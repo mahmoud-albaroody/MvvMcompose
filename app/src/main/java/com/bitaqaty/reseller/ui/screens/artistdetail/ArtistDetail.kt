@@ -42,6 +42,7 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
 fun ArtistDetail(personId: Int) {
+
     val artistDetailViewModel = hiltViewModel<ArtistDetailViewModel>()
     val artistDetail = artistDetailViewModel.artistDetail
     val progressBar = remember { mutableStateOf(false) }

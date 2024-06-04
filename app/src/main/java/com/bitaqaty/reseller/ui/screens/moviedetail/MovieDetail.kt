@@ -1,4 +1,4 @@
-package com.piashcse.hilt_mvvm_compose_movie.ui.screens.moviedetail
+package com.bitaqaty.reseller.ui.screens.moviedetail
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
@@ -73,7 +74,7 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(300.dp),
-                        imageModel = { ApiURL.IMAGE_URL.plus(it.data.poster_path)},
+                        imageModel = { ApiURL.IMAGE_URL.plus(it.data.poster_path) },
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center,
@@ -82,7 +83,7 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                         ),
                         component = rememberImageComponent {
                             +CircularRevealPlugin(
-                                duration = 800
+                                duration = 500
                             )
                             +ShimmerPlugin(
                                 baseColor = SecondaryFontColor,

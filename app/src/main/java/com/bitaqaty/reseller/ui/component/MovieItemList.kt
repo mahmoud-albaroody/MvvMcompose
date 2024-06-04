@@ -12,7 +12,9 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -22,14 +24,28 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.Card
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +55,7 @@ import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
 import com.bitaqaty.reseller.data.model.HomeMenuItem
 import com.bitaqaty.reseller.data.model.MovieItem
@@ -53,6 +70,7 @@ import com.bitaqaty.reseller.ui.theme.cornerRadius
 import com.bitaqaty.reseller.utils.conditional
 import com.bitaqaty.reseller.utils.items
 import com.bitaqaty.reseller.utils.pagingLoadingState
+import com.bitaqaty.reseller.utils.toPrettyJson
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.animation.circular.CircularRevealPlugin
 import com.skydoves.landscapist.coil.CoilImage
@@ -70,12 +88,16 @@ fun MovieItemList(
 ) {
     val configuration = LocalConfiguration.current
     val homeMenuItems: ArrayList<HomeMenuItem> = arrayListOf()
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
-    homeMenuItems.add(HomeMenuItem("", "sdsdsd", true))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat1, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat2, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat1, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat2, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat1, "sdsdsd", false))
+
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat2, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat1, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat2, "sdsdsd", false))
+    homeMenuItems.add(HomeMenuItem(R.drawable.cat1, "sdsdsd", false))
     var sizeState by remember { mutableStateOf(100.dp) }
     val sizee by animateDpAsState(
         targetValue = sizeState, tween(
@@ -105,6 +127,7 @@ fun MovieItemList(
             modifier = Modifier
                 .background(Purple80)
                 .width((screenWidth / 5).dp)
+                .height(screenHeight)
         ) {
 //            AnimatedInfiniteLazyColumn(
 //                items = homeMenuItems,
@@ -145,8 +168,14 @@ fun MovieItemList(
 //                    }
 //                }
 //            )
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = stringResource(id = R.string.app_title)
+            )
+
             LazyColumn(
                 modifier = Modifier
+                    .fillMaxHeight()
                     .padding(start = 5.dp, end = 5.dp)
             )
             {
@@ -216,33 +245,61 @@ fun MovieItemList(
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieItemView(item: MovieItem, navController: NavController) {
+
+//    val roundedTopCornerShape = RoundedCornerShape(
+//        topStart = CornerSize(0.dp), // adjust the radius as needed
+//        topEnd = CornerSize(16.dp),   // adjust the radius as needed
+//        bottomStart = CornerSize(16.dp),
+//        bottomEnd = CornerSize(16.dp)
+//    )
     Column(modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)) {
-        CoilImage(
+        Card(
             modifier = Modifier
-                .size(250.dp)
-                .cornerRadius(24)
-                .clickable {
-                    navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
+                .size(250.dp),
+//            shape = roundedTopCornerShape,
+        ) {
+            CoilImage(
+                modifier = Modifier
+                    .size(200.dp)
+//                    .clip(shape = roundedTopCornerShape)
+                    .clickable {
+                        //  sheetState.expand()
+                        // navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
+                    },
+                imageModel = { ApiURL.IMAGE_URL.plus(item.posterPath) },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center,
+                    contentDescription = "Movie item",
+                    colorFilter = null,
+                ),
+                component = rememberImageComponent {
+                    +CircularRevealPlugin(
+                        duration = 200
+                    )
+                    +ShimmerPlugin(
+                        baseColor = SecondaryFontColor,
+                        highlightColor = DefaultBackgroundColor
+                    )
                 },
-            imageModel = { ApiURL.IMAGE_URL.plus(item.posterPath) },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                contentDescription = "Movie item",
-                colorFilter = null,
-            ),
-            component = rememberImageComponent {
-                +CircularRevealPlugin(
-                    duration = 800
+            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "12.25",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
                 )
-                +ShimmerPlugin(
-                    baseColor = SecondaryFontColor,
-                    highlightColor = DefaultBackgroundColor
-                )
-            },
-        )
+                Text(text = "SAR", style = TextStyle(fontSize = 10.sp))
+            }
+        }
     }
 }
 
@@ -268,7 +325,7 @@ fun SelectableGenreChip(
             .background(
                 color = animateChipBackgroundColor
             )
-            .height(32.dp)
+            .height(62.dp)
             .widthIn(min = 80.dp)
             .padding(horizontal = 8.dp)
             .clickable(
@@ -279,31 +336,36 @@ fun SelectableGenreChip(
             }
     ) {
         Row(
-            Modifier.align(Alignment.Center),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            Modifier.align(Alignment.Center)        ,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            CoilImage(
-                modifier = Modifier
-                    .size(24.dp)
-                    .cornerRadius(24),
-                imageModel = { "https://image.tmdb.org/t/p/w342/ktHEdqmMWC1wdfPRMRCTZe2OISL.jpg" },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center,
-                    contentDescription = "Movie item",
-                    colorFilter = null,
-                ),
-                component = rememberImageComponent {
-                    +CircularRevealPlugin(
-                        duration = 800
-                    )
-                    +ShimmerPlugin(
-                        baseColor = SecondaryFontColor,
-                        highlightColor = DefaultBackgroundColor
-                    )
-                },
-            )
+//            CoilImage(
+//                modifier = Modifier
+//                    .size(24.dp)
+//                    .cornerRadius(24),
+//                imageModel = { "https://image.tmdb.org/t/p/w342/ktHEdqmMWC1wdfPRMRCTZe2OISL.jpg" },
+//                imageOptions = ImageOptions(
+//                    contentScale = ContentScale.Crop,
+//                    alignment = Alignment.Center,
+//                    contentDescription = "Movie item",
+//                    colorFilter = null,
+//                ),
+//                component = rememberImageComponent {
+//                    +CircularRevealPlugin(
+//                        duration = 800
+//                    )
+//                    +ShimmerPlugin(
+//                        baseColor = SecondaryFontColor,
+//                        highlightColor = DefaultBackgroundColor
+//                    )
+//                },
+//            )
 
+            Image(
+                modifier = Modifier.size(20.dp),
+                painter = painterResource(id = R.drawable.stc),
+                contentDescription = ""
+            )
             Text(
                 text = genre,
                 fontSize = 14.sp,
@@ -339,39 +401,43 @@ fun HomeItemView(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 0.dp)
-                ,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 0.dp),
         ) {
 
-            CoilImage(
-                modifier = Modifier
-                    .size(60.dp),
-//                .cornerRadius(24)
-                imageModel = { ApiURL.IMAGE_URL.plus(item.image) },
-                imageOptions = ImageOptions(
-//                contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center,
-                    contentDescription = "Movie item",
-                    colorFilter = null,
-                ),
-//            component = rememberImageComponent {
-//                +CircularRevealPlugin(
-//                    duration = 800
-//                )
-//                +ShimmerPlugin(
-//                    baseColor = SecondaryFontColor,
-//                    highlightColor = DefaultBackgroundColor
-//                )
-//            },
+            Image(
+                painter = painterResource(id = item.image),
+                contentDescription = stringResource(id = R.string.app_title)
             )
-            Text(
-                text = item.title, fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                color = Color.Black.copy(alpha = 0.80F),
-                style = TextStyle(background = Color.Yellow),
-            )
+//            CoilImage(
+//                modifier = Modifier
+//                    .size(60.dp),
+////                .cornerRadius(24)
+//                imageModel = { ApiURL.IMAGE_URL.plus(item.image) },
+//                imageOptions = ImageOptions(
+////                contentScale = ContentScale.Crop,
+//                    alignment = Alignment.Center,
+//                    contentDescription = "Movie item",
+//                    colorFilter = null,
+//                ),
+////            component = rememberImageComponent {
+////                +CircularRevealPlugin(
+////                    duration = 800
+////                )
+////                +ShimmerPlugin(
+////                    baseColor = SecondaryFontColor,
+////                    highlightColor = DefaultBackgroundColor
+////                )
+////            },
+//            )
+//            Text(
+//                text = item.title, fontSize = 14.sp,
+//                fontWeight = FontWeight.Light,
+//                textAlign = TextAlign.Center,
+//                color = Color.Black.copy(alpha = 0.80F),
+//                style = TextStyle(background = Color.Yellow),
+//            )
         }
 //        }
     }
