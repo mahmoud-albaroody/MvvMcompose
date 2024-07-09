@@ -16,7 +16,7 @@ import com.bitaqaty.reseller.data.model.moviedetail.Genre
 import com.bitaqaty.reseller.ui.screens.genre.GenreScreen
 import com.bitaqaty.reseller.ui.screens.artistdetail.ArtistDetail
 import com.bitaqaty.reseller.ui.screens.bottomnavigation.nowplaying.NowPlaying
-import com.piashcse.hilt_mvvm_compose_movie.ui.screens.moviedetail.MovieDetail
+import com.bitaqaty.reseller.ui.screens.moviedetail.MovieDetail
 import com.bitaqaty.reseller.ui.screens.bottomnavigation.popular.Popular
 import com.bitaqaty.reseller.ui.screens.bottomnavigation.toprated.TopRated
 import com.bitaqaty.reseller.ui.screens.bottomnavigation.upcoming.Upcoming
@@ -91,6 +91,7 @@ fun Navigation(
                 )
             }
         }
+
     }
 }
 

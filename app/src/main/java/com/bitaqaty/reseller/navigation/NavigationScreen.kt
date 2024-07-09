@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bitaqaty.reseller.R
 
@@ -37,13 +38,15 @@ sealed class Screen(
         Screen("movie_detail_screen", objectName = "movieItem", objectPath = "/{movieItem}")
 
     object ArtistDetail :
-        Screen("artist_detail_screen", objectName = "artistId",
-            objectPath = "/{artistId}")
+        Screen(
+            "artist_detail_screen", objectName = "artistId",
+            objectPath = "/{artistId}"
+        )
 
     // Bottom Navigation
     object HomeNav : Screen("home_screen", title = R.string.home, navIcon = {
         Icon(
-            Icons.Filled.Home,
+            painterResource(R.drawable.icon_home),
             contentDescription = "search",
             modifier = Modifier
                 .padding(end = 16.dp)
@@ -53,7 +56,7 @@ sealed class Screen(
 
     object PopularNav : Screen("popular_screen", title = R.string.popular, navIcon = {
         Icon(
-            Icons.Filled.Timeline,
+            painterResource(R.drawable.icon_store),
             contentDescription = "search",
             modifier = Modifier
                 .padding(end = 16.dp)
@@ -63,7 +66,7 @@ sealed class Screen(
 
     object TopRatedNav : Screen("top_rated_screen", title = R.string.top_rate, navIcon = {
         Icon(
-            Icons.Filled.Star,
+            painterResource(R.drawable.icon_fav),
             contentDescription = "search",
             modifier = Modifier
                 .padding(end = 16.dp)
@@ -73,12 +76,12 @@ sealed class Screen(
 
     object UpcomingNav : Screen("upcoming_screen",
         title = R.string.up_coming, navIcon = {
-        Icon(
-            Icons.Filled.KeyboardArrowDown,
-            contentDescription = "search",
-            modifier = Modifier
-                .padding(end = 16.dp)
-                .offset(x = 10.dp)
-        )
-    })
+            Icon(
+                painterResource(R.drawable.icon_search),
+                contentDescription = "search",
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .offset(x = 10.dp)
+            )
+        })
 }

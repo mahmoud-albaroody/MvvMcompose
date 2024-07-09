@@ -79,6 +79,8 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
     // multidex
     implementation ("androidx.multidex:multidex:2.0.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha01")
+    implementation ("androidx.fragment:fragment-compose:1.7.0-alpha10")
 
     // hilt
     implementation ("com.google.dagger:hilt-android:2.48.1")
@@ -96,6 +98,8 @@ dependencies {
 
     // timber log
     implementation ("com.jakewharton.timber:timber:5.0.1")
+    implementation ("io.coil-kt:coil-compose:1.3.1")
+ //   implementation ("com.google.accompanist:accompanist-bottomsheet:0.21.0")
 
     // coil with animation
 
