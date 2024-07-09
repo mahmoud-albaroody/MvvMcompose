@@ -11,4 +11,7 @@ object Dimens{
     val fontSize = 14.sp
     val space = 16.dp
     val padding = 10.dp
+
+    val textFieldHeight = 48.dp
 }
+

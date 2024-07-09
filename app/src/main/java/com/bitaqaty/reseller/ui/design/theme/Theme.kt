@@ -1,23 +1,30 @@
-package com.bitaqaty.reseller.ui.theme
+package com.bitaqaty.reseller.ui.design.theme
 
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.areStatusBarsVisible
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
+import com.bitaqaty.reseller.ui.theme.Pink40
+import com.bitaqaty.reseller.ui.theme.Pink80
+import com.bitaqaty.reseller.ui.theme.Purple80
+import com.bitaqaty.reseller.ui.theme.PurpleGrey40
+import com.bitaqaty.reseller.ui.theme.PurpleGrey80
+import com.bitaqaty.reseller.ui.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -40,6 +47,13 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+private val localDimens = compositionLocalOf { Dimens() }
+
+val MaterialTheme.dimens: Dimens
+    @Composable
+    @ReadOnlyComposable
+    get() = localDimens.current
 
 @Composable
 fun BitaqatyTheme(

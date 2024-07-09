@@ -32,4 +32,9 @@
     <string name="gender">Gender</string>
     <string name="birth_day">Birthday</string>
     <string name="place_of_birth">Place of Birth</string>
+
+    <string name="text_field_placeholder">Card Name, Category</string>
+    <string name="search_place_holder">Card Name, Category</string>
+    <string name="category_label">Category</string>
+    <string name="merchant_label">Merchant</string>
 </resources>

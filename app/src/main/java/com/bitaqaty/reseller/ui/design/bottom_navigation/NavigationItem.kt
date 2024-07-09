@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.bottom_navigation
+package com.bitaqaty.reseller.ui.design.bottom_navigation
 
 import com.bitaqaty.reseller.R
 
