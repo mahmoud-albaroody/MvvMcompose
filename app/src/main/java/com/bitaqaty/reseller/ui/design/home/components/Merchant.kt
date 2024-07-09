@@ -30,89 +30,118 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.design.home.Merchant
+import com.bitaqaty.reseller.ui.design.theme.PlaceHolder
+import com.bitaqaty.reseller.ui.design.theme.clickedMerchant
 import com.bitaqaty.reseller.ui.design.theme.dimens
+import com.bitaqaty.reseller.ui.design.theme.merchantBg
+import com.bitaqaty.reseller.ui.design.theme.merchantLabel
 
 @Composable
-fun Merchant(flagResId: Int, countryName: String) {
-    var isClicked by remember { mutableStateOf(false) }
-
+fun MerchantItem(
+    merchant: Merchant,
+    isSelected: Boolean,
+    onClickMerchant: () -> Unit
+) {
     Card(
         shape = RoundedCornerShape(MaterialTheme.dimens.cornerRadius10),
         modifier = Modifier
-            .clickable { isClicked = !isClicked }
-            .padding(vertical = 8.dp, horizontal = 8.dp)
+            .clickable { onClickMerchant() }
+            .padding(horizontal = MaterialTheme.dimens.padding8)
             .wrapContentSize()
 
     ) {
         Row(
             modifier = Modifier
-                .background(if (isClicked) Color(0xFF0D47A1) else MaterialTheme.colorScheme.primaryContainer)
-                .padding(16.dp)
+                .background(if (isSelected) clickedMerchant else merchantBg)
+                .padding(MaterialTheme.dimens.padding8)
                 .wrapContentSize()
         ) {
             Box(
                 modifier = Modifier
-                    .size(32.dp)
                     .border(BorderStroke(2.dp, Color.White), shape = CircleShape)
             ) {
-                Image(
-                    painter = painterResource(id = flagResId),
+                val imageRequest = ImageRequest.Builder(LocalContext.current)
+                    .data(merchant.imageUrl)
+                    .placeholder(R.drawable.ic_search)
+                    .error(R.drawable.ic_store)
+                    .transformations(CircleCropTransformation())
+                    .build()
+                AsyncImage(
+                    model = imageRequest,
                     contentDescription = "Country Flag",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(32.dp)
+                        .size(MaterialTheme.dimens.merchantImage)
                         .clip(CircleShape)
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(MaterialTheme.dimens.padding8))
             Text(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
-                    .padding(end = 16.dp),
-                text = countryName,
-                color = if (isClicked) Color.White else Color.Black,
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 18.sp,
+                    .padding(end = MaterialTheme.dimens.padding12),
+                text = merchant.name,
+                color = if (isSelected) Color.White else merchantLabel,
+                style = MaterialTheme.typography.PlaceHolder,
             )
         }
     }
 }
 
 @Composable
-fun MerchantList(merchants: List<Pair<Int, String>>) {
+fun MerchantList(merchants: List<Merchant>) {
+    var selectedMerchant by remember { mutableStateOf<Merchant?>(null) }
     LazyRow(
         modifier = Modifier
             .border(BorderStroke(width = 0.1.dp, color = Color.Gray)),
-        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+        contentPadding = PaddingValues(vertical = MaterialTheme.dimens.padding8, horizontal = MaterialTheme.dimens.padding12),
     ) {
-        items(merchants) { country ->
-            Merchant(flagResId = country.first, countryName = country.second)
+        items(merchants) { merchant ->
+            MerchantItem(
+                merchant = merchant,
+                isSelected = merchant == selectedMerchant,
+                onClickMerchant = { selectedMerchant = merchant }
+            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    Merchant(flagResId = R.drawable.flag, countryName = "USA")
+fun MerchantPreview() {
+    val merchant = Merchant(
+        name = "USA",
+        imageUrl = "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
+    )
+    MerchantItem(
+        merchant = merchant,
+        isSelected = false,
+        onClickMerchant = {}
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CountryListPreview() {
-    val sampleCountries = listOf(
-        Pair(R.drawable.flag, "United States"),
-        Pair(R.drawable.flag, "Canada"),
-        Pair(R.drawable.flag, "United Kingdom"),
-        Pair(R.drawable.flag, "Germany"),
-        Pair(R.drawable.flag, "France")
+fun MerchantListPreview() {
+    val sampleMerchants = listOf(
+        Merchant("USA", ""),
+        Merchant("USA", ""),
+        Merchant("USA", ""),
+        Merchant("USA", ""),
+        Merchant("USA", ""),
+        Merchant("USA", ""),
+        Merchant("USA", ""),
     )
 
-    MerchantList(merchants = sampleCountries)
+    MerchantList(merchants = sampleMerchants)
 }
