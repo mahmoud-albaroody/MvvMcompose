@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.data.model
 import com.google.gson.annotations.SerializedName
 
 data class BaseModel(
+
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

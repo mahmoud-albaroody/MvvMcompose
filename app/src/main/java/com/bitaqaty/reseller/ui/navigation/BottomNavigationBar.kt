@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.navigation
+package com.bitaqaty.reseller.ui.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

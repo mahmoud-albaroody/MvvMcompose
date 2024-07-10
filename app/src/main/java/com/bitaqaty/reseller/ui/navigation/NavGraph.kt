@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.navigation
+package com.bitaqaty.reseller.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,13 +16,18 @@ import com.bitaqaty.reseller.ui.design.MoreScreen
 import com.bitaqaty.reseller.ui.design.SearchScreen
 import com.bitaqaty.reseller.ui.design.StoreScreen
 import com.bitaqaty.reseller.ui.design.TransactionsScreen
+import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
+import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
+import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogScreen
+import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
+import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
 
 @Composable
 fun Navigation(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    NavHost(navController, startDestination = Screen.Home.route, modifier) {
+    NavHost(navController, startDestination = Screen.SelectSubCategoryScreen.route, modifier) {
         composable(Screen.Home.route) {
             HomeScreen()
         }
@@ -40,6 +45,21 @@ fun Navigation(
         }
         composable(Screen.More.route) {
             MoreScreen()
+        }
+        composable(Screen.Notification.route) {
+            NotificationScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.NotificationDetailsScreen.route) {
+            NotificationDetailsScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.RechargeLogScreen.route) {
+            RechargeLogScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.SelectMainCategoryScreen.route) {
+            SelectMainCategoryScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.SelectSubCategoryScreen.route) {
+            SelectSubCategoryScreen(navController = navController, modifier = modifier)
         }
 
     }

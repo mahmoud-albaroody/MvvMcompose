@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.screens.activity
+package com.bitaqaty.reseller.ui.presentation.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,8 +15,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
-import com.bitaqaty.reseller.navigation.Navigation
-import com.bitaqaty.reseller.navigation.BottomNavigationBar
+import com.bitaqaty.reseller.ui.navigation.Navigation
+import com.bitaqaty.reseller.ui.navigation.BottomNavigationBar
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import dagger.hilt.android.AndroidEntryPoint
 

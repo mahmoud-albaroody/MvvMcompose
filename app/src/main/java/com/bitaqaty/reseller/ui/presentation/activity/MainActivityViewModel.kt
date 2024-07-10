@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.screens.activity
+package com.bitaqaty.reseller.ui.presentation.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

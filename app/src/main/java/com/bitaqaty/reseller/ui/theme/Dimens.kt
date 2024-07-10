@@ -4,12 +4,24 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-object Dimens{
+object Dimens {
+
+    val halfDefaultMargin = 8.dp
+    val defaultMargin6 = 6.dp
+    val fourDefaultMargin = 4.dp
+    val quarterDefaultMargin = 2.dp
+    val DefaultMargin0 = 0.5.dp
+    val DefaultMargin1 = 1.dp
+    val DefaultMargin10 = 10.dp
+    val DefaultMargin = 16.dp
+    val DefaultMargin20 = 20.dp
+
     val thickness = 3.dp
     val width = 48.dp
     val imageSize = 19.dp
     val fontSize = 14.sp
-    val space = 16.dp
+
+
     val padding = 10.dp
 
     val textFieldHeight = 48.dp
