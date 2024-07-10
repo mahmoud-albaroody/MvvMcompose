@@ -28,18 +28,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.design.theme.dimens
+import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable
 fun Product() {
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.dimens.padding12)
+            .padding(Dimens.padding12)
             .wrapContentWidth(),
         shape = RoundedCornerShape(
-            topEndPercent = MaterialTheme.dimens.cornerRadius20,
-            bottomStartPercent = MaterialTheme.dimens.cornerRadius15,
-            bottomEndPercent = MaterialTheme.dimens.cornerRadius15
+            topEndPercent = Dimens.cornerRadius20,
+            bottomStartPercent = Dimens.cornerRadius15,
+            bottomEndPercent = Dimens.cornerRadius15
         ),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)

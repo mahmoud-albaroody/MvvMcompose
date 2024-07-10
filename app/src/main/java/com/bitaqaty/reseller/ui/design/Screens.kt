@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.design.bottom_navigation
+package com.bitaqaty.reseller.ui.design
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,10 +24,10 @@ import com.bitaqaty.reseller.ui.design.home.components.SearchCategoryList
 import com.bitaqaty.reseller.ui.design.home.components.TopBar
 import com.bitaqaty.reseller.ui.design.search.components.SearchBar
 import com.bitaqaty.reseller.ui.design.search.components.SearchCategory
-import com.bitaqaty.reseller.ui.design.theme.Label
-import com.bitaqaty.reseller.ui.design.theme.dimens
-import com.bitaqaty.reseller.ui.design.theme.label
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
+import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.Label
+import com.bitaqaty.reseller.ui.theme.label
 
 @Composable
 fun HomeScreen() {
@@ -43,12 +43,12 @@ fun HomeScreen() {
 }
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier.padding(start = MaterialTheme.dimens.padding12)) {
+fun SearchScreen(modifier: Modifier = Modifier.padding(start = Dimens.padding12)) {
     Column {
         SearchBar()
         LazyColumn {
             item {
-                Spacer(modifier = Modifier.height(MaterialTheme.dimens.padding12))
+                Spacer(modifier = Modifier.height(Dimens.padding12))
             }
             item {
                 Text(
@@ -59,13 +59,13 @@ fun SearchScreen(modifier: Modifier = Modifier.padding(start = MaterialTheme.dim
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(MaterialTheme.dimens.padding6))
+                Spacer(modifier = Modifier.height(Dimens.padding6))
             }
             item {
                 SearchCategoryList(items = 6)
             }
             item {
-                Spacer(modifier = Modifier.height(MaterialTheme.dimens.padding12))
+                Spacer(modifier = Modifier.height(Dimens.padding12))
             }
             item {
                 Text(
@@ -85,7 +85,7 @@ fun SearchScreen(modifier: Modifier = Modifier.padding(start = MaterialTheme.dim
 @Composable
 fun SearchCategoryList(items: Int) {
     LazyRow(
-        contentPadding = PaddingValues(start = MaterialTheme.dimens.padding12)
+        contentPadding = PaddingValues(start = Dimens.padding12)
     ) {
         items(items) { item ->
             SearchCategory()
@@ -96,7 +96,7 @@ fun SearchCategoryList(items: Int) {
 @Composable
 fun SearchProductList(items: Int) {
     LazyRow(
-        contentPadding = PaddingValues(start = MaterialTheme.dimens.padding12)
+        contentPadding = PaddingValues(start = Dimens.padding12)
     ) {
         items(items) { item ->
             Product()

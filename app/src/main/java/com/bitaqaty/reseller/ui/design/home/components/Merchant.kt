@@ -39,11 +39,12 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.design.home.Merchant
-import com.bitaqaty.reseller.ui.design.theme.PlaceHolder
-import com.bitaqaty.reseller.ui.design.theme.clickedMerchant
-import com.bitaqaty.reseller.ui.design.theme.dimens
-import com.bitaqaty.reseller.ui.design.theme.merchantBg
-import com.bitaqaty.reseller.ui.design.theme.merchantLabel
+import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.PlaceHolder
+import com.bitaqaty.reseller.ui.theme.clickedMerchant
+import com.bitaqaty.reseller.ui.theme.merchantBg
+import com.bitaqaty.reseller.ui.theme.merchantLabel
+
 
 @Composable
 fun MerchantItem(
@@ -52,17 +53,17 @@ fun MerchantItem(
     onClickMerchant: () -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(MaterialTheme.dimens.cornerRadius10),
+        shape = RoundedCornerShape(Dimens.cornerRadius10),
         modifier = Modifier
             .clickable { onClickMerchant() }
-            .padding(horizontal = MaterialTheme.dimens.padding8)
+            .padding(horizontal = Dimens.padding8)
             .wrapContentSize()
 
     ) {
         Row(
             modifier = Modifier
                 .background(if (isSelected) clickedMerchant else merchantBg)
-                .padding(MaterialTheme.dimens.padding8)
+                .padding(Dimens.padding8)
                 .wrapContentSize()
         ) {
             Box(
@@ -80,16 +81,16 @@ fun MerchantItem(
                     contentDescription = "Country Flag",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(MaterialTheme.dimens.merchantImage)
+                        .size(Dimens.merchantImage)
                         .clip(CircleShape)
                 )
             }
-            Spacer(modifier = Modifier.width(MaterialTheme.dimens.padding8))
+            Spacer(modifier = Modifier.width(Dimens.padding8))
             Text(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
-                    .padding(end = MaterialTheme.dimens.padding12),
+                    .padding(end = Dimens.padding12),
                 text = merchant.name,
                 color = if (isSelected) Color.White else merchantLabel,
                 style = MaterialTheme.typography.PlaceHolder,
@@ -104,7 +105,7 @@ fun MerchantList(merchants: List<Merchant>) {
     LazyRow(
         modifier = Modifier
             .border(BorderStroke(width = 0.1.dp, color = Color.Gray)),
-        contentPadding = PaddingValues(vertical = MaterialTheme.dimens.padding8, horizontal = MaterialTheme.dimens.padding12),
+        contentPadding = PaddingValues(vertical = Dimens.padding8, horizontal = Dimens.padding12),
     ) {
         items(merchants) { merchant ->
             MerchantItem(

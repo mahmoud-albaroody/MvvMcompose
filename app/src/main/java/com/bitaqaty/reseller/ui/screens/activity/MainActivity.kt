@@ -15,9 +15,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
-import com.bitaqaty.reseller.ui.design.bottom_navigation.BottomNavigationBar
-import com.bitaqaty.reseller.ui.design.bottom_navigation.HomeScreen
-import com.bitaqaty.reseller.ui.design.bottom_navigation.NavigationGraph
+import com.bitaqaty.reseller.navigation.Navigation
+import com.bitaqaty.reseller.navigation.BottomNavigationBar
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,8 +51,8 @@ fun MainScreen(){
             .fillMaxSize(),
         bottomBar = { BottomNavigationBar(navController) },
         content = { innerPadding ->
-            NavigationGraph(
-                navController
+            Navigation(
+                navController, modifier = Modifier
             )
         }
     )
@@ -67,4 +66,3 @@ fun HomePreview() {
     }
 }
 
-//CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr){}

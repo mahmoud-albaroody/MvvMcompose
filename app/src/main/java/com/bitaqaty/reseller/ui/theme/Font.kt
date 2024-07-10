@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.design.theme
+package com.bitaqaty.reseller.ui.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

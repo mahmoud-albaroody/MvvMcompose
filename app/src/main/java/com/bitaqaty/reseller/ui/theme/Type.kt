@@ -36,7 +36,7 @@ val Typography = Typography(
 
 
 
-val androidx.compose.material.Typography.subTitleSecondary: TextStyle
+val subTitleSecondary: TextStyle
     @Composable
     get() {
         return TextStyle(
@@ -46,7 +46,7 @@ val androidx.compose.material.Typography.subTitleSecondary: TextStyle
         )
     }
 
-val androidx.compose.material.Typography.bioGrapyText: TextStyle
+val bioGrapyText: TextStyle
     @Composable
     get() {
         return TextStyle(
@@ -56,7 +56,7 @@ val androidx.compose.material.Typography.bioGrapyText: TextStyle
         )
     }
 
-val androidx.compose.material.Typography.subTitlePrimary: TextStyle
+val subTitlePrimary: TextStyle
     @Composable
     get() {
         return TextStyle(
@@ -64,5 +64,25 @@ val androidx.compose.material.Typography.subTitlePrimary: TextStyle
             color = FontColor,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium
+        )
+    }
+
+val Typography.Label: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = frutigerLTArabic,
+            fontWeight = FontWeight.Light,
+            fontSize = 20.sp,
+        )
+    }
+
+val Typography.PlaceHolder: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = frutigerLTArabic,
+            fontWeight = FontWeight.Light,
+            fontSize = 18.sp,
         )
     }

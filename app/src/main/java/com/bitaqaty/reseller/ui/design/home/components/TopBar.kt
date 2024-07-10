@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.design.home.Merchant
-import com.bitaqaty.reseller.ui.design.theme.dimens
+import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable
 fun TopBar() {
@@ -35,7 +35,7 @@ fun TopBar() {
     ) {
         Image(
             modifier = Modifier
-                .size(MaterialTheme.dimens.bitaqatyLogo)
+                .size(Dimens.bitaqatyLogo)
                 .background(Color.White)
                 .border(0.1.dp, Color.Gray),
             painter = painterResource(id = R.drawable.bitaqaty_logo),

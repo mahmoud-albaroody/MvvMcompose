@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -14,8 +13,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.design.theme.border
-import com.bitaqaty.reseller.ui.design.theme.dimens
+import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.border
 
 @Composable
 fun SearchCategory(){
@@ -24,11 +23,11 @@ fun SearchCategory(){
         contentDescription = "Circle Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .size(MaterialTheme.dimens.categoryImage)
+            .size(Dimens.categoryImage)
             .clip(CircleShape)
-            .border(MaterialTheme.dimens.borderThickness7, border, CircleShape)
+            .border(Dimens.borderThickness7, border, CircleShape)
     )
-    Spacer(modifier = Modifier.padding(end = MaterialTheme.dimens.padding12))
+    Spacer(modifier = Modifier.padding(end = Dimens.padding12))
 }
 
 @Preview(showBackground = false)

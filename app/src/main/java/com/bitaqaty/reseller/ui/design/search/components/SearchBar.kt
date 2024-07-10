@@ -21,11 +21,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.design.theme.PlaceHolder
-import com.bitaqaty.reseller.ui.design.theme.SearchBarBackground
-import com.bitaqaty.reseller.ui.design.theme.border
-import com.bitaqaty.reseller.ui.design.theme.SearchBarText
-import com.bitaqaty.reseller.ui.design.theme.dimens
+import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.PlaceHolder
+import com.bitaqaty.reseller.ui.theme.SearchBarBackground
+import com.bitaqaty.reseller.ui.theme.SearchBarText
+import com.bitaqaty.reseller.ui.theme.border
+
 
 @Composable
 fun SearchBar() {
@@ -36,17 +37,17 @@ fun SearchBar() {
             .wrapContentHeight()
             .fillMaxWidth()
             .padding(
-                top = MaterialTheme.dimens.padding30,
-                start = MaterialTheme.dimens.padding12,
-                end = MaterialTheme.dimens.padding12
+                top = Dimens.padding30,
+                start = Dimens.padding12,
+                end = Dimens.padding12
             )
             .background(SearchBarBackground)
             .border(
-                MaterialTheme.dimens.borderThickness3,
+                Dimens.borderThickness3,
                 border,
                 MaterialTheme.shapes.medium
             )
-            .padding(MaterialTheme.dimens.padding12),
+            .padding(Dimens.padding12),
         value = text.value,
         onValueChange = { text.value = it },
         textStyle = MaterialTheme.typography.PlaceHolder,

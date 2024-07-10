@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.design.bottom_navigation
+package com.bitaqaty.reseller.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -36,16 +36,16 @@ import com.bitaqaty.reseller.ui.theme.Dimens
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        NavigationItem.Home,
-        NavigationItem.Search,
-        NavigationItem.Favorite,
-        NavigationItem.Store,
-        NavigationItem.Transactions,
-        NavigationItem.More
+        Screen.Home,
+        Screen.Search,
+        Screen.Favorite,
+        Screen.Store,
+        Screen.Transactions,
+        Screen.More
     )
 
     val selectedItem = remember { mutableIntStateOf(0) }
-    val currentRoute = remember { mutableStateOf(NavigationItem.Home.route) }
+    val currentRoute = remember { mutableStateOf(Screen.Home.route) }
 
     items.forEachIndexed { index, navigationItem ->
         if (navigationItem.route == currentRoute.value) {
