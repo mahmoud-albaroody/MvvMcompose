@@ -94,7 +94,9 @@ fun More() {
         Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
             FilterButton(
                 backgroundTex = Color.Red, text = "Logout",
-                iconVisibility = false, textColor = Color.White
+                iconVisibility = false, textColor = Color.White , onApplyFilterClick = {
+
+                }
             )
         }
     }

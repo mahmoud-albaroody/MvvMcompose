@@ -71,14 +71,19 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 fun ResetPasswordScreen(navController: NavController, modifier: Modifier) {
     val resetPasswordViewModel: ResetPasswordViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    ResetPassword()
+    ResetPassword(
+        "To reset your access data.\n" +
+                "Please enter your username, and click send.\n" +
+                "A message  message containing verfication code\n" +
+                "will be sent to you, please use that code to reset your\n" +
+                "Access data", "Please note that link is valid within 3 minutes"
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun ResetPassword(
-
+    text: String, text2: String
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -96,8 +101,10 @@ fun ResetPassword(
     ) {
 
 
-        Column(  modifier = Modifier
-            .fillMaxSize().padding(top = Dimens.DefaultMargin20),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = Dimens.DefaultMargin20),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
@@ -109,18 +116,14 @@ fun ResetPassword(
                 )
                 Text(
                     modifier = Modifier.padding(top = Dimens.DefaultMargin),
-                    text = "To reset your access data.\n" +
-                            "Please enter your username, and click send.\n" +
-                            "A message  message containing verfication code\n" +
-                            "will be sent to you, please use that code to reset your\n" +
-                            "Access data",
+                    text = text,
                     style = TextStyle(
                         fontSize = 13.sp, color = FontColor
                     ),
                 )
                 Text(
                     modifier = Modifier.padding(vertical = Dimens.DefaultMargin),
-                    text = "Please note that link is valid within 3 minutes",
+                    text = text2,
                     style = TextStyle(
                         fontSize = 13.sp, color = FontColor
                     ),

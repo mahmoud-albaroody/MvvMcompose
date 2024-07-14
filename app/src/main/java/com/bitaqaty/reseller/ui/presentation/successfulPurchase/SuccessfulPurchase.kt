@@ -138,7 +138,10 @@ fun ProductDetails() {
             ) {
                 FilterButton(
                     backgroundTex = BebeBlue, text = "Print Product",
-                    iconVisibility = false, textColor = Color.White
+                    iconVisibility = false, textColor = Color.White,
+                    onApplyFilterClick = {
+
+                    }
                 )
             }
             Box(
@@ -147,8 +150,14 @@ fun ProductDetails() {
                     .weight(1f)
             ) {
                 FilterButton(
-                    backgroundTex = Color.White, text = "Print VAT",
-                    iconVisibility = false, textColor = BebeBlue, haveBorder = true
+                    backgroundTex = Color.White,
+                    text = "Print VAT",
+                    iconVisibility = false,
+                    textColor = BebeBlue,
+                    haveBorder = true,
+                    onApplyFilterClick = {
+
+                    }
                 )
             }
         }

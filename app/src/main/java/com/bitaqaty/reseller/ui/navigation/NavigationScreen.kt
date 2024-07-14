@@ -34,13 +34,18 @@ sealed class Screen(
 
     object BankTransferScreen : Screen("bankTransferScreen", 0, "bankTransferScreen")
 
-    object TransactionsScreen : Screen("transactionsScreen", 0, "transactionsScreen")
     object SuccessfulPurchaseScreen : Screen("transactionsScreen", 0, "transactionsScreen")
     object LoginScreen : Screen("loginScreen", 0, "loginScreen")
 
     object ResetPasswordScreen : Screen("resetPasswordScreen", 0, "resetPasswordScreen")
 
     object ChangePasswordScreen : Screen("changePasswordScreen", 0, "changePasswordScreen")
+
+
+    object ForgetPasswordScreen : Screen("forgetPasswordScreen", 0, "forgetPasswordScreen")
+
+    object MainScreen2 : Screen("MainScreen2", 0, "MainScreen2")
+
 
 
 }

@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,26 +32,29 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey100
-
 
 
 @Composable
 fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     val transactionsViewModel: TransactionsViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-
+    screen(onFilterClick = {
+        navController.navigate(Screen.ApplyFilterScreen.route)
+    })
 }
 
-@Preview
 @Composable
-fun screen() {
+fun screen(onFilterClick: () -> Unit) {
     Box(Modifier.fillMaxSize()) {
         Transactions()
-        Box (Modifier.align(Alignment.BottomEnd)){
-            Filter()
+        Box(Modifier.align(Alignment.BottomEnd)) {
+            Filter(onFilterClick = {
+                onFilterClick.invoke()
+            })
         }
 
     }
@@ -169,7 +173,7 @@ fun TransactionsItem() {
 
 
 @Composable
-fun Filter() {
+fun Filter(onFilterClick: () -> Unit) {
 
     Column(Modifier.background(Color.White)) {
         Divider(
@@ -181,6 +185,9 @@ fun Filter() {
         )
         Card(
             Modifier
+                .clickable {
+                    onFilterClick.invoke()
+                }
                 .padding(
                     horizontal = Dimens.DefaultMargin,
                 )

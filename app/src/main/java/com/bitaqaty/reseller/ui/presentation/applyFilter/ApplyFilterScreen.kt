@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.ui.presentation.applyFilter
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,12 +52,14 @@ fun ApplyFilterScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: ApplyFilterViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {
     }
-    ApplyFilter()
+    ApplyFilter(onApplyFilterClick = {
+        navController.popBackStack()
+    })
 }
 
-@Preview
+
 @Composable
-fun ApplyFilter() {
+fun ApplyFilter(onApplyFilterClick: () -> Unit) {
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -78,7 +81,10 @@ fun ApplyFilter() {
         Column {
             FilterButton(
                 backgroundTex = BebeBlue, text = "Filter",
-                iconVisibility = true, textColor = Color.White
+                iconVisibility = true,
+                textColor = Color.White, onApplyFilterClick = {
+                    onApplyFilterClick.invoke()
+                }
             )
         }
     }
@@ -235,13 +241,17 @@ fun CheckBox() {
 fun FilterButton(
     backgroundTex: Color, text: String,
     iconVisibility: Boolean, textColor: Color,
-    haveBorder: Boolean = false
+    haveBorder: Boolean = false,
+    onApplyFilterClick: () -> Unit
 ) {
     var borderStroke: BorderStroke? = null
     if (haveBorder)
         borderStroke = BorderStroke(Dimens.DefaultMargin0, LightGrey400)
     Card(
         Modifier
+            .clickable {
+                onApplyFilterClick.invoke()
+            }
             .padding(
                 vertical = Dimens.halfDefaultMargin,
                 horizontal = Dimens.DefaultMargin,

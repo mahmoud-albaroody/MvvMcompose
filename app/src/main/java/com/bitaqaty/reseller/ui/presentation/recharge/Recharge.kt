@@ -61,7 +61,10 @@ fun Recharge() {
         Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
             FilterButton(
                 backgroundTex = BebeBlue, text = "Recharge",
-                iconVisibility = false, textColor = Color.White
+                iconVisibility = false, textColor = Color.White,
+                onApplyFilterClick = {
+
+                }
             )
         }
         Row(

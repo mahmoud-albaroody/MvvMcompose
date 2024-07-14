@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,6 +64,7 @@ import androidx.core.util.PatternsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
@@ -71,14 +73,20 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 fun LoginScreen(navController: NavController, modifier: Modifier) {
     val loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    LoginItem()
+    LoginItem(onResetAccessClick = {
+        navController.navigate(Screen.ResetPasswordScreen.route)
+    }, onForgetClick = {
+        navController.navigate(Screen.ForgetPasswordScreen.route)
+
+    }, onLoginClick = {
+        navController.navigate(Screen.MainScreen2.route)
+    })
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun LoginItem(
-
+    onResetAccessClick: () -> Unit, onForgetClick: () -> Unit, onLoginClick: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     var email by rememberSaveable { mutableStateOf("") }
@@ -135,8 +143,7 @@ fun LoginItem(
                     colors = CardDefaults.cardColors(containerColor = Color.Transparent)
                 ) {
                     OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
 
                         value = email,
                         placeholder = {
@@ -150,7 +157,8 @@ fun LoginItem(
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent,
                             cursorColor = BebeBlue // Customize the cursor color as needed
-                            , errorBorderColor = Color.Transparent
+                            ,
+                            errorBorderColor = Color.Transparent
                         ),
                         onValueChange = {
                             email = it
@@ -217,7 +225,8 @@ fun LoginItem(
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent,
                             cursorColor = BebeBlue // Customize the cursor color as needed
-                            , errorBorderColor = Color.Transparent
+                            ,
+                            errorBorderColor = Color.Transparent
                         ),
                         onValueChange = {
                             password = it
@@ -255,10 +264,8 @@ fun LoginItem(
                     }
                 }) {
                 Text(
-                    text = stringResource(R.string.login),
-                    style = TextStyle(
-                        textAlign = TextAlign.Center,
-                        fontSize = 13.sp, color = Color.White
+                    text = stringResource(R.string.login), style = TextStyle(
+                        textAlign = TextAlign.Center, fontSize = 13.sp, color = Color.White
                     )
                 )
             }
@@ -270,17 +277,19 @@ fun LoginItem(
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(BebeBlue),
             onClick = {
-                if (email.isNotEmpty() && password.isNotEmpty() && !isNotValid) {
-                    //       viewModel.login(email, password)
-                } else {
-                    if (email.isEmpty()) {
-                        isNotValid = true
-                    }
-                    if (password.isEmpty()) {
-                        isValidNotPassword = true
-                    }
+                onLoginClick.invoke()
 
-                }
+//                if (email.isNotEmpty() && password.isNotEmpty() && !isNotValid) {
+//
+//                } else {
+//                    if (email.isEmpty()) {
+//                        isNotValid = true
+//                    }
+//                    if (password.isEmpty()) {
+//                        isValidNotPassword = true
+//                    }
+//
+//                }
             }) {
             Text(
                 text = stringResource(R.string.login),
@@ -290,47 +299,62 @@ fun LoginItem(
         }
 
 
+        AccessData(onForgetClick = {
+            onForgetClick.invoke()
+        }, onResetAccessClick = {
+            onResetAccessClick.invoke()
+        })
 
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = Dimens.padding30),
-            horizontalAlignment = Alignment.CenterHorizontally
+    }
+}
+
+@Composable
+fun AccessData(
+    onResetAccessClick: () -> Unit, onForgetClick: () -> Unit
+) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(top = Dimens.padding30),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.clickable {
+                onForgetClick.invoke()
+            }, verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .background(Color.White),
-                    painter = painterResource(id = R.drawable.ic_password),
-                    contentDescription = "Logo",
-                )
-                Text(
-                    modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
-                    text = "Forget Password",
-                    style = TextStyle(
-                        fontSize = 13.sp, color = BebeBlue
-                    ),
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .background(Color.White),
-                    painter = painterResource(id = R.drawable.ic_password),
-                    contentDescription = "Logo",
-                )
-                Text(
-                    text = "Reset Access Data",
-                    modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
-                    style = TextStyle(
-                        fontSize = 13.sp, color = BebeBlue
-                    ),
-                )
-            }
+            Image(
+                modifier = Modifier.background(Color.White),
+                painter = painterResource(id = R.drawable.ic_password),
+                contentDescription = "Logo",
+            )
+            Text(
+                modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
+                text = "Forget Password",
+                style = TextStyle(
+                    fontSize = 13.sp, color = BebeBlue
+                ),
+            )
+        }
+        Row(
+            modifier = Modifier
+                .clickable {
+                    onResetAccessClick.invoke()
+                }
+                .padding(Dimens.halfDefaultMargin), verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier.background(Color.White),
+                painter = painterResource(id = R.drawable.ic_password),
+                contentDescription = "Logo",
+            )
+            Text(
+                text = "Reset Access Data",
+                modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
+                style = TextStyle(
+                    fontSize = 13.sp, color = BebeBlue
+                ),
+            )
         }
     }
 }

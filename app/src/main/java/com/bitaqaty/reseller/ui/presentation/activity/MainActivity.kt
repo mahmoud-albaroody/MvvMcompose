@@ -16,9 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.ui.navigation.Navigation
 import com.bitaqaty.reseller.ui.navigation.BottomNavigationBar
+import com.bitaqaty.reseller.ui.navigation.Navigation2
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +47,25 @@ class MainActivity : AppCompatActivity() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(){
+fun MainScreen() {
+    val navController = rememberNavController()
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        content = { innerPadding ->
+            Box{
+                Navigation(
+                    navController, modifier = Modifier
+                )
+            }
+        }
+    )
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun MainScreen2(modifier: Modifier) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -54,7 +74,7 @@ fun MainScreen(){
         bottomBar = { BottomNavigationBar(navController) },
         content = { innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
-                Navigation(
+                Navigation2(
                     navController, modifier = Modifier
                 )
             }
