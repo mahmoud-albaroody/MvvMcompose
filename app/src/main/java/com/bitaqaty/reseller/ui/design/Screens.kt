@@ -118,19 +118,8 @@ fun StoreScreen() {
     }
 }
 
-@Composable
-fun TransactionsScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "TransactionsScreen", fontSize = 30.sp, modifier = Modifier.align(Alignment.Center))
-    }
-}
 
-@Composable
-fun MoreScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "MoreScreen", fontSize = 30.sp, modifier = Modifier.align(Alignment.Center))
-    }
-}
+
 
 // Pop up to the start destination of the graph to
 // avoid building up a large stack of destinations

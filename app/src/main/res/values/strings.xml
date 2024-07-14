@@ -25,7 +25,7 @@
     <string name="there_is_no_internet">There is no internet!</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
-    <string name="login">Login</string>
+    <string name="login">Sign in</string>
     <string name="artist_detail">Artist Detail</string>
     <string name="know_for">Known for</string>
     <string name="biography">Biography</string>
@@ -38,4 +38,8 @@
     <string name="category_label">Category</string>
     <string name="merchant_label">Merchant</string>
     <string name="recharged_successfully">Recharged Successfully</string>
+
+    <string name="please_enter_valid_text">Please enter valid text</string>
+    <string name="password">Password</string>
+
 </resources>

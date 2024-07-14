@@ -1,16 +1,12 @@
-package com.bitaqaty.reseller.ui.presentation.rechargeUsingMada
+package com.bitaqaty.reseller.ui.presentation.rechargeUsingMadaSuccessfully
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,30 +20,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.presentation.notifications.NotificationHeader
-import com.bitaqaty.reseller.ui.presentation.notifications.NotificationItem
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
-import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.Green
-import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
-import com.bitaqaty.reseller.ui.theme.LightGrey300
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 
 @Composable
 fun RechargeUsingMadaScreen(navController: NavController, modifier: Modifier) {
-    val notificationViewModel: RechargeUsingMadaViewModel = hiltViewModel()
+    val notificationViewModel: RechargeUsingMadaSuccessfullyViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
     RechargeLog()
 }

@@ -53,7 +53,8 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 
-    NavigationBar(containerColor = Color.White, modifier = Modifier.fillMaxWidth()) {
+    NavigationBar(containerColor = Color.White,
+        modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             items.forEachIndexed { index, item ->
 

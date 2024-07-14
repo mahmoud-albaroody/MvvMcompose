@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,9 +53,11 @@ fun MainScreen(){
             .fillMaxSize(),
         bottomBar = { BottomNavigationBar(navController) },
         content = { innerPadding ->
-            Navigation(
-                navController, modifier = Modifier
-            )
+            Box(modifier = Modifier.padding(innerPadding)) {
+                Navigation(
+                    navController, modifier = Modifier
+                )
+            }
         }
     )
 }

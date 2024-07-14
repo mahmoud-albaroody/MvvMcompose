@@ -23,5 +23,24 @@ sealed class Screen(
 
     object SelectSubCategoryScreen : Screen("selectSubCategoryScreen", 0, "selectSubCategoryScreen")
 
+    object ApplyFilterScreen : Screen("applyFilterScreen", 0, "applyFilterScreen")
+
+    object MyProfileScreen : Screen("myProfileScreen", 0, "myProfileScreen")
+    object ChargeBalanceScreen : Screen("chargeBalanceScreen", 0, "chargeBalanceScreen")
+
+    object MoreScreen : Screen("moreScreen", 0, "moreScreen")
+
+    object RechargeScreen : Screen("rechargeScreen", 0, "rechargeScreen")
+
+    object BankTransferScreen : Screen("bankTransferScreen", 0, "bankTransferScreen")
+
+    object TransactionsScreen : Screen("transactionsScreen", 0, "transactionsScreen")
+    object SuccessfulPurchaseScreen : Screen("transactionsScreen", 0, "transactionsScreen")
+    object LoginScreen : Screen("loginScreen", 0, "loginScreen")
+
+    object ResetPasswordScreen : Screen("resetPasswordScreen", 0, "resetPasswordScreen")
+
+    object ChangePasswordScreen : Screen("changePasswordScreen", 0, "changePasswordScreen")
+
 
 }
