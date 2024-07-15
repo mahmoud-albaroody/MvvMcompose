@@ -21,6 +21,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,7 +39,9 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
+import com.bitaqaty.reseller.ui.theme.LightGrey400
 
 
 @Composable
@@ -47,6 +53,7 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     })
 }
 
+//@Preview
 @Composable
 fun screen(onFilterClick: () -> Unit) {
     Box(Modifier.fillMaxSize()) {
@@ -73,9 +80,12 @@ fun Transactions() {
 
 @Composable
 fun TransactionsItem() {
+    var viewDetails by remember { mutableStateOf(false) }
+    var arrow = R.drawable.ic_forward_arrow
     Card(
         Modifier
             .fillMaxWidth()
+
             .padding(
                 vertical = Dimens.halfDefaultMargin,
                 horizontal = Dimens.DefaultMargin
@@ -88,6 +98,14 @@ fun TransactionsItem() {
         Row(
             Modifier
                 .fillMaxWidth()
+                .clickable {
+                    arrow = if (viewDetails) {
+                        R.drawable.ic_forward_arrow
+                    } else {
+                        R.drawable.ic_drop_down_arrow
+                    }
+                    viewDetails = !viewDetails
+                }
                 .padding(Dimens.halfDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -106,7 +124,10 @@ fun TransactionsItem() {
                     modifier = Modifier
                         .fillMaxWidth(),
                     text = "Playstation PSN Card 10",
-                    style = TextStyle(color = Color.Black, fontSize = 18.sp),
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    ),
                 )
                 Text(
                     modifier = Modifier
@@ -115,7 +136,7 @@ fun TransactionsItem() {
                     text = "12/12/2023. 03:11:55",
                     style = TextStyle(
                         color = Color.Black,
-                        fontSize = 14.sp
+                        fontSize = 12.sp
                     ),
                 )
                 Row(
@@ -136,7 +157,7 @@ fun TransactionsItem() {
                             modifier = Modifier
                                 .fillMaxWidth(),
                             text = "Support Ticket",
-                            style = TextStyle(color = BebeBlue, fontSize = 12.sp),
+                            style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
                     }
                     Row(
@@ -154,7 +175,7 @@ fun TransactionsItem() {
                             modifier = Modifier
                                 .fillMaxWidth(),
                             text = "Print Again",
-                            style = TextStyle(color = BebeBlue, fontSize = 12.sp),
+                            style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
                     }
                 }
@@ -163,14 +184,56 @@ fun TransactionsItem() {
             Image(
                 modifier = Modifier
                     .weight(1f),
-                painter = painterResource(R.drawable.ic_forward_arrow),
+                painter = painterResource(arrow),
                 contentDescription = ""
             )
 
         }
+        if (viewDetails) {
+            Column(
+                Modifier.padding(
+                    bottom = Dimens.DefaultMargin
+                )
+            ) {
+                TransactionsDetails()
+                TransactionsDetails()
+                TransactionsDetails()
+                TransactionsDetails()
+            }
+        }
     }
 }
 
+
+@Preview
+@Composable
+fun TransactionsDetails() {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = Dimens.DefaultMargin,
+                vertical = Dimens.fourDefaultMargin
+            )
+    ) {
+        Text(
+            text = "Playstation PSN Card 10",
+            style = TextStyle(
+                color = LightGrey400,
+                fontSize = 10.sp
+            ),
+        )
+        Text(
+            modifier = Modifier
+                .padding(start = Dimens.DefaultMargin),
+            text = "Playstation PSN Card 10",
+            style = TextStyle(
+                color = FontColor,
+                fontSize = 10.sp
+            ),
+        )
+    }
+}
 
 @Composable
 fun Filter(onFilterClick: () -> Unit) {
@@ -203,6 +266,7 @@ fun Filter(onFilterClick: () -> Unit) {
                         horizontal = Dimens.DefaultMargin,
                         vertical = Dimens.DefaultMargin20
                     )
+
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center

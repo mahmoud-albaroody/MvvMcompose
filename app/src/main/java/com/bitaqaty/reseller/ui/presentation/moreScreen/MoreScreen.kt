@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.ui.presentation.moreScreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilter
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
@@ -53,12 +55,34 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 fun MoreScreen(navController: NavController, modifier: Modifier) {
     val moreViewModel: MoreViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    More()
+    More(onItemClick = {
+        when (it) {
+            "Notifications" -> {
+                navController.navigate(Screen.Notification.route)
+            }
+            "Edit Profile" -> {
+                navController.navigate(Screen.MyProfileScreen.route)
+            }
+            "Reports" -> {
+                //   navController.navigate(Screen.Notification.route)
+            }
+            "Add Balance" -> {
+                navController.navigate(Screen.ChargeBalanceScreen.route)
+            }
+            "English" -> {
+                //     navController.navigate(Screen.Notification.route)
+            }
+            "Logout" -> {
+                navController.navigate(Screen.MainScreen.route)
+            }
+        }
+
+    })
 }
 
-@Preview
+
 @Composable
-fun More() {
+fun More(onItemClick: (String) -> Unit) {
     Column(
         Modifier
             .background(Color.White)
@@ -66,22 +90,37 @@ fun More() {
             .padding(horizontal = Dimens.halfDefaultMargin)
     ) {
         MoreItem(
-            text = "Notifications", text2 = "3",
+            text = "Notifications",
+            text2 = "3",
             textColor = BebeBlue,
-            icon = R.drawable.ic_notification, weight = 6f
+            icon = R.drawable.ic_notification,
+            weight = 8f, onItemClick = {
+                onItemClick.invoke("Notifications")
+            }
         )
         MoreReport(
             "Edit Profile", "Add Balance",
-            text3 = "Khalid Ali", text4 = "15000,00"
+            text3 = "Khalid Ali", text4 = "15000,00",
+            onItemClick = {
+                onItemClick.invoke(it)
+            }
         )
         MoreReport(
-            text3 = "Reports", text4 = "Reseller\n" +
-                    "Support"
+            text3 = "Reports",
+            text4 = "Reseller\n" + "Support",
+            onItemClick = {
+                onItemClick.invoke(it)
+            }
         )
         MoreItem(
-            text = "Reports", text2 = "English",
+            text = "Reports",
+            text2 = "English",
             textColor = BebeBlue,
-            icon = R.drawable.ic_language, weight = 6f
+            icon = R.drawable.ic_language,
+            weight = 8f,
+            onItemClick = {
+                onItemClick.invoke("English")
+            }
         )
         Box(Modifier.padding(top = Dimens.DefaultMargin10)) {
             Divider(
@@ -92,12 +131,13 @@ fun More() {
             )
         }
         Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
-            FilterButton(
-                backgroundTex = Color.Red, text = "Logout",
-                iconVisibility = false, textColor = Color.White , onApplyFilterClick = {
-
-                }
-            )
+            FilterButton(backgroundTex = Color.Red,
+                text = "Logout",
+                iconVisibility = false,
+                textColor = Color.White,
+                onApplyFilterClick = {
+                    onItemClick.invoke("Logout")
+                })
         }
     }
 }
@@ -106,23 +146,31 @@ fun More() {
 @Composable
 fun MoreReport(
     text: String? = null, text2: String? = null,
-    text3: String, text4: String
+    text3: String, text4: String,onItemClick: (String) -> Unit
 ) {
     Column {
-
         Row(Modifier.fillMaxWidth()) {
             Box(Modifier.weight(1f)) {
                 MoreItem(
-                    text = text3, text3 = text,
+                    text = text3,
+                    text3 = text,
                     textColor = BebeBlue,
-                    icon = R.drawable.ic_personal_profile, weight = 1.5f
+                    icon = R.drawable.ic_personal_profile,
+                    weight =2f,
+                    onItemClick = {
+                        text?.let { onItemClick(it) }
+                    }
                 )
             }
             Box(Modifier.weight(1f)) {
                 MoreItem(
-                    text = text4, textColor = BebeBlue,
+                    text = text4,
+                    textColor = BebeBlue,
                     text3 = text2,
-                    icon = R.drawable.ic_personal_profile, weight = 1.5f
+                    icon = R.drawable.ic_personal_profile,
+                    weight = 2f, onItemClick = {
+                        text2?.let { onItemClick(text2) }
+                    }
                 )
             }
 
@@ -132,13 +180,21 @@ fun MoreReport(
 
 @Composable
 fun MoreItem(
-    text: String, text2: String? = null, text3: String? = null,
-    textColor: Color, icon: Int, weight: Float
+    text: String,
+    text2: String? = null,
+    text3: String? = null,
+    textColor: Color,
+    icon: Int,
+    weight: Float,
+    onItemClick: () -> Unit
 ) {
     Card(
         Modifier
             .fillMaxWidth()
-            .padding(Dimens.halfDefaultMargin),
+            .padding(Dimens.halfDefaultMargin)
+            .clickable {
+                onItemClick.invoke()
+            },
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -161,8 +217,7 @@ fun MoreItem(
                 )
             } else {
                 Image(
-                    modifier = Modifier
-                        .padding(Dimens.halfDefaultMargin),
+                    modifier = Modifier.padding(Dimens.halfDefaultMargin),
                     painter = painterResource(icon),
                     contentDescription = ""
                 )
@@ -184,22 +239,18 @@ fun MoreItem(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         text = text,
                         style = TextStyle(
-                            color = textColor,
-                            fontSize = 13.sp
+                            color = textColor, fontSize = 13.sp
                         ),
                     )
                     text3?.let {
                         Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth(),
                             text = it,
                             style = TextStyle(
-                                color = LightGrey200,
-                                fontSize = 10.sp
+                                color = LightGrey200, fontSize = 10.sp
                             ),
                         )
                     }
@@ -222,8 +273,7 @@ fun MoreItem(
                             modifier = Modifier.padding(Dimens.fourDefaultMargin),
                             text = it,
                             style = TextStyle(
-                                color = textCo,
-                                textAlign = TextAlign.End
+                                color = textCo, textAlign = TextAlign.End
                             ),
                         )
                     }

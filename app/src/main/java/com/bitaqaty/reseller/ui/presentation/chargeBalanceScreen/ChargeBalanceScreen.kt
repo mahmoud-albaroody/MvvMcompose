@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -46,13 +48,26 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: ChargeBalanceViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    ChargeBalance()
+    ChargeBalance(onItemClick = {
+        when (it) {
+            "Mada Ahly" -> {
+                navController.navigate(Screen.RechargeScreen.route)
+            }
+
+            "Bank Transfer" -> {
+                navController.navigate(Screen.BankTransferScreen.route)
+            }
+
+            "Recharging Log" -> {
+                navController.navigate(Screen.RechargeLogScreen.route)
+            }
+        }
+    })
 }
 
 
-@Preview
 @Composable
-fun ChargeBalance() {
+fun ChargeBalance(onItemClick: (String) -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -66,11 +81,17 @@ fun ChargeBalance() {
 
         Column {
             ProfileBalance()
-            MadaAhly("Mada Ahly", LightGrey200)
-            MadaAhly("Bank Transfer", BebeBlue)
+            MadaAhly("Mada Ahly", LightGrey200, onItemClick = {
+                onItemClick("Mada Ahly")
+            })
+            MadaAhly("Bank Transfer", BebeBlue, onItemClick = {
+                onItemClick("Bank Transfer")
+            })
         }
 
-        FooterChangeBalance()
+        FooterChangeBalance(onItemClick = {
+            onItemClick(it)
+        })
     }
 }
 
@@ -139,10 +160,13 @@ fun ProfileBalance() {
 
 
 @Composable
-fun MadaAhly(text: String, textColor: Color) {
+fun MadaAhly(text: String, textColor: Color, onItemClick: () -> Unit) {
     Card(
         Modifier
             .fillMaxWidth()
+            .clickable {
+                onItemClick.invoke()
+            }
             .padding(Dimens.halfDefaultMargin),
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
@@ -182,24 +206,31 @@ fun MadaAhly(text: String, textColor: Color) {
     }
 }
 
-@Preview
+
 @Composable
-fun FooterChangeBalance() {
+fun FooterChangeBalance(onItemClick: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
                 start = Dimens.halfDefaultMargin,
                 end = Dimens.halfDefaultMargin
-            ).padding(bottom = Dimens.halfDefaultMargin)
+            )
+            .padding(bottom = Dimens.halfDefaultMargin)
     ) {
         Box(
             Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(end = Dimens.fourDefaultMargin)
+                .clickable {
+                    onItemClick("Recharging Log")
+                }
         ) {
-            AccountManager("Recharging Log", R.drawable.ic_cart_large,12)
+            AccountManager("Recharging Log", R.drawable.ic_cart_large, 12,
+                onItemClick = {
+
+                })
 
         }
         Box(
@@ -207,8 +238,13 @@ fun FooterChangeBalance() {
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(start = Dimens.fourDefaultMargin)
+                .clickable {
+                    onItemClick("Bank Transfer")
+                }
         ) {
-            AccountManager("Bank Transfer", R.drawable.ic_calendar_date_schedu,12)
+            AccountManager("Bank Transfer", R.drawable.ic_calendar_date_schedu, 12, onItemClick = {
+
+            })
         }
     }
 }

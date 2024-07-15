@@ -10,7 +10,7 @@ object Dimens {
     val defaultMargin6 = 6.dp
     val fourDefaultMargin = 4.dp
     val quarterDefaultMargin = 2.dp
-    val DefaultMargin0 = 0.5.dp
+    val DefaultMargin0 = 0.25.dp
     val DefaultMargin1 = 1.dp
     val DefaultMargin10 = 10.dp
     val DefaultMargin = 16.dp
@@ -20,8 +20,8 @@ object Dimens {
     val width = 48.dp
     val imageSize = 19.dp
     val fontSize = 14.sp
-
-
+    val fontSize10 = 10.sp
+    val fontSize9 = 9.sp
     val padding = 10.dp
 
     val textFieldHeight = 48.dp
@@ -29,6 +29,8 @@ object Dimens {
     val padding32: Dp = 32.dp
     val padding24: Dp = 24.dp
     val padding40: Dp = 40.dp
+    val padding50: Dp = 50.dp
+    val padding45: Dp = 45.dp
     val padding12: Dp = 12.dp
     val padding6: Dp = 6.dp
     val padding8: Dp = 8.dp

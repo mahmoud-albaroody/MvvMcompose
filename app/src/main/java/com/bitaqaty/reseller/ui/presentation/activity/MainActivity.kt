@@ -11,18 +11,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Navigation
 import com.bitaqaty.reseller.ui.navigation.BottomNavigationBar
 import com.bitaqaty.reseller.ui.navigation.Navigation2
+import com.bitaqaty.reseller.ui.navigation.Screen
+import com.bitaqaty.reseller.ui.navigation.currentRoute
+import com.bitaqaty.reseller.ui.navigation.navigationTitle
+import com.bitaqaty.reseller.ui.presentation.appbar.AppBarWithArrow
+import com.bitaqaty.reseller.ui.presentation.appbar.HomeAppBar
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -54,7 +65,7 @@ fun MainScreen() {
         modifier = Modifier
             .fillMaxSize(),
         content = { innerPadding ->
-            Box{
+            Box {
                 Navigation(
                     navController, modifier = Modifier
                 )
@@ -67,11 +78,123 @@ fun MainScreen() {
 @Composable
 fun MainScreen2(modifier: Modifier) {
     val navController = rememberNavController()
-
+    var haveBack: Boolean = false
+    var appTitle: String = ""
+    var haveTopBar = true
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         bottomBar = { BottomNavigationBar(navController) },
+        topBar = {
+            when {
+                currentRoute(navController) == Screen.NotificationDetailsScreen.route -> {
+                    appTitle = "Notifications"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.Notification.route -> {
+                    appTitle = "Notifications"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.MyProfileScreen.route -> {
+                    appTitle = "Profile"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.ChargeBalanceScreen.route -> {
+                    appTitle = "Charge Balance"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.ChangePasswordScreen.route -> {
+                    appTitle = "Change Password"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.RechargeScreen.route -> {
+                    appTitle = "Recharge Using Mada"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.RechargeLogScreen.route -> {
+                    appTitle = "Recharge Log"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.ApplyFilterScreen.route -> {
+                    appTitle = "Recharge Log"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.BankTransferScreen.route -> {
+                    appTitle = "Bank Transfer"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.More.route -> {
+                    appTitle = "More"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.RechargeUsingMadaScreen.route -> {
+                    appTitle = "Recharge Using Mada"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.Transactions.route -> {
+                    appTitle = "Transactions"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.SuccessfulPurchaseScreen.route -> {
+                    appTitle = "Transactions"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.SelectMainCategoryScreen.route -> {
+                    appTitle = "Select Main Category"
+                    haveBack = true
+                    haveTopBar = true
+                }
+                currentRoute(navController) == Screen.Favorite.route -> {
+                    appTitle = "Favorite"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.SelectSubCategoryScreen.route -> {
+                    appTitle = "Select Sub Category"
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.Home.route -> {
+                    appTitle = "Transactions"
+                    haveBack = false
+                    haveTopBar = false
+                }
+            }
+            if (haveTopBar) {
+                AppBarWithArrow(navigationTitle(navController, appTitle), haveBack = haveBack) {
+                    navController.popBackStack()
+                }
+            }
+
+        },
         content = { innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
                 Navigation2(

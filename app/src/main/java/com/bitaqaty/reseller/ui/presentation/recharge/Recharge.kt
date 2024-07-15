@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.presentation.recharge
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.DynamicSelectTextField
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.profileScreen.ProfileFooter
@@ -36,13 +36,14 @@ import com.bitaqaty.reseller.ui.theme.LightGrey200
 fun RechargeScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: RechargeViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    Recharge()
+    Recharge(onRechargeClick = {
+        navController.navigate(Screen.RechargeUsingMadaScreen.route)
+    })
 }
 
 
-@Preview
 @Composable
-fun Recharge() {
+fun Recharge(onRechargeClick: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -63,7 +64,7 @@ fun Recharge() {
                 backgroundTex = BebeBlue, text = "Recharge",
                 iconVisibility = false, textColor = Color.White,
                 onApplyFilterClick = {
-
+                    onRechargeClick.invoke()
                 }
             )
         }

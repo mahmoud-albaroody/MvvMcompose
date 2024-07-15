@@ -1,33 +1,26 @@
 package com.bitaqaty.reseller.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.design.FavoriteScreen
 import com.bitaqaty.reseller.ui.design.HomeScreen
 import com.bitaqaty.reseller.ui.design.SearchScreen
 import com.bitaqaty.reseller.ui.design.StoreScreen
-import com.bitaqaty.reseller.ui.presentation.activity.MainScreen2
+import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilterScreen
 import com.bitaqaty.reseller.ui.presentation.bankTransfer.BankTransferScreen
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePasswordScreen
 import com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen.ChargeBalanceScreen
-import com.bitaqaty.reseller.ui.presentation.forgetPassword.ForgetPasswordScreen
-import com.bitaqaty.reseller.ui.presentation.login.LoginScreen
+import com.bitaqaty.reseller.ui.presentation.favoriteScreen.FavoraiteScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.MyProfileScreen
 import com.bitaqaty.reseller.ui.presentation.recharge.RechargeScreen
+import com.bitaqaty.reseller.ui.presentation.rechargeUsingMadaSuccessfully.RechargeUsingMadaScreen
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogScreen
-import com.bitaqaty.reseller.ui.presentation.resetPassword.ResetPasswordScreen
 import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
@@ -45,9 +38,7 @@ fun Navigation2(
         composable(Screen.Search.route) {
             SearchScreen()
         }
-        composable(Screen.Favorite.route) {
-            FavoriteScreen()
-        }
+
         composable(Screen.Store.route) {
             StoreScreen()
         }
@@ -75,7 +66,7 @@ fun Navigation2(
         composable(Screen.ChargeBalanceScreen.route) {
             ChargeBalanceScreen(navController = navController, modifier = modifier)
         }
-        composable(Screen.MoreScreen.route) {
+        composable(Screen.More.route) {
             MoreScreen(navController = navController, modifier = modifier)
         }
         composable(Screen.RechargeScreen.route) {
@@ -95,6 +86,18 @@ fun Navigation2(
             ChangePasswordScreen(navController = navController, modifier = modifier)
         }
 
+
+        composable(Screen.RechargeUsingMadaScreen.route) {
+            RechargeUsingMadaScreen(navController = navController, modifier = modifier)
+        }
+
+        composable(Screen.Favorite.route) {
+            FavoraiteScreen(navController = navController, modifier = modifier)
+        }
+
+        composable(Screen.MainScreen.route) {
+            MainScreen()
+        }
 
 
     }

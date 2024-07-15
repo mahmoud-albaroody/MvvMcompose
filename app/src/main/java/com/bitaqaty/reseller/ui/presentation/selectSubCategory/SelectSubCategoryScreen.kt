@@ -13,13 +13,17 @@ import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCatego
 fun SelectSubCategoryScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: SelectSubCategoryViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    SelectMainCategory()
+    SelectMainCategory(onItemClick = {
+        
+    })
 }
 
-@Preview
+
 @Composable
-fun SelectMainCategory() {
-    SelectMainCategoryItems()
+fun SelectMainCategory(onItemClick: () -> Unit) {
+    SelectMainCategoryItems(onItemClick = {
+
+    })
 }
 
 

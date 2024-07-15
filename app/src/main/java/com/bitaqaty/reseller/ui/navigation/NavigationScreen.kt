@@ -28,7 +28,6 @@ sealed class Screen(
     object MyProfileScreen : Screen("myProfileScreen", 0, "myProfileScreen")
     object ChargeBalanceScreen : Screen("chargeBalanceScreen", 0, "chargeBalanceScreen")
 
-    object MoreScreen : Screen("moreScreen", 0, "moreScreen")
 
     object RechargeScreen : Screen("rechargeScreen", 0, "rechargeScreen")
 
@@ -41,10 +40,14 @@ sealed class Screen(
 
     object ChangePasswordScreen : Screen("changePasswordScreen", 0, "changePasswordScreen")
 
+    object RechargeUsingMadaScreen : Screen("rechargeUsingMadaScreen", 0, "rechargeUsingMadaScreen")
+
+
 
     object ForgetPasswordScreen : Screen("forgetPasswordScreen", 0, "forgetPasswordScreen")
 
     object MainScreen2 : Screen("MainScreen2", 0, "MainScreen2")
+    object MainScreen : Screen("MainScreen", 0, "MainScreen")
 
 
 

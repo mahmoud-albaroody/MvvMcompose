@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.Green
@@ -38,11 +39,13 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 fun RechargeUsingMadaScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: RechargeUsingMadaSuccessfullyViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    RechargeLog()
+    RechargeLog(onHomePageClick = {
+        navController.navigate(Screen.Home.route)
+    })
 }
 
 @Composable
-fun RechargeLog() {
+fun RechargeLog(onHomePageClick: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -50,15 +53,17 @@ fun RechargeLog() {
     ) {
 
 
-        RechargeSuccessfullyPage()
+        RechargeSuccessfullyPage(onHomePageClick = {
+            onHomePageClick.invoke()
+        })
     }
 
 
 }
 
-@Preview
+
 @Composable
-fun RechargeSuccessfullyPage() {
+fun RechargeSuccessfullyPage(onHomePageClick: () -> Unit) {
 
     Column(
         Modifier
@@ -69,7 +74,9 @@ fun RechargeSuccessfullyPage() {
     ) {
         RechargeSuccessfully()
         NewBalance()
-        HomePageButton()
+        HomePageButton(onHomePageClick = {
+            onHomePageClick.invoke()
+        })
     }
 }
 
@@ -170,7 +177,7 @@ fun NewBalance(
 
 
 @Composable
-fun HomePageButton() {
+fun HomePageButton(onHomePageClick: () -> Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -182,7 +189,7 @@ fun HomePageButton() {
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         onClick = {
-
+            onHomePageClick.invoke()
         },
         border = BorderStroke(Dimens.DefaultMargin1, BebeBlue)
     )

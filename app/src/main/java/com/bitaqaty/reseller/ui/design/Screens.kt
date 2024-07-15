@@ -104,12 +104,7 @@ fun SearchProductList(items: Int) {
     }
 }
 
-@Composable
-fun FavoriteScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "FavoriteScreen", fontSize = 30.sp, modifier = Modifier.align(Alignment.Center))
-    }
-}
+
 
 @Composable
 fun StoreScreen() {

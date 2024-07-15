@@ -2,10 +2,14 @@ package com.bitaqaty.reseller.ui.presentation.rechargingLogScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,15 +21,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationHeader
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationItem
+import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
@@ -36,17 +44,24 @@ import com.bitaqaty.reseller.ui.theme.LightGrey300
 fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: RechargeLogViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    RechargeLog()
+    RechargeLog(onFilterClick = {
+        navController.navigate(Screen.ApplyFilterScreen.route)
+    })
+//    RechargeLog()
 }
 
-@Preview
+//
+//@Preview
 @Composable
-fun RechargeLog() {
+fun RechargeLog(onFilterClick:()->Unit) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
     Column(
         Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
+
         RechargeLogHeader(
             LightGrey300,
             "Date/Time",
@@ -57,7 +72,14 @@ fun RechargeLog() {
             textAlign = TextAlign.Center
         )
 
-        RechargeLogItems()
+        Box(Modifier.height(screenHeight * 0.68f)) {
+            RechargeLogItems()
+        }
+
+        Filter(onFilterClick = {
+             onFilterClick.invoke()
+        })
+
     }
 
 
@@ -70,7 +92,6 @@ fun RechargeLogItems() {
     LazyColumn(
         Modifier
             .fillMaxSize(), content = {
-
             items(10) {
                 RechargeLogHeader(
                     LightGrey100,

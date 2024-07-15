@@ -41,13 +41,13 @@ fun Navigation(
 }
 
 @Composable
-fun navigationTitle(navController: NavController): String {
+fun navigationTitle(navController: NavController,title:String): String {
     return when (currentRoute(navController)) {
         Screen.Home.route -> stringResource(id = R.string.movie_detail)
         Screen.Search.route -> stringResource(id = R.string.artist_detail)
         Screen.Store.route -> stringResource(id = R.string.login)
         else -> {
-            ""
+            title
         }
     }
 }

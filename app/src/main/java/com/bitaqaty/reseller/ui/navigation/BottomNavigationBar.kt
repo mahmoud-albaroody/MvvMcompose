@@ -2,12 +2,14 @@ package com.bitaqaty.reseller.ui.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Divider
@@ -26,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
@@ -53,17 +56,25 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 
-    NavigationBar(containerColor = Color.White,
-        modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+    NavigationBar(
+        containerColor = Color.White,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             items.forEachIndexed { index, item ->
 
                 val isSelected = index == selectedItem.intValue
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+
+                ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
                     ) {
                         this@NavigationBar.BottomNavigationItem(
                             alwaysShowLabel = true,
@@ -71,9 +82,6 @@ fun BottomNavigationBar(navController: NavController) {
                                 Image(
                                     painter = painterResource(item.icon),
                                     contentDescription = item.title,
-                                    modifier = Modifier
-                                        .height(Dimens.imageSize)
-                                        .width(Dimens.imageSize),
                                     colorFilter = if (isSelected) {
                                         ColorFilter.tint(colorResource(id = R.color.purple_700))
                                     } else {
@@ -83,15 +91,15 @@ fun BottomNavigationBar(navController: NavController) {
                             },
                             label = {
                                 Text(
-                                    modifier = if(isSelected){
+                                    modifier = if (isSelected) {
                                         Modifier.basicMarquee(initialDelayMillis = 0)
-                                                             }else{
+                                    } else {
                                         Modifier
-                                                                  },
+                                    },
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     text = item.title,
-                                    fontSize = Dimens.fontSize,
+                                    fontSize = Dimens.fontSize9,
                                     fontWeight = if (isSelected) {
                                         FontWeight.Bold
                                     } else {

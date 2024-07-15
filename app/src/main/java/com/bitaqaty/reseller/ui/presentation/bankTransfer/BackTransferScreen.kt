@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.presentation.bankTransfer
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

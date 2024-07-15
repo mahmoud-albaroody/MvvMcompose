@@ -4,6 +4,7 @@ package com.bitaqaty.reseller.ui.presentation.profileScreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,12 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey200
@@ -39,12 +39,13 @@ import com.bitaqaty.reseller.ui.theme.border
 fun MyProfileScreen(navController: NavController, modifier: Modifier) {
     val myProfileViewModel: MyProfileViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    Profile()
+    Profile(onItemClick = {
+        navController.navigate(Screen.ChangePasswordScreen.route)
+    })
 }
 
-@Preview
 @Composable
-fun Profile() {
+fun Profile(onItemClick: (String) -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -61,7 +62,10 @@ fun Profile() {
                         horizontal = Dimens.DefaultMargin, vertical = Dimens.defaultMargin6
                     )
             ) {
-                AccountManager("Account Manager", R.drawable.ic_manager_icon,14)
+                AccountManager("Account Manager",
+                    R.drawable.ic_manager_icon, 14, onItemClick = {
+                        onItemClick("Account Manager")
+                    })
             }
             Box(
                 Modifier
@@ -70,7 +74,11 @@ fun Profile() {
                         horizontal = Dimens.DefaultMargin, vertical = Dimens.defaultMargin6
                     )
             ) {
-                AccountManager("Change Paasword", R.drawable.ic_password_svgrepo,14)
+                AccountManager("Change Password",
+                    R.drawable.ic_password_svgrepo, 14,
+                    onItemClick = {
+                        onItemClick("Change Password")
+                    })
             }
         }
         Column(Modifier.padding(top = Dimens.padding40)) {
@@ -200,8 +208,14 @@ fun ProfileDetails() {
 
 
 @Composable
-fun AccountManager(text: String, icon: Int,textSize:Int) {
+fun AccountManager(
+    text: String, icon: Int, textSize: Int,
+    onItemClick: () -> Unit
+) {
     Card(
+        Modifier.clickable {
+            onItemClick.invoke()
+        },
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
@@ -227,7 +241,7 @@ fun AccountManager(text: String, icon: Int,textSize:Int) {
                 style = TextStyle(
                     textAlign = TextAlign.Start,
                     color = BebeBlue,
-                    fontSize =textSize.sp,
+                    fontSize = textSize.sp,
                 ),
                 text = text
             )

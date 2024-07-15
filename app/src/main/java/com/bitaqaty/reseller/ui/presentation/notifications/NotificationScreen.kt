@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.ui.presentation.notifications
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
@@ -37,29 +39,35 @@ fun NotificationScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = true) {
     }
 
-    Notification()
+    Notification(onItemClick = {
+        navController.navigate(Screen.NotificationDetailsScreen.route)
+    })
 
 }
 
-@Preview
+
 @Composable
-fun Notification() {
+fun Notification(onItemClick: () -> Unit) {
     LazyColumn(
         Modifier
             .fillMaxSize()
             .background(Color.White), content = {
             items(4) {
-                NotificationItem()
+                NotificationItem(onItemClick = {
+                    onItemClick.invoke()
+                })
             }
         })
 }
 
-@Preview
 @Composable
-fun NotificationItem() {
+fun NotificationItem(onItemClick: () -> Unit) {
     Card(
         Modifier
             .fillMaxWidth()
+            .clickable {
+                onItemClick.invoke()
+            }
             .padding(
                 horizontal = Dimens.DefaultMargin,
                 vertical = Dimens.halfDefaultMargin
