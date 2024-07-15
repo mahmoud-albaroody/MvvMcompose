@@ -71,14 +71,14 @@ fun UpperProductSection() {
             modifier = Modifier
                 .wrapContentWidth()
                 .background(Color.Gray)
-                .padding(16.dp),
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = Modifier.wrapContentWidth(),
                 textAlign = TextAlign.Center,
                 text = "ITunes",
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
             )
@@ -92,7 +92,7 @@ fun UpperProductSection() {
                     textAlign = TextAlign.Start,
                     text = "$",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 40.sp,
+                    fontSize = 20.sp,
                     color = Color.Black,
                     style = TextStyle(
                         shadow = Shadow(
@@ -107,7 +107,7 @@ fun UpperProductSection() {
                     text = "10",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 72.sp,
+                    fontSize = 36.sp,
                     color = Color.Black,
                     style = TextStyle(
                         shadow = Shadow(
@@ -127,12 +127,13 @@ fun UpperProductSection() {
                 Image(
                     modifier = Modifier
                         .wrapContentWidth()
-                        .size(56.dp),
+                        .size(36.dp),
                     painter = painterResource(id = R.drawable.flag),
                     contentDescription = "Image"
                 )
                 Image(
                     modifier = Modifier
+                        .size(36.dp)
                         .wrapContentWidth()
                         .padding(end = 4.dp)
                         .size(80.dp),
@@ -154,7 +155,7 @@ fun LowerProductSection() {
         Text(
             modifier = Modifier.wrapContentWidth().align(Alignment.CenterHorizontally),
             text = "18.75",
-            fontSize = 36.sp,
+            fontSize = 18.sp,
             color = Color.Black,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
@@ -162,7 +163,7 @@ fun LowerProductSection() {
         Text(
             modifier = Modifier.wrapContentWidth().align(Alignment.CenterHorizontally).padding(bottom = 8.dp),
             text = "SAR",
-            fontSize = 24.sp,
+            fontSize = 12.sp,
             color = Color.Black,
             textAlign = TextAlign.Center,
         )

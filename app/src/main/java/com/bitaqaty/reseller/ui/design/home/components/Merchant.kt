@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -33,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -100,12 +102,17 @@ fun MerchantItem(
 }
 
 @Composable
-fun MerchantList(merchants: List<Merchant>) {
+fun MerchantList(
+    merchants: List<Merchant>,
+    scrollState: LazyListState,
+    borderColor: Color = Color.Gray
+) {
     var selectedMerchant by remember { mutableStateOf<Merchant?>(null) }
     LazyRow(
         modifier = Modifier
-            .border(BorderStroke(width = 0.1.dp, color = Color.Gray)),
+            .border(BorderStroke(width = 0.1.dp, color = borderColor)),
         contentPadding = PaddingValues(vertical = Dimens.padding8, horizontal = Dimens.padding12),
+        state = scrollState
     ) {
         items(merchants) { merchant ->
             MerchantItem(
@@ -144,5 +151,5 @@ fun MerchantListPreview() {
         Merchant("USA", ""),
     )
 
-    MerchantList(merchants = sampleMerchants)
+    MerchantList(merchants = sampleMerchants, scrollState = LazyListState())
 }

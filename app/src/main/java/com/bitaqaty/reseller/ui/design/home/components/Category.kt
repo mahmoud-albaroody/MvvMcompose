@@ -10,17 +10,18 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bitaqaty.reseller.ui.design.home.Category
 import com.bitaqaty.reseller.utils.TrapezoidShape
 
 @Composable
-fun Category(
-    contentDescription: String,
-    name: String,
+fun CategoryItem(
+    category: Category,
     isSelected: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -40,7 +41,7 @@ fun Category(
         ) {
             Canvas(modifier = Modifier.matchParentSize()) {
                 drawArc(
-                    color = Color.Gray,
+                    color = if(isSelected) Color.LightGray else Color(0xff0E46A3),
                     startAngle = 320f,
                     sweepAngle = 340f,
                     useCenter = false,
@@ -52,21 +53,24 @@ fun Category(
                     .size(50.dp)
                     .padding(2.dp),
                 imageVector = Icons.Default.Star,
-                contentDescription = contentDescription,
+                contentDescription = "",
                 tint = Color.Yellow
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = name, fontSize = 16.sp, color = Color.Blue)
+        Text(
+            text = category.name,
+            fontSize = 12.sp,
+            color = if(isSelected) Color.LightGray else Color.Blue
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CategoryPreview() {
-    Category(
-        contentDescription = "Star Icon",
-        name = "Featured",
-        isSelected = true
+    CategoryItem(
+        category = Category("Featured", ""),
+        isSelected = false
     )
 }
