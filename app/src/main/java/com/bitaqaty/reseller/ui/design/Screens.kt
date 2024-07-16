@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.ui.design.home.HomeScreen
 import com.bitaqaty.reseller.ui.design.search.components.SearchScreen
+import com.bitaqaty.reseller.ui.design.settlementTransactions.SettlementTransactionsScreen
 import com.bitaqaty.reseller.ui.design.store.StoreScreen
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 
@@ -34,7 +35,8 @@ fun FavoriteScreen() {
 
 @Composable
 fun Store() {
-    StoreScreen()
+    //StoreScreen()
+    SettlementTransactionsScreen()
 }
 
 @Composable
