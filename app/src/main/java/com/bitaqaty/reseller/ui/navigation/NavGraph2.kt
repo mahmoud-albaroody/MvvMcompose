@@ -17,12 +17,15 @@ import com.bitaqaty.reseller.ui.presentation.favoriteScreen.FavoraiteScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
+import com.bitaqaty.reseller.ui.presentation.productsDiscountsList.ProductsDiscountsScreen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.MyProfileScreen
 import com.bitaqaty.reseller.ui.presentation.recharge.RechargeScreen
 import com.bitaqaty.reseller.ui.presentation.rechargeUsingMadaSuccessfully.RechargeUsingMadaScreen
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogScreen
+import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReportScreen
 import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
+import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTransactionsScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
 
@@ -31,7 +34,7 @@ fun Navigation2(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    NavHost(navController, startDestination = Screen.Home.route, modifier) {
+    NavHost(navController, startDestination = Screen.SettlementTransactionsScreen.route, modifier) {
         composable(Screen.Home.route) {
             HomeScreen()
         }
@@ -98,7 +101,15 @@ fun Navigation2(
         composable(Screen.MainScreen.route) {
             MainScreen()
         }
-
+        composable(Screen.SalesReportScreen.route) {
+            SalesReportScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.ProductsDiscountsScreen.route) {
+            ProductsDiscountsScreen(navController = navController, modifier = modifier)
+        }
+        composable(Screen.SettlementTransactionsScreen.route) {
+            SettlementTransactionsScreen(navController = navController, modifier = modifier)
+        }
 
     }
 }

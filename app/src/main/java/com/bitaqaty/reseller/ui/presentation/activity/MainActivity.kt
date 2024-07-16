@@ -170,6 +170,7 @@ fun MainScreen2(modifier: Modifier) {
                     haveBack = true
                     haveTopBar = true
                 }
+
                 currentRoute(navController) == Screen.Favorite.route -> {
                     appTitle = "Favorite"
                     haveBack = false
@@ -182,10 +183,22 @@ fun MainScreen2(modifier: Modifier) {
                     haveTopBar = true
                 }
 
+                currentRoute(navController) == Screen.SalesReportScreen.route -> {
+                    appTitle = "Sales Report"
+                    haveBack = false
+                    haveTopBar = true
+                }
+
                 currentRoute(navController) == Screen.Home.route -> {
                     appTitle = "Transactions"
                     haveBack = false
                     haveTopBar = false
+                }
+
+                currentRoute(navController) == Screen.SettlementTransactionsScreen.route -> {
+                    appTitle = "Settlement Transactions"
+                    haveBack = true
+                    haveTopBar = true
                 }
             }
             if (haveTopBar) {

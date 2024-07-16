@@ -47,13 +47,12 @@ fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
     RechargeLog(onFilterClick = {
         navController.navigate(Screen.ApplyFilterScreen.route)
     })
-//    RechargeLog()
 }
 
 //
 //@Preview
 @Composable
-fun RechargeLog(onFilterClick:()->Unit) {
+fun RechargeLog(onFilterClick: () -> Unit) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     Column(
@@ -69,15 +68,16 @@ fun RechargeLog(onFilterClick:()->Unit) {
             "Amount",
             "Balance After",
             FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            true
         )
 
-        Box(Modifier.height(screenHeight * 0.68f)) {
-            RechargeLogItems()
+        Box(Modifier.height(screenHeight * 0.50f)) {
+            RechargeLogItems(true)
         }
 
         Filter(onFilterClick = {
-             onFilterClick.invoke()
+            onFilterClick.invoke()
         })
 
     }
@@ -88,7 +88,7 @@ fun RechargeLog(onFilterClick:()->Unit) {
 
 @Preview
 @Composable
-fun RechargeLogItems() {
+fun RechargeLogItems(isViewMothed: Boolean) {
     LazyColumn(
         Modifier
             .fillMaxSize(), content = {
@@ -100,7 +100,8 @@ fun RechargeLogItems() {
                     "500",
                     "100",
                     null,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    isViewMothed
                 )
             }
         })
@@ -111,7 +112,8 @@ fun RechargeLogItems() {
 fun RechargeLogHeader(
     cardColor: Color, date: String, method: String,
     amount: String, balance: String,
-    fontWeight: FontWeight?, textAlign: TextAlign
+    fontWeight: FontWeight?, textAlign: TextAlign,
+    isViewMothed: Boolean
 ) {
     Card(
         Modifier
@@ -131,7 +133,8 @@ fun RechargeLogHeader(
             amount,
             balance,
             fontWeight,
-            textAlign
+            textAlign,
+            isViewMothed
         )
     }
 }
@@ -142,7 +145,7 @@ private fun ChargeItemText(
     date: String, method: String,
     amount: String, balance: String,
     fontWeight: FontWeight?,
-    textAlign: TextAlign
+    textAlign: TextAlign, isViewMothed: Boolean
 ) {
     Row(
         Modifier
@@ -161,16 +164,17 @@ private fun ChargeItemText(
             ),
             text = date
         )
-        Text(
-            modifier = Modifier.weight(1f),
-            style = TextStyle(
-                textAlign = TextAlign.Center,
-                color = FontColor,
-                fontSize = 12.sp,
-                fontWeight = fontWeight
-            ),
-            text = method
-        )
+        if (isViewMothed)
+            Text(
+                modifier = Modifier.weight(1f),
+                style = TextStyle(
+                    textAlign = TextAlign.Center,
+                    color = FontColor,
+                    fontSize = 12.sp,
+                    fontWeight = fontWeight
+                ),
+                text = method
+            )
         Text(
             modifier = Modifier.weight(1f),
             style = TextStyle(

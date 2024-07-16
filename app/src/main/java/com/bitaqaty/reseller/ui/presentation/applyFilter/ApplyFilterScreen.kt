@@ -242,6 +242,7 @@ fun FilterButton(
     backgroundTex: Color, text: String,
     iconVisibility: Boolean, textColor: Color,
     haveBorder: Boolean = false,
+    icon:Int=R.drawable.ic_filter_white,
     onApplyFilterClick: () -> Unit
 ) {
     var borderStroke: BorderStroke? = null
@@ -273,7 +274,7 @@ fun FilterButton(
         ) {
             if (iconVisibility)
                 Image(
-                    painter = painterResource(R.drawable.ic_filter_white),
+                    painter = painterResource(icon),
                     contentDescription = ""
                 )
 

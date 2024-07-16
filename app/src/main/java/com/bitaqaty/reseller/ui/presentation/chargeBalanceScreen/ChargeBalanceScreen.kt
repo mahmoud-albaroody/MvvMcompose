@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen
 
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,6 +50,7 @@ fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: ChargeBalanceViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
     ChargeBalance(onItemClick = {
+        Log.e("dddd",it)
         when (it) {
             "Mada Ahly" -> {
                 navController.navigate(Screen.RechargeScreen.route)
@@ -229,7 +231,7 @@ fun FooterChangeBalance(onItemClick: (String) -> Unit) {
         ) {
             AccountManager("Recharging Log", R.drawable.ic_cart_large, 12,
                 onItemClick = {
-
+                    onItemClick("Recharging Log")
                 })
 
         }
