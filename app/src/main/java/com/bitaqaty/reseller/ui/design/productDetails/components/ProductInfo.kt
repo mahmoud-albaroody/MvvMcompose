@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.design.productDetails.noRippleClickable
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
+import com.bitaqaty.reseller.utils.noRippleClickable
 
 @Composable
 fun ProductInfo(onClickInfo: () -> Unit) {

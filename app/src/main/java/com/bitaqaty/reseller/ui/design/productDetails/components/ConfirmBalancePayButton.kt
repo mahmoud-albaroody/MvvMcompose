@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
+import com.bitaqaty.reseller.utils.NoRippleInteractionSource
 
 @Composable
 fun ConfirmBalancePayButton(

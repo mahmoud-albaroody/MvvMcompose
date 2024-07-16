@@ -26,11 +26,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
+import com.bitaqaty.reseller.utils.NoRippleInteractionSource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -71,8 +75,8 @@ fun BottomNavigationBar(navController: NavController) {
                                     painter = painterResource(item.icon),
                                     contentDescription = item.title,
                                     modifier = Modifier
-                                        .height(Dimens.imageSize)
-                                        .width(Dimens.imageSize),
+                                        .height(28.dp)
+                                        .width(28.dp),
                                     colorFilter = if (isSelected) {
                                         ColorFilter.tint(colorResource(id = R.color.purple_700))
                                     } else {
@@ -90,12 +94,14 @@ fun BottomNavigationBar(navController: NavController) {
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     text = item.title,
-                                    fontSize = Dimens.fontSize,
+                                    fontSize = 9.sp,
+                                    fontFamily = frutigerLTArabic,
                                     fontWeight = if (isSelected) {
                                         FontWeight.Bold
                                     } else {
-                                        FontWeight.Normal
-                                    }
+                                        FontWeight.SemiBold
+                                    },
+                                    color = if(isSelected) Color.Blue else Color.Gray
                                 )
                             },
                             selected = isSelected,
@@ -114,6 +120,7 @@ fun BottomNavigationBar(navController: NavController) {
                             },
                             selectedContentColor = colorResource(R.color.purple_700),
                             unselectedContentColor = colorResource(R.color.grey),
+                            interactionSource = NoRippleInteractionSource()
                         )
 
                         if (isSelected) {

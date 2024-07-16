@@ -11,9 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.design.FavoriteScreen
-import com.bitaqaty.reseller.ui.design.HomeScreen
+import com.bitaqaty.reseller.ui.design.Home
 import com.bitaqaty.reseller.ui.design.MoreScreen
-import com.bitaqaty.reseller.ui.design.SearchScreen
+import com.bitaqaty.reseller.ui.design.Search
 import com.bitaqaty.reseller.ui.design.StoreScreen
 import com.bitaqaty.reseller.ui.design.TransactionsScreen
 
@@ -24,10 +24,10 @@ fun Navigation(
 ) {
     NavHost(navController, startDestination = Screen.Home.route, modifier) {
         composable(Screen.Home.route) {
-            HomeScreen()
+            Home()
         }
         composable(Screen.Search.route) {
-            SearchScreen()
+            Search()
         }
         composable(Screen.Favorite.route) {
             FavoriteScreen()

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,13 +28,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.utils.noRippleClickable
 
 @Composable
-fun Product() {
+fun Product(
+    onClick: () -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(Dimens.padding12)
-            .wrapContentWidth(),
+            .wrapContentWidth()
+            .noRippleClickable { onClick() },
         shape = RoundedCornerShape(
             topEndPercent = Dimens.cornerRadius20,
             bottomStartPercent = Dimens.cornerRadius15,
@@ -173,5 +176,5 @@ fun LowerProductSection() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProductPreview() {
-    Product()
+    Product(onClick = {})
 }

@@ -2,7 +2,6 @@ package com.bitaqaty.reseller.ui.design.productDetails.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -26,11 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bitaqaty.reseller.ui.design.productDetails.noRippleClickable
 import com.bitaqaty.reseller.ui.theme.Counter
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.counterText
 import com.bitaqaty.reseller.ui.theme.merchantBg
+import com.bitaqaty.reseller.utils.noRippleClickable
 
 @Composable
 fun Counter() {

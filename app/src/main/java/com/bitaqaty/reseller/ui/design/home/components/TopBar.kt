@@ -35,9 +35,7 @@ import com.bitaqaty.reseller.ui.theme.Dimens
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar(
-    onClick: () -> Unit
-) {
+fun TopBar() {
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -48,7 +46,6 @@ fun TopBar(
     ) {
         Image(
             modifier = Modifier
-                .clickable { onClick() }
                 .size(Dimens.bitaqatyLogo)
                 .background(Color.White)
                 .border(0.1.dp, Color.Gray),
@@ -97,5 +94,5 @@ fun TopBar(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun TopBarPreview() {
-    TopBar(onClick = {})
+    TopBar()
 }
