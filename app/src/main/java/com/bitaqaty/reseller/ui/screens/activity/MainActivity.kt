@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,7 +53,7 @@ fun MainScreen(){
         bottomBar = { BottomNavigationBar(navController) },
         content = { innerPadding ->
             Navigation(
-                navController, modifier = Modifier
+                navController, modifier = Modifier.padding(innerPadding)
             )
         }
     )

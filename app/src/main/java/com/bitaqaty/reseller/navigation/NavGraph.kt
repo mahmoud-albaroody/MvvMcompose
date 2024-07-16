@@ -14,7 +14,7 @@ import com.bitaqaty.reseller.ui.design.FavoriteScreen
 import com.bitaqaty.reseller.ui.design.Home
 import com.bitaqaty.reseller.ui.design.MoreScreen
 import com.bitaqaty.reseller.ui.design.Search
-import com.bitaqaty.reseller.ui.design.StoreScreen
+import com.bitaqaty.reseller.ui.design.Store
 import com.bitaqaty.reseller.ui.design.TransactionsScreen
 
 @Composable
@@ -33,7 +33,7 @@ fun Navigation(
             FavoriteScreen()
         }
         composable(Screen.Store.route) {
-            StoreScreen()
+            Store()
         }
         composable(Screen.Transactions.route) {
             TransactionsScreen()

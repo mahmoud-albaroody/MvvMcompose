@@ -86,9 +86,6 @@ fun SearchScreen() {
             item {
                 SearchProductList(12)
             }
-            item{
-                Spacer(modifier = Modifier.height(140.dp))
-            }
         }
     }
 }
