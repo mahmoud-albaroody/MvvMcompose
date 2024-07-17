@@ -56,6 +56,7 @@ fun SettlementTransactionsScreen(){
         item { AdditionalNotes() }
         item { Spacer(modifier = Modifier.height(16.dp)) }
         item { SendButton() }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
     }
 }
 
@@ -96,7 +97,7 @@ fun BasicData(){
     Column {
         Text(
             text = "Basic Data",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +105,7 @@ fun BasicData(){
             text = "Transfer amount*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "The requested transfer amount",
             validationType = ValidationType.TRANSFER_AMOUNT,
             keyBoardType = KeyboardOptions(keyboardType = KeyboardType.Decimal)
@@ -114,7 +115,7 @@ fun BasicData(){
             text = "CR number*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "CR number"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -122,7 +123,7 @@ fun BasicData(){
             text = "Company Name*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "Company Name"
         )
     }
@@ -133,7 +134,7 @@ fun BankStatements(){
     Column {
         Text(
             text = "Bank Statements",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -141,7 +142,7 @@ fun BankStatements(){
             text = "Swift Code*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "Swift Code"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -149,7 +150,7 @@ fun BankStatements(){
             text = "Bank Name*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "Bank Name"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -157,7 +158,7 @@ fun BankStatements(){
             text = "IBAN*"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             placeHolder = "IBAN",
             validationType = ValidationType.IBAN
         )
@@ -169,7 +170,7 @@ fun AdditionalNotes(){
     Column {
         Text(
             text = "Additional Notes",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -177,7 +178,7 @@ fun AdditionalNotes(){
             text = "Additional Notes"
         )
         Spacer(modifier = Modifier.height(4.dp))
-        TextField(
+        ValidationTextField(
             modifier = Modifier
                 .height(120.dp),
             placeHolder = "Additional Notes",
@@ -201,7 +202,7 @@ fun AdditionalNotes(){
             Text(
                 text = "Minimum amount to request 100.0 SAR",
                 color = Color.Blue,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold
             )
         }
@@ -226,7 +227,7 @@ fun SendButton(){
     }
 }
 @Composable
-fun TextField(
+fun ValidationTextField(
     modifier: Modifier = Modifier,
     placeHolder: String,
     singleLine: Boolean = true,
@@ -277,7 +278,7 @@ fun TextField(
         ),
         singleLine = singleLine,
         shape = RoundedCornerShape(10.dp),
-        keyboardOptions = keyBoardType
+        keyboardOptions = keyBoardType,
     )
     if(isError){
         Text(
