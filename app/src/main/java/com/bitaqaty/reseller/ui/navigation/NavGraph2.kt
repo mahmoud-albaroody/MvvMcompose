@@ -5,15 +5,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.bitaqaty.reseller.ui.design.HomeScreen
-import com.bitaqaty.reseller.ui.design.SearchScreen
-import com.bitaqaty.reseller.ui.design.StoreScreen
+
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilterScreen
 import com.bitaqaty.reseller.ui.presentation.bankTransfer.BankTransferScreen
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePasswordScreen
 import com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen.ChargeBalanceScreen
+import com.bitaqaty.reseller.ui.presentation.components.SearchScreen
 import com.bitaqaty.reseller.ui.presentation.favoriteScreen.FavoraiteScreen
+import com.bitaqaty.reseller.ui.presentation.home.HomeScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
@@ -26,6 +26,7 @@ import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReportScreen
 import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTransactionsScreen
+import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
 
@@ -34,7 +35,7 @@ fun Navigation2(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    NavHost(navController, startDestination = Screen.SettlementTransactionsScreen.route, modifier) {
+    NavHost(navController, startDestination = Screen.Home.route, modifier) {
         composable(Screen.Home.route) {
             HomeScreen()
         }
@@ -43,7 +44,7 @@ fun Navigation2(
         }
 
         composable(Screen.Store.route) {
-            StoreScreen()
+            StoreScreen(navController = navController, modifier = modifier)
         }
         composable(Screen.Notification.route) {
             NotificationScreen(navController = navController, modifier = modifier)

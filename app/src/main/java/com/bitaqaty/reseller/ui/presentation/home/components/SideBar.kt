@@ -1,7 +1,7 @@
-package com.bitaqaty.reseller.ui.design.home.components
+package com.bitaqaty.reseller.ui.presentation.home.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,45 +16,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bitaqaty.reseller.ui.presentation.home.Category
+import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.LightGrey80
+import com.bitaqaty.reseller.ui.theme.merchantBg
+import com.bitaqaty.reseller.utils.noRippleClickable
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SearchCategoryList(categories: List<CategoryItem>) {
-    var selectedItem by remember { mutableStateOf<CategoryItem?>(null) }
+fun CategoryList(categories: List<Category>) {
+    var selectedItem by remember { mutableStateOf<Category?>(null) }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
-            .width(96.dp)
-            .background(color = Color.LightGray),
+            .width(74.dp)
+            .background(color = LightGrey80),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(categories) { category ->
-            Category(
-                contentDescription = category.contentDescription,
-                name = category.name,
+            CategoryItem(
+                category = category,
                 isSelected = selectedItem == category,
                 modifier = Modifier
                     .fillParentMaxWidth()
-                    .background(color = Color.LightGray)
-                    .clickable { selectedItem = category }
+                    .animateItemPlacement()
+                    .background(color = Color(0xFFBFCCEC))
+                    .noRippleClickable { selectedItem = category }
             )
         }
     }
 }
 
-data class CategoryItem(
-    val contentDescription: String,
-    val name: String,
-)
-
 val sampleCategories = listOf(
-    CategoryItem("Star", "Category 1"),
-    CategoryItem("Star", "Category 2"),
-    CategoryItem("Star", "Category 3"),
+    Category("Star", "Category 1"),
+    Category("Star", "Category 2"),
+    Category("Star", "Category 3"),
 )
 
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    SearchCategoryList(categories = sampleCategories)
+    CategoryList(categories = sampleCategories)
 }

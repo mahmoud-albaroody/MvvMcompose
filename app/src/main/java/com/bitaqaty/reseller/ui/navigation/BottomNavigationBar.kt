@@ -2,14 +2,12 @@ package com.bitaqaty.reseller.ui.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Divider
@@ -29,11 +27,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
+import com.bitaqaty.reseller.utils.NoRippleInteractionSource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -69,10 +70,7 @@ fun BottomNavigationBar(navController: NavController) {
 
                 val isSelected = index == selectedItem.intValue
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
@@ -82,6 +80,9 @@ fun BottomNavigationBar(navController: NavController) {
                                 Image(
                                     painter = painterResource(item.icon),
                                     contentDescription = item.title,
+                                    modifier = Modifier
+                                        .height(28.dp)
+                                        .width(28.dp),
                                     colorFilter = if (isSelected) {
                                         ColorFilter.tint(colorResource(id = R.color.purple_700))
                                     } else {
@@ -99,12 +100,14 @@ fun BottomNavigationBar(navController: NavController) {
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     text = item.title,
+                                    fontFamily = frutigerLTArabic,
                                     fontSize = Dimens.fontSize9,
                                     fontWeight = if (isSelected) {
                                         FontWeight.Bold
                                     } else {
-                                        FontWeight.Normal
-                                    }
+                                        FontWeight.SemiBold
+                                    },
+                                    color = if(isSelected) Color.Blue else Color.Gray
                                 )
                             },
                             selected = isSelected,
@@ -123,6 +126,7 @@ fun BottomNavigationBar(navController: NavController) {
                             },
                             selectedContentColor = colorResource(R.color.purple_700),
                             unselectedContentColor = colorResource(R.color.grey),
+                            interactionSource = NoRippleInteractionSource()
                         )
 
                         if (isSelected) {

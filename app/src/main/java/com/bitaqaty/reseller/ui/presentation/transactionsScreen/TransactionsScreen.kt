@@ -72,7 +72,7 @@ fun Transactions() {
     LazyColumn(
         Modifier
             .background(Color.White), content = {
-            items(10) {
+            items(100) {
                 TransactionsItem()
             }
         })

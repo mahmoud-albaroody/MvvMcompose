@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.design.search.components
+package com.bitaqaty.reseller.ui.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

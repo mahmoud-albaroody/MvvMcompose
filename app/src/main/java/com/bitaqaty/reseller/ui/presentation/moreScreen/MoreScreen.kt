@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.moreScreen
 
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -45,10 +46,12 @@ import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilter
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.ui.theme.LightGrey80
 
 
 @Composable
@@ -57,21 +60,35 @@ fun MoreScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = true) {}
     More(onItemClick = {
         when (it) {
+
             "Notifications" -> {
                 navController.navigate(Screen.Notification.route)
             }
+
             "Edit Profile" -> {
                 navController.navigate(Screen.MyProfileScreen.route)
             }
+
             "Reports" -> {
-                //   navController.navigate(Screen.Notification.route)
+                  navController.navigate(Screen.SalesReportScreen.route)
             }
+
             "Add Balance" -> {
                 navController.navigate(Screen.ChargeBalanceScreen.route)
             }
+
             "English" -> {
                 //     navController.navigate(Screen.Notification.route)
             }
+
+            "Settlement\n" + "Transaction" -> {
+                navController.navigate(Screen.SettlementTransactionsScreen.route)
+            }
+
+            "Product \n" + "Discount List" -> {
+                navController.navigate(Screen.ProductsDiscountsScreen.route)
+            }
+
             "Logout" -> {
                 navController.navigate(Screen.MainScreen.route)
             }
@@ -83,61 +100,75 @@ fun MoreScreen(navController: NavController, modifier: Modifier) {
 
 @Composable
 fun More(onItemClick: (String) -> Unit) {
+
     Column(
         Modifier
             .background(Color.White)
             .fillMaxSize()
             .padding(horizontal = Dimens.halfDefaultMargin)
+            .padding(top = Dimens.halfDefaultMargin),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        MoreItem(
-            text = "Notifications",
-            text2 = "3",
-            textColor = BebeBlue,
-            icon = R.drawable.ic_notification,
-            weight = 8f, onItemClick = {
-                onItemClick.invoke("Notifications")
-            }
-        )
-        MoreReport(
-            "Edit Profile", "Add Balance",
-            text3 = "Khalid Ali", text4 = "15000,00",
-            onItemClick = {
-                onItemClick.invoke(it)
-            }
-        )
-        MoreReport(
-            text3 = "Reports",
-            text4 = "Reseller\n" + "Support",
-            onItemClick = {
-                onItemClick.invoke(it)
-            }
-        )
-        MoreItem(
-            text = "Reports",
-            text2 = "English",
-            textColor = BebeBlue,
-            icon = R.drawable.ic_language,
-            weight = 8f,
-            onItemClick = {
-                onItemClick.invoke("English")
-            }
-        )
-        Box(Modifier.padding(top = Dimens.DefaultMargin10)) {
-            Divider(
-                modifier = Modifier
-                    .height(Dimens.DefaultMargin0)
-                    .fillMaxWidth()  // Set the thickness of the vertical line
-                    .background(BebeBlue)
+        Column {
+            MoreItem(
+                text = "Notifications",
+                text2 = "3",
+                textColor = Blue,
+                icon = R.drawable.ic_notification,
+                weight = 8f, onItemClick = {
+                    onItemClick.invoke("Notifications")
+                }
+            )
+            MoreReport(
+                "Edit Profile", "Add Balance",
+                text3 = "Khalid Ali", text4 = "15000,00",
+                onItemClick = {
+                    onItemClick.invoke(it)
+                }
+            )
+            MoreReport(
+                text3 = "Reports",
+                text4 = "Reseller\n" + "Support",
+                onItemClick = {
+                    onItemClick.invoke(it)
+                }
+            )
+            MoreReport(
+                text3 = "Product \n" + "Discount List",
+                text4 = "Settlement\n" + "Transaction",
+                onItemClick = {
+                    onItemClick.invoke(it)
+                }
+            )
+            MoreItem(
+                text = "Reports",
+                text2 = "English",
+                textColor = Blue,
+                icon = R.drawable.ic_language,
+                weight = 8f,
+                onItemClick = {
+                    onItemClick.invoke("English")
+                }
             )
         }
-        Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
-            FilterButton(backgroundTex = Color.Red,
-                text = "Logout",
-                iconVisibility = false,
-                textColor = Color.White,
-                onApplyFilterClick = {
-                    onItemClick.invoke("Logout")
-                })
+        Column {
+            Box(Modifier.padding(top = Dimens.halfDefaultMargin)) {
+                Divider(
+                    modifier = Modifier
+                        .height(Dimens.DefaultMargin0)
+                        .fillMaxWidth()  // Set the thickness of the vertical line
+                        .background(LightGrey80)
+                )
+            }
+            Box(Modifier.padding(top = Dimens.halfDefaultMargin)) {
+                FilterButton(backgroundTex = Color.Red,
+                    text = "Logout",
+                    iconVisibility = false,
+                    textColor = Color.White,
+                    onApplyFilterClick = {
+                        onItemClick.invoke("Logout")
+                    })
+            }
         }
     }
 }
@@ -146,7 +177,7 @@ fun More(onItemClick: (String) -> Unit) {
 @Composable
 fun MoreReport(
     text: String? = null, text2: String? = null,
-    text3: String, text4: String,onItemClick: (String) -> Unit
+    text3: String, text4: String, onItemClick: (String) -> Unit
 ) {
     Column {
         Row(Modifier.fillMaxWidth()) {
@@ -154,22 +185,30 @@ fun MoreReport(
                 MoreItem(
                     text = text3,
                     text3 = text,
-                    textColor = BebeBlue,
+                    textColor = Blue,
                     icon = R.drawable.ic_personal_profile,
-                    weight =2f,
+                    weight = 2f,
                     onItemClick = {
-                        text?.let { onItemClick(it) }
+                        if (text != null) {
+                            onItemClick(text)
+                        } else {
+                            onItemClick(text3)
+                        }
                     }
                 )
             }
             Box(Modifier.weight(1f)) {
                 MoreItem(
                     text = text4,
-                    textColor = BebeBlue,
+                    textColor = Blue,
                     text3 = text2,
                     icon = R.drawable.ic_personal_profile,
                     weight = 2f, onItemClick = {
-                        text2?.let { onItemClick(text2) }
+                        if (text2 != null) {
+                            onItemClick(text2)
+                        } else {
+                            onItemClick(text4)
+                        }
                     }
                 )
             }
@@ -191,7 +230,8 @@ fun MoreItem(
     Card(
         Modifier
             .fillMaxWidth()
-            .padding(Dimens.halfDefaultMargin)
+            .padding(Dimens.fourDefaultMargin)
+            .padding(top = Dimens.halfDefaultMargin)
             .clickable {
                 onItemClick.invoke()
             },
@@ -217,7 +257,9 @@ fun MoreItem(
                 )
             } else {
                 Image(
-                    modifier = Modifier.padding(Dimens.halfDefaultMargin),
+                    modifier = Modifier
+                        .size(Dimens.profileImage)
+                        .weight(1f),
                     painter = painterResource(icon),
                     contentDescription = ""
                 )
@@ -242,15 +284,20 @@ fun MoreItem(
                         modifier = Modifier.fillMaxWidth(),
                         text = text,
                         style = TextStyle(
-                            color = textColor, fontSize = 13.sp
+                            color = textColor,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp
                         ),
                     )
                     text3?.let {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.defaultMargin6),
                             text = it,
                             style = TextStyle(
-                                color = LightGrey200, fontSize = 10.sp
+                                color = LightGrey200,
+                                fontSize = 10.sp
                             ),
                         )
                     }

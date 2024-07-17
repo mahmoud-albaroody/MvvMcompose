@@ -1,17 +1,17 @@
-package com.bitaqaty.reseller.ui.design.home.components
+package com.bitaqaty.reseller.ui.presentation.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,13 +29,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.utils.noRippleClickable
 
 @Composable
-fun Product() {
+fun Product(
+    onClick: () -> Unit,
+) {
     Card(
         modifier = Modifier
-            .padding(Dimens.padding12)
-            .wrapContentWidth(),
+            .fillMaxWidth()
+            .padding(Dimens.DefaultMargin10)
+            .noRippleClickable { onClick() },
         shape = RoundedCornerShape(
             topEndPercent = Dimens.cornerRadius20,
             bottomStartPercent = Dimens.cornerRadius15,
@@ -44,9 +48,10 @@ fun Product() {
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Column(modifier = Modifier
-            .wrapContentWidth()
-            .background(Color.LightGray),
+        Column(
+            modifier = Modifier
+                .wrapContentWidth()
+                .background(Color.LightGray),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             UpperProductSection()
@@ -58,7 +63,7 @@ fun Product() {
 @Composable
 fun UpperProductSection() {
     Card(
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(
             topEndPercent = 20,
             bottomStartPercent = 20,
@@ -69,30 +74,31 @@ fun UpperProductSection() {
     ) {
         Column(
             modifier = Modifier
-                .wrapContentWidth()
+                .fillMaxWidth()
                 .background(Color.Gray)
-                .padding(16.dp),
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = Modifier.wrapContentWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 text = "ITunes",
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
             )
 
             Row(
-                modifier = Modifier.wrapContentWidth().align(Alignment.Start),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Top,
             ) {
                 Text(
                     modifier = Modifier.padding(end = 4.dp),
-                    textAlign = TextAlign.Start,
+                    textAlign = TextAlign.Center,
                     text = "$",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 40.sp,
+                    fontSize = 20.sp,
                     color = Color.Black,
                     style = TextStyle(
                         shadow = Shadow(
@@ -103,11 +109,13 @@ fun UpperProductSection() {
                     )
                 )
                 Text(
-                    modifier = Modifier.padding(end = 4.dp).wrapContentWidth(),
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .wrapContentWidth(),
                     text = "10",
-                    textAlign = TextAlign.Start,
+                    textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 72.sp,
+                    fontSize = 36.sp,
                     color = Color.Black,
                     style = TextStyle(
                         shadow = Shadow(
@@ -120,19 +128,22 @@ fun UpperProductSection() {
                 )
             }
             Row(
-                modifier = Modifier.wrapContentWidth().align(Alignment.End),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.End),
                 verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.Center
             ) {
                 Image(
                     modifier = Modifier
                         .wrapContentWidth()
-                        .size(56.dp),
+                        .size(36.dp),
                     painter = painterResource(id = R.drawable.flag),
                     contentDescription = "Image"
                 )
                 Image(
                     modifier = Modifier
+                        .size(36.dp)
                         .wrapContentWidth()
                         .padding(end = 4.dp)
                         .size(80.dp),
@@ -152,17 +163,22 @@ fun LowerProductSection() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            modifier = Modifier.wrapContentWidth().align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .wrapContentWidth()
+                .align(Alignment.CenterHorizontally),
             text = "18.75",
-            fontSize = 36.sp,
+            fontSize = 18.sp,
             color = Color.Black,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
         )
         Text(
-            modifier = Modifier.wrapContentWidth().align(Alignment.CenterHorizontally).padding(bottom = 8.dp),
+            modifier = Modifier
+                .wrapContentWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 8.dp),
             text = "SAR",
-            fontSize = 24.sp,
+            fontSize = 12.sp,
             color = Color.Black,
             textAlign = TextAlign.Center,
         )
@@ -172,5 +188,5 @@ fun LowerProductSection() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProductPreview() {
-    Product()
+    Product(onClick = {})
 }

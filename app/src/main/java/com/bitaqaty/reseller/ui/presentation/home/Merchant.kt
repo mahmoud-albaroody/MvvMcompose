@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.design.home
+package com.bitaqaty.reseller.ui.presentation.home
 
 data class Merchant(
     val name: String,

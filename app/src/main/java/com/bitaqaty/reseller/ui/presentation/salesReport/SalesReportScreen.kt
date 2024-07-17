@@ -46,6 +46,7 @@ import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsDetails
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.Green
@@ -135,28 +136,26 @@ fun SalesReportDetails() {
             .fillMaxWidth()
             .padding(horizontal = Dimens.halfDefaultMargin)
     ) {
-        SalesReportDetailsCell()
+        SalesReportDetailsCell(
+            "Current Balance",
+            838.88, icon = R.drawable.ic_coins
+        )
         Row(
             Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
+                SalesReportDetailsCell(
+                    "No. of Transactions\n",
+                    0.32, icon = R.drawable.ic_calco
+                )
             }
             Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
-            }
-        }
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
-            }
-            Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
+                SalesReportDetailsCell(
+                    "Total Recommended\n" +
+                            "Retail Price", 0.32, icon = R.drawable.ic_calco
+                )
             }
         }
         Row(
@@ -164,19 +163,42 @@ fun SalesReportDetails() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
+                SalesReportDetailsCell(
+                    "Total MADA Alahly\n" +
+                            "Commission", 0.32, R.drawable.ic_balance
+                )
             }
             Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell()
+                SalesReportDetailsCell(
+                    "Total Balance\n"
+                            + "Commission", 0.32, R.drawable.ic_balance
+                )
+            }
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Box((Modifier.weight(1f))) {
+                SalesReportDetailsCell(
+                    "Total Cost Price\n",
+                    0.32, R.drawable.ic_calco
+                )
+            }
+            Box((Modifier.weight(1f))) {
+                SalesReportDetailsCell(
+                    "Total Expected\n" +
+                            "Commission", 0.32, R.drawable.ic_balance
+                )
             }
         }
     }
 }
 
-@Preview
+
 @Composable
 fun SalesReportDetailsCell(
-
+    text: String, balance: Double, icon: Int
 ) {
     Card(
         Modifier
@@ -208,16 +230,16 @@ fun SalesReportDetailsCell(
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "text",
+                    text = text,
                     textAlign = TextAlign.Start,
                     style = TextStyle(
-                        color = BebeBlue, fontSize = 15.sp
+                        color = Blue100, fontSize = 12.sp
                     ),
                 )
                 Text(
                     modifier = Modifier
-                        .padding(top = Dimens.fourDefaultMargin),
-                    text = "838.88",
+                        .padding(top = Dimens.defaultMargin6),
+                    text = balance.toString(),
                     textAlign = TextAlign.Start,
                     style = TextStyle(
                         color = Color.Black,
@@ -229,9 +251,8 @@ fun SalesReportDetailsCell(
 
 
             Image(
-                modifier = Modifier
-                    .padding(Dimens.halfDefaultMargin),
-                painter = painterResource(R.drawable.ic_forward_arrow),
+                modifier = Modifier.padding(end = Dimens.DefaultMargin10).size(25.dp),
+                painter = painterResource(icon),
                 contentDescription = ""
             )
 

@@ -42,4 +42,5 @@
     <string name="please_enter_valid_text">Please enter valid text</string>
     <string name="password">Password</string>
 
+    <string name="total_amount">Total Amount</string>
 </resources>

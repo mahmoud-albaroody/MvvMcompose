@@ -83,6 +83,16 @@ val Typography.PlaceHolder: TextStyle
         return TextStyle(
             fontFamily = frutigerLTArabic,
             fontWeight = FontWeight.Light,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
+        )
+    }
+
+val Typography.Counter: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = frutigerLTArabic,
+            fontWeight = FontWeight.Light,
+            fontSize = 28.sp,
         )
     }

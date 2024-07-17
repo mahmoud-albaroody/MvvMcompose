@@ -31,6 +31,8 @@ object Dimens {
     val padding40: Dp = 40.dp
     val padding50: Dp = 50.dp
     val padding45: Dp = 45.dp
+    val padding20: Dp = 20.dp
+    val padding16: Dp = 16.dp
     val padding12: Dp = 12.dp
     val padding6: Dp = 6.dp
     val padding8: Dp = 8.dp
@@ -38,7 +40,7 @@ object Dimens {
     val borderThickness3: Dp = 3.dp
     val borderThickness7: Dp = 7.dp
 
-    val categoryImage: Dp = 75.dp
+    val categoryImage: Dp = 52.dp
     val merchantImage: Dp = 32.dp
     val profileImage: Dp = 50.dp
 
@@ -46,6 +48,6 @@ object Dimens {
     val cornerRadius15: Int = 15
     val cornerRadius20: Int = 20
 
-    val bitaqatyLogo: Dp = 96.dp
+    val bitaqatyLogo: Dp = 74.dp
 }
 

@@ -11,3 +11,7 @@ val frutigerLTArabic = FontFamily(
     Font(R.font.frutiger_lt_arabic_bold_65, weight = FontWeight.Bold),
     Font(R.font.frutiger_lt_arabic_black_75, weight = FontWeight.ExtraBold)
 )
+
+val arial = FontFamily(
+    Font(R.font.arial, weight = FontWeight.Normal)
+)

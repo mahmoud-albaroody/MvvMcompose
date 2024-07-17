@@ -126,5 +126,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //coil
-    implementation ("io.coil-kt:coil-compose:2.0.0")
+    implementation ("io.coil-kt:coil-compose:2.2.2")
+    //bottom_sheet
+    implementation("androidx.compose.material:material:1.6.8")
 }
