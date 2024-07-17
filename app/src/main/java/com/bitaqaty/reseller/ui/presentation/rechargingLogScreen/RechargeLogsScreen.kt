@@ -86,7 +86,7 @@ fun RechargeLog(onFilterClick: () -> Unit) {
 }
 
 
-@Preview
+
 @Composable
 fun RechargeLogItems(isViewMothed: Boolean) {
     LazyColumn(
