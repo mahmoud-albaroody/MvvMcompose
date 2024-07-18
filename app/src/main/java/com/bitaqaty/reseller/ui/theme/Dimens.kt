@@ -33,6 +33,7 @@ object Dimens {
     val padding45: Dp = 45.dp
     val padding20: Dp = 20.dp
     val padding16: Dp = 16.dp
+    val padding14: Dp = 14.dp
     val padding12: Dp = 12.dp
     val padding6: Dp = 6.dp
     val padding8: Dp = 8.dp

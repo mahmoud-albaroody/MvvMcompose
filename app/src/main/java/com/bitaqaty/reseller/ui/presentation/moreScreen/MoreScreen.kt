@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -70,7 +72,7 @@ fun MoreScreen(navController: NavController, modifier: Modifier) {
             }
 
             "Reports" -> {
-                  navController.navigate(Screen.SalesReportScreen.route)
+                navController.navigate(Screen.SalesReportScreen.route)
             }
 
             "Add Balance" -> {
@@ -106,7 +108,8 @@ fun More(onItemClick: (String) -> Unit) {
             .background(Color.White)
             .fillMaxSize()
             .padding(horizontal = Dimens.halfDefaultMargin)
-            .padding(top = Dimens.halfDefaultMargin),
+            .padding(top = Dimens.halfDefaultMargin)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
@@ -152,7 +155,7 @@ fun More(onItemClick: (String) -> Unit) {
             )
         }
         Column {
-            Box(Modifier.padding(top = Dimens.halfDefaultMargin)) {
+            Box(Modifier.padding(top = Dimens.fourDefaultMargin)) {
                 Divider(
                     modifier = Modifier
                         .height(Dimens.DefaultMargin0)
@@ -231,7 +234,7 @@ fun MoreItem(
         Modifier
             .fillMaxWidth()
             .padding(Dimens.fourDefaultMargin)
-            .padding(top = Dimens.halfDefaultMargin)
+            .padding(top = Dimens.fourDefaultMargin)
             .clickable {
                 onItemClick.invoke()
             },
@@ -243,7 +246,7 @@ fun MoreItem(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(Dimens.halfDefaultMargin),
+                .padding(horizontal = Dimens.halfDefaultMargin, vertical = Dimens.fourDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

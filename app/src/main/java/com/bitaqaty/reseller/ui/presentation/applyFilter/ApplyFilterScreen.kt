@@ -266,7 +266,7 @@ fun FilterButton(
             modifier = Modifier
                 .padding(
                     horizontal = Dimens.DefaultMargin,
-                    vertical = Dimens.DefaultMargin20
+                    vertical = Dimens.padding16
                 )
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,

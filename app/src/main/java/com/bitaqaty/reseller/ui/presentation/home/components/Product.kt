@@ -147,7 +147,7 @@ fun UpperProductSection() {
                         .wrapContentWidth()
                         .padding(end = 4.dp)
                         .size(80.dp),
-                    painter = painterResource(id = R.drawable.apple),
+                    painter = painterResource(id = R.drawable.ic_manager_icon),
                     contentDescription = "Image",
                     alignment = Alignment.TopEnd
                 )
