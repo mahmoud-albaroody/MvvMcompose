@@ -24,7 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -63,7 +65,7 @@ fun Profile(onItemClick: (String) -> Unit) {
                     )
             ) {
                 AccountManager("Account Manager",
-                    R.drawable.ic_manager_icon, 14, onItemClick = {
+                    R.drawable.ic_manager_icon, 13, onItemClick = {
                         onItemClick("Account Manager")
                     })
             }
@@ -75,7 +77,7 @@ fun Profile(onItemClick: (String) -> Unit) {
                     )
             ) {
                 AccountManager("Change Password",
-                    R.drawable.ic_password_svgrepo, 14,
+                    R.drawable.ic_password_svgrepo, 13,
                     onItemClick = {
                         onItemClick("Change Password")
                     })
@@ -140,12 +142,15 @@ fun ProfileDetails() {
                                 .padding(horizontal = Dimens.halfDefaultMargin)
                         ) {
                             Text(
-                                text = "Sub Account",
+                                text = "Welcome",
                                 style = TextStyle(color = LightGrey200, fontSize = 14.sp)
                             )
                             Text(
                                 text = "Khalidalisub5",
-                                style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 14.sp
+                                )
                             )
                         }
                     }
@@ -157,11 +162,17 @@ fun ProfileDetails() {
                 ) {
                     Text(
                         text = "Sub Account",
-                        style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+                        style = TextStyle(
+                            color = LightGrey200,
+                            fontSize = 14.sp
+                        )
                     )
                     Text(
-                        text = "Khalidalisub5",
-                        style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+                        text = "Khalid ali",
+                        style = TextStyle(
+                            color = LightGrey200,
+                            fontSize = 14.sp
+                        )
                     )
                 }
             }
@@ -227,7 +238,9 @@ fun AccountManager(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = Dimens.fourDefaultMargin),
                 painter = painterResource(icon), contentDescription = ""
             )
             Text(
@@ -241,6 +254,7 @@ fun AccountManager(
                 style = TextStyle(
                     textAlign = TextAlign.Start,
                     color = BebeBlue,
+                    fontWeight = FontWeight.Bold,
                     fontSize = textSize.sp,
                 ),
                 text = text
@@ -249,7 +263,7 @@ fun AccountManager(
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(0.5f),
                 painter = painterResource(R.drawable.ic_forward_arrow),
                 contentDescription = ""
             )

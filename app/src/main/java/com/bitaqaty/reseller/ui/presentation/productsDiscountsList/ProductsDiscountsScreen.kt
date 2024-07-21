@@ -282,7 +282,9 @@ fun ServiceItem() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = Modifier.padding(top = Dimens.halfDefaultMargin),
+                modifier = Modifier
+                    .padding(horizontal = Dimens.padding2)
+                    .padding(top = Dimens.halfDefaultMargin),
                 text = "Playstation PSN Card 10",
                 style = TextStyle(
                     color = LightGrey400,

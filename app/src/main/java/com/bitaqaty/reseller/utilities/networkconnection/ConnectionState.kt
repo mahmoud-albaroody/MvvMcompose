@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.utils.networkconnection
+package com.bitaqaty.reseller.utilities.networkconnection
 
 sealed class ConnectionState {
     object Available : ConnectionState()

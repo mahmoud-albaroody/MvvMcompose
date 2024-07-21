@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -42,9 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -56,7 +53,7 @@ import com.bitaqaty.reseller.ui.presentation.productDetails.components.MadaPayBu
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.PrintVatButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ProductInfo
 import com.bitaqaty.reseller.ui.theme.arial
-import com.bitaqaty.reseller.utils.noRippleClickable
+import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +71,7 @@ fun ProductDetailsBottomSheet(
             shape = RectangleShape,
             dragHandle = null,
             scrimColor = Color.Black.copy(alpha = .5f),
-            windowInsets = WindowInsets(0, 0, 0, 0)
+
         ) {
             var isExpanded by remember { mutableStateOf(false) }
             val navigationBarHeight = with(LocalDensity.current) {

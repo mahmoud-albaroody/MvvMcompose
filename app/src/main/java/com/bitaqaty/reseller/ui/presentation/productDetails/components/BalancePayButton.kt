@@ -2,8 +2,6 @@ package com.bitaqaty.reseller.ui.presentation.productDetails.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.Interaction
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -31,9 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
-import com.bitaqaty.reseller.utils.NoRippleInteractionSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 
 @Composable
 fun BalancePayButton(

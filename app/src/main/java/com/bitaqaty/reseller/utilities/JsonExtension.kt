@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.utils
+package com.bitaqaty.reseller.utilities
 
 import android.content.res.AssetManager
 import com.google.gson.Gson

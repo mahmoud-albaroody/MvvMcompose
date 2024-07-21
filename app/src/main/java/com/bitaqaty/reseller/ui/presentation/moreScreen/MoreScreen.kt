@@ -167,7 +167,7 @@ fun More(onItemClick: (String) -> Unit) {
                 FilterButton(backgroundTex = Color.Red,
                     text = "Logout",
                     iconVisibility = false,
-                    textColor = Color.White,
+                    textColor = Color.White,horizontalPadding =  Dimens.DefaultMargin,
                     onApplyFilterClick = {
                         onItemClick.invoke("Logout")
                     })

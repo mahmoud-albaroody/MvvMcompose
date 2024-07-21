@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.ui.presentation.home.Category
 import com.bitaqaty.reseller.ui.theme.LightGrey80
-import com.bitaqaty.reseller.utils.TrapezoidShape
+import com.bitaqaty.reseller.utilities.TrapezoidShape
 
 @Composable
 fun CategoryItem(

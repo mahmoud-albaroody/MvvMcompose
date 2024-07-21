@@ -27,14 +27,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
-import com.bitaqaty.reseller.utils.NoRippleInteractionSource
+import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

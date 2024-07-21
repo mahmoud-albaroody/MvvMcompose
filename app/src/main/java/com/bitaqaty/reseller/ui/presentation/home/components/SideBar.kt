@@ -17,10 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bitaqaty.reseller.ui.presentation.home.Category
-import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.LightGrey80
-import com.bitaqaty.reseller.ui.theme.merchantBg
-import com.bitaqaty.reseller.utils.noRippleClickable
+import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

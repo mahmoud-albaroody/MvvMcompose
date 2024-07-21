@@ -37,12 +37,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 
@@ -69,20 +71,21 @@ fun ApplyFilter(onApplyFilterClick: () -> Unit) {
 
     ) {
         Column {
-            DynamicSelectTextField()
+            DynamicSelectTextField(TextAlign.Center)
             TextFiledd()
-            DynamicSelectTextField()
-            DynamicSelectTextField()
-            DynamicSelectTextField()
-            DynamicSelectTextField()
-            DynamicSelectTextField()
+            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center)
             CheckBox()
         }
         Column {
             FilterButton(
-                backgroundTex = BebeBlue, text = "Filter",
+                backgroundTex = Blue100, text = "Filter",
                 iconVisibility = true,
-                textColor = Color.White, onApplyFilterClick = {
+                textColor = Color.White,
+                horizontalPadding =  Dimens.DefaultMargin, onApplyFilterClick = {
                     onApplyFilterClick.invoke()
                 }
             )
@@ -98,7 +101,8 @@ fun TextFiledd() {
     Card(
         Modifier
             .padding(
-                vertical = Dimens.halfDefaultMargin, horizontal = Dimens.DefaultMargin,
+                vertical = Dimens.padding4,
+                horizontal = Dimens.DefaultMargin,
             )
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),
@@ -130,18 +134,17 @@ fun TextFiledd() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DynamicSelectTextField(
-
-) {
+fun DynamicSelectTextField(textAlign: TextAlign) {
     val options: List<String> =
-        listOf("Account username", "Option 2", "Option 3", "Option 4", "Option 5")
+        listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5")
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
 
     Card(
         Modifier
             .padding(
-                vertical = Dimens.halfDefaultMargin, horizontal = Dimens.DefaultMargin,
+                vertical = Dimens.padding4,
+                horizontal = Dimens.DefaultMargin,
             )
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),
@@ -162,7 +165,7 @@ fun DynamicSelectTextField(
                 value = selectedOptionText,
                 textStyle = TextStyle(
                     color = BebeBlue,
-                    textAlign = TextAlign.Center
+                    textAlign = textAlign
                 ),
                 onValueChange = { },
                 trailingIcon = {
@@ -242,7 +245,7 @@ fun FilterButton(
     backgroundTex: Color, text: String,
     iconVisibility: Boolean, textColor: Color,
     haveBorder: Boolean = false,
-    icon:Int=R.drawable.ic_filter_white,
+    icon: Int = R.drawable.ic_filter_white, horizontalPadding: Dp,
     onApplyFilterClick: () -> Unit
 ) {
     var borderStroke: BorderStroke? = null
@@ -250,12 +253,10 @@ fun FilterButton(
         borderStroke = BorderStroke(Dimens.DefaultMargin0, LightGrey400)
     Card(
         Modifier
-            .clickable {
-                onApplyFilterClick.invoke()
-            }
+
             .padding(
                 vertical = Dimens.halfDefaultMargin,
-                horizontal = Dimens.DefaultMargin,
+                horizontal = horizontalPadding,
             )
             .fillMaxWidth(),
         border = borderStroke,
@@ -264,6 +265,9 @@ fun FilterButton(
     ) {
         Row(
             modifier = Modifier
+                .clickable {
+                    onApplyFilterClick.invoke()
+                }
                 .padding(
                     horizontal = Dimens.DefaultMargin,
                     vertical = Dimens.padding16
@@ -279,7 +283,8 @@ fun FilterButton(
                 )
 
             Text(
-                modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
+                modifier = Modifier
+                    .padding(start = Dimens.halfDefaultMargin),
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     color = textColor,

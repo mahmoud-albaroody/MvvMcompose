@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
@@ -26,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
-import com.bitaqaty.reseller.utils.NoRippleInteractionSource
+import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 
 @Composable
 fun MadaPayButton(

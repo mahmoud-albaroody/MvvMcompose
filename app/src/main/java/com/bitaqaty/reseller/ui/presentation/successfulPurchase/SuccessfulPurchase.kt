@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
@@ -137,8 +138,8 @@ fun ProductDetails() {
                     .weight(1f)
             ) {
                 FilterButton(
-                    backgroundTex = BebeBlue, text = "Print Product",
-                    iconVisibility = false, textColor = Color.White,
+                    backgroundTex = Blue100, text = "Print Product",
+                    iconVisibility = false, textColor = Color.White,horizontalPadding =  Dimens.DefaultMargin,
                     onApplyFilterClick = {
 
                     }
@@ -153,8 +154,8 @@ fun ProductDetails() {
                     backgroundTex = Color.White,
                     text = "Print VAT",
                     iconVisibility = false,
-                    textColor = BebeBlue,
-                    haveBorder = true,
+                    textColor = Blue100,
+                    haveBorder = true,horizontalPadding =  Dimens.DefaultMargin,
                     onApplyFilterClick = {
 
                     }

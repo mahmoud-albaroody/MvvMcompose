@@ -1,8 +1,7 @@
 package com.bitaqaty.reseller.di
 
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
-import com.bitaqaty.reseller.data.repository.MovieRepository
-import com.bitaqaty.reseller.domain.MovieUseCase
+//import com.bitaqaty.reseller.data.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,22 +14,22 @@ object RepositoryModule {
     /**
      * Provides RemoteDataRepository for access api service method
      */
-    @Singleton
-    @Provides
-    fun provideMovieRepository(
-        apiService: ApiService,
-    ): MovieRepository {
-        return MovieRepository(
-            apiService
-        )
-    }
-    @Singleton
-    @Provides
-    fun provideMovieUseCase(
-        apiService: MovieRepository,
-    ): MovieUseCase {
-        return MovieUseCase(
-            apiService
-        )
-    }
+//    @Singleton
+//    @Provides
+//    fun provideMovieRepository(
+//        apiService: ApiService,
+//    ): MovieRepository {
+//        return MovieRepository(
+//            apiService
+//        )
+//    }
+//    @Singleton
+//    @Provides
+//    fun provideMovieUseCase(
+//        apiService: MovieRepository,
+//    ): MovieUseCase {
+//        return MovieUseCase(
+//            apiService
+//        )
+//    }
 }

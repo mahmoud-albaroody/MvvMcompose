@@ -23,6 +23,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +43,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey200
@@ -48,9 +53,9 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 @Composable
 fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: ChargeBalanceViewModel = hiltViewModel()
+
     LaunchedEffect(key1 = true) {}
     ChargeBalance(onItemClick = {
-        Log.e("dddd",it)
         when (it) {
             "Mada Ahly" -> {
                 navController.navigate(Screen.RechargeScreen.route)
@@ -83,10 +88,10 @@ fun ChargeBalance(onItemClick: (String) -> Unit) {
 
         Column {
             ProfileBalance()
-            MadaAhly("Mada Ahly", LightGrey200, onItemClick = {
+            MadaAhly("Mada Ahly", Color.White, Blue100, onItemClick = {
                 onItemClick("Mada Ahly")
             })
-            MadaAhly("Bank Transfer", BebeBlue, onItemClick = {
+            MadaAhly("Bank Transfer", BebeBlue, Color.Transparent, onItemClick = {
                 onItemClick("Bank Transfer")
             })
         }
@@ -97,8 +102,10 @@ fun ChargeBalance(onItemClick: (String) -> Unit) {
     }
 }
 
+@Preview
 @Composable
 fun ProfileBalance() {
+
     Card(
         Modifier
             .fillMaxWidth()
@@ -115,7 +122,7 @@ fun ProfileBalance() {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .weight(2f)
+                    .weight(2.5f)
                     .padding(Dimens.halfDefaultMargin)
             ) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -162,22 +169,26 @@ fun ProfileBalance() {
 
 
 @Composable
-fun MadaAhly(text: String, textColor: Color, onItemClick: () -> Unit) {
+fun MadaAhly(
+    text: String, textColor: Color,
+    cardColor: Color, onItemClick: () -> Unit
+) {
     Card(
         Modifier
             .fillMaxWidth()
-            .clickable {
-                onItemClick.invoke()
-            }
+
             .padding(Dimens.halfDefaultMargin),
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = cardColor)
 
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
+                .clickable {
+                    onItemClick.invoke()
+                }
                 .padding(Dimens.halfDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -229,7 +240,8 @@ fun FooterChangeBalance(onItemClick: (String) -> Unit) {
                     onItemClick("Recharging Log")
                 }
         ) {
-            AccountManager("Recharging Log", R.drawable.ic_cart_large, 12,
+            AccountManager("Recharging Log",
+                R.drawable.ic_cart_large, 12,
                 onItemClick = {
                     onItemClick("Recharging Log")
                 })

@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,9 +28,11 @@ import com.bitaqaty.reseller.ui.presentation.applyFilter.DynamicSelectTextField
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.profileScreen.ProfileFooter
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey200
+import com.bitaqaty.reseller.ui.theme.LightGrey400
 
 
 @Composable
@@ -47,9 +50,10 @@ fun Recharge(onRechargeClick: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
+            .padding(top = Dimens.padding10)
             .background(Color.White)
     ) {
-        DynamicSelectTextField()
+        DynamicSelectTextField(TextAlign.Start)
         RechargeAmount()
         Column(Modifier.padding(top = Dimens.DefaultMargin)) {
             ProfileFooter("Maximum recharge amount is 5000 SAR", R.drawable.ic_info_circle)
@@ -61,8 +65,10 @@ fun Recharge(onRechargeClick: () -> Unit) {
         }
         Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
             FilterButton(
-                backgroundTex = BebeBlue, text = "Recharge",
-                iconVisibility = false, textColor = Color.White,
+                backgroundTex = Blue100, text = "Recharge",
+                iconVisibility = false,
+                textColor = Color.White,
+                horizontalPadding =  Dimens.DefaultMargin,
                 onApplyFilterClick = {
                     onRechargeClick.invoke()
                 }
@@ -111,14 +117,14 @@ fun RechargeAmount() {
                     bottom = Dimens.quarterDefaultMargin
                 ),
             text = "Recharge Amount",
-            style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+            style = TextStyle(color = LightGrey400, fontSize = 14.sp)
         )
         Box(
             modifier = Modifier.padding(
                 bottom = Dimens.padding30
             )
         ) {
-            DynamicSelectTextField()
+            DynamicSelectTextField(TextAlign.Center)
         }
     }
 }

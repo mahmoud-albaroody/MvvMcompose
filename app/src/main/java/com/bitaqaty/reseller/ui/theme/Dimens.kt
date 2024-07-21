@@ -36,7 +36,11 @@ object Dimens {
     val padding14: Dp = 14.dp
     val padding12: Dp = 12.dp
     val padding6: Dp = 6.dp
+    val padding4: Dp = 4.dp
+    val padding2: Dp = 2.dp
+    val padding5: Dp = 5.dp
     val padding8: Dp = 8.dp
+    val padding10: Dp = 10.dp
 
     val borderThickness3: Dp = 3.dp
     val borderThickness7: Dp = 7.dp

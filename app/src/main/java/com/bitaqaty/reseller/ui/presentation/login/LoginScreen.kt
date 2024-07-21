@@ -66,6 +66,7 @@ import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 
@@ -275,7 +276,7 @@ fun LoginItem(
             .padding(vertical = Dimens.padding30)
             .align(Alignment.CenterHorizontally),
             shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(BebeBlue),
+            colors = ButtonDefaults.buttonColors(Blue100),
             onClick = {
                 onLoginClick.invoke()
 
@@ -293,8 +294,9 @@ fun LoginItem(
             }) {
             Text(
                 text = stringResource(R.string.login),
-                Modifier.padding(vertical = 8.dp),
-                style = TextStyle(textAlign = TextAlign.Center, fontSize = 15.sp)
+                Modifier.padding(vertical = Dimens.padding8),
+                style = TextStyle(textAlign = TextAlign.Center,
+                    fontSize = 15.sp)
             )
         }
 

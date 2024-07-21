@@ -51,6 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey400
@@ -61,7 +62,7 @@ import com.bitaqaty.reseller.ui.theme.merchantLabel
 fun ChangePasswordScreen(navController: NavController, modifier: Modifier) {
     val changePasswordScreenViewModel: ChangePasswordScreenViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-     ChangePassword()
+    ChangePassword()
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -223,7 +224,7 @@ fun ChangePassword() {
                 .padding(vertical = Dimens.padding30)
                 .align(Alignment.CenterHorizontally),
                 shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(BebeBlue),
+                colors = ButtonDefaults.buttonColors(Blue100),
                 onClick = {
                     if (email.isNotEmpty() && password.isNotEmpty() && !isNotValid) {
                         //       viewModel.login(email, password)
@@ -238,9 +239,12 @@ fun ChangePassword() {
                     }
                 }) {
                 Text(
-                    text = stringResource(R.string.login),
-                    Modifier.padding(vertical = 8.dp),
-                    style = TextStyle(textAlign = TextAlign.Center, fontSize = 15.sp)
+                    text = "Change",
+                    Modifier.padding(vertical = Dimens.padding8),
+                    style = TextStyle(
+                        textAlign = TextAlign.Center,
+                        fontSize = 15.sp
+                    )
                 )
             }
 

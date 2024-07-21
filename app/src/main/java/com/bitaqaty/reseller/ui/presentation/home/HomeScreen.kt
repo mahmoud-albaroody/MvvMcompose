@@ -55,7 +55,6 @@ fun HomeScreen() {
                     columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(Dimens.fourDefaultMargin),
                 ) {
-
                     items(10) { _ ->
                         Product(
                             onClick = {
@@ -69,6 +68,7 @@ fun HomeScreen() {
                 }
             }
         }
+
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             ProductDetailsBottomSheet(
                 isBottomSheetVisible = isBottomSheetVisible,

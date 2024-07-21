@@ -3,6 +3,7 @@ package com.bitaqaty.reseller.ui.presentation.appbar
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,40 +44,43 @@ fun AppBarWithArrow(
         backgroundColor = Color.White,
         modifier = Modifier.height(58.dp)
     ) {
-        Row {
-            if (haveBack)
-                Card(
-                    modifier = Modifier
-                        .clickable {
-                            pressOnBack.invoke()
-                        }
-                        .padding(start = Dimens.halfDefaultMargin),
-                    shape = RoundedCornerShape(Dimens.DefaultMargin10),
-                    border = BorderStroke(0.25.dp, BebeBlue),
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_back_24),
-                        colorFilter = ColorFilter.tint(LightGrey400),
-                        contentDescription = null,
+        Box {
+
+
+//            Spacer(modifier = Modifier.width(Dimens.halfDefaultMargin))
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                text = title ?: "",
+                style = MaterialTheme.typography.h6,
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
+            Row {
+                if (haveBack)
+                    Card(
                         modifier = Modifier
-                            .padding(Dimens.halfDefaultMargin)
 
-                    )
-                }
+                            .padding(start = Dimens.halfDefaultMargin),
+                        shape = RoundedCornerShape(Dimens.DefaultMargin10),
+                        border = BorderStroke(0.25.dp, BebeBlue),
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ic_back_24),
+                            colorFilter = ColorFilter.tint(LightGrey400),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable {
+                                    pressOnBack.invoke()
+                                }
+                                .padding(Dimens.halfDefaultMargin)
+
+                        )
+                    }
+            }
         }
-
-        Spacer(modifier = Modifier.width(Dimens.halfDefaultMargin))
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .align(Alignment.CenterVertically),
-            text = title ?: "",
-            style = MaterialTheme.typography.h6,
-            color = LightGrey400,
-            textAlign = TextAlign.Center
-        )
     }
 
 }
@@ -91,39 +95,41 @@ fun AppBarWithArrow(
         backgroundColor = Color.White,
         modifier = Modifier.height(58.dp)
     ) {
-        Row {
-            if (true)
-                Card(
-                    modifier = Modifier
-                        .padding(start = Dimens.halfDefaultMargin),
-                    shape = RoundedCornerShape(Dimens.fourDefaultMargin),
-                    border = BorderStroke(0.25.dp, BebeBlue),
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_back_24),
-                        colorFilter = ColorFilter.tint(LightGrey400),
-                        contentDescription = null,
+        Box {
+
+
+//            Spacer(modifier = Modifier.width(Dimens.halfDefaultMargin))
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                text = "title" ?: "",
+                style = MaterialTheme.typography.h6,
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
+            Row {
+                if (true)
+                    Card(
                         modifier = Modifier
-                            .padding(Dimens.halfDefaultMargin)
-                            .clickable {
+                            .padding(start = Dimens.halfDefaultMargin),
+                        shape = RoundedCornerShape(Dimens.fourDefaultMargin),
+                        border = BorderStroke(0.25.dp, BebeBlue),
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ic_back_24),
+                            colorFilter = ColorFilter.tint(LightGrey400),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(Dimens.halfDefaultMargin)
+                                .clickable {
 
-                            }
-                    )
-                }
+                                }
+                        )
+                    }
+            }
         }
-
-        Spacer(modifier = Modifier.width(Dimens.halfDefaultMargin))
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .align(Alignment.CenterVertically),
-            text = "title" ?: "",
-            style = MaterialTheme.typography.h6,
-            color = LightGrey400,
-            textAlign = TextAlign.Center
-        )
     }
 
 }

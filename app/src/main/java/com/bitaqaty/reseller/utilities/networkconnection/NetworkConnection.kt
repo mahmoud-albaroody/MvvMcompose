@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.utils.networkconnection
+package com.bitaqaty.reseller.utilities.networkconnection
 
 import android.content.Context
 import android.net.ConnectivityManager

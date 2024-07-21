@@ -248,26 +248,23 @@ fun Filter(onFilterClick: () -> Unit) {
         )
         Card(
             Modifier
-                .clickable {
-                    onFilterClick.invoke()
-                }
                 .padding(
                     horizontal = Dimens.DefaultMargin,
                 )
-                .padding(top = Dimens.DefaultMargin20, bottom = Dimens.halfDefaultMargin)
+                .padding(top = Dimens.DefaultMargin20,
+                    bottom = Dimens.halfDefaultMargin)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(Dimens.halfDefaultMargin),
             border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Row(
-                modifier = Modifier
-                    .padding(
+                modifier = Modifier.clickable {
+                    onFilterClick.invoke()
+                }.padding(
                         horizontal = Dimens.DefaultMargin,
                         vertical = Dimens.DefaultMargin20
-                    )
-
-                    .fillMaxWidth(),
+                    ).fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -275,7 +272,6 @@ fun Filter(onFilterClick: () -> Unit) {
                     painter = painterResource(R.drawable.ic_filter),
                     contentDescription = ""
                 )
-
                 Text(
                     modifier = Modifier.padding(start = Dimens.halfDefaultMargin),
                     style = TextStyle(

@@ -60,31 +60,32 @@ fun RechargeLog(onFilterClick: () -> Unit) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-
-        RechargeLogHeader(
-            LightGrey300,
-            "Date/Time",
-            "Method",
-            "Amount",
-            "Balance After",
-            FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            true
-        )
-
-        Box(Modifier.height(screenHeight * 0.50f)) {
-            RechargeLogItems(true)
+        Box (Modifier.height(screenHeight * 0.68f)){
+            Column {
+                RechargeLogHeader(
+                    LightGrey300,
+                    "Date/Time",
+                    "Method",
+                    "Amount",
+                    "Balance After",
+                    FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    true
+                )
+                RechargeLogItems(true)
+            }
         }
-
-        Filter(onFilterClick = {
-            onFilterClick.invoke()
-        })
+        Box() {
+            Filter(
+                onFilterClick = {
+                    onFilterClick.invoke()
+                })
+        }
 
     }
 
 
 }
-
 
 
 @Composable
@@ -119,7 +120,7 @@ fun RechargeLogHeader(
         Modifier
             .padding(
                 horizontal = Dimens.DefaultMargin,
-                vertical = Dimens.halfDefaultMargin
+                vertical = Dimens.padding10
             )
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),

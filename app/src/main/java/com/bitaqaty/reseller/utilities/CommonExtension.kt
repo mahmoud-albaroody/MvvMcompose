@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.utils
+package com.bitaqaty.reseller.utilities
 
 import okhttp3.ResponseBody
 import org.json.JSONObject

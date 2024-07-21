@@ -25,6 +25,8 @@ import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogHead
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogItems
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogViewModel
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Blue100
+import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey300
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -47,8 +49,8 @@ fun SettlementTransactions() {
             .background(Color.White)
     ) {
 
-        FilterButton(backgroundTex = BebeBlue, text = "Transaction Request",
-            iconVisibility = true, textColor = Color.White ) {
+        FilterButton(backgroundTex = Blue100, text = "Transaction Request",
+            iconVisibility = true, horizontalPadding =  Dimens.DefaultMargin,textColor = Color.White ) {
 
         }
         RechargeLogHeader(

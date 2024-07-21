@@ -29,7 +29,7 @@ import com.bitaqaty.reseller.ui.theme.Counter
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.counterText
 import com.bitaqaty.reseller.ui.theme.merchantBg
-import com.bitaqaty.reseller.utils.noRippleClickable
+import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @Composable
 fun Counter() {

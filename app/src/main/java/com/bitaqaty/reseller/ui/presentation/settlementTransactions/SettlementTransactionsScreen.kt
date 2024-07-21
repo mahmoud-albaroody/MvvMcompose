@@ -39,7 +39,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.PlaceHolder
 import com.bitaqaty.reseller.ui.theme.SearchBarBackground
 import com.bitaqaty.reseller.ui.theme.SearchBarText
-import com.bitaqaty.reseller.utils.AppConstant.MIN_Transfer_AMOUNT
+import com.bitaqaty.reseller.utilities.AppConstant.MIN_Transfer_AMOUNT
 
 @Composable
 fun SettlementTransactionsScreen(){

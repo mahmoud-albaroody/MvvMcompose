@@ -51,14 +51,10 @@ fun RechargeLog(onHomePageClick: () -> Unit) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-
-
         RechargeSuccessfullyPage(onHomePageClick = {
             onHomePageClick.invoke()
         })
     }
-
-
 }
 
 
@@ -81,6 +77,7 @@ fun RechargeSuccessfullyPage(onHomePageClick: () -> Unit) {
 }
 
 
+@Preview
 @Composable
 fun RechargeSuccessfully(
 ) {

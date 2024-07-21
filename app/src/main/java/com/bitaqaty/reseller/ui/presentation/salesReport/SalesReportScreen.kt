@@ -88,7 +88,7 @@ fun SalesReport() {
                     })
             }
         }
-        Box(Modifier.height(screenHeight * 0.2f)) {
+        Box(Modifier.height(screenHeight * 0.13f)) {
             Filter(
                 onFilterClick = {
                     // onFilterClick.invoke()
@@ -102,7 +102,9 @@ fun SalesReport() {
 @Composable
 fun PrintExportButton() {
     Row(
-        Modifier.fillMaxWidth(),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimens.padding8),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Box(Modifier.weight(1f)) {
@@ -110,7 +112,8 @@ fun PrintExportButton() {
                 backgroundTex = Green,
                 text = "Print",
                 iconVisibility = true,
-                textColor = Color.White
+                textColor = Color.White,
+                horizontalPadding = Dimens.halfDefaultMargin,
             ) {
 
             }
@@ -120,7 +123,8 @@ fun PrintExportButton() {
                 backgroundTex = clickedMerchant,
                 text = "Export",
                 iconVisibility = true,
-                textColor = Color.White
+                textColor = Color.White,
+                horizontalPadding = Dimens.halfDefaultMargin,
             ) {
 
             }
@@ -251,7 +255,9 @@ fun SalesReportDetailsCell(
 
 
             Image(
-                modifier = Modifier.padding(end = Dimens.DefaultMargin10).size(25.dp),
+                modifier = Modifier
+                    .padding(end = Dimens.DefaultMargin10)
+                    .size(25.dp),
                 painter = painterResource(icon),
                 contentDescription = ""
             )

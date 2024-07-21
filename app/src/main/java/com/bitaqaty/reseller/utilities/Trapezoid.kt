@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.utils
+package com.bitaqaty.reseller.utilities
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
