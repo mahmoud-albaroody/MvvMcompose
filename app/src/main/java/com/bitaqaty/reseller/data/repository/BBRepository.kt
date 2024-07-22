@@ -1,9 +1,10 @@
 package com.bitaqaty.reseller.data.repository
 
+import android.util.Log
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.utilities.network.DataState
-import com.bitaqaty.reseller.utilities.network.PairType
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -33,15 +34,31 @@ class BBRepository @Inject constructor(
     private val apiService: ApiService
 ) : BBRepositoryInterface {
     override suspend fun getTransactionLogList(jsonObject: JsonObject):
-            Flow<DataState<PairType<TransactionLogResult, Void>>> =flow {
-        emit(DataState.Loading)
-        try {
-            val searchResult = apiService.getTransactionLogList(jsonObject)
-            emit(searchResult)
-        } catch (e: Exception) {
-            emit(DataState.NetworkError(e))
+            Flow<DataState<TransactionLogResult>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val searchResult = apiService.getTransactionLogList(jsonObject)
+                emit(searchResult)
+            } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
         }
-    }
+
+    override suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val searchResult = apiService.getCategoryList()
+                Log.e(
+                    "dddd",
+                    (searchResult as DataState.Success<ArrayList<Category>>).data.toString()
+                )
+                emit(searchResult)
+            } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
+        }
 
 }
 //    override suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>> = flow {

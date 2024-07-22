@@ -192,8 +192,8 @@ dependencies {
     // pagination
     implementation("androidx.paging:paging-compose:3.2.1")
 
-    // timber log
-    implementation("com.jakewharton.timber:timber:5.0.1")
+//    // timber log
+//    implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.coil-kt:coil-compose:1.3.1")
     //   implementation ("com.google.accompanist:accompanist-bottomsheet:0.21.0")
 

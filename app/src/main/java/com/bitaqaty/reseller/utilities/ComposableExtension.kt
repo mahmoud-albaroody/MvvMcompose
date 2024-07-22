@@ -12,7 +12,6 @@ import androidx.compose.ui.composed
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.bitaqaty.reseller.utilities.network.DataState
-import com.bitaqaty.reseller.utilities.network.PairType
 
 fun <T : Any> LazyGridScope.items(
     lazyPagingItems: LazyPagingItems<T>,
@@ -49,7 +48,7 @@ fun <T : Any> LazyPagingItems<T>.pagingLoadingState(
     }
 }
 
-fun <T : Any, U : Any> MutableState<DataState<PairType<T, U>>?>.pagingLoadingState(isLoaded: (pagingState: Boolean) -> Unit) {
+fun <T : Any, U : Any> MutableState<DataState<T>?>.pagingLoadingState(isLoaded: (pagingState: Boolean) -> Unit) {
     when (this.value) {
         is DataState.Success<T> -> {
             isLoaded(false)
@@ -59,21 +58,21 @@ fun <T : Any, U : Any> MutableState<DataState<PairType<T, U>>?>.pagingLoadingSta
             isLoaded(true)
         }
 
-        is DataState.ApiError -> {
-            isLoaded(false)
-        }
-
-        is DataState.EmptyResponse -> {
-            isLoaded(false)
-        }
-
-        is DataState.NetworkError -> {
-            isLoaded(false)
-        }
-
-        is DataState.UnknownError -> {
-            isLoaded(false)
-        }
+//        is DataState.ApiError -> {
+//            isLoaded(false)
+//        }
+//
+//        is DataState.EmptyResponse -> {
+//            isLoaded(false)
+//        }
+//
+//        is DataState.NetworkError -> {
+//            isLoaded(false)
+//        }
+//
+//        is DataState.UnknownError -> {
+//            isLoaded(false)
+//        }
 
         else -> {
 

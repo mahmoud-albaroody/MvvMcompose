@@ -1,12 +1,9 @@
 package com.bitaqaty.reseller.di
 
 import android.content.Context
-import android.util.Log
 import com.bitaqaty.reseller.HiltApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
-import com.bitaqaty.reseller.data.datasource.remote.NetworkResponseAdapterFactory
-import com.bitaqaty.reseller.data.datasource.remote.NullOnEmptyConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -99,14 +96,16 @@ object NetworkModule {
                 //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
                 .header("Authorization", "")
                 .header("Content-Type", "application/json; charset=utf-8")
-//                .header("locale", AccountData.auth_token.toString())
-//                .header("device-id", AccountData.auth_token.toString())
-//              //  .header("whitelabel-code", AccountData.auth_token.toString())
-//                .header("OS", AccountData.auth_token.toString())
-//                .header("Application-name", AccountData.auth_token.toString())
-//                .header("partner-device", AccountData.auth_token.toString())
-
-
+                .header("Content-Type", "application/json")
+                .header("locale", "en")
+                .header("device-id", "96baed0207d76e88")
+                .header("whitelabel-code", "BITAQATY_BUSINESS")
+                .header("OS", "ANDROID")
+                .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
+                .header(
+                    "Authorization",
+                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzUzMTc4ODcwLCJpYXQiOjE3MjE2NDI4NzAsImp0aSI6IjA3ZDc1ZGQ3LTdhNWYtNDc4NC04NWVmLWI2MmRkODMxN2M5ZiJ9.InH74uudtBDuPVSWyfEWoT5I0QO1lbvXHbm9C2B2EuTC5CJmyX2zFsfblMDwARD6k8IluuXgsmambizyrMYtkmCcBCzsORa4onwVI8Kgge7BhcxV_Wr_sm611qoIku5ZVM-m7six5SKKs9_g4Yz7hpfw2WFmQ7mERiDP__avvO10xU9m6ugvjwiumX3giKMxziNGH4x0GESyPhV44qNoGZPY72kwN7Z_hF8KsRUA6b3SW3M3PqQNdzDEHhP1-mrHILmy-P3s3c_pOimrs1j6OReOGO-cMGyKgQ9jIYXfUqJcWnuz7klNeXkaxXdcX5XAw2IEFzlp20J5TuRIvtZ3Ow"
+                )
             it.proceed(requestBuilder.build())
         }
     }
@@ -127,7 +126,6 @@ object NetworkModule {
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()
     }
-
     /**
      * Provides ApiServices client for Retrofit
      */

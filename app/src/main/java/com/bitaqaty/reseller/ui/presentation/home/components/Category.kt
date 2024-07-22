@@ -12,10 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bitaqaty.reseller.ui.presentation.home.Category
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.theme.LightGrey80
 import com.bitaqaty.reseller.utilities.TrapezoidShape
 
@@ -41,7 +42,7 @@ fun CategoryItem(
         ) {
             Canvas(modifier = Modifier.matchParentSize()) {
                 drawArc(
-                    color = if(isSelected) Color.LightGray else Color(0xff0E46A3),
+                    color = if (isSelected) Color.LightGray else Color(0xff0E46A3),
                     startAngle = 320f,
                     sweepAngle = 340f,
                     useCenter = false,
@@ -59,18 +60,19 @@ fun CategoryItem(
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = category.name,
+            text = category.nameEn!!,
             fontSize = 12.sp,
-            color = if(isSelected) Color.LightGray else Color.Blue
+            textAlign = TextAlign.Center,
+            color = if (isSelected) Color.LightGray else Color.Blue
         )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CategoryPreview() {
-    CategoryItem(
-        category = Category("Featured", ""),
-        isSelected = false
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun CategoryPreview() {
+//    CategoryItem(
+//        category = Category("Featured", ""),
+//        isSelected = false
+//    )
+//}

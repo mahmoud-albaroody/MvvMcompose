@@ -7,7 +7,6 @@ import com.bitaqaty.reseller.utilities.MySharedPreferences
 import com.bitaqaty.reseller.utilities.SurePayReceiver
 import com.google.gson.Gson
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 
 @HiltAndroidApp
 class HiltApplication : MultiDexApplication() {
@@ -28,8 +27,6 @@ class HiltApplication : MultiDexApplication() {
         gson = Gson()
         applicationInstance = this
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+
     }
 }

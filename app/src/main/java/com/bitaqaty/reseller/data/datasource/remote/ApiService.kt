@@ -1,12 +1,12 @@
 package com.bitaqaty.reseller.data.datasource.remote
 
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.network.DataState
-import com.bitaqaty.reseller.utilities.network.PairType
 import com.google.gson.JsonObject
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,16 +15,14 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-//    @GET("movie/now_playing")
-//    suspend fun nowPlayingMovieList(
-//        @Query("page") page: Int,
-//        @Query("with_genres") genreId: String?,
-//        @Query("api_key") api_key: String = ApiURL.API_KEY
-//    ): BaseModel
+
+    @POST(ApiURL.GET_CATEGORIES)
+    suspend fun getCategoryList():
+            DataState<ArrayList<Category>>
 
     @POST(Globals.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body jsonObject: JsonObject):
-            DataState<PairType<TransactionLogResult, Void>>
+            DataState<TransactionLogResult>
 
 
     @GET("movie/popular")

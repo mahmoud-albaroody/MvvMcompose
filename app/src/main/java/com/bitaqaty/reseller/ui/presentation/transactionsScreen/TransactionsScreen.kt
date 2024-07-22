@@ -55,9 +55,9 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = true) {
         transactionsViewModel.transactionsLog()
     }
-    transactionsLog.value.let {dataState ->
+    transactionsLog.value.let { dataState ->
         if (dataState is DataState.Success<TransactionLogResult>) {
-           Log.e("mmm",dataState.body.transactionLogList.toString())
+           Log.e("mmm",dataState.data.transactionLogList.toString())
         }
     }
     screen(onFilterClick = {
