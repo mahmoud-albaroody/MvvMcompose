@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.di
 
 import android.content.Context
 import android.util.Log
+import com.bitaqaty.reseller.HiltApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
 import com.bitaqaty.reseller.data.datasource.remote.NetworkResponseAdapterFactory
@@ -9,6 +10,7 @@ import com.bitaqaty.reseller.data.datasource.remote.NullOnEmptyConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -33,6 +35,17 @@ object NetworkModule {
         return ApiURL.BASE_URL
     }
 
+    @Singleton
+    @Provides
+    fun provideApplication(@ApplicationContext app: Context): HiltApplication {
+        return app as HiltApplication
+    }
+
+    @Singleton
+    @Provides
+    fun provideContext(application: HiltApplication): Context {
+        return application.applicationContext
+    }
     /**
      * Provides LoggingInterceptor for api information
      */
@@ -60,14 +73,17 @@ object NetworkModule {
         cache: Cache
     ): OkHttpClient {
         val okHttpClient = OkHttpClient().newBuilder()
-
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        val header = HttpLoggingInterceptor()
+        header.apply { header.level = HttpLoggingInterceptor.Level.HEADERS }
         okHttpClient.callTimeout(CALL_TIMEOUT.toLong(), TimeUnit.SECONDS)
         okHttpClient.connectTimeout(CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
         okHttpClient.readTimeout(READ_TIMEOUT.toLong(), TimeUnit.SECONDS)
         okHttpClient.writeTimeout(WRITE_TIMEOUT.toLong(), TimeUnit.SECONDS)
+        okHttpClient.cache(cache)
         okHttpClient.addInterceptor(loggingInterceptor)
         okHttpClient.addInterceptor(interceptor)
-        okHttpClient.build()
+
         return okHttpClient.build()
     }
 

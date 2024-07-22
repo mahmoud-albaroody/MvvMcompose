@@ -1,14 +1,10 @@
 package com.bitaqaty.reseller.data.repository
 
-import androidx.paging.PagingData
 import com.bitaqaty.reseller.data.model.TransactionLogResult
-import com.bitaqaty.reseller.data.model.artist.Artist
-import com.bitaqaty.reseller.data.model.artist.ArtistDetail
-import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.PairType
+import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.serialization.json.JsonObject
 
 interface BBRepositoryInterface {
     suspend fun getTransactionLogList(jsonObject: JsonObject): Flow<DataState<PairType<TransactionLogResult, Void>>>

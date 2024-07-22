@@ -7,7 +7,7 @@ import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.PairType
-import kotlinx.serialization.json.JsonObject
+import com.google.gson.JsonObject
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

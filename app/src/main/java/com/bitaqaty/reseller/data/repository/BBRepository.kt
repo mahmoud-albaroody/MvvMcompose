@@ -4,9 +4,10 @@ import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.PairType
+import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.json.JsonObject
+
 
 import javax.inject.Inject
 
@@ -37,9 +38,8 @@ class BBRepository @Inject constructor(
         try {
             val searchResult = apiService.getTransactionLogList(jsonObject)
             emit(searchResult)
-
         } catch (e: Exception) {
-            emit(DataState.ApiError(null,1))
+            emit(DataState.NetworkError(e))
         }
     }
 

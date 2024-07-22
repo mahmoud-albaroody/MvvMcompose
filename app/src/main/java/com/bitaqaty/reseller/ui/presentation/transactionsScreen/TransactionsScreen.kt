@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,18 +37,29 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.utilities.network.DataState
 
 
 @Composable
 fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     val transactionsViewModel: TransactionsViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
+    val transactionsLog = transactionsViewModel.transactionLogs
+
+    LaunchedEffect(key1 = true) {
+        transactionsViewModel.transactionsLog()
+    }
+    transactionsLog.value.let {dataState ->
+        if (dataState is DataState.Success<TransactionLogResult>) {
+           Log.e("mmm",dataState.body.transactionLogList.toString())
+        }
+    }
     screen(onFilterClick = {
         navController.navigate(Screen.ApplyFilterScreen.route)
     })
