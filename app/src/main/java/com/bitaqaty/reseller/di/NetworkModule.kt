@@ -46,6 +46,7 @@ object NetworkModule {
     fun provideContext(application: HiltApplication): Context {
         return application.applicationContext
     }
+
     /**
      * Provides LoggingInterceptor for api information
      */
@@ -140,9 +141,9 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
-           // .addConverterFactory(NullOnEmptyConverterFactory())
+            // .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(converterFactory)
-           // .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            // .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
 
