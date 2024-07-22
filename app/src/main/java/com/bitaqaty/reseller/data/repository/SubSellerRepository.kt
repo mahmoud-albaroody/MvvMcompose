@@ -10,6 +10,7 @@ import com.bitaqaty.reseller.data.datasource.remote.paging.UpcomingPagingDataSou
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.paging.TopRatedPagingDataSource
 import com.bitaqaty.reseller.data.model.BaseModel
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Genres
 import com.bitaqaty.reseller.data.model.MovieItem
 import com.bitaqaty.reseller.data.model.artist.Artist
@@ -20,9 +21,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class MovieRepository @Inject constructor(
+class SubSellerRepository @Inject constructor(
     private val apiService: ApiService
-) : MovieRepositoryInterface {
+) : SubSellerRepositoryInterface {
+    override suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>> = flow {
+        emit(DataState.Loading)
+        try {
+            val categoryList = apiService.getCategoryList()
+            emit(DataState.Success(categoryList))
+        }catch (e: Exception){
+            emit(DataState.Error(e))
+        }
+    }
+
     override suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>> = flow {
         emit(DataState.Loading)
         try {

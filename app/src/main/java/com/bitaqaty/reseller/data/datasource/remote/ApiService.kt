@@ -1,15 +1,21 @@
 package com.bitaqaty.reseller.data.datasource.remote
 
 import com.bitaqaty.reseller.data.model.BaseModel
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Genres
 import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
+import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
+    @POST(ApiURL.GET_CATEGORIES)
+    suspend fun getCategoryList(): ArrayList<Category>
+
     @GET("movie/now_playing")
     suspend fun nowPlayingMovieList(
         @Query("page") page: Int,

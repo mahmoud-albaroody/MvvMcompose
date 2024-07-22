@@ -1,9 +1,9 @@
 package com.bitaqaty.reseller.domain
 
-import com.bitaqaty.reseller.data.repository.MovieRepository
+import com.bitaqaty.reseller.data.repository.SubSellerRepository
 
 class MovieUseCase constructor(
-    private val repo: MovieRepository,
+    private val repo: SubSellerRepository,
 ) {
     suspend fun invoke(personId: Int) = repo.artistDetail(personId)
 }

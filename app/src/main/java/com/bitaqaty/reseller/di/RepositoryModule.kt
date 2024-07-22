@@ -1,7 +1,7 @@
 package com.bitaqaty.reseller.di
 
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
-import com.bitaqaty.reseller.data.repository.MovieRepository
+import com.bitaqaty.reseller.data.repository.SubSellerRepository
 import com.bitaqaty.reseller.domain.MovieUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,17 +17,17 @@ object RepositoryModule {
      */
     @Singleton
     @Provides
-    fun provideMovieRepository(
+    fun provideSubSellerRepository(
         apiService: ApiService,
-    ): MovieRepository {
-        return MovieRepository(
+    ): SubSellerRepository {
+        return SubSellerRepository(
             apiService
         )
     }
     @Singleton
     @Provides
     fun provideMovieUseCase(
-        apiService: MovieRepository,
+        apiService: SubSellerRepository,
     ): MovieUseCase {
         return MovieUseCase(
             apiService

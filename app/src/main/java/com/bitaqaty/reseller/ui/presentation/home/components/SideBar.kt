@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bitaqaty.reseller.ui.presentation.home.Category
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.LightGrey80
 import com.bitaqaty.reseller.ui.theme.merchantBg
@@ -48,14 +48,14 @@ fun CategoryList(categories: List<Category>) {
     }
 }
 
-val sampleCategories = listOf(
-    Category("Star", "Category 1"),
-    Category("Star", "Category 2"),
-    Category("Star", "Category 3"),
-)
+//val sampleCategories = listOf(
+//    Category("Star", "Category 1"),
+//    Category("Star", "Category 2"),
+//    Category("Star", "Category 3"),
+//)
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    CategoryList(categories = sampleCategories)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun Preview() {
+//    CategoryList(categories = sampleCategories)
+//}

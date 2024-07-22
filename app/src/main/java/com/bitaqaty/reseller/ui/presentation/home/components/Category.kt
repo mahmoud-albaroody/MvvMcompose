@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bitaqaty.reseller.ui.presentation.home.Category
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.theme.LightGrey80
 import com.bitaqaty.reseller.utils.TrapezoidShape
 
@@ -60,18 +60,18 @@ fun CategoryItem(
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = category.name,
+            text = category.nameEn!!,
             fontSize = 12.sp,
             color = if(isSelected) Color.LightGray else Color.Blue
         )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CategoryPreview() {
-    CategoryItem(
-        category = Category("Featured", ""),
-        isSelected = false
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun CategoryPreview() {
+//    CategoryItem(
+//        category = Category("Featured", ""),
+//        isSelected = false
+//    )
+//}
