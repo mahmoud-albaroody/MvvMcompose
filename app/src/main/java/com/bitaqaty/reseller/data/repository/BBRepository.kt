@@ -1,8 +1,9 @@
 package com.bitaqaty.reseller.data.repository
 
-import android.util.Log
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
@@ -49,13 +50,31 @@ class BBRepository @Inject constructor(
         flow {
             emit(DataState.Loading)
             try {
-                val searchResult = apiService.getCategoryList()
-                Log.e(
-                    "dddd",
-                    (searchResult as DataState.Success<ArrayList<Category>>).data.toString()
-                )
-                emit(searchResult)
+                val categoryList = apiService.getCategoryList()
+                emit(DataState.Success(categoryList))
             } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getTopMerchants(): Flow<DataState<TopMerchants>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val topMerchants = apiService.getTopMerchants()
+                emit(DataState.Success(topMerchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getMerchants(categoryId: Int): Flow<DataState<ArrayList<Merchant>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val merchants = apiService.getMerchants(categoryId)
+                emit(DataState.Success(merchants))
+            }catch (e: Exception){
                 emit(DataState.Error(e))
             }
         }

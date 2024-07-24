@@ -40,7 +40,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.presentation.home.Merchant
+import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.PlaceHolder
 import com.bitaqaty.reseller.ui.theme.clickedMerchant
@@ -73,7 +73,7 @@ fun MerchantItem(
                     .border(BorderStroke(2.dp, Color.White), shape = CircleShape)
             ) {
                 val imageRequest = ImageRequest.Builder(LocalContext.current)
-                    .data(merchant.imageUrl)
+                    .data(merchant.logoPath)
                     .placeholder(R.drawable.ic_search)
                     .error(R.drawable.ic_store)
                     .transformations(CircleCropTransformation())
@@ -93,7 +93,7 @@ fun MerchantItem(
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
                     .padding(end = Dimens.padding12),
-                text = merchant.name,
+                text = merchant.getName(),
                 color = if (isSelected) Color.White else merchantLabel,
                 style = MaterialTheme.typography.PlaceHolder,
             )
@@ -124,32 +124,32 @@ fun MerchantList(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun MerchantPreview() {
-    val merchant = Merchant(
-        name = "USA",
-        imageUrl = "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
-    )
-    MerchantItem(
-        merchant = merchant,
-        isSelected = false,
-        onClickMerchant = {}
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MerchantListPreview() {
-    val sampleMerchants = listOf(
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-    )
-
-    MerchantList(merchants = sampleMerchants, scrollState = LazyListState())
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun MerchantPreview() {
+//    val merchant = Merchant(
+//        name = "USA",
+//        imageUrl = "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
+//    )
+//    MerchantItem(
+//        merchant = merchant,
+//        isSelected = false,
+//        onClickMerchant = {}
+//    )
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun MerchantListPreview() {
+//    val sampleMerchants = listOf(
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//        Merchant("USA", ""),
+//    )
+//
+//    MerchantList(merchants = sampleMerchants, scrollState = LazyListState())
+//}

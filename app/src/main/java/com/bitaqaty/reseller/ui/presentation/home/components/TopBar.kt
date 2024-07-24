@@ -30,12 +30,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.ui.presentation.home.Merchant
+import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.ui.theme.Dimens
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    merchants: ArrayList<Merchant> = ArrayList()
+) {
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -52,22 +54,22 @@ fun TopBar() {
             painter = painterResource(id = R.drawable.bitaqaty_logo),
             contentDescription = "Logo",
         )
-        val sampleMerchants = listOf(
-            Merchant("USA", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("USE", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("USC", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("UST", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("USL", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("USI", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-            Merchant("USO", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
-        )
+//        val sampleMerchants = listOf(
+//            Merchant("USA", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("USE", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("USC", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("UST", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("USL", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("USI", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//            Merchant("USO", "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"),
+//        )
 
         Box(
             modifier = Modifier
                 .align(Alignment.CenterVertically),
             contentAlignment = Alignment.Center,
         ) {
-            MerchantList(merchants = sampleMerchants, scrollState = scrollState)
+            MerchantList(merchants = merchants, scrollState = scrollState)
             Icon(
                 modifier = Modifier
                     .height(48.dp)
@@ -79,7 +81,7 @@ fun TopBar() {
                     )
                     .clickable {
                         coroutineScope.launch {
-                            scrollState.animateScrollToItem(sampleMerchants.size - 1)
+                            scrollState.animateScrollToItem(merchants.size - 1)
                         }
                     },
                 painter = painterResource(id = R.drawable.ic_forward_arrow),
@@ -90,9 +92,9 @@ fun TopBar() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun TopBarPreview() {
-    TopBar()
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun TopBarPreview() {
+//    TopBar()
+//}

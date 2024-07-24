@@ -15,23 +15,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.ui.theme.LightGrey80
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CategoryList(categories: List<Category>) {
-    var selectedItem by remember { mutableStateOf<Category?>(null) }
+fun CategoryList(
+    categories: List<Category>,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    var selectedItem by remember { mutableStateOf<Category?>(categories.first()) }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
             .width(74.dp)
-            .background(color = LightGrey80),
+            .background(color = Color(0xFFBFCCEC)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(categories) { category ->
+        items(categories.subList(0, 5)) { category ->
             CategoryItem(
                 category = category,
                 isSelected = selectedItem == category,
@@ -39,17 +44,17 @@ fun CategoryList(categories: List<Category>) {
                     .fillParentMaxWidth()
                     .animateItemPlacement()
                     .background(color = Color(0xFFBFCCEC))
-                    .noRippleClickable { selectedItem = category }
+                    .noRippleClickable { selectedItem = category },
+                onClickCategory = {
+                    if(it != 0){
+                        viewModel.getMerchants(category.id)
+                        selectedItem = category
+                    }
+                }
             )
         }
     }
 }
-
-//val sampleCategories = listOf(
-//    Category("Star", "Category 1"),
-//    Category("Star", "Category 2"),
-//    Category("Star", "Category 3"),
-//)
 
 //@Preview(showBackground = true)
 //@Composable

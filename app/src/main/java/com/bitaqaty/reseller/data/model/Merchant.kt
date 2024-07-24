@@ -1,23 +1,18 @@
 package com.bitaqaty.reseller.data.model
 
 import com.bitaqaty.reseller.utilities.Globals
-import com.google.gson.annotations.SerializedName
 
-data class Category(
-    @SerializedName("id")
+data class Merchant(
     val id: Int = 0,
-    @SerializedName("nameAr")
-    private val nameAr: String? = null,
-    @SerializedName("nameEn")
-    private val nameEn: String? = null,
-    @SerializedName("imagePath")
-    val imagePath: String? = null,
-    @SerializedName("descriptionAr")
+    val nameAr: String? = null,
+    val nameEn: String? = null,
     val descriptionAr: String? = null,
-    @SerializedName("descriptionEn")
     val descriptionEn: String? = null,
-    @SerializedName("logoPath")
+    val howToUseAr: String? = null,
+    val howToUseEn: String? = null,
     val logoPath: String? = null,
+    val pinned: Boolean = true,
+    val isDelete: Boolean = false
 ){
     fun getName(): String {
         return if (Globals.lang == "en") {
@@ -32,6 +27,14 @@ data class Category(
             descriptionEn ?: descriptionAr ?: ""
         } else {
             descriptionAr ?: descriptionEn ?: ""
+        }
+    }
+
+    fun getHowToUse(): String {
+        return if (Globals.lang == "en") {
+            howToUseEn ?: howToUseAr ?: ""
+        } else {
+            howToUseAr ?: howToUseEn ?: ""
         }
     }
 }
