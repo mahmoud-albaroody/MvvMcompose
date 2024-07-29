@@ -3,6 +3,8 @@ package com.bitaqaty.reseller.data.repository
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.utilities.network.DataState
@@ -74,6 +76,17 @@ class BBRepository @Inject constructor(
             try {
                 val merchants = apiService.getMerchants(categoryId)
                 emit(DataState.Success(merchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getProducts(productsInfo: ProductListRequest): Flow<DataState<ProductListResponse>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val products = apiService.getProductList(productsInfo)
+                emit(DataState.Success(products))
             }catch (e: Exception){
                 emit(DataState.Error(e))
             }

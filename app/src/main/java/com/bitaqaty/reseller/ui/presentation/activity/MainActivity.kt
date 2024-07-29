@@ -210,6 +210,11 @@ fun MainScreen2(modifier: Modifier) {
                     haveBack = true
                     haveTopBar = true
                 }
+                currentRoute(navController) == Screen.Store.route -> {
+                    appTitle = "Shopping Categories"
+                    haveBack = false
+                    haveTopBar = true
+                }
             }
             if (haveTopBar) {
                 AppBarWithArrow(navigationTitle(navController, appTitle), haveBack = haveBack) {

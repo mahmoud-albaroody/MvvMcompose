@@ -1,13 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.home.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,23 +16,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.Product
+import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @Composable
-fun Product(
+fun ProductItem(
+    product: Product,
+    isSelected: Boolean,
     onClick: () -> Unit,
 ) {
     Card(
@@ -56,20 +52,26 @@ fun Product(
         Column(
             modifier = Modifier
                 .wrapContentWidth()
-                .background(Color.LightGray),
+                .background(if(isSelected) Color(0xFF3255A4) else Color.LightGray),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            UpperProductSection()
-            LowerProductSection()
+            ProductLogo(product.productSmallImagePath)
+            ProductPrice(
+                product.getRecommendedRetailPriceDouble().toString(),
+                isSelected
+            )
         }
     }
 }
 
 @Composable
-fun UpperProductSection() {
+fun ProductLogo(
+    logoUrl: String? = null
+) {
     Card(
         modifier = Modifier
-            .height(IntrinsicSize.Min),
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(
             topEndPercent = 20,
             bottomStartPercent = 20,
@@ -78,127 +80,58 @@ fun UpperProductSection() {
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Image(
+        ImageLoader(
             modifier = Modifier
-                .fillMaxSize(),
-            painter = painterResource(id = R.drawable.flag),
-            contentDescription = "Image"
+                .fillMaxWidth()
+                .size(120.dp),
+            imgUrl = logoUrl,
+            errorImg = R.drawable.no_image,
+            isCircle = false
         )
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(Color.Gray)
-//                .padding(10.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Text(
-//                modifier = Modifier.fillMaxWidth(),
-//                textAlign = TextAlign.Center,
-//                text = "ITunes",
-//                fontSize = 18.sp,
-//                color = Color.Black,
-//                fontWeight = FontWeight.Bold,
-//            )
-//
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.Center,
-//                verticalAlignment = Alignment.Top,
-//            ) {
-//                Text(
-//                    modifier = Modifier.padding(end = 4.dp),
-//                    textAlign = TextAlign.Center,
-//                    text = "$",
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 20.sp,
-//                    color = Color.Black,
-//                    style = TextStyle(
-//                        shadow = Shadow(
-//                            color = Color.White,
-//                            offset = Offset(10f, 10f),
-//                            blurRadius = 30f
-//                        )
-//                    )
-//                )
-//                Text(
-//                    modifier = Modifier
-//                        .padding(end = 4.dp)
-//                        .wrapContentWidth(),
-//                    text = "10",
-//                    textAlign = TextAlign.Center,
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 36.sp,
-//                    color = Color.Black,
-//                    style = TextStyle(
-//                        shadow = Shadow(
-//                            color = Color.LightGray,
-//                            offset = Offset(60f, 80f),
-//                            blurRadius = 70f
-//                        ),
-//                        platformStyle = PlatformTextStyle(includeFontPadding = false)
-//                    )
-//                )
-//            }
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .align(Alignment.End),
-//                verticalAlignment = Alignment.Bottom,
-//                horizontalArrangement = Arrangement.Center
-//            ) {
-//                Image(
-//                    modifier = Modifier
-//                        .wrapContentWidth()
-//                        .size(36.dp),
-//                    painter = painterResource(id = R.drawable.flag),
-//                    contentDescription = "Image"
-//                )
-//                Image(
-//                    modifier = Modifier
-//                        .size(36.dp)
-//                        .wrapContentWidth()
-//                        .padding(end = 4.dp)
-//                        .size(80.dp),
-//                    painter = painterResource(id = R.drawable.ic_manager_icon),
-//                    contentDescription = "Image",
-//                    alignment = Alignment.TopEnd
-//                )
-//            }
-//        }
     }
 }
 
 @Composable
-fun LowerProductSection() {
+fun ProductPrice(
+    price: String? = null,
+    isSelected: Boolean
+) {
     Column(
-        modifier = Modifier.wrapContentWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             modifier = Modifier
-                .wrapContentWidth()
-                .align(Alignment.CenterHorizontally),
-            text = "18.75",
-            fontSize = 18.sp,
-            color = Color.Black,
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 4.dp),
+            text = price.toString(),
+            fontSize = 14.sp,
+            color = if(isSelected) Color.White else Color.DarkGray,
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.SemiBold,
+            lineHeight = TextUnit.Unspecified,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1
         )
         Text(
             modifier = Modifier
-                .wrapContentWidth()
+                .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(bottom = 8.dp),
+                .padding(bottom = 4.dp),
             text = "SAR",
-            fontSize = 12.sp,
-            color = Color.Black,
+            fontSize = 10.sp,
+            color = if(isSelected) Color.White else Color.DarkGray,
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Normal,
+            lineHeight = TextUnit.Unspecified
         )
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ProductPreview() {
-    Product(onClick = {})
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun ProductPreview() {
+//    ProductItem(product = Product(recommendedRetailPrice = "200.0")) {
+//
+//    }
+//}

@@ -39,6 +39,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.TopMerchant
+import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
@@ -89,18 +90,13 @@ fun TopMerchantLogo(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        val imageRequest = ImageRequest.Builder(LocalContext.current)
-            .data(logoUrl)
-            .placeholder(R.drawable.loading)
-            .error(R.drawable.bitaqaty_logo)
-            .build()
-        AsyncImage(
-            model = imageRequest,
-            contentDescription = "Country Flag",
-            contentScale = ContentScale.FillBounds,
+        ImageLoader(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(100.dp)
+                .size(100.dp),
+            imgUrl = logoUrl,
+            errorImg = R.drawable.no_image,
+            isCircle = false,
         )
     }
 }

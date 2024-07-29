@@ -1,20 +1,17 @@
 package com.bitaqaty.reseller.ui.presentation.home
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.repository.BBRepository
 import com.bitaqaty.reseller.utilities.network.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,12 +24,19 @@ class HomeViewModel @Inject constructor(
     val categoryState: State<DataState<ArrayList<Category>>> = _categoryState
 
     private val _topMerchantsState =
-        mutableStateOf<DataState<TopMerchants>>(DataState.Loading)
-    val topMerchantsState: State<DataState<TopMerchants>> = _topMerchantsState
+        mutableStateOf<DataState<TopMerchants>?>(null)
+    val topMerchantsState: State<DataState<TopMerchants>?> = _topMerchantsState
 
     private val _merchantsState =
         mutableStateOf<DataState<ArrayList<Merchant>>?>(null)
     val merchantsState: State<DataState<ArrayList<Merchant>>?> = _merchantsState
+
+    private val _productsState =
+        mutableStateOf<DataState<ProductListResponse>>(DataState.Loading)
+    val productsState: State<DataState<ProductListResponse>> = _productsState
+
+    private val _categoryId = mutableStateOf<Int?>(null)
+    val categoryId: State<Int?> = _categoryId
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -47,10 +51,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getTopMerchants(){
+    fun getTopMerchants(){
         viewModelScope.launch {
             repo.getTopMerchants().collect{ state ->
                 _topMerchantsState.value = state
+                _merchantsState.value = null
             }
         }
     }
@@ -59,6 +64,23 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             repo.getMerchants(categoryId).collect{ state ->
                 _merchantsState.value = state
+                if(state is DataState.Success){
+                    val productsInfo = ProductListRequest(
+                        categoryId = categoryId,
+                        merchantId = state.data.first().id
+                    )
+                    getProducts(productsInfo)
+                    _topMerchantsState.value = null
+                    _categoryId.value = categoryId
+                }
+            }
+        }
+    }
+
+    fun getProducts(productsInfo: ProductListRequest){
+        viewModelScope.launch {
+            repo.getProducts(productsInfo).collect{state ->
+                _productsState.value = state
             }
         }
     }

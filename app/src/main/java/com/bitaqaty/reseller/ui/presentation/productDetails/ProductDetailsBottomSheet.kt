@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.BalancePayButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ConfirmBalancePayButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.Counter
@@ -58,6 +59,7 @@ import com.bitaqaty.reseller.utilities.noRippleClickable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsBottomSheet(
+    product: Product? = null,
     isBottomSheetVisible: Boolean,
     sheetState: SheetState,
     onDismiss: () -> Unit
@@ -71,12 +73,8 @@ fun ProductDetailsBottomSheet(
             shape = RectangleShape,
             dragHandle = null,
             scrimColor = Color.Black.copy(alpha = .5f),
-
         ) {
             var isExpanded by remember { mutableStateOf(false) }
-            val navigationBarHeight = with(LocalDensity.current) {
-                WindowInsets.navigationBars.getBottom(this).toDp()
-            }
 
             var isBalancePayClicked by remember { mutableStateOf(false) }
             var isConfirmBalancePayClicked by remember { mutableStateOf(false) }
@@ -128,7 +126,7 @@ fun ProductDetailsBottomSheet(
                     if (isExpanded) {
                         Text(
                             modifier = Modifier.padding(top = 24.dp),
-                            text = "Apple & iTunes Giftcard \$10 (US Store)\n",
+                            text = "${product?.getName() ?: ""} (US Store)\n",
                             fontFamily = arial,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 14.sp,
@@ -214,23 +212,21 @@ fun ProductDetailsBottomSheet(
                     }
                 }
             }
-//            Spacer(modifier = Modifier
-//                .height(navigationBarHeight))
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-@Preview(showBackground = false, showSystemUi = true)
-fun ProductDetailsBottomSheetPreview(){
-    val sheetState = rememberStandardBottomSheetState(
-        initialValue = SheetValue.Expanded
-    )
-    ProductDetailsBottomSheet(
-        isBottomSheetVisible = true,
-        sheetState = sheetState,
-        onDismiss = {}
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//@Preview(showBackground = false, showSystemUi = true)
+//fun ProductDetailsBottomSheetPreview(){
+//    val sheetState = rememberStandardBottomSheetState(
+//        initialValue = SheetValue.Expanded
+//    )
+//    ProductDetailsBottomSheet(
+//        isBottomSheetVisible = true,
+//        sheetState = sheetState,
+//        onDismiss = {}
+//    )
+//}
 

@@ -38,7 +38,7 @@ fun CategoryItem(
     Column(
         modifier = backgroundModifier
             .padding(vertical = 14.dp)
-            .noRippleClickable { onClickCategory(category.id) },
+            .noRippleClickable { if(!isSelected) onClickCategory(category.id) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(

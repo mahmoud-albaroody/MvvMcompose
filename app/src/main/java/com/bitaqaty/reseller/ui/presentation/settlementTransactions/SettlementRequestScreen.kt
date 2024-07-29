@@ -42,7 +42,7 @@ import com.bitaqaty.reseller.ui.theme.SearchBarText
 import com.bitaqaty.reseller.utilities.AppConstant.MIN_Transfer_AMOUNT
 
 @Composable
-fun SettlementTransactionsScreen(){
+fun SettlementRequestScreen(){
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 12.dp),
@@ -328,5 +328,5 @@ enum class ValidationType {
 @Composable
 @Preview(showSystemUi = true)
 fun SettlementTransactionsScreenPreview(){
-    SettlementTransactionsScreen()
+    SettlementRequestScreen()
 }

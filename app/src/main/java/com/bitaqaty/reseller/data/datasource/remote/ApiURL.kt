@@ -7,7 +7,8 @@ object ApiURL {
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w342"
 
     const val BASE_URL = BuildConfig.BASE_URL
-    const val GET_CATEGORIES = "categories/list-categories"
+    const val CATEGORIES = "categories/list-categories"
     const val TOP_MERCHANTS = "sub-acc-home/top-merchants"
     const val MERCHANTS = "merchants/list-merchants/{category_id}"
+    const val PRODUCT_LIST = "products/list-products"
 }

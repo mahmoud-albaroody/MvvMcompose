@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.ui.presentation.home.components.MerchantList
-import com.bitaqaty.reseller.ui.presentation.home.components.Product
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -96,7 +95,7 @@ fun SearchCategoryList(items: Int) {
         contentPadding = PaddingValues(start = Dimens.padding12)
     ) {
         items(items) { _ ->
-            SearchCategory()
+            //SearchCategory()
         }
     }
 }
@@ -114,14 +113,14 @@ fun SearchProductList(items: Int) {
     LazyRow(
         contentPadding = PaddingValues(start = Dimens.padding12)
     ) {
-        items(items) { _ ->
-            Product(onClick = {
-                scope.launch {
-                    isBottomSheetVisible = true
-                    sheetState.expand()
-                }
-            })
-        }
+//        items(items) { _ ->
+//            Product(onClick = {
+//                scope.launch {
+//                    isBottomSheetVisible = true
+//                    sheetState.expand()
+//                }
+//            })
+//        }
     }
 
     ProductDetailsBottomSheet(

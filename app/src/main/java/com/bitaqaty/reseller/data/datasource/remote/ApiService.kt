@@ -2,6 +2,8 @@ package com.bitaqaty.reseller.data.datasource.remote
 
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.artist.Artist
@@ -18,7 +20,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @POST(ApiURL.GET_CATEGORIES)
+    @POST(ApiURL.CATEGORIES)
     suspend fun getCategoryList(): ArrayList<Category>
 
     @POST(ApiURL.TOP_MERCHANTS)
@@ -26,7 +28,8 @@ interface ApiService {
 
     @POST(ApiURL.MERCHANTS)
     suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
-
+    @POST(ApiURL.PRODUCT_LIST)
+    suspend fun getProductList(@Body productsInfo: ProductListRequest): ProductListResponse
     @POST(Globals.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body jsonObject: JsonObject):
             DataState<TransactionLogResult>
