@@ -9,62 +9,63 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.bitaqaty.reseller.ui.navigation.Screen
+import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.SettlementLog
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
-import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLog
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogHeader
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogItems
-import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogViewModel
-import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey300
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.bitaqaty.reseller.ui.theme.White
 
 @Composable
 fun SettlementTransactionsScreen(navController: NavController, modifier: Modifier) {
-    val notificationViewModel: SettlementTransactionsViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
-    SettlementTransactions()
+    val settlementTransactionsViewModel: SettlementTransactionsViewModel = hiltViewModel()
+    LaunchedEffect(key1 = true) {
+        settlementTransactionsViewModel.settlementLog(1, 1)
+    }
+    settlementTransactionsViewModel.settlementLogs.value.let {
+        SettlementTransactions(it?.requestsLogs)
+    }
+
 }
 
-@Preview
 @Composable
-fun SettlementTransactions() {
+fun SettlementTransactions(settlementLog: ArrayList<SettlementLog>?) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(White)
     ) {
 
-        FilterButton(backgroundTex = Blue100, text = "Transaction Request",
-            iconVisibility = true, horizontalPadding =  Dimens.DefaultMargin,textColor = Color.White ) {
+        FilterButton(
+            backgroundTex = Blue100, text = stringResource(id = R.string.transfer_request),
+            iconVisibility = true, horizontalPadding = Dimens.DefaultMargin, textColor = White
+        ) {
 
         }
         RechargeLogHeader(
             LightGrey300,
-            "Date/Time",
-            "Method",
-            "Amount",
-            "Balance After",
+            stringResource(id = R.string.date_time),
+            stringResource(id = R.string.method),
+            stringResource(id = R.string.amount),
+            stringResource(id = R.string.status),
             FontWeight.Bold,
             textAlign = TextAlign.Center, false
         )
 
-        Box(androidx.compose.ui.Modifier.height(screenHeight * 0.68f)) {
-            RechargeLogItems(false)
+        Box(Modifier.height(screenHeight * 0.68f)) {
+            RechargeLogItems(false, settlementLog)
         }
 
     }

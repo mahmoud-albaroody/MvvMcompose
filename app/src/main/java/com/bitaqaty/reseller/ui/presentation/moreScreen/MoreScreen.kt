@@ -1,6 +1,9 @@
 package com.bitaqaty.reseller.ui.presentation.moreScreen
 
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,21 +13,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,79 +32,128 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Screen
-import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilter
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivity
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
-import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue
 import com.bitaqaty.reseller.ui.theme.Dimens
-import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey200
-import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.LightGrey80
+import com.bitaqaty.reseller.ui.theme.Red
+import com.bitaqaty.reseller.ui.theme.Transparent
+import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Globals.lang
+import com.bitaqaty.reseller.utilities.LocaleHelper
+import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.Utils.getLang
+import com.bitaqaty.reseller.utilities.Utils.loadLocale
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @Composable
 fun MoreScreen(navController: NavController, modifier: Modifier) {
     val moreViewModel: MoreViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+
+        moreViewModel.viewModelScope.launch {
+            moreViewModel.getLogout.collect {
+                navController.navigate(Screen.LoginScreen.route)
+            }
+        }
+    }
     More(onItemClick = {
+
         when (it) {
 
-            "Notifications" -> {
+            context.resources.getString(R.string.notification) -> {
                 navController.navigate(Screen.Notification.route)
             }
 
-            "Edit Profile" -> {
+            context.resources.getString(R.string.edit_profile) -> {
                 navController.navigate(Screen.MyProfileScreen.route)
             }
 
-            "Reports" -> {
+            context.resources.getString(R.string.reports) -> {
                 navController.navigate(Screen.SalesReportScreen.route)
             }
 
-            "Add Balance" -> {
+            context.resources.getString(R.string.add_balance) -> {
                 navController.navigate(Screen.ChargeBalanceScreen.route)
             }
 
-            "English" -> {
-                //     navController.navigate(Screen.Notification.route)
+            context.resources.getString(R.string.reseller_support) -> {
             }
 
-            "Settlement\n" + "Transaction" -> {
+            "English" -> {
+                changeLang(context)
+            }
+
+            "عربي" -> {
+                changeLang(context)
+            }
+
+            context.resources.getString(R.string.settlement_transaction) -> {
                 navController.navigate(Screen.SettlementTransactionsScreen.route)
             }
 
-            "Product \n" + "Discount List" -> {
+            context.resources.getString(R.string.product_discount_list) -> {
                 navController.navigate(Screen.ProductsDiscountsScreen.route)
             }
 
-            "Logout" -> {
-                navController.navigate(Screen.MainScreen.route)
+            context.resources.getString(R.string.logout) -> {
+                moreViewModel.logout()
             }
         }
 
     })
 }
 
+private fun changeLang(context: Context) {
+    var lan = ""
+    lan = if (getLang() == "en") {
+        "ar"
+    } else {
+        "en"
+    }
+    Utils.saveLang(lan)
+
+    (context as? Activity)?.finish()
+
+    (context as? Activity)?.startActivity(
+        Intent(
+            context,
+            MainActivity::class.java
+        )
+    )
+}
+
 
 @Composable
 fun More(onItemClick: (String) -> Unit) {
+    val context = LocalContext.current
+    val langText: String = if (getLang() == "en") {
+        "عربي"
+    } else {
+        "English"
+    }
 
     Column(
         Modifier
-            .background(Color.White)
+            .background(White)
             .fillMaxSize()
             .padding(horizontal = Dimens.halfDefaultMargin)
             .padding(top = Dimens.halfDefaultMargin)
@@ -114,43 +162,49 @@ fun More(onItemClick: (String) -> Unit) {
     ) {
         Column {
             MoreItem(
-                text = "Notifications",
+                text = stringResource(id = R.string.notification),
                 text2 = "3",
                 textColor = Blue,
                 icon = R.drawable.ic_notification,
                 weight = 8f, onItemClick = {
-                    onItemClick.invoke("Notifications")
+                    onItemClick.invoke(context.getString(R.string.notification))
                 }
             )
             MoreReport(
-                "Edit Profile", "Add Balance",
-                text3 = "Khalid Ali", text4 = "15000,00",
+                stringResource(R.string.edit_profile),
+                stringResource(R.string.add_balance),
+                text3 = Utils.getUserData()?.reseller?.username ?: "",
+                text4 = Utils.getUserData()?.reseller?.getBalance() ?: "",
                 onItemClick = {
                     onItemClick.invoke(it)
                 }
             )
             MoreReport(
-                text3 = "Reports",
-                text4 = "Reseller\n" + "Support",
+                text3 = stringResource(R.string.reports),
+                text4 = stringResource(R.string.reseller_support),
                 onItemClick = {
                     onItemClick.invoke(it)
                 }
             )
             MoreReport(
-                text3 = "Product \n" + "Discount List",
-                text4 = "Settlement\n" + "Transaction",
+                text3 = stringResource(R.string.product_discount_list),
+                text4 = stringResource(R.string.settlement_transaction),
                 onItemClick = {
                     onItemClick.invoke(it)
                 }
             )
             MoreItem(
-                text = "Reports",
-                text2 = "English",
+                text = stringResource(id = R.string.language),
+                text2 = langText,
                 textColor = Blue,
                 icon = R.drawable.ic_language,
                 weight = 8f,
                 onItemClick = {
-                    onItemClick.invoke("English")
+                    if (lang == "ar") {
+                        onItemClick.invoke("English")
+                    } else {
+                        onItemClick.invoke("عربي")
+                    }
                 }
             )
         }
@@ -164,12 +218,12 @@ fun More(onItemClick: (String) -> Unit) {
                 )
             }
             Box(Modifier.padding(top = Dimens.halfDefaultMargin)) {
-                FilterButton(backgroundTex = Color.Red,
-                    text = "Logout",
+                FilterButton(backgroundTex = Red,
+                    text = stringResource(R.string.logout),
                     iconVisibility = false,
-                    textColor = Color.White,horizontalPadding =  Dimens.DefaultMargin,
+                    textColor = White, horizontalPadding = Dimens.DefaultMargin,
                     onApplyFilterClick = {
-                        onItemClick.invoke("Logout")
+                        onItemClick.invoke(context.getString(R.string.logout))
                     })
             }
         }
@@ -240,13 +294,16 @@ fun MoreItem(
             },
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = White)
 
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Dimens.halfDefaultMargin, vertical = Dimens.fourDefaultMargin),
+                .padding(
+                    horizontal = Dimens.halfDefaultMargin,
+                    vertical = Dimens.fourDefaultMargin
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -308,11 +365,11 @@ fun MoreItem(
 
 
                 text2?.let {
-                    var textCo: Color = Color.White
-                    var color = Color.Red
+                    var textCo: Color = White
+                    var color = Red
 
-                    if (text2 == "English") {
-                        color = Color.Transparent
+                    if (text2 == "English" || text2 == "عربي") {
+                        color = Transparent
                         textCo = LightGrey200
                     }
                     Card(

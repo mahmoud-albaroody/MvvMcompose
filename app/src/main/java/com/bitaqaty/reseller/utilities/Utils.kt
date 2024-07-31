@@ -44,6 +44,7 @@ import com.bitaqaty.reseller.utilities.Globals.DEVICE_ID
 import com.bitaqaty.reseller.utilities.Globals.ERROR_LOG
 import com.bitaqaty.reseller.utilities.Globals.IS_MADA
 import com.bitaqaty.reseller.utilities.Globals.IS_MOBILY
+import com.bitaqaty.reseller.utilities.Globals.LANG
 import com.bitaqaty.reseller.utilities.Globals.LOGIN_PROCESS_TOKEN
 import com.bitaqaty.reseller.utilities.Globals.MADA_DATA
 import com.bitaqaty.reseller.utilities.Globals.MADA_VERSION
@@ -90,7 +91,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun saveLang() {
+    fun saveLang(lang:String) {
         CURRENT_INDEX = 0
         mPrefs?.putString(CURRENT_LANG, lang)
         mPrefs?.commit()
@@ -300,6 +301,8 @@ object Utils {
         mPrefs?.commit()
     }
 
+
+
     @JvmStatic
     fun isMadaApp(): Boolean {
         return BuildConfig.IS_SURE
@@ -308,12 +311,12 @@ object Utils {
 
     @JvmStatic
     fun isPartnerApp(): Boolean {
-            return BuildConfig.IS_PARTNER || getUserData()?.reseller?.partner == true
+        return BuildConfig.IS_PARTNER || getUserData()?.reseller?.partner == true
     }
 
     @JvmStatic
     fun isShowCart(): Boolean {
-   //     return true
+        //     return true
         return getUserData()?.reseller?.showCart == true
     }
 
@@ -834,18 +837,21 @@ object Utils {
                 fromY = if (type == SlideType.HIDE) 0f else (array[1] + height).toFloat()
                 toY = if (type == SlideType.HIDE) -1f * (array[1] + height) else 0f
             }
+
             SlideDirection.DOWN -> {
                 fromX = 0f
                 toX = 0f
                 fromY = if (type == SlideType.HIDE) 0f else -1f * (array[1] + height)
                 toY = if (type == SlideType.HIDE) 1f * (array[1] + height) else 0f
             }
+
             SlideDirection.LEFT -> {
                 fromX = if (type == SlideType.HIDE) 0f else 1f * (array[0] + width)
                 toX = if (type == SlideType.HIDE) -1f * (array[0] + width) else 0f
                 fromY = 0f
                 toY = 0f
             }
+
             SlideDirection.RIGHT -> {
                 fromX = if (type == SlideType.HIDE) 0f else -1f * (array[0] + width)
                 toX = if (type == SlideType.HIDE) 1f * (array[0] + width) else 0f

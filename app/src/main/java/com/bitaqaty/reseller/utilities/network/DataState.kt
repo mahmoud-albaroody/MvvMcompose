@@ -7,7 +7,7 @@ package com.bitaqaty.reseller.utilities.network
 
 //data class PairType<out T : Any, out U : Any>(val first: T, val second: U)
 
-sealed class DataState<out T > {
+sealed class DataState<out R> {
     data class Success<out T>(val data: T) : DataState<T>()
     data class Error(val exception: Exception) : DataState<Nothing>()
     object Loading : DataState<Nothing>()

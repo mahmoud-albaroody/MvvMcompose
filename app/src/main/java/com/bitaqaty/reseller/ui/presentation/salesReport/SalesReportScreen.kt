@@ -362,7 +362,7 @@ fun SalesReportItem() {
                     bottom = Dimens.DefaultMargin
                 )
             ) {
-                TransactionsDetails()
+                TransactionsDetails("")
                 Card(
                     Modifier
                         .fillMaxWidth()

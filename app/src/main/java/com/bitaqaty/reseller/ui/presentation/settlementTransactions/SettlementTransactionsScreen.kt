@@ -41,12 +41,13 @@ import com.bitaqaty.reseller.ui.theme.SearchBarBackground
 import com.bitaqaty.reseller.ui.theme.SearchBarText
 import com.bitaqaty.reseller.utilities.AppConstant.MIN_Transfer_AMOUNT
 
+@Preview
 @Composable
-fun SettlementTransactionsScreen(){
+fun SettlementTransactionsScreen() {
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 12.dp),
-    ){
+    ) {
         item { SettlementHeader() }
         item { Spacer(modifier = Modifier.height(16.dp)) }
         item { BasicData() }
@@ -61,7 +62,7 @@ fun SettlementTransactionsScreen(){
 }
 
 @Composable
-fun SettlementHeader(){
+fun SettlementHeader() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -93,7 +94,7 @@ fun SettlementHeader(){
 }
 
 @Composable
-fun BasicData(){
+fun BasicData() {
     Column {
         Text(
             text = "Basic Data",
@@ -130,7 +131,7 @@ fun BasicData(){
 }
 
 @Composable
-fun BankStatements(){
+fun BankStatements() {
     Column {
         Text(
             text = "Bank Statements",
@@ -166,7 +167,7 @@ fun BankStatements(){
 }
 
 @Composable
-fun AdditionalNotes(){
+fun AdditionalNotes() {
     Column {
         Text(
             text = "Additional Notes",
@@ -210,7 +211,7 @@ fun AdditionalNotes(){
 }
 
 @Composable
-fun SendButton(){
+fun SendButton() {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,6 +227,7 @@ fun SendButton(){
         )
     }
 }
+
 @Composable
 fun ValidationTextField(
     modifier: Modifier = Modifier,
@@ -252,8 +254,10 @@ fun ValidationTextField(
                 it.isEmpty() -> "*This field is required"
                 validationType == ValidationType.TRANSFER_AMOUNT && !validateAmount(it).isValid ->
                     validateAmount(it).errorMessage
+
                 validationType == ValidationType.IBAN && !validateIBAN(it).isValid ->
                     validateIBAN(it).errorMessage
+
                 else -> ""
             }
         },
@@ -280,7 +284,7 @@ fun ValidationTextField(
         shape = RoundedCornerShape(10.dp),
         keyboardOptions = keyBoardType,
     )
-    if(isError){
+    if (isError) {
         Text(
             text = errorMessage,
             color = Color.Red
@@ -289,44 +293,50 @@ fun ValidationTextField(
 }
 
 private fun validateAmount(amount: String): Validation {
-    return if(amount.toFloat() < MIN_Transfer_AMOUNT){
+    return if (amount.toFloat() < MIN_Transfer_AMOUNT) {
         Validation(
             isValid = false,
             errorMessage = "*The Minimum amount to request is $MIN_Transfer_AMOUNT"
         )
-    }else{
+    } else {
         Validation(isValid = true)
     }
 }
 
 private fun validateIBAN(IBAN: String): Validation {
     return when {
-        IBAN.length >= 2 && IBAN.substring(0,2) != "SA" -> {
+        IBAN.length >= 2 && IBAN.substring(0, 2) != "SA" -> {
             Validation(false, "*IBAN code should started with SA")
         }
+
         IBAN.trim().length != 24 -> {
             Validation(false, "*Invalid IBAN code")
         }
-        IBAN.length == 24 && IBAN.trim().substring(2,24).any { !it.isDigit() } -> {
+
+        IBAN.length == 24 && IBAN.trim().substring(2, 24).any { !it.isDigit() } -> {
             Validation(false, "*22 number must be entered")
         }
+
         else -> {
             Validation(true)
         }
     }
 }
+
 data class Validation(
     val isValid: Boolean,
     val errorMessage: String = ""
 )
+
 enum class ValidationType {
     DEFAULT,
     TRANSFER_AMOUNT,
     IBAN,
     NOTES
 }
+
 @Composable
 @Preview(showSystemUi = true)
-fun SettlementTransactionsScreenPreview(){
+fun SettlementTransactionsScreenPreview() {
     SettlementTransactionsScreen()
 }

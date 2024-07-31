@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,11 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.ui.theme.Red
+import com.bitaqaty.reseller.ui.theme.Transparent
+import com.bitaqaty.reseller.ui.theme.White
 
 
 @Composable
@@ -71,20 +76,26 @@ fun ApplyFilter(onApplyFilterClick: () -> Unit) {
 
     ) {
         Column {
-            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
             TextFiledd()
-            DynamicSelectTextField(TextAlign.Center)
-            DynamicSelectTextField(TextAlign.Center)
-            DynamicSelectTextField(TextAlign.Center)
-            DynamicSelectTextField(TextAlign.Center)
-            DynamicSelectTextField(TextAlign.Center)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
+            DynamicSelectTextField(TextAlign.Center,
+                listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5"),true)
             CheckBox()
         }
         Column {
             FilterButton(
-                backgroundTex = Blue100, text = "Filter",
+                backgroundTex = Blue100, text = stringResource(id = R.string.filter),
                 iconVisibility = true,
-                textColor = Color.White,
+                textColor = White,
                 horizontalPadding =  Dimens.DefaultMargin, onApplyFilterClick = {
                     onApplyFilterClick.invoke()
                 }
@@ -121,12 +132,12 @@ fun TextFiledd() {
             onValueChange = { },
             shape = RoundedCornerShape(8.dp),
             colors = ExposedDropdownMenuDefaults.textFieldColors(
-                cursorColor = Color.Red,
-                disabledLabelColor = Color.Blue,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
+                cursorColor = BebeBlue,
+                disabledLabelColor = BebeBlue,
+                focusedIndicatorColor = Transparent,
+                unfocusedIndicatorColor = Transparent,
+                unfocusedContainerColor =Transparent,
+                focusedContainerColor = Transparent,
             )
         )
     }
@@ -134,9 +145,9 @@ fun TextFiledd() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DynamicSelectTextField(textAlign: TextAlign) {
-    val options: List<String> =
-        listOf("Please follow the instructions", "Option 2", "Option 3", "Option 4", "Option 5")
+fun DynamicSelectTextField(textAlign: TextAlign,
+                           options: List<String>,clickable:Boolean) {
+
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
 
@@ -149,7 +160,7 @@ fun DynamicSelectTextField(textAlign: TextAlign) {
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+        colors = CardDefaults.cardColors(containerColor = White)
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -172,23 +183,26 @@ fun DynamicSelectTextField(textAlign: TextAlign) {
                     Image(
                         modifier = Modifier
                             .weight(1f),
-                        painter = painterResource(R.drawable.ic_arrow_down),
+                        painter = painterResource
+                            (R.drawable.ic_arrow_down),
                         contentDescription = ""
                     )
                 },
                 shape = RoundedCornerShape(8.dp),
-                colors = ExposedDropdownMenuDefaults.textFieldColors(
-                    cursorColor = Color.Red,
-                    disabledLabelColor = Color.Blue,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
+                colors = ExposedDropdownMenuDefaults.
+                textFieldColors(
+                    cursorColor = BebeBlue,
+                    disabledLabelColor = BebeBlue,
+                    focusedIndicatorColor = Transparent,
+                    unfocusedIndicatorColor = Transparent,
+                    unfocusedContainerColor = Transparent,
+                    focusedContainerColor = Transparent,
                 ),
 
                 )
             ExposedDropdownMenu(
                 expanded = expanded,
+                modifier = Modifier.background(White),
                 onDismissRequest = {
                     expanded = false
                 }
@@ -199,18 +213,19 @@ fun DynamicSelectTextField(textAlign: TextAlign) {
                             Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Color.Transparent)
-                                    .padding(vertical = Dimens.fourDefaultMargin),
+                                    .background(White),
                                 text = selectionOption,
                                 style = TextStyle(
                                     textAlign = TextAlign.Center,
-                                    color = Color.Red
+                                    color = FontColor
                                 )
                             )
                         },
                         onClick = {
-                            selectedOptionText = selectionOption
-                            expanded = false
+                            if(clickable) {
+                                selectedOptionText = selectionOption
+                                expanded = false
+                            }
 
                         }
                     )

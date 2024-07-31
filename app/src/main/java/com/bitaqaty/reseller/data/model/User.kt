@@ -3,7 +3,7 @@ package com.bitaqaty.reseller.data.model
 import com.bitaqaty.reseller.utilities.Utils
 
 data class User(
-    var errors: ArrayList<ErrorMessage>? = ArrayList(),
+    var errors: ArrayList<ErrorMessage> = ArrayList(),
     var token: String? = null,
     var oneSingleToken: String? = null,
     var reseller: UserInfo? = null,

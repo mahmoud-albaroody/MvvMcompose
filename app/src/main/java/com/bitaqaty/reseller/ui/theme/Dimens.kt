@@ -21,6 +21,7 @@ object Dimens {
     val imageSize = 19.dp
     val fontSize = 14.sp
     val fontSize10 = 10.sp
+    val fontSize12 = 12.sp
     val fontSize9 = 9.sp
     val padding = 10.dp
 

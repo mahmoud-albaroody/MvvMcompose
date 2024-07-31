@@ -19,7 +19,8 @@ sealed class Screen(
 
     object RechargeLogScreen : Screen("rechargeLogScreen", 0, "rechargeLogScreen")
 
-    object SelectMainCategoryScreen : Screen("selectMainCategoryScreen", 0, "selectMainCategoryScreen")
+    object SelectMainCategoryScreen :
+        Screen("selectMainCategoryScreen", 0, "selectMainCategoryScreen")
 
     object SelectSubCategoryScreen : Screen("selectSubCategoryScreen", 0, "selectSubCategoryScreen")
 
@@ -43,8 +44,20 @@ sealed class Screen(
     object RechargeUsingMadaScreen : Screen("rechargeUsingMadaScreen", 0, "rechargeUsingMadaScreen")
 
 
-
     object ForgetPasswordScreen : Screen("forgetPasswordScreen", 0, "forgetPasswordScreen")
+    object VerificationCodeScreen : Screen(
+        "verificationCodeScreen",
+        0,
+        "verificationCodeScreen", objectName = "verificationCodeScreen/",
+        objectPath = "{object}"
+    )
+    object RestorePasswordScreen : Screen(
+        "restorePasswordScreen",
+        0,
+        "restorePasswordScreen", objectName = "restorePasswordScreen/",
+        objectPath = "{username}"
+    )
+
 
     object MainScreen2 : Screen("MainScreen2", 0, "MainScreen2")
     object MainScreen : Screen("MainScreen", 0, "MainScreen")
@@ -52,6 +65,7 @@ sealed class Screen(
 
     object ProductsDiscountsScreen : Screen("ProductsDiscountsScreen", 0, "ProductsDiscountsScreen")
 
-    object SettlementTransactionsScreen : Screen("SettlementTransactionsScreen", 0, "SettlementTransactionsScreen")
+    object SettlementTransactionsScreen :
+        Screen("SettlementTransactionsScreen", 0, "SettlementTransactionsScreen")
 
 }

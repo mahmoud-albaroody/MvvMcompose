@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.RechargingLog
+import com.bitaqaty.reseller.data.model.SettlementLog
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationHeader
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationItem
@@ -39,43 +44,63 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey300
+import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Utils
 
 @Composable
 fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
-    val notificationViewModel: RechargeLogViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
-    RechargeLog(onFilterClick = {
-        navController.navigate(Screen.ApplyFilterScreen.route)
-    })
+    val rechargeLogViewModel: RechargeLogViewModel = hiltViewModel()
+    var discrmenationVal = ""
+    var dateFrom = ""
+    var dateTo = ""
+    var pageIndex = 1
+    var dateMethod: String? = null
+
+    LaunchedEffect(key1 = true) {
+        rechargeLogViewModel.getRechargingList(
+            pageIndex,
+            discrmenationVal,
+            dateFrom,
+            dateTo,
+            dateMethod
+        )
+    }
+    rechargeLogViewModel.rechargeLogs.value.let {
+        RechargeLog(it?.resultList, onFilterClick = {
+            navController.navigate(Screen.ApplyFilterScreen.route)
+        })
+    }
+
 }
 
 //
 //@Preview
 @Composable
-fun RechargeLog(onFilterClick: () -> Unit) {
+fun RechargeLog(rechargingLogs: ArrayList<RechargingLog>?, onFilterClick: () -> Unit) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(White),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Box (Modifier.height(screenHeight * 0.68f)){
+        Column(Modifier.height(screenHeight * 0.70f)) {
             Column {
                 RechargeLogHeader(
                     LightGrey300,
-                    "Date/Time",
-                    "Method",
-                    "Amount",
-                    "Balance After",
+                    stringResource(id = R.string.date_time),
+                    stringResource(id = R.string.method),
+                    stringResource(id = R.string.amount),
+                    stringResource(id = R.string.balance_after),
                     FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     true
                 )
-                RechargeLogItems(true)
+                RechargeLogItems(true, rechargingLogs = rechargingLogs)
             }
         }
-        Box() {
+        Column(Modifier.height(screenHeight * 0.15f)) {
             Filter(
                 onFilterClick = {
                     onFilterClick.invoke()
@@ -89,21 +114,54 @@ fun RechargeLog(onFilterClick: () -> Unit) {
 
 
 @Composable
-fun RechargeLogItems(isViewMothed: Boolean) {
+fun RechargeLogItems(
+    isViewMothed: Boolean,
+    settlementLog: ArrayList<SettlementLog>? = null,
+    rechargingLogs: ArrayList<RechargingLog>? = null
+) {
     LazyColumn(
         Modifier
             .fillMaxSize(), content = {
-            items(10) {
-                RechargeLogHeader(
-                    LightGrey100,
-                    "12/12/2023 03:11:55 PM",
-                    "Mada Alhly",
-                    "500",
-                    "100",
-                    null,
-                    textAlign = TextAlign.Start,
-                    isViewMothed
-                )
+            if (settlementLog != null) {
+                items(settlementLog) {
+                    val amount = "${it.amount} ${Utils.getUserCurrency()}"
+                    val status: String = when (it.status) {
+                        "PENDING" -> {
+                            stringResource(R.string.pending)
+                        }
+
+                        "DONE" ->
+                            stringResource(R.string.done1)
+
+                        else -> {
+                            stringResource(R.string.rejected)
+                        }
+                    }
+                    RechargeLogHeader(
+                        LightGrey100,
+                        it.creationDate,
+                        stringResource(id = R.string.mada_ahly),
+                        amount,
+                        status,
+                        null,
+                        textAlign = TextAlign.Center,
+                        isViewMothed
+                    )
+                }
+            } else if (rechargingLogs != null) {
+                items(rechargingLogs) {
+                    val amount = "${it.amount} ${Utils.getUserCurrency()}"
+                    RechargeLogHeader(
+                        LightGrey100,
+                        it.getCheckingDate(),
+                        it.getChargingMethod(),
+                        amount,
+                        it.getBalanceAfterValue().toString(),
+                        null,
+                        textAlign = TextAlign.Center,
+                        isViewMothed
+                    )
+                }
             }
         })
 }
@@ -120,7 +178,7 @@ fun RechargeLogHeader(
         Modifier
             .padding(
                 horizontal = Dimens.DefaultMargin,
-                vertical = Dimens.padding10
+                vertical = Dimens.padding4
             )
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.halfDefaultMargin),
@@ -151,7 +209,8 @@ private fun ChargeItemText(
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(vertical = Dimens.DefaultMargin, horizontal = Dimens.halfDefaultMargin),
+            .padding(vertical = Dimens.DefaultMargin,
+                horizontal = Dimens.DefaultMargin),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

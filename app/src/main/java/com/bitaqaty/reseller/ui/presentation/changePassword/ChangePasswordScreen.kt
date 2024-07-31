@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -135,12 +136,14 @@ fun ChangePassword() {
                             style = TextStyle(color = BebeBlue)
                         )
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        containerColor = Color.Transparent,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        cursorColor = BebeBlue, // Customize the cursor color as needed
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
-                        cursorColor = BebeBlue // Customize the cursor color as needed
-                        , errorBorderColor = Color.Transparent
+                        errorBorderColor = Color.Transparent,
                     ),
                     onValueChange = {
                         password = it
@@ -203,12 +206,14 @@ fun ChangePassword() {
                             style = TextStyle(color = BebeBlue)
                         )
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        containerColor = Color.Transparent,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        cursorColor = BebeBlue, // Customize the cursor color as needed
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
-                        cursorColor = BebeBlue // Customize the cursor color as needed
-                        , errorBorderColor = Color.Transparent
+                        errorBorderColor = Color.Transparent,
                     ),
                     onValueChange = {
                         password = it

@@ -7,9 +7,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.RemainingTrials
+import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.repository.BBRepository
+import com.bitaqaty.reseller.domain.AuthenticationUseCase
+import com.bitaqaty.reseller.domain.SettingUseCase
 import com.bitaqaty.reseller.utilities.network.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,36 +24,58 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repo: BBRepository
+    private val repo: BBRepository, private val settingUseCase: SettingUseCase
 ) : ViewModel() {
-    private val _categoryState =
-        mutableStateOf<DataState<ArrayList<Category>>?>(DataState.Loading)
-    val categoryState: State<DataState<ArrayList<Category>>?> = _categoryState
+    //    private val _categoryState =
+//        mutableStateOf<DataState<ArrayList<Category>>?>(DataState.Loading)
+//    val categoryState: State<DataState<ArrayList<Category>>?> = _categoryState
+    val categoryState: MutableState<DataState<ArrayList<Category>>?> = mutableStateOf(null)
 
-//    init {
-//        getCategoryList()
-//    }
-//
-//    private fun getCategoryList() {
-//        viewModelScope.launch {
-//            repository.getCategoryList().collect { state ->
-//                _categoryState.value = state
-//            }
-//        }
-//    }
+    private val _getProfile =
+        MutableSharedFlow<User>()
+    val getProfile: MutableSharedFlow<User>
+        get() = _getProfile
 
-//    val categoryState: MutableState<DataState<ArrayList<Category>>> =
-//        mutableStateOf(DataState.Loading)
+    private val _getSystemSetting =
+        MutableSharedFlow<ArrayList<SystemSettings>>()
+    val getSystemSetting: MutableSharedFlow<ArrayList<SystemSettings>>
+        get() = _getSystemSetting
+
 
     fun getCategoryList() {
         viewModelScope.launch {
             repo.getCategoryList()
                 .catch {
-        Log.e("dddd","sdfdsf")
+                    Log.e("dddd", "sdfdsf")
                 }
                 .onEach {
-                    _categoryState.value = it
+                    categoryState.value = it
                 }.launchIn(viewModelScope)
         }
     }
+
+    fun getProfile() {
+        viewModelScope.launch {
+            settingUseCase.getProfile()
+                .catch {
+
+                }
+                .onEach {
+                    _getProfile.emit(it)
+                }.launchIn(viewModelScope)
+        }
+    }
+
+    fun getSystemSetting() {
+        viewModelScope.launch {
+            settingUseCase.getSystemSettings()
+                .catch {
+
+                }
+                .onEach {
+                    _getSystemSetting.emit(it)
+                }.launchIn(viewModelScope)
+        }
+    }
+
 }

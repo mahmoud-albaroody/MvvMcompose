@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="reseller_support">Reseller Support</string>
+    <string name="product_discount_list">Product Discount List</string>
+    <string name="settlement_transaction">Settlement Transaction</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome</string>
+    <string name="your_balance">Your Balance</string>
+    <string name="reports">Reports</string>
+    <string name="by_continue_recharging_you_agree_on">By continue recharging you agree on</string>
+    <string name="charge_balance">Charge Balance</string>
+
+</resources>

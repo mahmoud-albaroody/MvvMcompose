@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +37,8 @@ import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.border
+import com.bitaqaty.reseller.utilities.DateUtils
+import com.bitaqaty.reseller.utilities.Utils
 
 @Composable
 fun MyProfileScreen(navController: NavController, modifier: Modifier) {
@@ -64,7 +67,8 @@ fun Profile(onItemClick: (String) -> Unit) {
                         horizontal = Dimens.DefaultMargin, vertical = Dimens.defaultMargin6
                     )
             ) {
-                AccountManager("Account Manager",
+                AccountManager(
+                    stringResource(id = R.string.account_manager),
                     R.drawable.ic_manager_icon, 13, onItemClick = {
                         onItemClick("Account Manager")
                     })
@@ -73,10 +77,12 @@ fun Profile(onItemClick: (String) -> Unit) {
                 Modifier
                     .fillMaxWidth()
                     .padding(
-                        horizontal = Dimens.DefaultMargin, vertical = Dimens.defaultMargin6
+                        horizontal = Dimens.DefaultMargin,
+                        vertical = Dimens.defaultMargin6
                     )
             ) {
-                AccountManager("Change Password",
+                AccountManager(
+                    stringResource(id = R.string.change_password),
                     R.drawable.ic_password_svgrepo, 13,
                     onItemClick = {
                         onItemClick("Change Password")
@@ -84,9 +90,18 @@ fun Profile(onItemClick: (String) -> Unit) {
             }
         }
         Column(Modifier.padding(top = Dimens.padding40)) {
-            ProfileFooter("FAQ", R.drawable.ic_check_faq_help_infor)
-            ProfileFooter("Terms and Conditions", R.drawable.ic_verified_check_svgre)
-            ProfileFooter("Privacy", R.drawable.ic_shield_user_svgrepo)
+            ProfileFooter(
+                stringResource(id = R.string.more_faq),
+                R.drawable.ic_check_faq_help_infor
+            )
+            ProfileFooter(
+                stringResource(id = R.string.termsAndConditions),
+                R.drawable.ic_verified_check_svgre
+            )
+            ProfileFooter(
+                stringResource(id = R.string.more_privacy_policy),
+                R.drawable.ic_shield_user_svgrepo
+            )
         }
 
 
@@ -142,11 +157,11 @@ fun ProfileDetails() {
                                 .padding(horizontal = Dimens.halfDefaultMargin)
                         ) {
                             Text(
-                                text = "Welcome",
+                                text = stringResource(R.string.welcome),
                                 style = TextStyle(color = LightGrey200, fontSize = 14.sp)
                             )
                             Text(
-                                text = "Khalidalisub5",
+                                text = Utils.getUserData()?.reseller?.username ?: "",
                                 style = TextStyle(
                                     color = Color.Black,
                                     fontSize = 14.sp
@@ -158,17 +173,18 @@ fun ProfileDetails() {
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Sub Account",
+                        text = stringResource(id = R.string.profile_sub_account),
                         style = TextStyle(
                             color = LightGrey200,
                             fontSize = 14.sp
                         )
                     )
                     Text(
-                        text = "Khalid ali",
+                        text = Utils.getUserData()?.reseller?.username ?: "",
                         style = TextStyle(
                             color = LightGrey200,
                             fontSize = 14.sp
@@ -180,7 +196,7 @@ fun ProfileDetails() {
                 Modifier
                     .fillMaxWidth()
                     .padding(
-                        vertical = Dimens.halfDefaultMargin, horizontal = Dimens.DefaultMargin
+                        vertical = Dimens.halfDefaultMargin,
                     )
                     .padding(top = Dimens.padding30)
             ) {
@@ -188,28 +204,48 @@ fun ProfileDetails() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Last Visit Date",
-                        style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+                        text = stringResource(id = R.string.profile_last_visit_date),
+                        style = TextStyle(
+                            color = LightGrey200,
+                            fontSize = 13.sp,
+                            textAlign = TextAlign.Center
+                        )
                     )
                     Text(
-                        text = "Account No.",
-                        style = TextStyle(color = LightGrey200, fontSize = 14.sp)
+                        text = stringResource(R.string.profile_account_no),
+                        style = TextStyle(
+                            color = LightGrey200,
+                            fontSize = 13.sp,
+                            textAlign = TextAlign.Center
+                        )
                     )
                 }
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .padding(start = Dimens.halfDefaultMargin),
+                        .padding(start = Dimens.halfDefaultMargin,
+                            top = Dimens.padding2),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(
-                        text = "12-12-2023, 12:59:05 PM",
-                        style = TextStyle(color = LightGrey200, fontSize = 12.sp)
-                    )
+                    Utils.getUserData()?.reseller?.lastLoginDate?.let {
+                        Text(
+                            text = DateUtils.getlastVisitDate(it),
+                            style = TextStyle(
+                                color = LightGrey200,
+                                fontSize = 12.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+                    }
+
                     Text(
                         modifier = Modifier.padding(top = Dimens.fourDefaultMargin),
-                        text = "5604001752",
-                        style = TextStyle(color = LightGrey200, fontSize = 12.sp)
+                        text = Utils.getUserData()?.reseller?.accountNumber ?: "",
+                        style = TextStyle(
+                            color = LightGrey200,
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center
+                        )
                     )
                 }
             }
@@ -295,7 +331,7 @@ fun ProfileFooter(text: String, icon: Int) {
                 .fillMaxWidth(), style = TextStyle(
                 textAlign = TextAlign.Start,
                 color = BebeBlue,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
             ), text = text
         )
     }

@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +39,12 @@ import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BottomNavigationBar(navController: NavController) {
+    Screen.Home.title = stringResource(id = R.string.home)
+    Screen.Search.title = stringResource(id = R.string.productSearchHint)
+    Screen.Favorite.title = stringResource(R.string.favorite)
+    Screen.Store.title = stringResource(R.string.store)
+    Screen.Transactions.title = stringResource(id = R.string.transactionLog)
+    Screen.More.title = stringResource(id = R.string.more)
     val items = listOf(
         Screen.Home,
         Screen.Search,
@@ -99,7 +106,7 @@ fun BottomNavigationBar(navController: NavController) {
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     text = item.title,
-                                    fontFamily = frutigerLTArabic,
+
                                     fontSize = Dimens.fontSize9,
                                     fontWeight = if (isSelected) {
                                         FontWeight.Bold

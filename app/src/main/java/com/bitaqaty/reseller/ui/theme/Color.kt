@@ -29,13 +29,22 @@ val LightGrey200 = Color(0xff7E7E7E)
 val LightGrey300 = Color(0xffD8D8D8)
 val LightGrey400 = Color(0xff707070)
 val LightGrey800 = Color(0x4B4B4B)
+
+val Transparent = Color(0x00000000)
+
+
+val Grey = Color(0xff888888)
+
 val BebeBlue = Color(0xff5874B4)
+
 val Blue100 = Color(0xFF3155A4)
 val LiteBlue = Color(0xFFCEDAF3)
 val Blue = Color(0xFF3255A4)
 
-val Green = Color(0xff23A212)
+val Red = Color(0xFFEB0303)
+val White = Color(0xFFFFFFFF)
 
+val Green = Color(0xff23A212)
 
 
 val counterText = Color(0xFF4B4B4B)

@@ -1,7 +1,5 @@
 package com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen
 
-
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,62 +8,53 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.AccountManager
 import com.bitaqaty.reseller.ui.theme.BebeBlue
-import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
-import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.ui.theme.Transparent
+import com.bitaqaty.reseller.utilities.Utils
 
 
 @Composable
 fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
-    val notificationViewModel: ChargeBalanceViewModel = hiltViewModel()
-
+    val chargeBalanceViewModel: ChargeBalanceViewModel = hiltViewModel()
+    val context = LocalContext.current
     LaunchedEffect(key1 = true) {}
     ChargeBalance(onItemClick = {
         when (it) {
-            "Mada Ahly" -> {
+            context.resources.getString(R.string.mada_ahly) -> {
                 navController.navigate(Screen.RechargeScreen.route)
             }
 
-            "Bank Transfer" -> {
+            context.resources.getString(R.string.bank_transfer) -> {
                 navController.navigate(Screen.BankTransferScreen.route)
             }
 
-            "Recharging Log" -> {
+            context.resources.getString(R.string.rechargeLog) -> {
                 navController.navigate(Screen.RechargeLogScreen.route)
             }
         }
@@ -75,6 +64,7 @@ fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
 
 @Composable
 fun ChargeBalance(onItemClick: (String) -> Unit) {
+    val context = LocalContext.current
     Column(
         Modifier
             .fillMaxSize()
@@ -88,12 +78,16 @@ fun ChargeBalance(onItemClick: (String) -> Unit) {
 
         Column {
             ProfileBalance()
-            MadaAhly("Mada Ahly", Color.White, Blue100, onItemClick = {
-                onItemClick("Mada Ahly")
+            MadaAhly(stringResource(id = R.string.mada_ahly), BebeBlue, Transparent, onItemClick = {
+                onItemClick(context.getString(R.string.mada_ahly))
             })
-            MadaAhly("Bank Transfer", BebeBlue, Color.Transparent, onItemClick = {
-                onItemClick("Bank Transfer")
-            })
+            MadaAhly(
+                stringResource(id = R.string.bank_transfer),
+                BebeBlue,
+                Transparent,
+                onItemClick = {
+                    onItemClick(context.getString(R.string.bank_transfer))
+                })
         }
 
         FooterChangeBalance(onItemClick = {
@@ -122,7 +116,7 @@ fun ProfileBalance() {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .weight(2.5f)
+                    .weight(2f)
                     .padding(Dimens.halfDefaultMargin)
             ) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -138,11 +132,11 @@ fun ProfileBalance() {
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Welcome",
+                            text = stringResource(id = R.string.welcome),
                             style = TextStyle(color = LightGrey200),
                         )
                         Text(
-                            text = "Khalid Ali",
+                            text = Utils.getUserData()?.reseller?.username ?: "",
                             style = TextStyle(fontWeight = FontWeight.Bold),
                             modifier = Modifier.padding(top = Dimens.halfDefaultMargin)
                         )
@@ -151,13 +145,14 @@ fun ProfileBalance() {
             }
             Column(
                 Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Your Balance",
+                    text = stringResource(R.string.your_balance),
                     style = TextStyle(color = LightGrey200)
                 )
                 Text(
-                    text = "15000,00",
+                    text = Utils.getUserData()?.reseller?.getBalance() ?: "",
                     style = TextStyle(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(top = Dimens.halfDefaultMargin)
                 )
@@ -222,6 +217,8 @@ fun MadaAhly(
 
 @Composable
 fun FooterChangeBalance(onItemClick: (String) -> Unit) {
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -237,13 +234,14 @@ fun FooterChangeBalance(onItemClick: (String) -> Unit) {
                 .weight(1f)
                 .padding(end = Dimens.fourDefaultMargin)
                 .clickable {
-                    onItemClick("Recharging Log")
+                    onItemClick(context.getString(R.string.rechargeLog))
                 }
         ) {
-            AccountManager("Recharging Log",
+            AccountManager(
+                stringResource(id = R.string.rechargeLog),
                 R.drawable.ic_cart_large, 12,
                 onItemClick = {
-                    onItemClick("Recharging Log")
+                    onItemClick(context.getString(R.string.rechargeLog))
                 })
 
         }
@@ -253,12 +251,15 @@ fun FooterChangeBalance(onItemClick: (String) -> Unit) {
                 .weight(1f)
                 .padding(start = Dimens.fourDefaultMargin)
                 .clickable {
-                    onItemClick("Bank Transfer")
+                    onItemClick(context.getString(R.string.bank_transfer))
                 }
         ) {
-            AccountManager("Bank Transfer", R.drawable.ic_calendar_date_schedu, 12, onItemClick = {
-
-            })
+            AccountManager(
+                stringResource(id = R.string.bank_transfer),
+                R.drawable.ic_calendar_date_schedu,
+                12,
+                onItemClick = {
+                })
         }
     }
 }

@@ -12,7 +12,30 @@ object Globals {
     const val STORE_KEY_PASSWORD = "OneCard\$160314"
     const val APPLICATION_ID = "com.bitaqaty.reseller"
     var DEV_ID = ""
+    const val SIGN_IN = "auth/login"
+    const val LOGIN_CHANGE_PASSWORD = "auth/login-change-password"
+    const val RESET_CHANGE_PASSWORD = "auth/forget-password-change"
+    const val CHANGE_PASSWORD = "profile/change-password"
+    const val AUTHENTICATED_LOGIN = "auth/authenticated-login"
+    const val PROFILE = "auth/get-reseller"
 
+    const val ACCESS_DATA = "auth/validate-username-access-data"
+
+    const val REMAINING_TRAILS = "auth/sms-verification-remaining-trials"
+    const val VERIFICATION_REMAINING_TRAILS = "auth/verification-remaining-trials"
+    const val VALIDATE_SMS_VERIFICATION_CODE = "auth/validate-sms-verification-code"
+    const val RESEND_SMS_VERIFICATION_CODE = "auth/resend-reset-access-data-sms"
+    const val VALIDATE_RESET_SMS_VERIFICATION_CODE = "auth/validate-reset-access-data-sms"
+
+    const val ACCEPT_AGREEMENT = "auth/accept-agreement"
+    const val FORGET_PASSWORD = "auth/forget-password"
+    const val FORGET_PASSWORD_INIT = "auth/forget-password-init"
+    const val FORGET_PASSWORD_SEND = "auth/forget-password-send"
+    const val VERIFY_FORGET_PASSWORD = "auth/verify-forget-password"
+    const val LOGOUT = "auth/logout"
+    const val SYSTEM_SETTINGS = "system-settings/system-settings"
+
+    const val White_Label = "auth/white-label-system-setting"
 
     //Notification
     const val Notification = "https://app.onesignal.com/api/v1/notifications"
@@ -160,6 +183,7 @@ object Globals {
     const val SUPER_STATE_KEY = "SUPER_STATE_KEY"
     const val USER_DATA = "USER_DATA"
     const val IS_MADA = "IS_MADA"
+    const val LANG = "LANG"
     const val CATEGORY_DATA = "CATEGORY_DATA"
     const val MERCHANT_DATA = "MERCHANT_DATA"
     const val IS_TOP_MERCHANT = "IS_TOP_MERCHANT"
@@ -197,7 +221,7 @@ object Globals {
     //</editor-fold>
 
     //<editor-fold desc="Global values">
-    var lang: String = "en"
+    var lang: String = "ar"
     var MORE_PERMISSIONS = intArrayOf()
     var CURRENT_INDEX = 0
     var CURRENT_HOME_SUBE_SELECTED = DATE.CURRENT_MONTH.value

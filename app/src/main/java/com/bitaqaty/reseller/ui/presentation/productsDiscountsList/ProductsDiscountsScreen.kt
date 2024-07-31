@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
@@ -23,25 +24,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.salesReport.PrintExportButton
-import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReport
-import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReportItem
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
@@ -53,13 +57,25 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 @Composable
 fun ProductsDiscountsScreen(navController: NavController, modifier: Modifier) {
     val productsDiscountsViewModel: ProductsDiscountsViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
-    ProductsDiscounts()
+    val products: SnapshotStateList<Product> = remember { mutableStateListOf<Product>() }
+    LaunchedEffect(key1 = true) {
+        productsDiscountsViewModel
+            .getProductDiscountList(
+                0, 89,
+                312052, "", false
+            )
+        productsDiscountsViewModel.getProduct.collect {
+            products.clear()
+            products.addAll(it.products)
+
+        }
+    }
+    ProductsDiscounts(products)
+
 }
 
-@Preview
 @Composable
-fun ProductsDiscounts() {
+fun ProductsDiscounts(products: SnapshotStateList<Product>) {
     Column(
         Modifier
             .fillMaxSize()
@@ -71,8 +87,8 @@ fun ProductsDiscounts() {
                 .fillMaxSize()
                 .background(Color.White),
             content = {
-                items(10) {
-                    ProductsDiscountsItem()
+                items(products) {
+                    ProductsDiscountsItem(it)
                 }
             })
 
@@ -88,9 +104,9 @@ fun CancelDone() {
 
 }
 
-@Preview
+
 @Composable
-fun ProductsDiscountsItem() {
+fun ProductsDiscountsItem(product: Product) {
     var viewDetails by remember { mutableStateOf(false) }
     var arrow = R.drawable.ic_forward_arrow
     Card(
@@ -131,7 +147,7 @@ fun ProductsDiscountsItem() {
                     contentDescription = ""
                 )
                 Text(
-                    text = "Playstation PSN Card 10",
+                    text = product.getName(),
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 14.sp
@@ -152,7 +168,7 @@ fun ProductsDiscountsItem() {
             ) {
                 Text(
                     modifier = Modifier,
-                    text = "Playstation PSN Card 10",
+                    text = stringResource(id = R.string.costPrice),
                     style = TextStyle(
                         color = LightGrey400,
                         fontSize = 14.sp
@@ -161,7 +177,7 @@ fun ProductsDiscountsItem() {
                 Text(
                     modifier = Modifier
                         .padding(vertical = Dimens.halfDefaultMargin),
-                    text = "19.68",
+                    text = product.getRecommendedRetailPriceDouble().toString(),
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 15.sp,
@@ -189,13 +205,16 @@ fun ProductsDiscountsItem() {
                         .padding(horizontal = Dimens.halfDefaultMargin)
                 ) {
                     Box(Modifier.weight(1f)) {
-                        ServiceItem()
+                        ServiceItem(stringResource(id = R.string.service), "")
                     }
                     Box(Modifier.weight(1f)) {
-                        ServiceItem()
+                        ServiceItem(stringResource(id = R.string.vat_amount_per), product.getVat())
                     }
                     Box(Modifier.weight(1f)) {
-                        ServiceItem()
+                        ServiceItem(
+                            stringResource(id = R.string.costAfterVat),
+                            product.recommendedRetailPriceAfterVat.toString()
+                        )
                     }
                 }
                 Card(
@@ -258,14 +277,13 @@ fun SalesReportItemDetails() {
     }
 }
 
-@Preview
 @Composable
-fun ServiceItem() {
+fun ServiceItem(name: String, valu: String) {
     Card(
         Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = Dimens.halfDefaultMargin
+                horizontal = Dimens.quarterDefaultMargin
             )
             .padding(
                 top = Dimens.fourDefaultMargin,
@@ -285,19 +303,20 @@ fun ServiceItem() {
                 modifier = Modifier
                     .padding(horizontal = Dimens.padding2)
                     .padding(top = Dimens.halfDefaultMargin),
-                text = "Playstation PSN Card 10",
+                text = name,
+                minLines = 2,
                 style = TextStyle(
                     color = LightGrey400,
-                    fontSize = 12.sp, textAlign = TextAlign.Center
+                    fontSize = 11.sp, textAlign = TextAlign.Center
                 ),
             )
             Text(
                 modifier = Modifier
                     .padding(vertical = Dimens.halfDefaultMargin),
-                text = "19.68",
+                text = valu,
                 style = TextStyle(
                     color = Color.Black,
-                    fontSize = 15.sp,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 ),
             )

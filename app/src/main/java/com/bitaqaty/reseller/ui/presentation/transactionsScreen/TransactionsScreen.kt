@@ -1,7 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
@@ -23,53 +24,64 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey400
-import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Utils
 
 
 @Composable
 fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     val transactionsViewModel: TransactionsViewModel = hiltViewModel()
-    val transactionsLog = transactionsViewModel.transactionLogs
-
+    val transactionLogList = remember { mutableStateListOf<TransactionLog>() }
     LaunchedEffect(key1 = true) {
         transactionsViewModel.transactionsLog()
-    }
-    transactionsLog.value.let { dataState ->
-        if (dataState is DataState.Success<TransactionLogResult>) {
-           Log.e("mmm",dataState.data.transactionLogList.toString())
+        transactionsViewModel.transactionLogs.collect {
+            transactionLogList.clear()
+            transactionLogList.addAll(it.transactionLogList)
+
         }
     }
-    screen(onFilterClick = {
+
+    screen(transactionLogList = transactionLogList) {
         navController.navigate(Screen.ApplyFilterScreen.route)
-    })
+    }
 }
 
 //@Preview
 @Composable
-fun screen(onFilterClick: () -> Unit) {
-    Box(Modifier.fillMaxSize()) {
-        Transactions()
+fun screen(transactionLogList: List<TransactionLog>, onFilterClick: () -> Unit) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(White)) {
+        Transactions(transactionLogList)
         Box(Modifier.align(Alignment.BottomEnd)) {
             Filter(onFilterClick = {
                 onFilterClick.invoke()
@@ -80,18 +92,18 @@ fun screen(onFilterClick: () -> Unit) {
 }
 
 @Composable
-fun Transactions() {
+fun Transactions(transactionLogList: List<TransactionLog>) {
     LazyColumn(
         Modifier
-            .background(Color.White), content = {
-            items(100) {
-                TransactionsItem()
+            .background(White), content = {
+            items(transactionLogList) {
+                TransactionsItem(it)
             }
         })
 }
 
 @Composable
-fun TransactionsItem() {
+fun TransactionsItem(transactionLog: TransactionLog) {
     var viewDetails by remember { mutableStateOf(false) }
     var arrow = R.drawable.ic_forward_arrow
     Card(
@@ -121,36 +133,49 @@ fun TransactionsItem() {
                 .padding(Dimens.halfDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+//            Image(
+//                modifier = Modifier
+//                    .padding(Dimens.halfDefaultMargin),
+//                painter = painterResource(R.drawable.logo),
+//                contentDescription = ""
+//            )
             Image(
+                painter = rememberAsyncImagePainter(
+                    model = transactionLog.merchantLogoPath
+                ),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
                 modifier = Modifier
-                    .padding(Dimens.halfDefaultMargin),
-                painter = painterResource(R.drawable.logo),
-                contentDescription = ""
+                    .size(70.dp, 100.dp)
+                    .clip(RoundedCornerShape(5.dp))
             )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(start = Dimens.padding8)
                     .weight(4f),
             ) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "Playstation PSN Card 10",
+                    text = transactionLog.getProductName(),
                     style = TextStyle(
-                        color = Color.Black,
+                        color = Black,
                         fontSize = 16.sp
                     ),
                 )
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = Dimens.halfDefaultMargin),
-                    text = "12/12/2023. 03:11:55",
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 12.sp
-                    ),
-                )
+                transactionLog.date?.let {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = Dimens.halfDefaultMargin),
+                        text = it,
+                        style = TextStyle(
+                            color = Black,
+                            fontSize = 12.sp
+                        ),
+                    )
+                }
                 Row(
                     Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -167,8 +192,8 @@ fun TransactionsItem() {
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            text = "Support Ticket",
+                                .fillMaxWidth().padding(start = Dimens.padding4),
+                            text = stringResource(R.string.support_ticket),
                             style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
                     }
@@ -185,8 +210,8 @@ fun TransactionsItem() {
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            text = "Print Again",
+                                .fillMaxWidth().padding(start = Dimens.padding4),
+                            text = stringResource(R.string.print_again),
                             style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
                     }
@@ -207,19 +232,79 @@ fun TransactionsItem() {
                     bottom = Dimens.DefaultMargin
                 )
             ) {
-                TransactionsDetails()
-                TransactionsDetails()
-                TransactionsDetails()
-                TransactionsDetails()
+                TransactionsDetails(
+                    stringResource(R.string.TLogTransID),
+                    transactionLog.transactionID
+                )
+                TransactionsDetails(
+                    stringResource(R.string.TLogCostPrice),
+                    transactionLog.getCheckingSubTransactionVatValue()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.TLogVATAmount),
+                    transactionLog.getCheckingSubTransactionPrice()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.recommended_retail_price),
+                    transactionLog.getCheckingRecommendedRetailPrice()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.VAT_on_recommended),
+                    transactionLog.getCheckingVatOnRecommendedRetailPrice()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.total_vat),
+                    transactionLog.getCheckingTotalVat()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.recommended_retail_price_after_vat),
+                    transactionLog.getCheckingRecommendedRetailPriceAfterVAT()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.balance_after),
+                    transactionLog.getCheckingSubTransactionBalanceAfter()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.expected_profit),
+                    transactionLog.getCheckingExpectedProfit()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.TLogSerialNo),
+                    Utils.fixSecretsForAr(transactionLog.productSerial).toString()
+                )
+                TransactionsDetails(
+                    transactionLog.getProductUserNameTitle(),
+                    transactionLog.productUserName?.let { Utils.fixSecretsForAr(it).toString() }
+                )
+                TransactionsDetails(
+                    transactionLog.getProductSecretTitle(),
+                    Utils.fixSecretsForAr(transactionLog.productSecret).toString()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.purchase_expiry),
+                    transactionLog.itemExpirationDate
+                )
+                TransactionsDetails(
+                    stringResource(R.string.TLogUserName),
+                    transactionLog.subReselleraccount
+                )
+                TransactionsDetails(
+                    stringResource(R.string.payment_method),
+                    transactionLog.getPaymentMethod()
+                )
+                TransactionsDetails(
+                    stringResource(R.string.TLogSerialNo),
+                    transactionLog.productSerial
+                )
+
             }
         }
     }
 }
 
 
-@Preview
 @Composable
-fun TransactionsDetails() {
+fun TransactionsDetails(title: String, value: String? = null) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -229,7 +314,7 @@ fun TransactionsDetails() {
             )
     ) {
         Text(
-            text = "Playstation PSN Card 10",
+            text = title,
             style = TextStyle(
                 color = LightGrey400,
                 fontSize = 10.sp
@@ -238,7 +323,7 @@ fun TransactionsDetails() {
         Text(
             modifier = Modifier
                 .padding(start = Dimens.DefaultMargin),
-            text = "Playstation PSN Card 10",
+            text = value ?: "",
             style = TextStyle(
                 color = FontColor,
                 fontSize = 10.sp
@@ -249,8 +334,7 @@ fun TransactionsDetails() {
 
 @Composable
 fun Filter(onFilterClick: () -> Unit) {
-
-    Column(Modifier.background(Color.White)) {
+    Column(Modifier.background(White)) {
         Divider(
             modifier = Modifier
                 .height(Dimens.DefaultMargin0)
@@ -263,20 +347,25 @@ fun Filter(onFilterClick: () -> Unit) {
                 .padding(
                     horizontal = Dimens.DefaultMargin,
                 )
-                .padding(top = Dimens.DefaultMargin20,
-                    bottom = Dimens.halfDefaultMargin)
+                .padding(
+                    top = Dimens.DefaultMargin20,
+                    bottom = Dimens.halfDefaultMargin
+                )
                 .fillMaxWidth(),
             shape = RoundedCornerShape(Dimens.halfDefaultMargin),
             border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(containerColor = White)
         ) {
             Row(
-                modifier = Modifier.clickable {
-                    onFilterClick.invoke()
-                }.padding(
+                modifier = Modifier
+                    .clickable {
+                        onFilterClick.invoke()
+                    }
+                    .padding(
                         horizontal = Dimens.DefaultMargin,
                         vertical = Dimens.DefaultMargin20
-                    ).fillMaxWidth(),
+                    )
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -291,7 +380,7 @@ fun Filter(onFilterClick: () -> Unit) {
                         color = BebeBlue,
                         fontSize = 14.sp,
                     ),
-                    text = "Filter"
+                    text = stringResource(id = R.string.filter)
                 )
             }
         }

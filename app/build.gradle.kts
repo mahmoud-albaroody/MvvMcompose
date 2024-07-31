@@ -90,15 +90,15 @@ android {
     }
 
 
-    bundle {
-        language {
-            // Specifies that the app bundle should not support
-            // configuration APKs for language resources. These
-            // resources are instead packaged with each base and
-            // dynamic feature APK.
-            enableSplit = false
-        }
-    }
+//    bundle {
+//        language {
+//            // Specifies that the app bundle should not support
+//            // configuration APKs for language resources. These
+//            // resources are instead packaged with each base and
+//            // dynamic feature APK.
+//            enableSplit = false
+//        }
+//    }
     flavorDimensions+=  "default"
 
     productFlavors {
@@ -177,6 +177,9 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha01")
     implementation("androidx.fragment:fragment-compose:1.7.0-alpha10")
+    // lottie dependencies
+    implementation ("com.airbnb.android:lottie-compose:4.0.0")
+
 
     // hilt
     implementation("com.google.dagger:hilt-android:2.48.1")

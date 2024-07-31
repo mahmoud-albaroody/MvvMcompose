@@ -4,6 +4,9 @@ import android.content.Context
 import com.bitaqaty.reseller.HiltApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
+import com.bitaqaty.reseller.utilities.Globals.lang
+import com.bitaqaty.reseller.utilities.Utils.isCashInApp
+import com.bitaqaty.reseller.utilities.Utils.isMadaApp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import javax.net.ssl.SSLContext
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -91,21 +96,28 @@ object NetworkModule {
     fun provideHeaderInterceptor(): Interceptor {
 
         return Interceptor {
-
+            var deviceType = ""
+            if (isMadaApp()) {
+                deviceType = "SUREPAY"
+            } else if (isCashInApp()) {
+                deviceType = "CACHIN"
+            }
             val requestBuilder = it.request().newBuilder()
                 //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
                 .header("Authorization", "")
                 .header("Content-Type", "application/json; charset=utf-8")
                 .header("Content-Type", "application/json")
-                .header("locale", "en")
+                .header("locale", lang)
                 .header("device-id", "96baed0207d76e88")
                 .header("whitelabel-code", "BITAQATY_BUSINESS")
                 .header("OS", "ANDROID")
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
                 .header(
                     "Authorization",
-                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzUzMTc4ODcwLCJpYXQiOjE3MjE2NDI4NzAsImp0aSI6IjA3ZDc1ZGQ3LTdhNWYtNDc4NC04NWVmLWI2MmRkODMxN2M5ZiJ9.InH74uudtBDuPVSWyfEWoT5I0QO1lbvXHbm9C2B2EuTC5CJmyX2zFsfblMDwARD6k8IluuXgsmambizyrMYtkmCcBCzsORa4onwVI8Kgge7BhcxV_Wr_sm611qoIku5ZVM-m7six5SKKs9_g4Yz7hpfw2WFmQ7mERiDP__avvO10xU9m6ugvjwiumX3giKMxziNGH4x0GESyPhV44qNoGZPY72kwN7Z_hF8KsRUA6b3SW3M3PqQNdzDEHhP1-mrHILmy-P3s3c_pOimrs1j6OReOGO-cMGyKgQ9jIYXfUqJcWnuz7klNeXkaxXdcX5XAw2IEFzlp20J5TuRIvtZ3Ow"
+                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzUzNjk3OTYyLCJpYXQiOjE3MjIxNjE5NjIsImp0aSI6ImFmNDMwM2EwLWIzNzYtNDgwNC1hOGEzLTQxODZlM2FjZjIwNCJ9.EYCAVXPcbF6YJC1TeZkddtPxoHMNuTX74IwM9hbG2n2OXy95e32W7T_4aWh_MJELXFA4eaSTVflPLYGRL6SMdwLUvqPKl8CFusAJC1x9K0qxsm0oUKpSnTFnyauBi38PsYL3jzgxbJCWkPHjgSEGLUqqtOqq8aXYpMWJRyERm7-WAgThfCaFGRO6sG3B5RQ1LYqqhH_nTQIo34OFbe2TY0BaecAdYpaBRd4Ppu3AtD_POpoxfz4BYoamOdr6SxSP7dAPTlmBZ0UemEeFWd44Hs4iOTYSsk7QabyNv9OpGrZ1rgzjWIfSP0ZzVrpykG3oHxnQWRwRGaB6ryRMq5TelQ"
                 )
+                .header("partner-device", deviceType)
+
             it.proceed(requestBuilder.build())
         }
     }
@@ -126,6 +138,7 @@ object NetworkModule {
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()
     }
+
     /**
      * Provides ApiServices client for Retrofit
      */

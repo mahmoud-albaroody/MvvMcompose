@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.home
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.presentation.home.components.CategoryList
 import com.bitaqaty.reseller.ui.presentation.home.components.Product
@@ -32,6 +34,10 @@ import com.bitaqaty.reseller.ui.presentation.home.components.TopBar
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Globals
+import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.Utils.saveUserData
 import com.bitaqaty.reseller.utilities.network.DataState
 import kotlinx.coroutines.launch
 
@@ -40,29 +46,52 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val categoryState by viewModel.categoryState
-
+    val categoryStatee = viewModel.categoryState
+    val getProfileState = viewModel.getProfile
+    val getSystemSettings = viewModel.getSystemSetting
     val scope = rememberCoroutineScope()
     val categoryList = remember { mutableStateListOf<Category>() }
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
         confirmValueChange = { it != SheetValue.Hidden })
     LaunchedEffect(key1 = true) {
+        viewModel.getProfile()
         viewModel.getCategoryList()
+
+        viewModel.viewModelScope.launch {
+            getSystemSettings.collect {
+                Globals.SETTINGS = it
+            }
+        }
+        viewModel.viewModelScope.launch {
+            getProfileState.collect {
+                saveUserData(it)
+                viewModel.getSystemSetting()
+            }
+        }
     }
-    viewModel.categoryState.value.let {
-        if (it is DataState.Loading) {
-            Log.e("dddd", "sfsdfdsf")
-        } else if (it is DataState.Success) {
-            categoryList.clear()
-            categoryList.addAll(it.data)
+    categoryStatee.value.let {
+        when (it) {
+            is DataState.Loading -> {
+                Log.e("dddd", "sfsdfdsf")
+            }
 
-        } else {
+            is DataState.Success<ArrayList<Category>> -> {
+                categoryList.clear()
+                categoryList.addAll(it.data)
 
+            }
+
+            else -> {
+
+            }
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+
+
+
+    Box(modifier = Modifier.fillMaxSize().background(White)) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopBar()
 
