@@ -11,4 +11,7 @@ object ApiURL {
     const val TOP_MERCHANTS = "sub-acc-home/top-merchants"
     const val MERCHANTS = "merchants/list-merchants/{category_id}"
     const val PRODUCT_LIST = "products/list-products"
+
+    const val SYSTEM_SETTING = "system-settings/system-settings"
+    const val SETTLEMENT_REQUEST_DATA = "partner-settlement/get-settelement-request-data"
 }

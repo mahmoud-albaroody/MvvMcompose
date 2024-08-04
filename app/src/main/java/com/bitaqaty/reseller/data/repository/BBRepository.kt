@@ -3,8 +3,11 @@ package com.bitaqaty.reseller.data.repository
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
+import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.utilities.network.DataState
@@ -92,6 +95,27 @@ class BBRepository @Inject constructor(
             }
         }
 
+    override suspend fun getSystemSettings(): Flow<DataState<ArrayList<SystemSettings>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val systemSettings = apiService.getSystemSetting()
+                emit(DataState.Success(systemSettings))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getSettlementRequestData(): Flow<DataState<PersonalBankData>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val bankData = apiService.getSettlementRequestData()
+                emit(DataState.Success(bankData))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
 }
 //    override suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>> = flow {
 //        emit(DataState.Loading)

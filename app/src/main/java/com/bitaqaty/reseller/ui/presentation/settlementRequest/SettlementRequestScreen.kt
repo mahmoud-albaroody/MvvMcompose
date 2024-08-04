@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.presentation.settlementTransactions
+package com.bitaqaty.reseller.ui.presentation.settlementRequest
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,33 +32,74 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.PersonalBankData
+import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.theme.PlaceHolder
 import com.bitaqaty.reseller.ui.theme.SearchBarBackground
 import com.bitaqaty.reseller.ui.theme.SearchBarText
-import com.bitaqaty.reseller.utilities.AppConstant.MIN_Transfer_AMOUNT
+import com.bitaqaty.reseller.utilities.network.DataState
 
 @Composable
-fun SettlementRequestScreen(){
-    LazyColumn(
-        modifier = Modifier
-            .padding(horizontal = 12.dp),
-    ){
-        item { SettlementHeader() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { BasicData() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { BankStatements() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { AdditionalNotes() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { SendButton() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
+fun SettlementRequestScreen(
+    viewModel: SettlementRequestViewModel = hiltViewModel()
+){
+    val systemSettingsState by viewModel.systemSettingsState
+    val bankDataState by viewModel.personalBankData
+    val minAmount = viewModel.minTransferAmount
+
+    LaunchedEffect(key1 =  true){
+        viewModel.getSystemSettings()
+        viewModel.getPersonalBankData()
+    }
+
+    if(systemSettingsState is DataState.Loading || bankDataState is DataState.Loading){
+        Loading()
+    }else if(systemSettingsState is DataState.Error || bankDataState is DataState.Error){
+        val error = (bankDataState as DataState.Error).exception
+        Text(text = "Error: ${error.message}")
+    }else{
+        val bankData = (bankDataState as DataState.Success<PersonalBankData>).data
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+        ){
+            item { SettlementHeader() }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item {
+                BasicData(
+                    crNum = bankData.crNumber ?: "",
+                    companyName = bankData.companyName ?: ""
+                )
+            }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item {
+                BankStatements(
+                    swiftCode = bankData.swiftCode ?: "",
+                    bankName = bankData.bankName ?: "",
+                    IBAN = bankData.iban ?: ""
+                )
+            }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item {
+                AdditionalNotes(
+                    notes = bankData.notes ?: "",
+                    minAmount = minAmount
+                )
+            }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { SendButton() }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+        }
     }
 }
 
@@ -93,7 +136,10 @@ fun SettlementHeader(){
 }
 
 @Composable
-fun BasicData(){
+fun BasicData(
+    crNum: String = "",
+    companyName: String = ""
+){
     Column {
         Text(
             text = "Basic Data",
@@ -108,7 +154,7 @@ fun BasicData(){
         ValidationTextField(
             placeHolder = "The requested transfer amount",
             validationType = ValidationType.TRANSFER_AMOUNT,
-            keyBoardType = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            keyBoardType = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next)
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -116,6 +162,7 @@ fun BasicData(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            initialVal = crNum,
             placeHolder = "CR number"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -124,13 +171,18 @@ fun BasicData(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            initialVal = companyName,
             placeHolder = "Company Name"
         )
     }
 }
 
 @Composable
-fun BankStatements(){
+fun BankStatements(
+    swiftCode: String = "",
+    bankName: String = "",
+    IBAN: String = ""
+){
     Column {
         Text(
             text = "Bank Statements",
@@ -143,6 +195,7 @@ fun BankStatements(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            initialVal = swiftCode,
             placeHolder = "Swift Code"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -151,6 +204,7 @@ fun BankStatements(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            initialVal = bankName,
             placeHolder = "Bank Name"
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -159,6 +213,7 @@ fun BankStatements(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            initialVal = IBAN,
             placeHolder = "IBAN",
             validationType = ValidationType.IBAN
         )
@@ -166,7 +221,10 @@ fun BankStatements(){
 }
 
 @Composable
-fun AdditionalNotes(){
+fun AdditionalNotes(
+    notes: String = "",
+    minAmount: String
+){
     Column {
         Text(
             text = "Additional Notes",
@@ -181,6 +239,7 @@ fun AdditionalNotes(){
         ValidationTextField(
             modifier = Modifier
                 .height(120.dp),
+            initialVal = notes,
             placeHolder = "Additional Notes",
             singleLine = false,
             validationType = ValidationType.NOTES
@@ -200,7 +259,7 @@ fun AdditionalNotes(){
                 tint = Color.Blue
             )
             Text(
-                text = "Minimum amount to request 100.0 SAR",
+                text = "Minimum amount to request $minAmount SAR",
                 color = Color.Blue,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold
@@ -229,12 +288,15 @@ fun SendButton(){
 @Composable
 fun ValidationTextField(
     modifier: Modifier = Modifier,
+    viewModel: SettlementRequestViewModel = hiltViewModel(),
+    initialVal: String = "",
     placeHolder: String,
     singleLine: Boolean = true,
     validationType: ValidationType = ValidationType.DEFAULT,
-    keyBoardType: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+    keyBoardType: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next)
 ) {
-    var text by remember { mutableStateOf("") }
+    val updatedText by viewModel.text
+    var textState by remember { mutableStateOf(TextFieldValue(initialVal.ifEmpty { updatedText })) }
     var isError by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
@@ -242,20 +304,12 @@ fun ValidationTextField(
         modifier = modifier
             .fillMaxWidth()
             .background(SearchBarBackground),
-        value = text,
+        value = textState,
         onValueChange = {
-            text = it
-            isError = validationType != ValidationType.NOTES && it.isEmpty()
-                    || (validationType == ValidationType.TRANSFER_AMOUNT && !validateAmount(it).isValid)
-                    || (validationType == ValidationType.IBAN && !validateIBAN(it).isValid)
-            errorMessage = when {
-                it.isEmpty() -> "*This field is required"
-                validationType == ValidationType.TRANSFER_AMOUNT && !validateAmount(it).isValid ->
-                    validateAmount(it).errorMessage
-                validationType == ValidationType.IBAN && !validateIBAN(it).isValid ->
-                    validateIBAN(it).errorMessage
-                else -> ""
-            }
+            viewModel.validateStartWithZeroOrDecimalPoint(it.text)
+            textState = it.copy(text = updatedText, selection = TextRange(updatedText.length))
+            isError = viewModel.validateSettlementRequest(it.text, validationType).isError
+            errorMessage = viewModel.validateSettlementRequest(it.text, validationType).errorMessage
         },
         isError = isError,
         textStyle = MaterialTheme.typography.PlaceHolder,
@@ -287,46 +341,8 @@ fun ValidationTextField(
         )
     }
 }
-
-private fun validateAmount(amount: String): Validation {
-    return if(amount.toFloat() < MIN_Transfer_AMOUNT){
-        Validation(
-            isValid = false,
-            errorMessage = "*The Minimum amount to request is $MIN_Transfer_AMOUNT"
-        )
-    }else{
-        Validation(isValid = true)
-    }
-}
-
-private fun validateIBAN(IBAN: String): Validation {
-    return when {
-        IBAN.length >= 2 && IBAN.substring(0,2) != "SA" -> {
-            Validation(false, "*IBAN code should started with SA")
-        }
-        IBAN.trim().length != 24 -> {
-            Validation(false, "*Invalid IBAN code")
-        }
-        IBAN.length == 24 && IBAN.trim().substring(2,24).any { !it.isDigit() } -> {
-            Validation(false, "*22 number must be entered")
-        }
-        else -> {
-            Validation(true)
-        }
-    }
-}
-data class Validation(
-    val isValid: Boolean,
-    val errorMessage: String = ""
-)
-enum class ValidationType {
-    DEFAULT,
-    TRANSFER_AMOUNT,
-    IBAN,
-    NOTES
-}
-@Composable
-@Preview(showSystemUi = true)
-fun SettlementTransactionsScreenPreview(){
-    SettlementRequestScreen()
-}
+//@Composable
+//@Preview(showSystemUi = true)
+//fun SettlementTransactionsScreenPreview(){
+//    SettlementRequestScreen()
+//}

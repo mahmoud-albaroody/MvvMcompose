@@ -132,8 +132,10 @@ fun HomeScreen(
                         isBottomSheetVisible = isBottomSheetVisible,
                         sheetState = sheetState,
                         onDismiss = {
-                            scope.launch { sheetState.hide() }
-                                .invokeOnCompletion { isBottomSheetVisible = false }
+                            scope.launch {
+                                isBottomSheetVisible = false
+                                sheetState.hide()
+                            }
                         })
                 }
             }

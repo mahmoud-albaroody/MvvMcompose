@@ -104,7 +104,7 @@ object NetworkModule {
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
                 .header(
                     "Authorization",
-                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzUzNzAzMDAwLCJpYXQiOjE3MjIxNjcwMDAsImp0aSI6IjA5OWM5OTQyLTk5ZjEtNDI0NS05MGFkLTczOWQ2NjY5NGI1ZiJ9.ink4jnrcFDgC8XNowRC8bOMahVYMQ1vXlR5mjxVHgZnQ0rAcGrZWWXmnsiNYe9F4aMCX-S25lJcJ_OClvgFvj6fldG57AjSfsrrYBQZL9oELKMd5cTVrtRMr9lbqYrCvpwkpmzuOrU-ZdvQ-Xe_gUoPSatmIOLXtkKzKRVYtbJBIu_NDQ18KuNF7s72rqsvO0cLZTljOa-gJ-A5_xVMLlEOAM1rcbTP0SK24eshkJ1NXMi1FNUtc5gxEKKfgZ8uAQ6M91nI0muZQAs-AFEMOrHirbenyfnAnHpQ4QQdRNOwhF6hv7l7IyN1PiEi6y8hvZgcbFulruTCTHLCAsrrJQQ"
+                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzU0MzE2MTE0LCJpYXQiOjE3MjI3ODAxMTQsImp0aSI6ImFlMWY5MWU2LTA1OWMtNGIwNC1iMjFmLWMzM2U2MDNhMmVlNCJ9.G0ojSTu2anPfQKT2OWkYfQdlR63PQ2CqNVnwQCZhUiUMDEYeUT35WOUe92OsjJ_rlWPUPUy6LDafLxlfugPyIHObMgfcl6qcX3eUNWjfqm5cZFcWEbTOPe4SgzSpdAJeaYprSIeyAiT1HXdJcyjzPZUYEGwm4OBhGQeGrXvZHxEeMlOLy_RI8CRUcRR9W7AUpaNoVgkH44vkeyYPuZtP1De39l4opE3ObTfIsNQn694_hpE3NouFssaUtKEQxuKzNhYb3TCuvC-ZKaATHtV2qK4ATQN85F0u0XxwVHKkW2TOU9zeiehgW3q78bVpt1QFhIT2l7lLnzN9JDeiO8781A"
                 )
             it.proceed(requestBuilder.build())
         }
@@ -134,7 +134,7 @@ object NetworkModule {
     fun provideRetrofitClient(
         baseUrl: String,
         okHttpClient: OkHttpClient,
-        converterFactory: Converter.Factory
+        converterFactory: Converter.Factory,
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
