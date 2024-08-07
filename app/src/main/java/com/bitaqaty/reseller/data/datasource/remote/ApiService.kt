@@ -6,9 +6,11 @@ import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
+import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
@@ -34,6 +36,10 @@ interface ApiService {
     suspend fun getSystemSetting(): ArrayList<SystemSettings>
     @POST(ApiURL.SETTLEMENT_REQUEST_DATA)
     suspend fun getSettlementRequestData(): PersonalBankData
+    @POST(ApiURL.CREATE_SETTLEMENT_REQUEST)
+    suspend fun createSettlementRequest(@Body settlementRequest: SettlementRequestDataRequest): SettlementRequestResult
+    @POST(ApiURL.PROFILE)
+    suspend fun getProfile(): User
 
     @POST(Globals.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body jsonObject: JsonObject):

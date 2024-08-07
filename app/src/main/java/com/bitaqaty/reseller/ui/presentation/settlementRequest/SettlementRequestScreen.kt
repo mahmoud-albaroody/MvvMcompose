@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.settlementRequest
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,13 +28,22 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -41,12 +54,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.data.model.PersonalBankData
+import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.theme.PlaceHolder
 import com.bitaqaty.reseller.ui.theme.SearchBarBackground
 import com.bitaqaty.reseller.ui.theme.SearchBarText
 import com.bitaqaty.reseller.utilities.network.DataState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettlementRequestScreen(
@@ -54,57 +70,81 @@ fun SettlementRequestScreen(
 ){
     val systemSettingsState by viewModel.systemSettingsState
     val bankDataState by viewModel.personalBankData
-    val minAmount = viewModel.minTransferAmount
+    val settlementRequestState by viewModel.settlementRequestState
+    val userState by viewModel.user
+
+    val focusManager = LocalFocusManager.current
+    val lazyListState = rememberLazyListState()
+    val context = LocalContext.current
+    val focusRequesters = remember {
+        List(6) { FocusRequester() }
+    }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 =  true){
         viewModel.getSystemSettings()
         viewModel.getPersonalBankData()
+        viewModel.getUser()
     }
 
-    if(systemSettingsState is DataState.Loading || bankDataState is DataState.Loading){
-        Loading()
-    }else if(systemSettingsState is DataState.Error || bankDataState is DataState.Error){
-        val error = (bankDataState as DataState.Error).exception
-        Text(text = "Error: ${error.message}")
-    }else{
-        val bankData = (bankDataState as DataState.Success<PersonalBankData>).data
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 12.dp)
-        ){
-            item { SettlementHeader() }
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            item {
-                BasicData(
-                    crNum = bankData.crNumber ?: "",
-                    companyName = bankData.companyName ?: ""
-                )
+    when {
+        systemSettingsState is DataState.Loading
+                || bankDataState is DataState.Loading
+                || userState is DataState.Loading-> {
+            Loading()
+        }
+        systemSettingsState is DataState.Error || bankDataState is DataState.Error -> {
+            val error = (bankDataState as DataState.Error).exception
+            Text(text = "Error: ${error.message}")
+        }
+        else -> {
+            if(settlementRequestState is DataState.Loading){
+                Loading()
             }
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            item {
-                BankStatements(
-                    swiftCode = bankData.swiftCode ?: "",
-                    bankName = bankData.bankName ?: "",
-                    IBAN = bankData.iban ?: ""
-                )
+            if(settlementRequestState is DataState.Success){
+                val request = (settlementRequestState as DataState.Success<SettlementRequestResult>).data
+                Toast.makeText(context, request.errors.first().errorMessage, Toast.LENGTH_LONG).show()
             }
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            item {
-                AdditionalNotes(
-                    notes = bankData.notes ?: "",
-                    minAmount = minAmount
-                )
+            LazyColumn(
+                state = lazyListState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(if (settlementRequestState is DataState.Loading) 0.5f else 1f)
+                    .padding(horizontal = 12.dp)
+            ){
+                item { SettlementHeader(viewModel = viewModel) }
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                item { BasicData(
+                    viewModel = viewModel,
+                    focusRequesters = focusRequesters.subList(0, 3)
+                ) }
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                item { BankStatements(
+                    viewModel = viewModel,
+                    focusRequesters = focusRequesters.subList(3, 6)
+                ) }
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                item { AdditionalNotes(
+                    viewModel = viewModel,
+                    focusManager = focusManager
+                ) }
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                item { SendButton(
+                    viewModel = viewModel,
+                    focusRequesters = focusRequesters,
+                    lazyListState = lazyListState,
+                    scope = scope
+                ) }
+                item { Spacer(modifier = Modifier.height(16.dp)) }
             }
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            item { SendButton() }
-            item { Spacer(modifier = Modifier.height(16.dp)) }
         }
     }
 }
 
 @Composable
-fun SettlementHeader(){
+fun SettlementHeader(
+    viewModel: SettlementRequestViewModel
+){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -120,7 +160,7 @@ fun SettlementHeader(){
                 color = Color.Gray
             )
             Text(
-                text = "838.88 SAR",
+                text = viewModel.balance,
                 color = Color.Black
             )
         }
@@ -128,7 +168,7 @@ fun SettlementHeader(){
         Icon(
             modifier = Modifier
                 .fillMaxHeight(),
-            painter = painterResource(id = R.drawable.ic_wallet),
+            painter = painterResource(id = R.drawable.ic_coin),
             contentDescription = null,
             tint = Color.Gray
         )
@@ -137,8 +177,8 @@ fun SettlementHeader(){
 
 @Composable
 fun BasicData(
-    crNum: String = "",
-    companyName: String = ""
+    viewModel: SettlementRequestViewModel,
+    focusRequesters: List<FocusRequester>
 ){
     Column {
         Text(
@@ -152,6 +192,10 @@ fun BasicData(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            viewModel = viewModel,
+            focusRequester = focusRequesters[0],
+            value = viewModel.settlementRequestUiState.collectAsState().value.amount,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(amount = value)} },
             placeHolder = "The requested transfer amount",
             validationType = ValidationType.TRANSFER_AMOUNT,
             keyBoardType = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next)
@@ -162,8 +206,12 @@ fun BasicData(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
-            initialVal = crNum,
-            placeHolder = "CR number"
+            viewModel = viewModel,
+            focusRequester = focusRequesters[1],
+            value = viewModel.settlementRequestUiState.collectAsState().value.crNum,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(crNum = value)} },
+            placeHolder = "CR number",
+            validationType = ValidationType.CR_NUM
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -171,17 +219,20 @@ fun BasicData(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
-            initialVal = companyName,
-            placeHolder = "Company Name"
+            viewModel = viewModel,
+            focusRequester = focusRequesters[2],
+            value = viewModel.settlementRequestUiState.collectAsState().value.companyName,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(companyName = value)} },
+            placeHolder = "Company Name",
+            validationType = ValidationType.COMPANY_NAME
         )
     }
 }
 
 @Composable
 fun BankStatements(
-    swiftCode: String = "",
-    bankName: String = "",
-    IBAN: String = ""
+    viewModel: SettlementRequestViewModel,
+    focusRequesters: List<FocusRequester>
 ){
     Column {
         Text(
@@ -195,8 +246,12 @@ fun BankStatements(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
-            initialVal = swiftCode,
-            placeHolder = "Swift Code"
+            viewModel = viewModel,
+            focusRequester = focusRequesters[0],
+            value = viewModel.settlementRequestUiState.collectAsState().value.swiftCode,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(swiftCode = value)} },
+            placeHolder = "Swift Code",
+            validationType = ValidationType.SWIFT_CODE
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -204,8 +259,12 @@ fun BankStatements(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
-            initialVal = bankName,
-            placeHolder = "Bank Name"
+            viewModel = viewModel,
+            focusRequester = focusRequesters[1],
+            value = viewModel.settlementRequestUiState.collectAsState().value.bankName,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(bankName = value)} },
+            placeHolder = "Bank Name",
+            validationType = ValidationType.BANK_NAME
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -213,7 +272,10 @@ fun BankStatements(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
-            initialVal = IBAN,
+            viewModel = viewModel,
+            focusRequester = focusRequesters[2],
+            value = viewModel.settlementRequestUiState.collectAsState().value.IBAN,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(IBAN = value)} },
             placeHolder = "IBAN",
             validationType = ValidationType.IBAN
         )
@@ -222,8 +284,8 @@ fun BankStatements(
 
 @Composable
 fun AdditionalNotes(
-    notes: String = "",
-    minAmount: String
+    viewModel: SettlementRequestViewModel,
+    focusManager: FocusManager
 ){
     Column {
         Text(
@@ -237,29 +299,34 @@ fun AdditionalNotes(
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
+            viewModel = viewModel,
+            value = viewModel.settlementRequestUiState.collectAsState().value.notes,
+            onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(notes = value)} },
             modifier = Modifier
                 .height(120.dp),
-            initialVal = notes,
             placeHolder = "Additional Notes",
             singleLine = false,
-            validationType = ValidationType.NOTES
+            validationType = ValidationType.NOTES,
+            keyBoardType = KeyboardOptions(imeAction = ImeAction.Done),
+            focusManager = focusManager
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 modifier = Modifier
-                    .height(20.dp),
-                painter = painterResource(id = R.drawable.ic_info),
+                    .height(12.dp)
+                    .padding(end = 4.dp),
+                painter = painterResource(id = R.drawable.ic_info_parentheses),
                 contentDescription = null,
                 tint = Color.Blue
             )
             Text(
-                text = "Minimum amount to request $minAmount SAR",
+                text = "Minimum amount to request ${viewModel.minTransferAmount} SAR",
                 color = Color.Blue,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold
@@ -269,12 +336,58 @@ fun AdditionalNotes(
 }
 
 @Composable
-fun SendButton(){
+fun SendButton(
+    viewModel: SettlementRequestViewModel,
+    focusRequesters: List<FocusRequester>,
+    lazyListState: LazyListState,
+    scope: CoroutineScope
+){
+    val keyboardController = LocalSoftwareKeyboardController.current
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.Blue, shape = RoundedCornerShape(10.dp)),
-        onClick = {},
+        onClick = {
+            val settlementRequestError = viewModel.settlementRequestUiState.value.errors
+            if(settlementRequestError == Errors()){
+                viewModel.sendSettlementRequest()
+            }else{
+                scope.launch {
+                    when{
+                        settlementRequestError.amountError -> {
+                            lazyListState.animateScrollToItem(0)
+                            focusRequesters[0].requestFocus()
+                            keyboardController?.show()
+                        }
+                        settlementRequestError.crNumError -> {
+                            lazyListState.animateScrollToItem(1)
+                            focusRequesters[1].requestFocus()
+                            keyboardController?.show()
+                        }
+                        settlementRequestError.companyNameError -> {
+                            lazyListState.animateScrollToItem(2)
+                            focusRequesters[2].requestFocus()
+                            keyboardController?.show()
+                        }
+                        settlementRequestError.swiftCodeError -> {
+                            lazyListState.animateScrollToItem(3)
+                            focusRequesters[3].requestFocus()
+                            keyboardController?.show()
+                        }
+                        settlementRequestError.bankNameError -> {
+                            lazyListState.animateScrollToItem(4)
+                            focusRequesters[4].requestFocus()
+                            keyboardController?.show()
+                        }
+                        settlementRequestError.IBANError -> {
+                            lazyListState.animateScrollToItem(5)
+                            focusRequesters[5].requestFocus()
+                            keyboardController?.show()
+                        }
+                    }
+                }
+            }
+        },
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
@@ -288,28 +401,33 @@ fun SendButton(){
 @Composable
 fun ValidationTextField(
     modifier: Modifier = Modifier,
-    viewModel: SettlementRequestViewModel = hiltViewModel(),
-    initialVal: String = "",
+    focusRequester: FocusRequester = FocusRequester(),
+    focusManager: FocusManager = LocalFocusManager.current,
+    viewModel: SettlementRequestViewModel,
+    value: String = "",
+    onValueChange: (String) -> Unit,
     placeHolder: String,
     singleLine: Boolean = true,
-    validationType: ValidationType = ValidationType.DEFAULT,
+    validationType: ValidationType,
     keyBoardType: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next)
 ) {
     val updatedText by viewModel.text
-    var textState by remember { mutableStateOf(TextFieldValue(initialVal.ifEmpty { updatedText })) }
-    var isError by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") }
+    var textState by remember { mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length))) }
+    var isError by remember { mutableStateOf(viewModel.validate(textState.text, validationType).isError) }
+    var errorMessage by remember { mutableStateOf(viewModel.validate(textState.text, validationType).errorMessage) }
 
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
+            .focusRequester(focusRequester)
             .background(SearchBarBackground),
         value = textState,
         onValueChange = {
+            onValueChange(it.text)
             viewModel.validateStartWithZeroOrDecimalPoint(it.text)
-            textState = it.copy(text = updatedText, selection = TextRange(updatedText.length))
-            isError = viewModel.validateSettlementRequest(it.text, validationType).isError
-            errorMessage = viewModel.validateSettlementRequest(it.text, validationType).errorMessage
+            textState = TextFieldValue(text = updatedText, selection = TextRange(updatedText.length))
+            isError = viewModel.validate(it.text, validationType).isError
+            errorMessage = viewModel.validate(it.text, validationType).errorMessage
         },
         isError = isError,
         textStyle = MaterialTheme.typography.PlaceHolder,
@@ -333,6 +451,7 @@ fun ValidationTextField(
         singleLine = singleLine,
         shape = RoundedCornerShape(10.dp),
         keyboardOptions = keyBoardType,
+        keyboardActions = KeyboardActions(onDone = {focusManager.clearFocus()})
     )
     if(isError){
         Text(

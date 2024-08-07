@@ -7,9 +7,11 @@ import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
+import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
@@ -112,6 +114,28 @@ class BBRepository @Inject constructor(
             try {
                 val bankData = apiService.getSettlementRequestData()
                 emit(DataState.Success(bankData))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun createSettlementRequest(settlementRequest: SettlementRequestDataRequest): Flow<DataState<SettlementRequestResult>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val settlementRequestResult = apiService.createSettlementRequest(settlementRequest)
+                emit(DataState.Success(settlementRequestResult))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getProfile(): Flow<DataState<User>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val profile = apiService.getProfile()
+                emit(DataState.Success(profile))
             }catch (e: Exception){
                 emit(DataState.Error(e))
             }
