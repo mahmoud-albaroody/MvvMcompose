@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.data.model
 
+import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import java.io.Serializable
@@ -19,7 +20,7 @@ data class Report(
     var productId: Int? = null,
     var vatOnRecommendedPrice: Double? = null,
     var totalCostPerItem: Double? = null,
-    var totalCost: Double? = null,
+    var totalCost: String? = null,
     var recommendedPrice: Double? = null,
     var totalRecommendedPrice: Double? = null,
     var totalExpectedProfit: Double? = null,
@@ -35,7 +36,7 @@ data class Report(
     var paymentMethodEn: String? = null
 ) : Serializable {
 
-    fun getMerchantName(lang: String): String {
+    fun getMerchantName(): String {
         return if (lang == "en") {
             merchantNameEn ?: merchantNameAr ?: ""
         } else {
@@ -43,7 +44,7 @@ data class Report(
         }
     }
 
-    fun getPaymentMethod(lang: String): String {
+    fun getPaymentMethod(): String {
         return if (lang == "en") {
             paymentMethodEn ?: paymentMethodAr ?: ""
         } else {
@@ -91,7 +92,7 @@ data class Report(
         }
     }
 
-    fun getProductName(lang: String): String {
+    fun getProductName(): String {
         return if (lang == "en") {
             productNameEn ?: productNameAr ?: ""
         } else {

@@ -40,6 +40,7 @@ val BebeBlue = Color(0xff5874B4)
 val Blue100 = Color(0xFF3155A4)
 val LiteBlue = Color(0xFFCEDAF3)
 val Blue = Color(0xFF3255A4)
+val Black = Color(0xFF000000)
 
 val Red = Color(0xFFEB0303)
 val White = Color(0xFFFFFFFF)

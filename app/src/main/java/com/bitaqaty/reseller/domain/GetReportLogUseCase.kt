@@ -5,6 +5,22 @@ import com.google.gson.JsonObject
 import javax.inject.Inject
 
 class GetReportLogUseCase @Inject constructor(private val repo: BBRepository) {
-    suspend fun generateHomeSalesReport(jsonObject: JsonObject) = repo.generateHomeSalesReport(jsonObject)
+    suspend fun generateHomeSalesReport(jsonObject: JsonObject) =
+        repo.generateHomeSalesReport(jsonObject)
+
+    suspend fun getSimpleCategoryList() = repo.getSimpleCategoryList()
+
+    suspend fun getSimpleMerchantList(categoryId: Int) =
+        repo.getSimpleMerchantList(categoryId = categoryId)
+
+    suspend fun getProductLookList(jsonObject: JsonObject) =
+        repo.getProductLookList(jsonObject = jsonObject)
+
+    suspend fun getSurePayRechargeMethods() =
+        repo.getSurePayRechargeMethods()
+    suspend fun getMerchants(categoryId:Int) =
+        repo.getMerchants(categoryId)
+    suspend fun getUserNamesList() =
+        repo.getUserNamesList()
 
 }

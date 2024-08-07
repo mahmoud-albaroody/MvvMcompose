@@ -55,7 +55,9 @@ fun BankTransfer() {
     ) {
         DynamicSelectTextField(TextAlign.Start,
             stringArrayResource(R.array.credit_mada_instruction_arr).toList(),true
-        )
+        ){
+
+        }
         StepsIcons()
         RechargeAmount()
         LazyColumn(

@@ -70,7 +70,10 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     }
 
     screen(transactionLogList = transactionLogList) {
-        navController.navigate(Screen.ApplyFilterScreen.route)
+        navController.navigate(Screen.ApplyFilterScreen.route.plus(
+            Screen.ApplyFilterScreen.objectName
+                    + "TransactionLog"
+        ))
     }
 }
 
@@ -80,7 +83,8 @@ fun screen(transactionLogList: List<TransactionLog>, onFilterClick: () -> Unit) 
     Box(
         Modifier
             .fillMaxSize()
-            .background(White)) {
+            .background(White)
+    ) {
         Transactions(transactionLogList)
         Box(Modifier.align(Alignment.BottomEnd)) {
             Filter(onFilterClick = {
@@ -192,7 +196,8 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth().padding(start = Dimens.padding4),
+                                .fillMaxWidth()
+                                .padding(start = Dimens.padding4),
                             text = stringResource(R.string.support_ticket),
                             style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
@@ -210,7 +215,8 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth().padding(start = Dimens.padding4),
+                                .fillMaxWidth()
+                                .padding(start = Dimens.padding4),
                             text = stringResource(R.string.print_again),
                             style = TextStyle(color = BebeBlue, fontSize = 11.sp),
                         )
@@ -238,15 +244,15 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                 )
                 TransactionsDetails(
                     stringResource(R.string.TLogCostPrice),
-                    transactionLog.getCheckingSubTransactionVatValue()
+                    transactionLog.getCheckingPrice()
                 )
                 TransactionsDetails(
                     stringResource(R.string.TLogVATAmount),
-                    transactionLog.getCheckingSubTransactionPrice()
+                    transactionLog.getCheckingVatAmount()
                 )
                 TransactionsDetails(
                     stringResource(R.string.recommended_retail_price),
-                    transactionLog.getCheckingRecommendedRetailPrice()
+                    transactionLog.getCheckingVatAmount()
                 )
                 TransactionsDetails(
                     stringResource(R.string.VAT_on_recommended),
@@ -262,7 +268,7 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                 )
                 TransactionsDetails(
                     stringResource(R.string.balance_after),
-                    transactionLog.getCheckingSubTransactionBalanceAfter()
+                    transactionLog.getCheckingBalanceAfter()
                 )
                 TransactionsDetails(
                     stringResource(R.string.expected_profit),

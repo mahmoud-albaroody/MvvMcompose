@@ -4,7 +4,10 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
+import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
+import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ReportLog
@@ -17,6 +20,7 @@ import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
+import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
@@ -103,4 +107,36 @@ interface ApiService {
     @POST(Globals.GENERATE_SALES_REPORT)
     suspend fun generateHomeSalesReport(@Body jsonObject: JsonObject): ReportLog
 
+    @POST(Globals.GET_CATEGORY_LIST)
+    suspend fun getSimpleCategoryList(): ArrayList<Category>
+
+    @POST(Globals.GET_MERCHANT_LIST)
+    suspend fun getSimpleMerchantList(@Path("id") categoryId: Int): ArrayList<Merchant>
+
+    @POST(Globals.GET_PRODUCT_LOOKUP)
+    suspend fun getProductLookList(@Body jsonObject: JsonObject): ArrayList<Product>
+
+    @POST(Globals.SUREPAY_RESELLER_RECHARGE_METHODS)
+    suspend fun getSurePayRechargeMethods(): ArrayList<RechargeMethod>
+
+    @POST(Globals.GET_MERCHANTS)
+    suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
+    @POST(Globals.GET_USERNAMES_LIST)
+    suspend fun getUserNamesList(): ArrayList<LogUserName>
+
+
+//    lookups/list-categories
+//
+//    lookups/list-merchants/18
+//
+//    lookups/list-products
+//
+//    {"resellerId":311346,"categoryId":18,"merchantId":283851,"applyPagination":false}
+
+    //partner-recharge/get-charging-methods
+
+    //categories/list-categories
+    //merchants/list-merchants/77
+
+    //transaction-log/list-sub-accounts
 }

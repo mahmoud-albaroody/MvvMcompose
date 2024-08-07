@@ -21,7 +21,6 @@ data class ReportLog(
     var price: Double? = null
 ) : Serializable {
 
-    constructor(errors: ErrorMessage) : this(errors = arrayListOf(errors))
 
     fun getTotalSubResellerPrice(): String {
         return if (totalSubResellerPrice == null || totalSubResellerPrice == 0.0) {
@@ -30,6 +29,31 @@ data class ReportLog(
             "${totalSubResellerPrice.toString().fmt()} ${Utils.getUserCurrency()}"
         }
     }
+
+
+    fun getMadaCommission(): String {
+        return if (madacommission == null || madacommission == 0.0) {
+            "N/A"
+        } else {
+            "${madacommission.toString().fmt()} ${Utils.getUserCurrency()}"
+        }
+    }
+    fun getCheckingBalanceCommission(): String {
+        return if (balanceCommission == null || balanceCommission == 0.0) {
+            "N/A"
+        } else {
+            "${balanceCommission.toString().fmt()} ${Utils.getUserCurrency()}"
+        }
+    }
+
+    fun getCheckingTransactionsTotalAmount(): String {
+        return if (transactionsTotalAmount == null || transactionsTotalAmount == 0.0) {
+            "N/A"
+        } else {
+            "${transactionsTotalAmount.toString().fmt()} ${Utils.getUserCurrency()}"
+        }
+    }
+
 
     fun getTotalRecommendedPrice(): String {
         return if (totalRecommendedPrice == null || totalRecommendedPrice == 0.0) {

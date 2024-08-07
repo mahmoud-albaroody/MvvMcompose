@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,14 +26,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,12 +43,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.Product
+import com.bitaqaty.reseller.data.model.Report
+import com.bitaqaty.reseller.data.model.ReportLog
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsDetails
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Black
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
@@ -53,37 +63,62 @@ import com.bitaqaty.reseller.ui.theme.Green
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.ui.theme.clickedMerchant
+import com.bitaqaty.reseller.utilities.Utils
+import kotlinx.coroutines.launch
 
 @Composable
 fun SalesReportScreen(navController: NavController, modifier: Modifier) {
     val salesReportViewModel: SalesReportViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
-    SalesReport()
+
+    var report by remember { mutableStateOf(ReportLog()) }
+
+    LaunchedEffect(key1 = true) {
+        salesReportViewModel.getSalesReportList(1, -1, -1, true)
+        salesReportViewModel.viewModelScope.launch {
+            salesReportViewModel.getReport.collect {
+                report = it
+
+            }
+        }
+
+    }
+    SalesReport(report, onFilterClick = {
+        navController.navigate(
+            Screen.ApplyFilterScreen.route.plus(
+                Screen.ApplyFilterScreen.objectName
+                        + "SalesReport"
+            )
+        )
+    })
 }
 
 
-@Preview
 @Composable
-fun SalesReport() {
+fun SalesReport(report: ReportLog, onFilterClick: () -> Unit) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
+    val reportLogList = remember { mutableStateListOf<Report>() }
+
+    reportLogList.clear()
+    report.elements?.let { it1 -> reportLogList.addAll(it1) }
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(White)
     ) {
         Box(Modifier.height(screenHeight * 0.67f)) {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 PrintExportButton()
-                SalesReportDetails()
+                SalesReportDetails(report)
                 LazyColumn(
                     Modifier
                         .height(300.dp)
-                        .background(Color.White),
+                        .background(White),
                     content = {
-                        items(10) {
-                            SalesReportItem()
+                        items(reportLogList) { report ->
+                            SalesReportItem(report)
                         }
                     })
             }
@@ -91,7 +126,7 @@ fun SalesReport() {
         Box(Modifier.height(screenHeight * 0.13f)) {
             Filter(
                 onFilterClick = {
-                    // onFilterClick.invoke()
+                    onFilterClick.invoke()
                 })
         }
 
@@ -112,7 +147,7 @@ fun PrintExportButton() {
                 backgroundTex = Green,
                 text = "Print",
                 iconVisibility = true,
-                textColor = Color.White,
+                textColor = White,
                 horizontalPadding = Dimens.halfDefaultMargin,
             ) {
 
@@ -123,7 +158,7 @@ fun PrintExportButton() {
                 backgroundTex = clickedMerchant,
                 text = "Export",
                 iconVisibility = true,
-                textColor = Color.White,
+                textColor = White,
                 horizontalPadding = Dimens.halfDefaultMargin,
             ) {
 
@@ -132,17 +167,16 @@ fun PrintExportButton() {
     }
 }
 
-@Preview
 @Composable
-fun SalesReportDetails() {
+fun SalesReportDetails(report: ReportLog) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = Dimens.halfDefaultMargin)
+            .padding(horizontal = Dimens.padding8)
     ) {
         SalesReportDetailsCell(
-            "Current Balance",
-            838.88, icon = R.drawable.ic_coins
+            stringResource(id = R.string.current_balance),
+            Utils.getUserData()?.reseller?.balance.toString() ?: "", icon = R.drawable.ic_coins
         )
         Row(
             Modifier
@@ -151,31 +185,15 @@ fun SalesReportDetails() {
         ) {
             Box((Modifier.weight(1f))) {
                 SalesReportDetailsCell(
-                    "No. of Transactions\n",
-                    0.32, icon = R.drawable.ic_calco
+                    stringResource(id = R.string.report_no_of_transactions),
+                    report.numberOfTransactions.toString(), icon = R.drawable.ic_calco
                 )
             }
             Box((Modifier.weight(1f))) {
                 SalesReportDetailsCell(
-                    "Total Recommended\n" +
-                            "Retail Price", 0.32, icon = R.drawable.ic_calco
-                )
-            }
-        }
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell(
-                    "Total MADA Alahly\n" +
-                            "Commission", 0.32, R.drawable.ic_balance
-                )
-            }
-            Box((Modifier.weight(1f))) {
-                SalesReportDetailsCell(
-                    "Total Balance\n"
-                            + "Commission", 0.32, R.drawable.ic_balance
+                    stringResource(id = R.string.total_recommended_retail_price),
+                    report.getTotalRecommendedPrice(),
+                    icon = R.drawable.ic_calco
                 )
             }
         }
@@ -185,14 +203,34 @@ fun SalesReportDetails() {
         ) {
             Box((Modifier.weight(1f))) {
                 SalesReportDetailsCell(
-                    "Total Cost Price\n",
-                    0.32, R.drawable.ic_calco
+                    stringResource(id = R.string.total_mada_alahly_commission),
+                    report.getMadaCommission(),
+                    R.drawable.ic_balance
                 )
             }
             Box((Modifier.weight(1f))) {
                 SalesReportDetailsCell(
-                    "Total Expected\n" +
-                            "Commission", 0.32, R.drawable.ic_balance
+                    stringResource(id = R.string.total_balance_commission),
+                    report.getCheckingBalanceCommission(),
+                    R.drawable.ic_balance
+                )
+            }
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Box((Modifier.weight(1f))) {
+                SalesReportDetailsCell(
+                    stringResource(id = R.string.total_cost_price),
+                    report.getCheckingTransactionsTotalAmount(), R.drawable.ic_calco
+                )
+            }
+            Box((Modifier.weight(1f))) {
+                SalesReportDetailsCell(
+                    stringResource(id = R.string.total_expected_profit),
+                    report.getTotalExpectedProfit(),
+                    R.drawable.ic_balance
                 )
             }
         }
@@ -202,13 +240,13 @@ fun SalesReportDetails() {
 
 @Composable
 fun SalesReportDetailsCell(
-    text: String, balance: Double, icon: Int
+    text: String, balance: String, icon: Int
 ) {
     Card(
         Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = Dimens.halfDefaultMargin,
+                horizontal = Dimens.fourDefaultMargin,
                 vertical = Dimens.fourDefaultMargin
             )
             .clickable {
@@ -216,7 +254,7 @@ fun SalesReportDetailsCell(
             },
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = White)
 
     ) {
         Row(
@@ -228,26 +266,30 @@ fun SalesReportDetailsCell(
             Column(
                 modifier = Modifier
                     .padding(
-                        horizontal = Dimens.DefaultMargin,
+                        horizontal = Dimens.padding14,
                         vertical = Dimens.defaultMargin6
-                    ),
+                    )
+                    .weight(4f),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = text,
                     textAlign = TextAlign.Start,
+                    minLines = 2,
+                    maxLines = 2,
                     style = TextStyle(
-                        color = Blue100, fontSize = 12.sp
+                        fontWeight = FontWeight.Bold,
+                        color = Blue100, fontSize = 11.sp
                     ),
                 )
                 Text(
                     modifier = Modifier
-                        .padding(top = Dimens.defaultMargin6),
-                    text = balance.toString(),
+                        .padding(top = Dimens.padding4),
+                    text = balance,
                     textAlign = TextAlign.Start,
                     style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 15.sp, fontWeight = FontWeight.Bold
+                        color = FontColor,
+                        fontSize = 14.sp, fontWeight = FontWeight.Bold
                     ),
                 )
             }
@@ -256,8 +298,8 @@ fun SalesReportDetailsCell(
 
             Image(
                 modifier = Modifier
-                    .padding(end = Dimens.DefaultMargin10)
-                    .size(25.dp),
+                    .padding(end = Dimens.padding8)
+                    .weight(0.9f),
                 painter = painterResource(icon),
                 contentDescription = ""
             )
@@ -266,9 +308,9 @@ fun SalesReportDetailsCell(
     }
 }
 
-@Preview
+
 @Composable
-fun SalesReportItem() {
+fun SalesReportItem(report: Report) {
     var viewDetails by remember { mutableStateOf(false) }
     var arrow = R.drawable.ic_forward_arrow
     Card(
@@ -276,7 +318,7 @@ fun SalesReportItem() {
             .fillMaxWidth()
             .padding(
                 vertical = Dimens.halfDefaultMargin,
-                horizontal = Dimens.DefaultMargin
+                horizontal = Dimens.padding14
             ),
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         colors = CardDefaults.cardColors(containerColor = LightGrey100)
@@ -309,9 +351,9 @@ fun SalesReportItem() {
                     contentDescription = ""
                 )
                 Text(
-                    text = "Playstation PSN Card 10",
+                    text = report.getProductName(),
                     style = TextStyle(
-                        color = Color.Black,
+                        color = Black,
                         fontSize = 14.sp
                     ),
                 )
@@ -330,7 +372,7 @@ fun SalesReportItem() {
             ) {
                 Text(
                     modifier = Modifier,
-                    text = "Playstation PSN Card 10",
+                    text = stringResource(id = R.string.costAfterVat),
                     style = TextStyle(
                         color = LightGrey400,
                         fontSize = 14.sp
@@ -339,10 +381,10 @@ fun SalesReportItem() {
                 Text(
                     modifier = Modifier
                         .padding(vertical = Dimens.halfDefaultMargin),
-                    text = "19.68",
+                    text = report.price(),
                     style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 15.sp,
+                        color = Black,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     ),
                 )
@@ -350,7 +392,8 @@ fun SalesReportItem() {
             }
             Image(
                 modifier = Modifier
-                    .padding(horizontal = Dimens.halfDefaultMargin),
+                    .padding(horizontal = Dimens.halfDefaultMargin)
+                    .size(15.dp),
                 painter = painterResource(arrow),
                 contentDescription = ""
             )
@@ -362,7 +405,10 @@ fun SalesReportItem() {
                     bottom = Dimens.DefaultMargin
                 )
             ) {
-                TransactionsDetails("")
+                TransactionsDetails(
+                    stringResource(id = R.string.report_username),
+                    report.subAccountName
+                )
                 Card(
                     Modifier
                         .fillMaxWidth()
@@ -375,46 +421,86 @@ fun SalesReportItem() {
                     colors = CardDefaults.cardColors(containerColor = LightGrey100)
 
                 ) {
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.no_of_trans),
+                        report.numberOfTrans.toString()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.service),
+                        report.getMerchantName()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.VAT_on_recommended),
+                        report.getVatOnRecommendedRetailPrice()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.total_cost_per_item),
+                        report.getTotalCostPerItem()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.total_cost_price),
+                        report.totalTransAmount()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.recommended_retail_price_after_vat),
+                        report.getRecommendedPrice()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.total_recommended_retail_price),
+                        report.getTotalRecommendedPrice()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.payment_method),
+                        report.getPaymentMethod()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.total_expected_profit),
+                        report.getTotalExpectedProfit()
+                    )
+
                 }
             }
         }
     }
 }
 
-@Preview
 @Composable
-fun SalesReportItemDetails() {
+fun SalesReportItemDetails(title: String, valuee: String) {
     Row(
         Modifier
-            .background(Color.White)
+            .background(White)
             .fillMaxWidth()
             .padding(
                 horizontal = Dimens.halfDefaultMargin,
                 vertical = Dimens.fourDefaultMargin
             ),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Playstation PSN Card 10",
+            modifier = Modifier
+                .padding(
+                    top = Dimens.fourDefaultMargin
+                ),
+            text = title,
             style = TextStyle(
                 color = LightGrey200,
-                fontSize = 10.sp
+                fontSize = 10.sp,
+                textAlign = TextAlign.Center
             ),
         )
         Text(
             modifier = Modifier
                 .padding(
                     start = Dimens.DefaultMargin,
-                    end = Dimens.padding30, top = Dimens.halfDefaultMargin
+                    end = Dimens.padding30,
+                    top = Dimens.fourDefaultMargin
                 ),
-            text = "10",
+            text = valuee,
             style = TextStyle(
                 color = FontColor,
-                fontSize = 10.sp
+                fontSize = 10.sp,
+                textAlign = TextAlign.Center
             ),
         )
     }

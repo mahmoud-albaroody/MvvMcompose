@@ -4,7 +4,10 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
+import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
+import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ReportLog
@@ -14,6 +17,7 @@ import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
+import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
@@ -54,6 +58,14 @@ interface BBRepositoryInterface {
     suspend fun logout(): Flow<Void>
 
     suspend fun generateHomeSalesReport(jsonObject: JsonObject): Flow<ReportLog>
+
+    suspend fun getSimpleCategoryList(): Flow<ArrayList<Category>>
+    suspend fun getSimpleMerchantList(categoryId: Int): Flow<ArrayList<Merchant>>
+    suspend fun getProductLookList(jsonObject: JsonObject): Flow<ArrayList<Product>>
+
+    suspend fun getSurePayRechargeMethods(): Flow<ArrayList<RechargeMethod>>
+    suspend fun getMerchants(categoryId: Int): Flow<ArrayList<Merchant>>
+    suspend fun getUserNamesList(): Flow<ArrayList<LogUserName>>
 
 
 }

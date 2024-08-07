@@ -3,11 +3,14 @@ package com.bitaqaty.reseller.ui.presentation.salesReport
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.CurrentUser
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.ReportLog
 import com.bitaqaty.reseller.domain.GetProductUseCase
 import com.bitaqaty.reseller.domain.GetReportLogUseCase
+import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.Globals
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,31 +29,34 @@ class SalesReportViewModel @Inject constructor(private val getReportLogUseCase: 
     val getReport: MutableSharedFlow<ReportLog>
         get() = _getReport
 
-    fun getProductDiscountList(
-        pageNumber: Int, categoryId: Int = -1, merchantId: Int,
-        searchText: String = "", allowPaging: Boolean = true,
-        orderByProducts: Boolean = true
+
+
+
+    fun getSalesReportList(
+        pageNumber: Int, categoryId: Int = -1, merchantId: Int, allowPaging: Boolean = true,
     ) {
         val jsonObject = JsonObject()
-        jsonObject.addProperty("applyPagination", allowPaging)
-        jsonObject.addProperty("resellerId", CurrentUser.getInstance()?.reseller?.id)
+        jsonObject.addProperty("searchPeriod", "LAST_MONTH")
+        jsonObject.addProperty("subAccountId", "311346")
         if (allowPaging) {
             jsonObject.addProperty("pageSize", Globals.PAGE_SIZE)
             jsonObject.addProperty("pageNumber", pageNumber)
         }
-        jsonObject.addProperty("calculateVat", true)
-        jsonObject.addProperty("orderByProducts", orderByProducts)
-        jsonObject.addProperty("byUrl", false)
+//        jsonObject.addProperty("customDateFrom", "")
+//        jsonObject.addProperty("customDateTo", "")
+//        jsonObject.addProperty("productId", "")
+//
+//        if (categoryId != -1) {
+//            jsonObject.addProperty("categoryId", categoryId)
+//        }
+//        if (merchantId != -1) {
+//            jsonObject.addProperty("merchantId", merchantId)
+//        }
+//        jsonObject.addProperty("channel", "")
+//        jsonObject.addProperty("showRecommendedPrices", false)
+//        jsonObject.addProperty("showSubResellerPrices", false)
+//        jsonObject.addProperty("paymentMethod", "")
 
-        if (categoryId != -1) {
-            jsonObject.addProperty("categoryId", categoryId)
-        }
-        if (merchantId != -1) {
-            jsonObject.addProperty("merchantId", merchantId)
-        }
-        if (searchText.isNotEmpty()) {
-            jsonObject.addProperty("searchCriteria", searchText)
-        }
         viewModelScope.launch {
             getReportLogUseCase.generateHomeSalesReport(jsonObject)
                 .catch {
@@ -60,7 +66,11 @@ class SalesReportViewModel @Inject constructor(private val getReportLogUseCase: 
                     _getReport.emit(it)
                 }.launchIn(viewModelScope)
         }
+
     }
+
+
+
 }
 
 

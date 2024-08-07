@@ -24,7 +24,9 @@ sealed class Screen(
 
     object SelectSubCategoryScreen : Screen("selectSubCategoryScreen", 0, "selectSubCategoryScreen")
 
-    object ApplyFilterScreen : Screen("applyFilterScreen", 0, "applyFilterScreen")
+    object ApplyFilterScreen : Screen("applyFilterScreen", 0, "applyFilterScreen",
+         objectName = "applyFilterScreen/",
+        objectPath = "{comeFrom}")
 
     object MyProfileScreen : Screen("myProfileScreen", 0, "myProfileScreen")
     object ChargeBalanceScreen : Screen("chargeBalanceScreen", 0, "chargeBalanceScreen")

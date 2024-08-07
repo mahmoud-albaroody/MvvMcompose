@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.data.model
 
+import com.bitaqaty.reseller.utilities.Globals.lang
 import com.google.gson.annotations.SerializedName
 
 data class Category(
@@ -17,4 +18,12 @@ data class Category(
     val descriptionEn: String? = null,
     @SerializedName("logoPath")
     val logoPath: String? = null,
-)
+) {
+    fun getName(): String? {
+        return if (lang == "ar") {
+            nameAr
+        } else {
+            nameEn
+        }
+    }
+}

@@ -132,7 +132,9 @@ fun Recharge(onRechargeClick: () -> Unit) {
             DynamicSelectTextField(
                 TextAlign.Start,
                 stringArrayResource(R.array.credit_mada_instruction_arr).toList(), false
-            )
+            ){
+
+            }
         }
         RechargeAmount()
         Column(Modifier.padding(top = Dimens.DefaultMargin)) {
@@ -220,7 +222,9 @@ fun RechargeAmount() {
                     "1000",
                     "5000",
                 ), true
-            )
+            ){
+
+            }
         }
     }
 }

@@ -3,8 +3,10 @@ package com.bitaqaty.reseller.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilterScreen
@@ -29,6 +31,7 @@ import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTra
 import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
+import com.bitaqaty.reseller.ui.presentation.verificationCode.VerificationCodeScreen
 
 @Composable
 fun Navigation2(
@@ -61,8 +64,24 @@ fun Navigation2(
         composable(Screen.SelectSubCategoryScreen.route) {
             SelectSubCategoryScreen(navController = navController, modifier = modifier)
         }
-        composable(Screen.ApplyFilterScreen.route) {
-            ApplyFilterScreen(navController = navController, modifier = modifier)
+        composable(
+            Screen.ApplyFilterScreen.route.plus(
+                Screen.ApplyFilterScreen.objectName
+                        + "{comeFrom}"
+            ),
+            arguments = listOf(navArgument("comeFrom") {
+                type = NavType.StringType
+                nullable = true
+            })
+        ) {
+            it.arguments?.getString("comeFrom")?.let { comeFrom ->
+                ApplyFilterScreen(
+                    navController = navController,
+                    modifier = modifier,
+                    comeFrom = comeFrom
+                )
+            }
+
         }
         composable(Screen.MyProfileScreen.route) {
             MyProfileScreen(navController = navController, modifier = modifier)

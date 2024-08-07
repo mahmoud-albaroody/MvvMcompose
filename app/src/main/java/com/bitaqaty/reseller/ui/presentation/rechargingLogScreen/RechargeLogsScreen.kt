@@ -50,11 +50,11 @@ import com.bitaqaty.reseller.utilities.Utils
 @Composable
 fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
     val rechargeLogViewModel: RechargeLogViewModel = hiltViewModel()
-    var discrmenationVal = ""
-    var dateFrom = ""
-    var dateTo = ""
-    var pageIndex = 1
-    var dateMethod: String? = null
+    val discrmenationVal = ""
+    val dateFrom = ""
+    val dateTo = ""
+    val pageIndex = 1
+    val dateMethod: String? = null
 
     LaunchedEffect(key1 = true) {
         rechargeLogViewModel.getRechargingList(
@@ -67,7 +67,10 @@ fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
     }
     rechargeLogViewModel.rechargeLogs.value.let {
         RechargeLog(it?.resultList, onFilterClick = {
-            navController.navigate(Screen.ApplyFilterScreen.route)
+            navController.navigate(Screen.ApplyFilterScreen.route.plus(
+                Screen.ApplyFilterScreen.objectName
+                        + "rechargeLog"
+            ))
         })
     }
 

@@ -93,7 +93,7 @@ fun MerchantItem(
                     .wrapContentSize()
                     .align(Alignment.CenterVertically)
                     .padding(end = Dimens.padding12),
-                text = merchant.name,
+                text = merchant.getName(),
                 color = if (isSelected) Color.White else merchantLabel,
                 style = MaterialTheme.typography.PlaceHolder,
             )
@@ -128,7 +128,7 @@ fun MerchantList(
 @Composable
 fun MerchantPreview() {
     val merchant = Merchant(
-        name = "USA",
+        nameAr = "USA", nameEn = "USA",
         imageUrl = "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
     )
     MerchantItem(
@@ -142,13 +142,13 @@ fun MerchantPreview() {
 @Composable
 fun MerchantListPreview() {
     val sampleMerchants = listOf(
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
-        Merchant("USA", ""),
+        Merchant("USA", "USA",""),
+        Merchant("USA","USA", ""),
+        Merchant("USA", "USA",""),
+        Merchant("USA", "USA",""),
+        Merchant("USA","USA", ""),
+        Merchant("USA","USA", ""),
+        Merchant("USA", "USA",""),
     )
 
     MerchantList(merchants = sampleMerchants, scrollState = LazyListState())

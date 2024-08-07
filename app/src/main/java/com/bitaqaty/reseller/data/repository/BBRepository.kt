@@ -6,7 +6,10 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
+import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
+import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ReportLog
@@ -16,6 +19,7 @@ import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
+import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
@@ -66,17 +70,57 @@ class BBRepository @Inject constructor(
         emit(logoutResult)
 
     }
+
     override suspend fun getProductList(jsonObject: JsonObject): Flow<ProductListResult> = flow {
         //   emit(DataState.Loading)
         val logoutResult = apiService.getProductList(jsonObject)
         emit(logoutResult)
 
     }
+
     override suspend fun generateHomeSalesReport(jsonObject: JsonObject): Flow<ReportLog> = flow {
         //   emit(DataState.Loading)
         val logoutResult = apiService.generateHomeSalesReport(jsonObject)
         emit(logoutResult)
 
+    }
+
+    override suspend fun getSimpleCategoryList(): Flow<ArrayList<Category>> = flow {
+        //   emit(DataState.Loading)
+        val logoutResult = apiService.getSimpleCategoryList()
+        emit(logoutResult)
+
+    }
+
+    override suspend fun getSimpleMerchantList(categoryId: Int): Flow<ArrayList<Merchant>> = flow {
+        //   emit(DataState.Loading)
+        val logoutResult = apiService.getSimpleMerchantList(categoryId)
+        emit(logoutResult)
+    }
+
+    override suspend fun getProductLookList(jsonObject: JsonObject): Flow<ArrayList<Product>> =
+        flow {
+            //   emit(DataState.Loading)
+            val logoutResult = apiService.getProductLookList(jsonObject)
+            emit(logoutResult)
+        }
+
+    override suspend fun getSurePayRechargeMethods(): Flow<ArrayList<RechargeMethod>> = flow {
+        //   emit(DataState.Loading)
+        val logoutResult = apiService.getSurePayRechargeMethods()
+        emit(logoutResult)
+    }
+
+    override suspend fun getMerchants(categoryId: Int): Flow<ArrayList<Merchant>> = flow {
+        //   emit(DataState.Loading)
+        val logoutResult = apiService.getMerchants(categoryId)
+        emit(logoutResult)
+    }
+
+    override suspend fun getUserNamesList(): Flow<ArrayList<LogUserName>> = flow {
+        //   emit(DataState.Loading)
+        val logoutResult = apiService.getUserNamesList()
+        emit(logoutResult)
     }
 
 

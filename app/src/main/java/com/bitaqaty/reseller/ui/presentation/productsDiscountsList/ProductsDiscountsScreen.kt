@@ -43,15 +43,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.salesReport.PrintExportButton
 import com.bitaqaty.reseller.ui.theme.BebeBlue
+import com.bitaqaty.reseller.ui.theme.Black
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.ui.theme.White
 
 
 @Composable
@@ -79,13 +82,13 @@ fun ProductsDiscounts(products: SnapshotStateList<Product>) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(White)
     ) {
         PrintExportButton()
         LazyColumn(
             Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(White),
             content = {
                 items(products) {
                     ProductsDiscountsItem(it)
@@ -139,17 +142,18 @@ fun ProductsDiscountsItem(product: Product) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.weight(6f)
             ) {
-                Image(
+
+                AsyncImage(
                     modifier = Modifier
                         .padding(Dimens.halfDefaultMargin)
                         .size(25.dp),
-                    painter = painterResource(R.drawable.logo),
-                    contentDescription = ""
+                    model = product.getImage(),
+                    contentDescription = null,
                 )
                 Text(
                     text = product.getName(),
                     style = TextStyle(
-                        color = Color.Black,
+                        color = Black,
                         fontSize = 14.sp
                     ),
                 )
@@ -205,15 +209,21 @@ fun ProductsDiscountsItem(product: Product) {
                         .padding(horizontal = Dimens.halfDefaultMargin)
                 ) {
                     Box(Modifier.weight(1f)) {
-                        ServiceItem(stringResource(id = R.string.service), "")
+                        ServiceItem(
+                            stringResource(id = R.string.service),
+                            product.getMerchantName()
+                        )
                     }
                     Box(Modifier.weight(1f)) {
-                        ServiceItem(stringResource(id = R.string.vat_amount_per), product.getVat())
+                        ServiceItem(
+                            stringResource(id = R.string.vat_amount_per),
+                            product.vatePercentage.toString()
+                        )
                     }
                     Box(Modifier.weight(1f)) {
                         ServiceItem(
                             stringResource(id = R.string.costAfterVat),
-                            product.recommendedRetailPriceAfterVat.toString()
+                            product.getPriceAfterVat()
                         )
                     }
                 }
@@ -232,19 +242,41 @@ fun ProductsDiscountsItem(product: Product) {
                     colors = CardDefaults.cardColors(containerColor = LightGrey100)
 
                 ) {
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
-                    SalesReportItemDetails()
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.recommended_retail_price),
+                        product.getRecommendedPrice()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.VAT_on_recommended),
+                        product.vatOnRecommendedPrice ?: ""
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.total_vat),
+                        product.getTotalVat().toString()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.recommended_retail_price_after_vat),
+                        product.getRecommendedRetailPriceDouble().toString()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.expected_profit),
+                        product.getExpectProfitDouble().toString()
+                    )
+                    SalesReportItemDetails(
+                        stringResource(id = R.string.sku_code),
+                        product.skuBarcode.toString()
+                    )
+
+
                 }
             }
         }
     }
 }
 
-@Preview
+
 @Composable
-fun SalesReportItemDetails() {
+fun SalesReportItemDetails(title: String, value: String) {
     Row(
         Modifier
             .background(Color.White)
@@ -256,7 +288,7 @@ fun SalesReportItemDetails() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Playstation PSN Card 10",
+            text = title,
             style = TextStyle(
                 color = LightGrey200,
                 fontSize = 10.sp
@@ -268,7 +300,7 @@ fun SalesReportItemDetails() {
                     start = Dimens.DefaultMargin,
                     end = Dimens.padding30, top = Dimens.halfDefaultMargin
                 ),
-            text = "10",
+            text = value,
             style = TextStyle(
                 color = FontColor,
                 fontSize = 10.sp
