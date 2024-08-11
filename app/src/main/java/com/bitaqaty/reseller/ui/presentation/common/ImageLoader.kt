@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.common
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,9 +30,9 @@ fun ImageLoader(
     val imageRequest = imageRequestBuilder.build()
 
     AsyncImage(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         model = imageRequest,
         contentDescription = null,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillBounds,
     )
 }

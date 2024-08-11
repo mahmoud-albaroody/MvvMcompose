@@ -22,7 +22,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -46,6 +45,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,7 +56,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.ui.presentation.common.Loading
-import com.bitaqaty.reseller.ui.theme.PlaceHolder
 import com.bitaqaty.reseller.ui.theme.SearchBarBackground
 import com.bitaqaty.reseller.ui.theme.SearchBarText
 import com.bitaqaty.reseller.utilities.network.DataState
@@ -419,6 +418,7 @@ fun ValidationTextField(
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
+            .height(52.dp)
             .focusRequester(focusRequester)
             .background(SearchBarBackground),
         value = textState,
@@ -430,12 +430,12 @@ fun ValidationTextField(
             errorMessage = viewModel.validate(it.text, validationType).errorMessage
         },
         isError = isError,
-        textStyle = MaterialTheme.typography.PlaceHolder,
+        textStyle = TextStyle(fontSize = 16.sp),
         placeholder = {
             Text(
                 modifier = modifier,
                 text = placeHolder,
-                style = MaterialTheme.typography.PlaceHolder,
+                style = TextStyle(fontSize = 16.sp),
                 color = SearchBarText,
                 maxLines = 1,
             )

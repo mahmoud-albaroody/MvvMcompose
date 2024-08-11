@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.data.repository
 
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
@@ -8,6 +9,7 @@ import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.User
@@ -19,6 +21,7 @@ interface BBRepositoryInterface {
     suspend fun getTransactionLogList(jsonObject: JsonObject): Flow<DataState<TransactionLogResult>>
     suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>>
     suspend fun getTopMerchants(): Flow<DataState<TopMerchants>>
+    suspend fun getChildMerchants(childMerchantRequest: ChildMerchantRequest): Flow<DataState<TopChildMerchant>>
     suspend fun getMerchants(categoryId: Int): Flow<DataState<ArrayList<Merchant>>>
     suspend fun getProducts(productsInfo: ProductListRequest): Flow<DataState<ProductListResponse>>
     suspend fun getSystemSettings(): Flow<DataState<ArrayList<SystemSettings>>>

@@ -9,14 +9,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable
-fun TopMerchantList(
+fun ChildMerchantList(
     viewModel: HomeViewModel,
-    topMerchants: TopMerchants
+    childMerchants: TopChildMerchant
 ){
     LazyVerticalGrid(
         modifier = Modifier
@@ -25,21 +26,16 @@ fun TopMerchantList(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(Dimens.fourDefaultMargin),
     ) {
-        items(topMerchants.merchants!!.toList()) { topMerchant ->
-            TopMerchantItem(
+        items(childMerchants.merchants!!.toList()) { childMerchant ->
+            ChildMerchantItem(
                 onClick = {
-                         if(topMerchant.category!!){
-                             viewModel.getChildMerchants(topMerchant.categoryId!!)
-                             viewModel._categoryId.value = topMerchant.categoryId
-                         }else{
-                             val productsInfo = ProductListRequest(
-                                 categoryId = topMerchant.categoryId!!,
-                                 merchantId = topMerchant.merchantId!!
-                             )
-                             viewModel.getProducts(productsInfo)
-                         }
+                    val productsInfo = ProductListRequest(
+                        categoryId = viewModel._categoryId.value!!,
+                        merchantId = childMerchant.id
+                    )
+                    viewModel.getProducts(productsInfo)
                 },
-                topMerchant = topMerchant
+                childMerchant = childMerchant
             )
         }
     }

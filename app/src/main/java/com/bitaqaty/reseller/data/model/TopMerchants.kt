@@ -7,6 +7,12 @@ data class TopMerchants(
     val merchants: ArrayList<TopMerchant>? = null
 )
 
+data class TopChildMerchant(
+    val errors: ArrayList<ErrorMessage>? = null,
+    val merchants: ArrayList<Merchant>? = null,
+    val totalElementsCount: Int = 0
+) : Serializable
+
 data class TopMerchant(
     var id: Int? = null,
     var nameAr: String? = null,

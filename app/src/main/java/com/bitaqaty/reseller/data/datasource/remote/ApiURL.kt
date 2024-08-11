@@ -9,6 +9,7 @@ object ApiURL {
     const val BASE_URL = BuildConfig.BASE_URL
     const val CATEGORIES = "categories/list-categories"
     const val TOP_MERCHANTS = "sub-acc-home/top-merchants"
+    const val SUB_ACCOUNT_HOME_CHILD = "sub-acc-home/list-child-merchants"
     const val MERCHANTS = "merchants/list-merchants/{category_id}"
     const val PRODUCT_LIST = "products/list-products"
 

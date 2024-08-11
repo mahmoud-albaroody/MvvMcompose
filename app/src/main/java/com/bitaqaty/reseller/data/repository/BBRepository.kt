@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.data.repository
 
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
@@ -9,6 +10,7 @@ import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.User
@@ -70,6 +72,17 @@ class BBRepository @Inject constructor(
             try {
                 val topMerchants = apiService.getTopMerchants()
                 emit(DataState.Success(topMerchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getChildMerchants(childMerchantRequest: ChildMerchantRequest): Flow<DataState<TopChildMerchant>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val childMerchants = apiService.getChildMerchants(childMerchantRequest)
+                emit(DataState.Success(childMerchants))
             }catch (e: Exception){
                 emit(DataState.Error(e))
             }

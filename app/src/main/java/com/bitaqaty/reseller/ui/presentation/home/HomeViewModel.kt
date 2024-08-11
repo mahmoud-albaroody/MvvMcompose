@@ -5,9 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.repository.BBRepository
 import com.bitaqaty.reseller.utilities.network.DataState
@@ -27,16 +29,20 @@ class HomeViewModel @Inject constructor(
         mutableStateOf<DataState<TopMerchants>?>(null)
     val topMerchantsState: State<DataState<TopMerchants>?> = _topMerchantsState
 
+    private val _childMerchantsState =
+        mutableStateOf<DataState<TopChildMerchant>?>(null)
+    val childMerchantsState: State<DataState<TopChildMerchant>?> = _childMerchantsState
+
     private val _merchantsState =
         mutableStateOf<DataState<ArrayList<Merchant>>?>(null)
     val merchantsState: State<DataState<ArrayList<Merchant>>?> = _merchantsState
 
     private val _productsState =
-        mutableStateOf<DataState<ProductListResponse>>(DataState.Loading)
-    val productsState: State<DataState<ProductListResponse>> = _productsState
+        mutableStateOf<DataState<ProductListResponse>?>(null)
+    val productsState: State<DataState<ProductListResponse>?> = _productsState
 
-    private val _categoryId = mutableStateOf<Int?>(null)
-    val categoryId: State<Int?> = _categoryId
+    val _categoryId = mutableStateOf<Int?>(null)
+    //var categoryId: State<Int?> = _categoryId
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -56,6 +62,17 @@ class HomeViewModel @Inject constructor(
             repo.getTopMerchants().collect{ state ->
                 _topMerchantsState.value = state
                 _merchantsState.value = null
+            }
+        }
+    }
+
+    fun getChildMerchants(categoryId: Int){
+        val childMerchantRequest = ChildMerchantRequest(categoryId = categoryId)
+        viewModelScope.launch {
+            repo.getChildMerchants(childMerchantRequest).collect{ state ->
+                _childMerchantsState.value = state
+                _topMerchantsState.value = null
+                _productsState.value = null
             }
         }
     }
@@ -83,5 +100,7 @@ class HomeViewModel @Inject constructor(
                 _productsState.value = state
             }
         }
+        _childMerchantsState.value = null
+        _topMerchantsState.value = null
     }
 }

@@ -1,17 +1,25 @@
 package com.bitaqaty.reseller.ui.presentation.home.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,15 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.theme.LightGrey80
+import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 import com.bitaqaty.reseller.utilities.TrapezoidShape
 import com.bitaqaty.reseller.utilities.noRippleClickable
+import com.bitaqaty.reseller.utilities.noRippleCombinedClickable
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CategoryItem(
     category: Category,
     isSelected: Boolean,
     onClickCategory: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLongPress: () -> Unit
 ) {
     val backgroundModifier = if (isSelected) {
         modifier.background(color = Color.White, shape = TrapezoidShape())
@@ -38,7 +50,10 @@ fun CategoryItem(
     Column(
         modifier = backgroundModifier
             .padding(vertical = 14.dp)
-            .noRippleClickable { if(!isSelected) onClickCategory(category.id) },
+            .noRippleCombinedClickable(
+                onClick = {if (!isSelected) onClickCategory(category.id)},
+                onLongClick = {onLongPress()},
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(

@@ -173,7 +173,7 @@ fun MerchantList(
                     selectedMerchant = merchant
 
                     val productsInfo = ProductListRequest(
-                        categoryId = viewModel.categoryId.value!!,
+                        categoryId = viewModel._categoryId.value!!,
                         merchantId = merchant.id
                     )
                     viewModel.getProducts(productsInfo)

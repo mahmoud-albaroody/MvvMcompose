@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.data.datasource.remote
 
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
@@ -8,6 +9,7 @@ import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.User
@@ -28,6 +30,8 @@ interface ApiService {
     suspend fun getCategoryList(): ArrayList<Category>
     @POST(ApiURL.TOP_MERCHANTS)
     suspend fun getTopMerchants(): TopMerchants
+    @POST(ApiURL.SUB_ACCOUNT_HOME_CHILD)
+    suspend fun getChildMerchants(@Body childMerchantRequest: ChildMerchantRequest): TopChildMerchant
     @POST(ApiURL.MERCHANTS)
     suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
     @POST(ApiURL.PRODUCT_LIST)

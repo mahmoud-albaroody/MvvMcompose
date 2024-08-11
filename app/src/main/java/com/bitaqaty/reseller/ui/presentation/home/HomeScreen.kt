@@ -24,8 +24,10 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.ui.presentation.common.Loading
+import com.bitaqaty.reseller.ui.presentation.home.components.ChildMerchantList
 import com.bitaqaty.reseller.ui.presentation.home.components.SideBar
 import com.bitaqaty.reseller.ui.presentation.home.components.ProductList
 import com.bitaqaty.reseller.ui.presentation.home.components.TopBar
@@ -44,6 +46,7 @@ fun HomeScreen(
     val topMerchantState by viewModel.topMerchantsState
     val merchantState by viewModel.merchantsState
     val productsState by viewModel.productsState
+    val childMerchantsState by viewModel.childMerchantsState
 
     val scope = rememberCoroutineScope()
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
@@ -99,7 +102,10 @@ fun HomeScreen(
                             }
                             is DataState.Success -> {
                                 val topMerchants = (topMerchantState as DataState.Success<TopMerchants>).data
-                                TopMerchantList(topMerchants = topMerchants)
+                                TopMerchantList(
+                                    viewModel = viewModel,
+                                    topMerchants = topMerchants
+                                )
                             }
                             else -> {
                                 when(productsState){
@@ -118,6 +124,26 @@ fun HomeScreen(
                                                 isBottomSheetVisible = true
                                                 sheetState.expand()
                                             }
+                                        }
+                                    }
+                                    else -> {
+                                        when(childMerchantsState) {
+                                            is DataState.Loading -> {
+                                                Loading()
+                                            }
+                                            is DataState.Error -> {
+                                                val error =
+                                                    (childMerchantsState as DataState.Error).exception
+                                                Text(text = "Error: ${error.message}")
+                                            }
+                                            is DataState.Success -> {
+                                                val childMerchants = (childMerchantsState as DataState.Success<TopChildMerchant>).data
+                                                ChildMerchantList(
+                                                    viewModel = viewModel,
+                                                    childMerchants = childMerchants
+                                                )
+                                            }
+                                            else -> {}
                                         }
                                     }
                                 }
@@ -143,10 +169,10 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomePreview() {
-    BitaqatyTheme {
-        HomeScreen()
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun HomePreview() {
+//    BitaqatyTheme {
+//        HomeScreen()
+//    }
+//}
