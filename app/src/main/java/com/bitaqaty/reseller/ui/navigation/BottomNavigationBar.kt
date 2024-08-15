@@ -77,7 +77,7 @@ fun BottomNavigationBar(navController: NavController) {
                             alwaysShowLabel = true,
                             icon = {
                                 Image(
-                                    painter = painterResource(item.icon),
+                                    painter = painterResource(item.icon!!),
                                     contentDescription = item.title,
                                     modifier = Modifier
                                         .height(28.dp)
@@ -98,7 +98,7 @@ fun BottomNavigationBar(navController: NavController) {
                                     },
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
-                                    text = item.title,
+                                    text = item.title!!,
                                     fontFamily = frutigerLTArabic,
                                     fontSize = Dimens.fontSize9,
                                     fontWeight = if (isSelected) {

@@ -1,15 +1,11 @@
 <resources>
-    <string name="app_name">bitaqaty</string>
     <string name="app_title">Movie World</string>
     <string name="title">Title</string>
-    <string name="home">Home</string>
     <string name="popular">Popular</string>
     <string name="top_rate">Top rated</string>
     <string name="up_coming">Up coming</string>
-    <string name="description">Description</string>
     <string name="release_date">Release Date</string>
     <string name="rating">Rating</string>
-    <string name="language">Language</string>
     <string name="duration">Duration</string>
     <string name="movie_detail">Movie Detail</string>
     <string name="similar">Similar</string>
@@ -18,10 +14,8 @@
     <string name="screen_two">Screen two</string>
     <string name="open_drawer">Open drawer</string>
     <string name="rating_search">Rating :</string>
-    <string name="yes">Yes</string>
     <string name="do_you_want_to_exit_the_app">Do you want to exit the app?</string>
     <string name="close_the_app">Close the app</string>
-    <string name="no">No</string>
     <string name="there_is_no_internet">There is no internet!</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
@@ -37,10 +31,1114 @@
     <string name="search_place_holder">Card Name, Category</string>
     <string name="category_label">Category</string>
     <string name="merchant_label">Merchant</string>
-    <string name="recharged_successfully">Recharged Successfully</string>
 
     <string name="please_enter_valid_text">Please enter valid text</string>
     <string name="password">Password</string>
 
+    <string name="support_ticket">Support Ticket</string>
     <string name="total_amount">Total Amount</string>
+
+
+    <string name="app_name">Bitaqaty Business</string>
+    <string name="copyright">Copyright © 2020 Bitaqaty. All rights reserved.</string>
+    <string name="sign_welcome">Welcome\nto Bitaqaty Business</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="send">Send</string>
+    <string name="code">Code</string>
+    <string name="sign_in">Sign in</string>
+    <string name="change_password">Change password</string>
+    <string name="language">Language</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="current_lang">(English)</string>
+    <string name="loading">Loading…</string>
+    <string name="export">Export</string>
+    <string name="print_report">Print</string>
+    <string name="filter">Filter</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="days">day(s)</string>
+    <string name="hours">hour(s)</string>
+    <string name="mins">minute(s)</string>
+    <string name="secs">second(s)</string>
+    <string name="share_to">Share to</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Errors">-->
+    <string name="err_server">Something went wrong</string>
+    <string name="err_request_failed">Sorry, we were unable to process your request. Please try again shortly</string>
+    <string name="err_internet">No Internet connection. \nMake sure that Wi-Fi or cellular mobile data is turned on, then try again.</string>
+    <string name="retry">Retry</string>
+    <string name="no_data">No Data Available</string>
+    <string name="reLogin_error">Error login</string>
+    <string name="refresh">Refresh</string>
+    <string name="err_field_required">This field is required</string>
+    <string name="err_invalid_email">Email should be like example@example.com</string>
+    <string name="err_invalid_password">Invalid password</string>
+    <string name="err_passwords_mismatch">Passwords don’t match</string>
+    <string name="err_incorrect_username_password">Incorrect username/password</string>
+    <string name="err_incorrect_username">Incorrect username</string>
+    <string name="err_new_pass_match_old_pass">New password shouldn’t be as current password</string>
+    <string name="err_session_ended">Login session has ended</string>
+    <string name="err_sms_exceeded">You have reached maximum sms attempts, please contact administrator</string>
+    <string name="err_sms_resend_exceeded">You have exceeded number of allowed sms try again later</string>
+    <string name="err_invalid_verification_code">Incorrect verification code</string>
+    <string name="err_verification_code_expired">Sms Verification code expired\n\nPlease,request a new code</string>
+    <string name="err_try_again_later">You have exceeded number of allowed sms try again after\n</string>
+    <string name="err_wrong_current_pass">Incorrect password</string>
+    <string name="err_unauthorized">Session is expired, please login</string>
+    <string name="err_account_no_saved_before">Account no. already saved before</string>
+    <string name="noPermission">You don\'t have permissions to view this page</string>
+    <string name="err_bank_account_not_found">Bank account not found</string>
+    <string name="err_min_amount_per_request">Min. allowed amount per request is : XSAR</string>
+    <string name="err_max_amount_per_request">Max. allowed amount per request is : XSAR</string>
+    <string name="err_max_request_per_day">Max. allowed bank requests per day : D/R</string>
+    <string name="err_max_amount_per_day">Max. allowed amount per day : XSAR</string>
+    <string name="errSaveCredentials">All Card data must be entered and valid</string>
+    <string name="errWrongDate">Wrong expiry data, make sure you enter right format</string>
+    <string name="errCardHolderName">Card holder name is invalid.</string>
+    <string name="errCardNumber">Card number is invalid.</string>
+    <string name="errExpiryDate">Expiry date is invalid.</string>
+    <string name="errCVV">CVV is invalid.</string>
+    <string name="err_out_of_stock">%s is out of stock</string>
+    <string name="err_insufficient_stock">Insufficient %s in stock</string>
+    <string name="err_insufficient_balance">Insufficient balance</string>
+    <string name="err_price_changed">Product Price changed, Please go back and try again</string>
+    <string name="err_service_not_available">%s is out of stock</string>
+    <string name="err_select_category">Please, Select a Category first</string>
+    <string name="err_select_merchant">Please, Select a merchant first</string>
+    <string name="err_select_from_first">Select from date first</string>
+    <string name="err_invalid_custom_date">Invalid custom date</string>
+    <string name="err_invalid_ticket_details">Maximum characters is : 1500</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Sign in Page">-->
+    <string name="sign_instruction">To login, please enter your email address and password and click on Sign in</string>
+    <string name="sign_username">Email address/Username*</string>
+    <string name="sign_password">Password*</string>
+    <string name="sign_forgot_password"><u>Forgot password ?</u></string>
+    <string name="sign_signing">Signing in…</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Change password Page">-->
+    <string name="pass_enter_new_password">Enter new password</string>
+    <string name="pass_instruction">Enter New Password and Confirm New Password and click Change</string>
+    <string name="pass_change">Change</string>
+    <string name="pass_current_pass">Current Password*</string>
+    <string name="pass_new_pass">New Password*</string>
+    <string name="pass_conf_new_pass">Confirm New Password*</string>
+    <string name="pass_validation_1">Should be written in English</string>
+    <string name="pass_validation_2">Contain at least 8 characters</string>
+    <string name="pass_validation_3">Contain at least one small letter</string>
+    <string name="pass_validation_4">Contain at least one capital letter</string>
+    <string name="pass_validation_5">Contain at least one number</string>
+    <string name="pass_applying_change">Applying change…</string>
+    <string name="pass_change_success">Password is changed successfully, you can now login with the new password</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Forget password Page">-->
+    <string name="reset_password">Restore Password</string>
+    <string name="reset_password_choose_code">Please choose the method you need to receive verification code through then click Send</string>
+    <string name="reset_instruction">To restore your forgotten password, please enter your email address, and click Send. An email message containing a link to reset your password will be sent to your email. Please note that this link is valid within one hour</string>
+    <string name="to_reset_access_data">To reset your access data, please enter your username and click “Send”. A message containing verification code will be sent to you, please use that code to reset your access data. Please note that this code is valid within 3 Minutes</string>
+
+
+    <string name="reset_email">Email Address/Username*</string>
+    <string name="reset_link_sent">Link is resent</string>
+    <string name="reset_resend">Resend link</string>
+    <string name="reset_success_msg">An email has been sent to EMAIL_TXT, To reset your password, Please click on the verification link from Bitaqaty via email\n\nFor help: You can contact our Resellers support now\n\n\nIf you do not receive the message, you can click resend link</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Verification Page">-->
+    <string name="verification_enter_code">Enter Verification code</string>
+    <string name="verification_instruction">Please enter the Sms Verification Code sent to your account’s mobile number and click Sign in</string>
+    <string name="verification_code">Verification code</string>
+    <string name="verification_resend">Resend again</string>
+    <string name="verification_resend_message">In case you didn’t receive code press</string>
+    <string name="verification_resend_underline_resend_again"><u>Resend again</u></string>
+    <string name="verification_trial">Trials</string>
+    <string name="verification_wait">Wait</string>
+    <string name="verification_seconds">Seconds</string>
+    <string name="verification_verifying">Verifying…</string>
+    <string name="verification_code_sent">Verification code sent</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Profile Dialog">-->
+    <string name="profile_account_no">Account no.</string>
+    <string name="profile_last_visit_date">Last Visit Date</string>
+    <string name="profile_reseller">(Reseller)</string>
+    <string name="profile_sub_account">(Sub account)</string>
+    <string name="profile_sign_out">Sign Out</string>
+    <string name="profile_signing_out">Signing Out…</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Main Page">-->
+    <string name="hello">Hello, </string>
+    <string name="home">Home</string>
+    <string name="transactionLog">Transactions</string>
+    <string name="productList">Products Discount List</string>
+    <string name="more">More</string>
+    <string name="recharge">Recharge</string>
+    <string name="yourBalance">Balance:</string>
+    <string name="supportTitle">Reseller Support Center</string>
+    <string name="store">Store</string>
+    <string name="cart">Cart</string>
+    <string name="sar">SAR</string>
+    <string name="sar_full">SAR</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Recharge dialog">-->
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="mada">MADA</string>
+    <string name="credit">Credit Card</string>
+    <string name="amex">AMEX</string>
+    <string name="paypal">PayPal</string>
+    <string name="rechargeLog">Recharging Log</string>
+    <string name="rechargeRequests">Recharging requests</string>
+    <string name="bankTransferLog">Bank transfer</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Manage Account">-->
+    <string name="account_type">Account Type</string>
+    <string name="status">Status</string>
+    <string name="purchasing_limit">Purchasing limit</string>
+    <string name="manage">Manage</string>
+    <string name="limit">Limited</string>
+    <string name="periodic">Periodic</string>
+    <string name="notLimited">Unlimited</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="search_hint">Search</string>
+    <string name="show_more">Show more</string>
+    <string name="export_error">Something went wrong</string>
+    <string name="exportFileName">Sub Accounts</string>
+    <string name="export_success">Data exported successfully</string>
+    <string name="no_app_available">No application available to view file</string>
+    <string name="periodic_limit">Periodic Limit</string>
+    <string name="export_user_name">Account username</string>
+    <string name="export_full_name">Full Name</string>
+    <string name="export_account_type">Account Type</string>
+    <string name="export_status">Status</string>
+    <string name="export_purchase_limit">Purchase Limit </string>
+    <string name="exportefFileName">Sub Accounts.xls</string>
+
+
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Manage Account Details">-->
+    <string name="enable_account">Enable Account</string>
+    <string name="fullName">Full Name</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="description">Description</string>
+    <string name="accessType">Access Type</string>
+    <string name="purchase">Purchase</string>
+    <string name="canPurchase">This account can purchase any product</string>
+    <string name="accountType">Account Type</string>
+    <string name="amountLimited">Amount will be limited for the account</string>
+    <string name="amountPeriodic">Balance will be added Periodically</string>
+    <string name="amountNotLimited">Account’s balance will be from the Master Account balance with no limit</string>
+    <string name="balance">Balance</string>
+    <string name="purchaseLimit">Purchase Limit</string>
+    <string name="amount">Amount</string>
+    <string name="currentRemaining">Current Remaining Limit</string>
+    <string name="viewPurchaseLimit">View Purchase Limit</string>
+    <string name="viewProductDiscounts">View Products Discounts</string>
+    <string name="viewProductDiscountsDetails">In case of hiding all prices(product price, VAT amount, and after VAT) will be hidden in all Purchases Cycle, Products List, Reports, and Logs</string>
+    <string name="rechargingLog">Recharging Log</string>
+    <string name="rechargingMethod">Choose Recharging Method</string>
+    <string name="chooseLogType">Choose Log type</string>
+    <string name="transLogOption1">Transactions log of his account only</string>
+    <string name="transLogOption2">Transactions log of all the sub-accounts</string>
+    <string name="chooseReportTitle">Choose report type</string>
+    <string name="reportsOption1">Reports of his account only</string>
+    <string name="reportsOption2">Reports of all accounts</string>
+    <string name="resellerSupportAction">Resellers Support Center</string>
+    <string name="resellerSupportActionDetail">This account can communicate with our Reseller support through LiveChat, Whatsapp or opening ticket</string>
+    <string name="productDiscountsList">Products Discounts List</string>
+    <string name="period">Period</string>
+    <string name="save">Save</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="DEFAULT">Default</string>
+    <string name="web">Web</string>
+    <string name="application">Application</string>
+    <string name="viewMasterAccount">Allow to View Master Account Balance</string>
+    <string name="errorRechargePermission">Select at least one permission</string>
+    <string name="updateSuccessful">Changed successfully</string>
+    <string name="err_enterBalance">You need to enter purchase limit</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="error_export_data">No data to be exported</string>
+    <string name="no_search_result">No Search result</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Bank Transfer Recharging Requests">-->
+    <string name="btrr">Bank Transfer Recharging Requests</string>
+    <string name="btrr_status">Status</string>
+    <string name="btrr_status_all">All</string>
+    <string name="btrr_status_pending">Pending</string>
+    <string name="btrr_status_rejected">Rejected</string>
+    <string name="btrr_status_accepted">Accepted</string>
+    <string name="btrr_rejection_reason">Rejection reason</string>
+    <string name="btrr_no_data">No Data Available</string>
+    <string name="btrr_no_more_data">No More Data Available</string>
+    <string name="btrr_instruction">Please follow the instructions</string>
+    <string name="btrr_select_bank">Select bank Account</string>
+    <string name="btrr_sender_details">Sender Details</string>
+    <string name="btrr_transfer_details">Transfer Details</string>
+    <string name="btrr_bank_transfer">Bank Transfer</string>
+    <string name="btrr_countries">Countries</string>
+    <string name="btrr_account_number">Acc. No.</string>
+    <string name="btrr_account_name">Acc. Name</string>
+    <string name="btrr_bank_address">Bank address</string>
+    <string name="btrr_iban">IBAN</string>
+    <string name="btrr_add_account">Add New Account</string>
+    <string name="btrr_saved_accounts">Saved accounts</string>
+    <string name="btrr_confirm_delete">Are you sure you want to delete this account data?</string>
+    <string name="btrr_sender_country">Sender’s bank country</string>
+    <string name="btrr_sender_bank_name">Sender’s bank name*</string>
+    <string name="btrr_other">Other</string>
+    <string name="btrr_add_bank_name">Add bank name</string>
+    <string name="btrr_select_sender_bank">Select bank</string>
+    <string name="btrr_sender_bank_no">Sender’s bank account no.*</string>
+    <string name="btrr_sender_name">Sender’s name*</string>
+    <string name="btrr_save_sender_bank">Save account data</string>
+    <string name="btrr_warning">Bank account and Bitaqaty Business account should have the same owner name</string>
+    <string name="btrr_transfer_from">Transfer from\nSender’s country</string>
+    <string name="btrr_transfer_to">Transfer to\nCountry</string>
+    <string name="btrr_transfer_amount">Transfer amount</string>
+    <string name="btrr_transfer_amount_required">Transfer amount*</string>
+    <string name="btrr_recharge_amount">Recharge Amount</string>
+    <string name="btrr_amount">Amount</string>
+    <string name="btrr_transfer_date">Transfer date</string>
+    <string name="btrr_transfer_date_required">Transfer date*</string>
+    <string name="btrr_reference_no">Ref. No.</string>
+    <string name="btrr_reference_no_required">Reference No.*</string>
+    <string name="btrr_success">Request submitted successfully</string>
+    <string name="btrr_success_msg">Requests are processed daily within one hour from 8am to 2am KSA time</string>
+    <string name="btrr_min_amount_per_request">Minimum transfer amount is XSAR</string>
+    <string name="btrr_max_amount_per_request">Maximum transfer amount is XSAR</string>
+    <string name="btrr_export_date">Date/Time</string>
+    <string name="btrr_export_name">Sender’s name</string>
+    <string name="btrr_export_bank">Transfer to</string>
+    <string name="btrr_export_amount">Transfer amount</string>
+    <string name="btrr_export_transfer_date">Transfer date</string>
+    <string name="btrr_export_status">Status</string>
+    <string name="btrr_export_reason">Rejection reason</string>
+    <string name="btrr_file_name">Bank_Transfer_Recharging_Requests.xls</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Purchase">-->
+    <string name="shopping_categories">Shopping categories</string>
+    <string name="seeMore">See more</string>
+    <string name="how_to_use">How to use</string>
+    <string name="total_cost_price">Total Cost Price</string>
+    <string name="vat_amount_per">VAT Amount (%)</string>
+    <string name="total_cost_after_vat">Total Cost after VAT</string>
+    <string name="buy">Buy</string>
+    <string name="purchase_success">Successful purchase</string>
+    <string name="purchase_date">Purchasing date</string>
+    <string name="quantity">Total Quantity</string>
+    <string name="choose_method">Please choose your favorite method</string>
+    <string name="proceed">Proceed</string>
+    <string name="print">Print Product</string>
+    <string name="share">Share</string>
+    <string name="reprint">Do you want to reprint ?</string>
+    <string name="second_copy">Printed : 2</string>
+    <string name="date">Date:</string>
+    <string name="product">Product:</string>
+    <string name="service_provided_by">Voucher service provided by</string>
+    <string name="printed_on">Printed on:</string>
+    <string name="non_refundable">Sold Vouchers Are Not Replaceable or Refundable</string>
+    <!--<editor-fold>-->
+
+    <!--<editor-fold desc="Report">-->
+    <string name="report_username">Account username</string>
+    <string name="report_category">Category</string>
+    <string name="report_service">Service</string>
+    <string name="report_product">Product Name</string>
+    <string name="report_date">Date</string>
+    <string name="report_channel">Channel</string>
+    <string name="report_total_cost_price">Total Cost Price</string>
+    <string name="report_no_of_transactions">No. of Transactions</string>
+    <string name="report_trans_no">Trans. No.</string>
+    <string name="report_cost_price">Cost Price</string>
+    <string name="report_all">All</string>
+    <string name="report_this_month">This Month</string>
+    <string name="report_last_month">Last Month</string>
+    <string name="report_yesterday">Yesterday</string>
+    <string name="report_last_week">Last 7 days</string>
+    <string name="report_today">Today</string>
+    <string name="report_custom_date">Custom date</string>
+    <string name="report_portal">Offline</string>
+    <string name="report_pos">POS</string>
+    <string name="report_integration">Integration</string>
+    <string name="report_wallet">Wallet</string>
+    <string name="report_export_file_name">Sales Report.xls</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Support">-->
+    <string name="support_choose_ticket_type">Please choose the ticket type*</string>
+    <string name="support_full_name">Full Name</string>
+    <string name="support_email_address">Email address*</string>
+    <string name="support_mobile_no">Mobile Number</string>
+    <string name="support_ticket_details">Ticket Details*</string>
+    <string name="support_how_to">How to make a ticket</string>
+    <string name="support_how_to_1">Kindly use Bitaqaty Business Live Chat only which is available now on Bitaqaty Business website.</string>
+    <string name="support_how_to_2">Ask away… we are here to help! Just fill in the form and we will do our best to get back to you within 24 hours. It might take a bit longer – depending on the question, but we try hard not to keep you waiting longer than 72 hours.</string>
+    <string name="support_how_to_3">For the meantime, please have a look at our FAQ You may find the answer for your question right there!</string>
+    <string name="support_how_to_4">Please choose a topic and subtopic from the list below, and be as specific as possible in the data you enter</string>
+    <string name="support_talk_with_support_team">Talk with Resellers Support Team</string>
+    <string name="support_successful_message">Thank you for contacting us, will be replied within an hour, Please note that the working hours are from 9 am to 2 am</string>
+    <string name="support_chat">Chat</string>
+    <string name="support_or">Or</string>
+    <string name="support_whats_app">Whatsapp</string>
+    <string name="support_whats_no" translatable="false">+966597206666</string>
+    <string name="support_email" translatable="false">support@bitaqatybusiness.com</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Agreement Page">-->
+    <string name="agreement_reseller">Reseller agreement</string>
+    <string name="agreement_terms_of_use_header">Terms of Use</string>
+    <string name="agreement_terms_of_use">You should read carefully the following terms and conditions of reseller agreement before using our system to ensure maximum privacy and confidentiality with Bitaqaty Business :</string>
+    <string name="agreement_copyright_notice_header">Copyright notice</string>
+    <string name="agreement_copyright_notice">All copy rights reserved to National Technology Group (NTG)</string>
+    <string name="agreement_logos_and_trademarks_header">Logos and trademarks</string>
+    <string name="agreement_logos_and_trademarks">Bitaqaty Business is a registered trademark of NTG</string>
+    <string name="agreement_reseller_services_header">Reseller services</string>
+    <string name="agreement_reseller_services">Resellers may sell services and products provided by Bitaqaty Business at discount rates lists. All services featured on this website are available as per signed contracts with owners. Reproduction or republication of any included services is prohibited without prior consent of Bitaqaty Business.
+Bitaqaty Business is entitled to change available rates, according to market prices, without prior notification to distributor. Rates will be updated in the discounts and offers box within the reseller’s account page on Bitaqaty Business</string>
+    <string name="agreement_privacy_and_confidentiality_header">Privacy and confidentiality</string>
+    <string name="agreement_privacy_and_confidentiality">Bitaqaty Business is committed to protecting user privacy. No reseller is entitled to disclose any private data included in his/her account to a third party, including Bitaqaty Business team or technical support team. In this case, Bitaqaty Business shall not be held liable for any repercussions thereof.
+Using your account on Bitaqaty Business means you have credit account on Bitaqaty Business.net. Accordingly, user account should include valid data to ensure password recovery in case it is lost or forgotten. Should invalid data be registered with, Bitaqaty Business shall not be committed to account loss or recovery. Essential data include the following: mobile number, email address, username and address.
+In case of any change in reseller’s data, the user shall be responsible for updating his/her account details on Bitaqaty Business.
+In case of any account abuse, Bitaqaty Business has the sole right to suspend user’s account without prior notification.
+Logging in to your Bitaqaty Business account should be only done through the following link: https://www.Bitaqaty Business.net. Bitaqaty Business will not bear responsibility for illegal logins to Bitaqaty Business accounts
+Inactive accounts will be handled in accordance with Bitaqaty Business policy in this regards.</string>
+    <string name="agreement_agree">Agree</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="More Page">-->
+    <string name="more_manage_sub_account">Manage Sub Accounts</string>
+    <string name="more_reports">Reports</string>
+    <string name="more_resellers_support_center">Resellers Support Center</string>
+    <string name="more_sales_report">Sales report</string>
+    <string name="more_faq">FAQ</string>
+    <string name="more_terms_of_use">Terms of Use</string>
+    <string name="more_privacy_policy">Privacy Policy</string>
+    <string name="more_terms_of_use_overview">Welcome to bitaqatybusiness.com Website “Bitaqaty Business”. Please read the following terms and conditions:\n\nBy accessing, registering and/or continuing to use or access the Website, you are agreeing to be bound by these Terms of Use and the other documents and terms with immediate effect.\nThese Terms of Use and the Legal Documents are subject to change by us at any time. Your continued use of the Website following any such change constitutes your agreement to these Terms of Use and Legal Documents as so modified.\n\n<u>ABOUT THE WEBSITE</u>\nThe Website is an e-commerce platform that allows users to purchase a wide variety of cards and digital services.\nBITAQATY BUSINESS reserves the right to introduce new services and update or withdraw any of the services, in our sole discretion without any liability. </string>
+    <string name="more_privacy_policy_overview">Bitaqaty Business takes the privacy of your personal information very seriously, and by accepting this Privacy Policy, you expressly consent to us collecting, using and disclosing your personal information only in accordance with this Privacy Policy. Please note that Bitaqaty Business does not sell, rent or license your personal information to anyone. </string>
+    <string-array name="more_faq_header_arr">
+        <item>How can I get Bitaqaty POS to sell vouchers? </item>
+        <item>How do I become an authorized Reseller? </item>
+        <item>What are the discount rates that I will get? </item>
+        <item>How do I contact Bitaqaty sales employee in my area?</item>
+        <item>If one of my clients or I face a problem redeeming a voucher, what should I do? </item>
+        <item>What is the reseller agreement? Is it necessary to sign the agreement to work with you? </item>
+        <item>If I have a request for a specific voucher and it is not available in your system, what should I do? </item>
+        <item>Can I get a tax invoice after purchasing vouchers from you? </item>
+        <item>In which countries are authorized resellers accepted currently? </item>
+        <item>Which banks do you have accounts with? </item>
+        <item>What are the payment methods available to recharge my reseller account? </item>
+        <item>If my POS device malfunctions, what should I do? </item>
+    </string-array>
+    <string-array name="more_faq_body_arr">
+        <item>○ Bitaqaty POS is available for all our authorized resellers in various countries of the Middle East region, kindly submit a request via the following page and a member of our sales team will contact you. </item>
+        <item>○ You can submit a request on the following page to be contacted by a member of our sales team to help you join our network of Resellers. </item>
+        <item>○ The discount rates vary depending on the type of product as well as on your average monthly sales as an authorized reseller. </item>
+        <item>○ You can contact our customer service through our website, and they will direct one of our employees to contact you as soon as possible. </item>
+        <item>○ You can contact Bitaqaty Business customer service and one of our representatives will assist you to redeem the voucher. </item>
+        <item>○ The reseller agreement is a simple legal document that clarifies the nature of the relationship between the Bitaqaty Business and their authorized Resellers and the obligations and rights of both parties. </item>
+        <item>○ We are constantly adding new vouchers and we always welcome suggestions from our partners, kindly inform the sales employee responsible for your account about the required service and we will work on adding it to our portfolio as soon as possible.</item>
+        <item>○ Yes, indeed, we are keen to comply with all local laws in all countries in which we operate.\nYou can contact the salesperson responsible for your account to request a tax invoice at the end of each calendar month. </item>
+        <item>○ Our network of authorized resellers is mainly in the Middle East region; however you can join our network of authorized resellers from any country around the world. </item>
+        <item>○ We have a network of accounts in various local banks in the countries in which we operate, kindly contact the salesperson responsible for your account and he will provide you with a list of our bank accounts according to your country.</item>
+        <item>○ We have different recharging methods according to the country in which your account is registered, such as Mada, Visa, MasterCard, PayPal and other methods; For more information, kindly refer to the recharging page inside your reseller account dashboard. </item>
+        <item>○ Kindly contact the salesperson responsible for your account immediately and he will assist you in solving the issue or replace the device if necessary. </item>
+    </string-array>
+    <string-array name="more_terms_of_use_header_arr">
+        <item>1. Client’s Obligations</item>
+        <item>2. INTELLECTUAL PROPERTY RIGHTS</item>
+        <item>3. WARRANTIES, REPRESENTATIONS &amp; UNDERTAKINGS</item>
+        <item>4. LIABILITY &amp; INDEMNITIES</item>
+        <item>5. REPORTING VIOLATIONS OF THESE TERMS OF USE</item>
+        <item>6. General Provisions</item>
+    </string-array>
+    <string-array name="more_terms_of_use_body_arr">
+        <item><![CDATA[When using or accessing the Services, you agree that you:
+            <ul>
+                <li>are responsible for maintaining the privacy of, and restricting access to and use of your account and password, and accept responsibility for all activities that occur under your account and password.</li>
+                <li>agree to immediately notify us of any unauthorized use of your password or account or any other breach of security.</li>
+                <li>will provide true, accurate, current and complete information about yourself and your use of the services as required by us.</li>
+                <li>will cooperate with our requests for additional information with respect to your eligibility and usage of our services.</li>
+                <li>will not take any action that may undermine the Website’s feedback and ratings systems.</li>
+                <li>will not transfer your account to other party.</li>
+                <li>will not distribute viruses or any other technologies that may harm our services or the interests or property of other users.</li>
+                <li>will not infringe the copyright, trademark, patent, publicity, moral, database, and/or other intellectual property rights (collectively, &quot;Intellectual Property Rights&quot;)that belong to or are licensed to us and any Intellectual Property Rights that belong to third parties.</li>
+                <li>will not harvest or otherwise collect information about users or circumvent any technical measures we use to provide the services.</li>
+            </ul>]]>
+        </item>
+        <item>
+            <![CDATA[<ul>
+                <li>All content included on the Website, including but not limited to digital cards, text, graphics, logos, images, audio clips, digital downloads and software is our property or the property of our licensors and suppliers. We (or our licensors or suppliers, as the case may be) retain all right, title and interest in and to the Website and the services, including without limitation, all Intellectual Property Rights therein.</li>
+                <li>You agree that you have no right to use any of our trademarks without our prior written consent.</li>
+                <li>You agree that you have no right to claim to be an agent, marketer or representative of Gulf Direct Distribution Company or “bitaqatybusiness.com”</li>
+            </ul>]]>
+        </item>
+        <item><![CDATA[You warrant, represent and undertake that:
+            <ul>
+                <li>you shall fully comply and will at all times continue to fully comply with all applicable laws, statutes and regulations, including without limitation, all privacy laws and content regulation.</li>
+                <li>you have full power and authority to enter into these Terms of Use and the execution and performance of your obligations under these Terms of Use does not conflict with:<br/>&nbsp;○any laws, rules, regulations or governmental guidelines to which you are subject to.<br/>&nbsp;○any other agreements to which you are a party to or to which you are otherwise bound by</li>
+                <li>if you create or use an account on behalf of a business entity, you represent that you are authorized to act on behalf of such business and bind the business to these Terms of Use. Such account is deemed to be owned and controlled by the business entity.</li>
+                <li>any content you submit as part of your use of the services and any products that you list do not violate the rights of any third party anywhere in the world including without limitation, any Intellectual Property Rights (whether registered or not).</li>
+                <li>services are provided to you on an “as is” basis without warranties, representations, or undertakings of any kind. We disclaim all warranties, representations, or undertakings of any kind, whether express, implied or collateral, including, but not limited to, all warranties, representations, or undertakings of merchantability, of fitness for a particular or general purpose, of non-infringement, of compatibility or that the services are secure or error free or will operate without interruption or will be provided in a timely or proper manner or at all.</li>
+                <li>furthermore, whilst we attempt to be as accurate as possible, we do not warrant that product descriptions or other content of any Service is accurate, complete, reliable, current, or error-free. Additionally, as a buyer, you agree that we are not responsible for examining or warranting the listings or content provided by us or third parties through the services, and that you will not attempt to hold us liable for any inaccuracies or defects in any of the listings.</li>
+            </ul>]]>
+        </item>
+        <item><![CDATA[<ul>
+            <li>In no event will we, our parent company, subsidiaries and affiliates, and our, and their directors, officers, agents, employees or suppliers be liable, whether based on an action or claim in contract, tort, negligence, breach of statutory duty or otherwise arising out of or in relation to these Terms of Use for loss of profits, loss of data or information, business interruption or other pecuniary loss or for any special, indirect, incidental or consequential damages, even if we, our affiliates, directors, officers, agents, employees, licensors, subcontractors or suppliers have been advised of the possibility of such damages.</li>
+            <li>In addition, we (including our parent company, subsidiaries and affiliates and our, and their directors, officers, agents, employees or suppliers) are not liable, and you agree not to hold us responsible, for any damages or losses resulting directly or indirectly from:
+             <br/>&nbsp;○ the content or other information you provide when using the services.
+             <br/>&nbsp;○ your use of or your inability to use our services.
+             <br/>&nbsp;○ pricing, shipping, format or other guidance provided by us.
+             <br/>&nbsp;○ delays or disruptions in our services.
+             <br/>&nbsp;○ viruses or other malicious software obtained by accessing or linking to our services.
+             <br/>&nbsp;○ bugs, errors or inaccuracies of any kind in our services.
+             <br/>&nbsp;○ damage to your hardware device from the use of products sold on the Website or our services.
+             <br/>&nbsp;○ the content, actions or inactions of third parties using our services.
+             <br/>&nbsp;○ a suspension or other action taken by us with respect to your use of the services.
+             <br/>&nbsp;○ your need to modify practices, content or behavior or your loss of or inability to do business as a result of changes to these Terms of Use.</li>
+            <li>You agree to indemnify and hold us, our parent company, subsidiaries and affiliates and our, and their directors, officers, agents, employee or suppliers harmless from and against any losses, damages and expenses (including legal fees and attorney’s fees) (“Claims”) arising out of or relating to:<br/>&nbsp;○any claims or demands made by any third party due to or arising out of your use of the services.<br/>&nbsp;○your violation of any of the provisions of these Terms of Use, including without limitation, any of the warranties, representations and undertakings.<br/>&nbsp;○ your violation of any applicable laws, including without limitation, data protection or anti-spam laws.<br/>&nbsp;○the manner in which you use our services, including, without limitation, that the content you post, the items you list or your trademarks infringe the Intellectual Property Rights of any third party or that the content of your listings is slanderous, defamatory, obscene or violates any other rights (including privacy rights) of any third party (including other Website users).</li>
+        </ul>]]></item>
+        <item>We are committed to ensuring that listed items and content on our Website comply with these Terms of Use. If you believe that a listed item or content breaches these Terms of Use, please notify us and we will investigate.</item>
+        <item><![CDATA[<ul>
+            <li><b>Governing Law:</b> These Terms of Use and any non-contractual rights or obligations arising out of or in connection with it shall be governed by and construed in accordance with the applicable laws of Kingdom of Saudi Arabia (KSA).</li>
+            <li><b>Dispute Resolution:</b> If you have an issue with our services, please contact us. We will endeavor to resolve your issue as soon as possible. Any disputes or Claims arising out of or in connection with these Terms of Use, including any non-contractual rights or obligations arising out of or in connection with these Terms of Use shall be referred to and finally resolved by Riyadh, KSA courts.</li>
+            <li><b>Relationship of the Parties:</b> Nothing contained in these Terms of Use will be deemed or construed by the parties or any third party to create the relationship of partnership, joint venture or agency between the parties, it being understood that the parties will at all times remain independent parties contracting for services.</li>
+            <li><b>Further Assurances:</b> The parties will do and execute or arrange for the doing and executing of each necessary act, document and thing reasonably within its power to implement and give effect to these Terms of Use to its full extent, including without limitation, assisting each other in complying with applicable law.</li>
+            <li><b>Entire Agreement:</b> These Terms of Use and the documents referred to or incorporated herein by reference contain the entire agreement between the parties with respect to the subject matter and supersede all prior agreements, negotiations and representations, written or oral, relating to its subject matter. Except as provided in these Terms of Use and the documents referred to or incorporated into these Terms of Use by reference, there are no conditions, representations, warranties, undertakings or agreements between the parties whether direct, indirect, collateral, express or implied.</li>
+            <li><b>Amendment:</b> We reserve the right to modify, vary, amend or supplement these Terms of Use at any time and from time to time. We will post the current version of these Terms of Use on the Site and each such change will be effective upon posting on the Site or upon the date designated by us as the “effective date” (if any). Your continued use of the services following any such change constitutes your agreement to be bound by and its acceptance of these Terms of Use as so modified.</li>
+            <li><b>Severability:</b> If any provision of these Terms of Use is determined by any court of competent jurisdiction to be invalid, illegal or unenforceable, that provision will be severed from these Terms of Use and the remaining provisions will continue in full force and effect so long as the economic or legal substance of the transactions contemplated hereby is not affected in any manner.</li>
+            <li><b>Force Majeure:</b> Neither party will be liable for any loss or damage or for any delay or failure in performance due to acts beyond the control of such party whether or not such acts could reasonably be anticipated (including acts of God, legislative, judicial or regulatory acts of any provincial or the federal government, court or regulatory authority, acts of any of our subcontractors or anythird partyproviders of goods or Services to us, labor disruptions, blackouts, embargoes).</li>
+            <li><b>No Waiver:</b> Any waiver by us of any of the provisions of these Terms of Use will not constitute a waiver of any other provision (whether similar or not), nor will any such waiver constitute a continuing waiver of that particular provision, unless expressly provided by us in writing.</li>
+            <li><b>Communications:</b> You may contact us through email support@bitaqatybusiness.com</li>
+            <li><b>Survival:</b> All provisions that either expressly or by their nature survive, will survive suspension or termination of your membership of the Website.</li>
+        </ul>]]></item>
+    </string-array>
+    <string-array name="more_privacy_policy_header_arr">
+        <item>Bitaqaty Business’ Collection of Personal Information</item>
+        <item>Personal Information we collect</item>
+        <item>Security procedures</item>
+    </string-array>
+    <string-array name="more_privacy_policy_body_arr">
+        <item>To sign up for your Bitaqaty Business Account, we need to obtain certain personal information from you. You must complete Bitaqaty Business’ registration form accurately with correct information and might not provide any false or misleading information. </item>
+        <item>
+            <![CDATA[<ul>
+                <li>Full Name, address, email, phone number and other information as required.</li>
+                <li>Financial information such as credit/debit card or bank account details for certain optional transactions.</li>
+                <li>For verification purposes, we might ask for a proof of your identity and proof of address; such as a copy of your national ID card, passport, driver’s license and/or certificate of registration<br/>PS: Failure to supply such information may result in limitation on usage of BitaqatyBusinessservices or suspension of the user’s Account. For certain high value transactions, we may be required to report personal information to the relevant authorities.</li>
+            </ul>]]>
+        </item>
+        <item><![CDATA[When your registration is completed, you may start using Bitaqaty Business’ services which are strictly protected against fraud and abuse through the following actions we take:
+            <ul>
+                <li>Recording and storing your IP address and login times.</li>
+                <li>Collecting usage and access data that allows us to prevent multiple account openings or other fraudulent behaviors, or to protect our systems against illegal attacks or abuse.</li>
+                <li>We may share such data with specialized and trustworthy fraud management services that help us analyze the data.</li>
+                <li>We use cookies; which are small text files that are stored on a user’s computer for record-keeping purposes. Information collected and stored through cookies may be matched against the personal data we hold on our systems.</li>
+                <li>Depending on the information you have provided us, your current verification status and the type of transaction you wish to undertake, we may collect further information from banks, credit/debit card processing services and identity verification services.<br/>We obtain your personal and security information from the following sources:</li>
+                <li>Information you provide online, on written applications or forms, and other information you may provide.</li>
+                <li>Information entered online that may be stored even if you do not complete or submit an application.</li>
+                <li>Information from third parties in order to verify your identity or to prevent fraud.</li>
+                <li>Information from third parties that you authorize to provide information to us.</li>
+                <li>Information about your account experience and history.</li>
+            </ul>]]>
+        </item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="btrr instruction">-->
+    <string-array name="btrr_instruction_arr">
+        <item>First, transfer the amount from your bank account to business Bitaqaty account "Gulf Direct Distribution Company" before registering your transfer data on the Business Bitaqaty website.</item>
+        <item>After completing the transfer process, enter the transfer information, by following the required steps: Select the bank account which you transferred to, the sender’s details and the transfer details.</item>
+        <item>The E Payment department reviews your request and compares its data with your bank transfer data. The balance will be added when the data are identical.</item>
+        <item>Requests are processed within30 minutes 7days a week from 8:00 Am to 2:00 AM.</item>
+        <item>For request status, please check your registered email in Bitaqaty Business.</item>
+        <item>Minimum transfer amount is 500 SAR.</item>
+        <item>Maximum transfer amount is 50,000 SAR.</item>
+        <item>Maximum number of requests are 3 time within 24 hours.</item>
+        <item>Bank account and Bitaqaty Business account should have the same owner name.</item>
+        <item>Please keep the transfer receipt as it could be requested for verification.</item>
+        <item>We might call for verification, please make sure your mobile is available.</item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="credit and mada instruction">-->
+    <string-array name="credit_mada_instruction_arr">
+        <item>Please follow the instructions</item>
+        <item>Minimum transfer amount is 100 SAR.</item>
+        <item>Maximum daily transfer total amount is 50,000 SAR.</item>
+        <item>Credit Card or Mada must be 3D Secure.</item>
+        <item>Copy of Credit Card (including first 6-digit number) and personal ID might be requested as verification.</item>
+        <item>Credit Card transactions can be accepted within MENA region only currently.</item>
+        <item>Processing fees could be added on credit card transactions.</item>
+    </string-array>
+
+
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="amex instruction">-->
+    <string-array name="amex_instruction_arr">
+        <item>The maximum limit per day is 20,000 SAR.</item>
+        <item>You can only do 10 American Express Card requests during 24 hours.</item>
+        <item>The value of an American Express Card recharge request must be between 500 SAR and 3,000 SAR.</item>
+        <item>Only 4% will be added to the recharged amount as a fee. And if your currency is not SAR the bank conversion rate will be applied.</item>
+        <item>Any attempt to charge by American Express card illegally, will close your account without reference to you and a reservation on any balance in your account.</item>
+        <item>Any objection to any American Express card transaction from the bank, will close your account and send all your data to the responsible.</item>
+    </string-array>
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="Recharge TYPES">-->
+    <string name="rechargeAmount">Recharge Amount*</string>
+    <string name="rechargeAmountHint">Recharge Amount [CURRENCY]</string>
+    <string name="AmountAfterFeesHint">Amount after adding fees SAR</string>
+    <string name="amountAfterFees">Amount after exchange and adding fees</string>
+    <string name="madaAmountAfter">Amount after adding fees</string>
+    <string name="minAmount">Minimum recharge amount is [X] SAR</string>
+    <string name="maxAmount">Maximum recharge amount is [X] SAR</string>
+    <string name="minMessageAmount">Min. recharge amount is [X] SAR</string>
+    <string name="maxAmountMessage">Max. recharge amount is [X] SAR</string>
+
+    <string name="agreeOn">I agree on</string>
+    <string name="errOnlyNumber">Only numbers are allowed</string>
+    <string name="retryPayment">Retry</string>
+
+    <string name="termsAndConditions">Terms and conditions</string>
+    <string name="credit_terms">Terms and conditions \n\n\nTerms and Conditions for the Use of the Option of Charging the Account through a Credit Card (\"Terms of Use of the Charge Option\"):\n\nWhen the User chooses the option to charge his account through a Credit Card on www.bitaqatybusiness.com, he/she thereby acknowledges reading, comprehending and agreeing to the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website which govern the relationship between Bitaqaty Business and the User in relation to the Website (the “Terms and Conditions”) in full and agrees to abide by the Terms and Conditions in full without any reservation, condition or objection. The User acknowledges and agrees that Bitaqaty Business shall have the right to update and/or amend the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website at any time and at its sole and absolute discretion without the need of the approval of the User and/or notifying him/her. Such update/amendment shall enter into effect immediately or at the time determined by Bitaqaty Business:</string>
+    <string name="credit_content">• The Use of this Option, any other option and/or any other services available on the Website (the “Services”) shall be at the full responsibility of the User and at its sole expense.\n\n\n• The User shall be fully responsible for the use of the Services and/or any matters arising therefrom.\n\n\n• The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for what may arise from the use of the Services by the User whether in contract or otherwise in any manner whatsoever.\n\n\n• The User represents, warrants and agrees that his/her use of the Services corresponds with all applicable legislation and that such use does not violate any of his/her obligations including his/her contractual obligations and otherwise with any other party including the bank that issued the card and acknowledges and agrees that he/she shall be fully responsible in case of breach of these representations and warranties.\n\n\n• Bitaqaty Business shall not be responsible/liable in the event where the User uses the Services in violation to what is stated in the Terms and Conditions in any manner whatsoever. The User acknowledges and agrees that he/she shall be fully responsible in case of its non-abidance by the Terms and Conditions and fully, unconditionally and irrevocably indemnifies Bitaqaty Business against any responsibility and/or liability arising therefrom.\n\n\n• The User acknowledges and agrees that logging into his account and conducting any transactions and/or use of any services on the Website shall be deemed to be by the User and that he/she shall be fully responsible accordingly.\n\n\n•  Bitaqaty Business shall not be responsible/liable in case of delay in charging the account of the User and/or any matter arising therefrom in any manner whatsoever.\n\n\n• Bitaqaty Business shall have the right to reject the request to charge the account at its absolute discretion without stating any reason and without any responsibility and/or liability in any manner whatsoever.\n\n\n• The charging transaction shall be final, unconditional and irrevocable for any reason whatsoever. The User shall not have the right for a reverse of the Transaction after its execution, a cash refund of the amount of the transaction and/or transfer of the amount from an account to another for any reason whatsoever including, but not limited to, for unavailability of an item and/or service and/or non-use of the amount available and shall not be entitled to claim accordingly.\n\n\n• Bitaqaty Business shall not be responsible/liable in any manner whatsoever for the availability and/or unavailability of any item and/or service on the Website and/or any other website. The User shall not have the right to claim reverse of the Transaction, a cash refund of the amount of the Transaction and/or transfer of the amount from one account to another for the unavailability of the item and/or service and/or any other reason whatsoever.\n\n\n• The User acknowledges and agrees that it is fully aware of the means, procedures and other matters related to the Services available on the Website including purchase of items / services from the Website and the means of using same after purchase and/or other matters. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable in any manner whatsoever of what arises from his/her breach of these representations.\n\n\n• The agreement by the User to the Terms and Conditions including those related to the use of the credit card shall include its full responsibility for what arises from the use of the Credit card including the legal responsibility arising from any objection by the Issuing Bank and/or any other party in relation to the use of the Credit Card in the account of the User at Bitaqaty Business.\n\n\n• In case of receipt by Bitaqaty Business of any objection from the Issuing Bank and/or any other party, Bitaqaty Business shall have the right to take any measures it deems fit at its sole and absolute discretion including, but not limited to, stoppage of the account of the User immediately or at the time Bitaqaty Business deems fit at its sole and absolute discretion and/or blockage of any amounts available in the account.\n\n\n• Bitaqaty Business shall not be responsible/liable for any deficiency in the item / service purchased from the Website in any manner whatsoever. The User shall recourse to the technical support of the item/service provider and/or any responsible party in case of any deficiency in the item/service purchased from the website in case the User wishes so.\n\n\n• The User acknowledges and agrees that due to the nature of the internet, Bitaqaty Business shall not be responsible in case of stoppage and/or interruption of the Services and/or any other matters in any manner whatsoever.\n\n\n• The User acknowledges and agrees that it is fully aware that the internet is an international public network, thus use of the Services may entail various risks even though Bitaqaty Business uses security means and applications as it deems fit. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for any risks, damages and/or consequences arising therefrom in any matter whatsoever.</string>
+    <string name="admition"> I have read and comprehended and hereby agree to the Terms and Conditions, and agree to abide by same without any reservation, condition or objection.</string>
+    <string name="mada_terms">Terms and Conditions\n\n\nTerms and Conditions for the Use of the Option of Charging the Account through a Credit Card (\"Terms of Use of the Charge Option\"): \n\nWhen the User chooses the option to charge his account through a Credit Card on www.bitaqatybusiness.com, he/she thereby acknowledges reading, comprehending and agreeing to the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website which govern the relationship between Bitaqaty Business and the User in relation to the Website (the “Terms and Conditions”) in full and agrees to abide by the Terms and Conditions in full without any reservation, condition or objection. The User acknowledges and agrees that Bitaqaty Business shall have the right to update and/or amend the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website at any time and at its sole and absolute discretion without the need of the approval of the User and/or notifying him/her. Such update/amendment shall enter into effect immediately or at the time determined by Bitaqaty Business:</string>
+    <string name="mada_content">• The Use of this Option, any other option and/or any other services available on the Website (the \"Services\") shall be at the full responsibility of the User and at its sole expense.\n\n\n• The User shall be fully responsible for the use of the Services and/or any matters arising therefrom.\n\n\n• The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for what may arise from the use of the Services by the User whether in contract or otherwise in any manner whatsoever.\n\n\n•  The User represents, warrants and agrees that his/her use of the Services corresponds with all applicable legislation and that such use does not violate any of his/her obligations including his/her contractual obligations and otherwise with any other party including the bank that issued the card and acknowledges and agrees that he/she shall be fully responsible in case of breach of these representations and warranties.\n\n\n• Bitaqaty Business shall not be responsible/liable in the event where the User uses the Services in violation to what is stated in the Terms and Conditions in any manner whatsoever.\n\n\n• The User acknowledges and agrees that he/she shall be fully responsible in case of its non-abidance by the Terms and Conditions and fully, unconditionally and irrevocably indemnifies Bitaqaty Business against any responsibility and/or liability arising therefrom.\n\n\n• The User acknowledges and agrees that logging into his account and conducting any transactions and/or use of any services on the Website shall be deemed to be by the User and that he/she shall be fully responsible accordingly.\n\n\n• Bitaqaty Business shall not be responsible/liable in case of delay in charging the account of the User and/or any matter arising therefrom in any manner whatsoever.\n\n\n• Bitaqaty Business shall have the right to reject the request to charge the account at its absolute discretion without stating any reason and without any responsibility and/or liability in any manner whatsoever.\n\n\n• The charging transaction shall be final, unconditional and irrevocable for any reason whatsoever. The User shall not have the right for a reverse of the Transaction after its execution, a cash refund of the amount of the transaction and/or transfer of the amount from an account to another for any reason whatsoever including, but not limited to, for unavailability of an item and/or service and/or non-use of the amount available and shall not be entitled to claim accordingly.\n\n\n•  Bitaqaty Business shall not be responsible/liable in any manner whatsoever for the availability and/or unavailability of any item and/or service on the Website and/or any other website. The User shall not have the right to claim reverse of the Transaction, a cash refund of the amount of the Transaction and/or transfer of the amount from one account to another for the unavailability of the item and/or service and/or any other reason whatsoever.\n\n\n•  The User acknowledges and agrees that it is fully aware of the means, procedures and other matters related to the Services available on the Website including purchase of items / services from the Website and the means of using same after purchase and/or other matters. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable in any manner whatsoever of what arises from his/her breach of these representations.\n\n\n•  The agreement by the User to the Terms and Conditions including those related to the use of the credit card shall include its full responsibility for what arises from the use of the Credit card including the legal responsibility arising from any objection by the Issuing Bank and/or any other party in relation to the use of the Credit Card in the account of the User at Bitaqaty Business.\n\n\n• In case of receipt by Bitaqaty Business of any objection from the Issuing Bank and/or any other party, Bitaqaty Business shall have the right to take any measures it deems fit at its sole and absolute discretion including, but not limited to, stoppage of the account of the User immediately or at the time Bitaqaty Business deems fit at its sole and absolute discretion and/or blockage of any amounts available in the account.\n\n\n• Bitaqaty Business shall not be responsible/liable for any deficiency in the item / service purchased from the Website in any manner whatsoever.\n\n\n• The User shall recourse to the technical support of the item/service provider and/or any responsible party in case of any deficiency in the item/service purchased from the website in case the User wishes so.\n\n\n• The User acknowledges and agrees that due to the nature of the internet, Bitaqaty Business shall not be responsible in case of stoppage and/or interruption of the Services and/or any other matters in any manner whatsoever.\n\n\n• The User acknowledges and agrees that it is fully aware that the internet is an international public network, thus use of the Services may entail various risks even though Bitaqaty Business uses security means and applications as it deems fit. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for any risks, damages and/or consequences arising therefrom in any matter whatsoever.</string>
+    <string name="amex_terms">Terms and conditions\n\n\n Terms and Conditions for the Use of the Option of Charging the Account through a American Express Card (\"Terms of Use of the Charge Option\"):\n\n When the User chooses the option to charge his account through a American Express card on www.bitaqatybusiness.com, he/she thereby acknowledges reading, comprehending and agreeing to the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website which govern the relationship between Bitaqaty Business and the User in relation to the Website (the \"Terms and Conditions\") in full and agrees to abide by the Terms and Conditions in full without any reservation, condition or objection. The User acknowledges and agrees that Bitaqaty Business shall have the right to update and/or amend the Terms of Use of the Charge Option, the Terms of Use, any other terms and conditions and the Privacy Policy available on the Website at any time and at its sole and absolute discretion without the need of the approval of the User and/or notifying him/her. Such update/amendment shall enter into effect immediately or at the time determined by Bitaqaty Business:</string>
+    <string name="amex_content">•  The Use of this Option, any other option and/or any other services available on the Website (the \"Services\") shall be at the full responsibility of the User and at its sole expense. The User shall be fully responsible for the use of the Services and/or any matters arising therefrom. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for what may arise from the use of the Services by the User whether in contract or otherwise in any manner whatsoever.\n\n\n•  The User represents, warrants and agrees that his/her use of the Services corresponds with all applicable legislation and that such use does not violate any of his/her obligations including his/her contractual obligations and otherwise with any other party including the bank that issued the card and acknowledges and agrees that he/she shall be fully responsible in case of breach of these representations and warranties.\n\n\n• Bitaqaty Business shall not be responsible/liable in the event where the User uses the Services in violation to what is stated in the Terms and Conditions in any manner whatsoever. The User acknowledges and agrees that he/she shall be fully responsible in case of its non-abidance by the Terms and Conditions and fully, unconditionally and irrevocably indemnifies Bitaqaty Business against any responsibility and/or liability arising therefrom.\n\n\n• The User acknowledges and agrees that logging into his account and conducting any transactions and/or use of any services on the Website shall be deemed to be by the User and that he/she shall be fully responsible accordingly.\n\n\n•  Bitaqaty Business shall not be responsible/liable in case of delay in charging the account of the User and/or any matter arising therefrom in any manner whatsoever.\n\n\n•  Bitaqaty Business shall have the right to reject the request to charge the account at its absolute discretion without stating any reason and without any responsibility and/or liability in any manner whatsoever.\n\n\n• The charging transaction shall be final, unconditional and irrevocable for any reason whatsoever. The User shall not have the right for a reverse of the Transaction after its execution, a cash refund of the amount of the transaction and/or transfer of the amount from an account to another for any reason whatsoever including, but not limited to, for unavailability of an item and/or service and/or non-use of the amount available and shall not be entitled to claim accordingly.\n\n\n• Bitaqaty Business shall not be responsible/liable in any manner whatsoever for the availability and/or unavailability of any item and/or service on the Website and/or any other website. The User shall not have the right to claim reverse of the Transaction, a cash refund of the amount of the Transaction and/or transfer of the amount from one account to another for the unavailability of the item and/or service and/or any other reason whatsoever.\n\n\n• The User acknowledges and agrees that it is fully aware of the means, procedures and other matters related to the Services available on the Website including purchase of items / services from the Website and the means of using same after purchase and/or other matters. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable in any manner whatsoever of what arises from his/her breach of these representations.\n\n\n•  The agreement by the User to the Terms and Conditions including those related to the use of the credit card shall include its full responsibility for what arises from the use of the American Express card including the legal responsibility arising from any objection by the Issuing Bank and/or any other party in relation to the use of the American Express card in the account of the User at Bitaqaty Business.\n\n\n• In case of receipt by Bitaqaty Business of any objection from the Issuing Bank and/or any other party, Bitaqaty Business shall have the right to take any measures it deems fit at its sole and absolute discretion including, but not limited to, stoppage of the account of the User immediately or at the time Bitaqaty Business deems fit at its sole and absolute discretion and/or blockage of any amounts available in the account.\n\n\n• Bitaqaty Business shall not be responsible/liable for any deficiency in the item / service purchased from the Website in any manner whatsoever. The User shall recourse to the technical support of the item/service provider and/or any responsible party in case of any deficiency in the item/service purchased from the website in case the User wishes so.\n\n\n•  The User acknowledges and agrees that due to the nature of the internet, Bitaqaty Business shall not be responsible in case of stoppage and/or interruption of the Services and/or any other matters in any manner whatsoever.\n\n\n•  The User acknowledges and agrees that it is fully aware that the internet is an international public network, thus use of the Services may entail various risks even though Bitaqaty Business uses security means and applications as it deems fit. The User acknowledges and agrees that Bitaqaty Business shall not be responsible/liable for any risks, damages and/or consequences arising therefrom in any matter whatsoever.</string>
+    <string name="amex_alert">•	Please note that only American Express Cards issued in from Saudi Arabia will be accepted</string>
+
+    <string name="success_recharged">Recharged successfully</string>
+    <string name="error_recharged">Sorry the request was not successful</string>
+    <string name="error_recharged_sub">Something went wrong</string>
+    <string name="doneRecharge">Done</string>
+    <string name="retryRecharge">Retry</string>
+    <string name="saveCredentials">Save Card data</string>
+
+    <string name="errTerms">You need to accept Terms and conditions</string>
+    <string name="errRequestPerDay">Max. number of recharge per day: [X]</string>
+    <string name="errAmoutPerDay">Max. recharge amount per day: [X] SAR</string>
+    <string name="errAmoutPerDayPAYPAL">Max. recharge amount per day: [X] USD</string>
+    <string name="errEnterAmount">This field is required</string>
+    <string name="cardType">Card Type</string>
+    <string name="cardNumber">Card Number</string>
+    <string name="expiryDate">Expiry Date</string>
+    <string name="cardHolder">Card Holder Name</string>
+    <string name="cvv">CVV</string>
+    <string name="dateHint">MM/YYYY</string>
+    <string name="payNow">Pay now</string>
+    <string name="progress_message_payment_status">Getting the payment status…</string>
+    <string name="progress_message_processing_payment">Processing payment…</string>
+    <string name="progress_message_please_wait">Please wait…</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="RechargeLog">-->
+    <string name="rechargeMethods">Recharging Method</string>
+    <string name="dateTime">Date/Time</string>
+    <string name="method">Method</string>
+    <string name="amountRechargeLog">Amount</string>
+    <string name="balanceAfter">Balance after</string>
+    <string name="rechargeReason">Recharging reason</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="PayPal">-->
+    <string name="paypal_price">Price</string>
+    <string name="cardAmount">Card Amount</string>
+    <string name="USD">USD</string>
+    <string name="rechargeLogFileName">Recharging_Log.xls</string>
+    <string name="rechargeLogSheetName">Recharging_Log</string>
+    <string name="recharginDateTime">Date/Time</string>
+    <string name="rechargingExportMethod">Recharging Method</string>
+    <string name="recharging_amount">Amount</string>
+    <string name="balance_after">Balance after</string>
+    <string name="rechargingReason">Recharging Reason</string>
+    <string name="paypal_terms">Terms and conditions\n\n\n• Only verified PayPal accounts will be accepted!\n\n\n• Bitaqaty Business accepts accounts issued from the Middle East and North Africa only\n\n\n• Minimum Recharge amount is 500 SAR and Maximum is 10000 SAR or similar value in other currencies\n\n\n• Fees will be deducted from the amount recharged in your account</string>
+    <string-array name="paypal_arr">
+        <item>PayPal is a global e-commerce business allowing payments and money transfers to be made through the Internet.</item>
+        <item>How to add funds using PayPal:\n\n- Login to your Bitaqaty Business account, then click ‘Recharge’.\n\n- Choose “PayPal” from the listed recharging methods\n\n- Choose card denomination, then click “Recharge” then Confirm.\n\n- You will be redirected to PayPal page to sign in and confirm your transaction</item>
+        <item> Please note that: \n\n- Requests are processed within one hour from 8 AM to 2 AM / 7 days a week.\n\n- Please note that we might ask you to provide us with scanned copies of your ID card, in order to complete your request. We might also need to call you for verification.</item>
+    </string-array>
+    <string name="paypal_confirmation">Are you sure you want to recharge [X] using PayPal?</string>
+    <string name="paypal_confirmation2">You have to pay [Y] USD from your PayPal account</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="DiscountList">-->
+    <string name="category">Category</string>
+    <string name="service">Service</string>
+    <string name="VAT_Amount">VAT Amount</string>
+    <string name="costAfterVat">Cost Price after VAT</string>
+    <string name="costPrice">Cost Price</string>
+    <string name="productName">Product Name</string>
+    <string name="ProductListSheetName">Products_Discounts_List</string>
+    <string name="exportedProductListFileName">Products_Discounts_List.xls</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="SEARCH">-->
+    <string name="search_desc">Enter a few words to search on Bitaqaty business</string>
+    <string name="search_results_for">Search results for:</string>
+    <string name="no_results_found">No results found for: </string>
+    <string name="product_cost_price">Product Cost Price</string>
+    <string name="out_of_stock">Out of stock</string>
+    <string name="productSearchHint">Search</string>
+
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="TransactionLog">-->
+    <string name="TLogUserName">Account username</string>
+    <string name="TLogSerialNo">Serial No.</string>
+    <string name="TLogPin">PIN Code</string>
+    <string name="TLogPassword">Password</string>
+    <string name="TLogChannel">Channel</string>
+    <string name="TLogPrinted">Printed ?</string>
+    <string name="TLogFrom">From</string>
+    <string name="TLogTo">To</string>
+    <string name="TLogSupport">Support Ticket</string>
+    <string name="TLogPrint">Print</string>
+    <string name="TLogCanceled">Canceled</string>
+    <string name="TLogCostAfter">Total Cost after VAT</string>
+    <string name="TLogTransID">Trans. ID</string>
+    <string name="TLogCostPrice">Cost Price</string>
+    <string name="TLogVATAmount">VAT Amount</string>
+    <string name="TLogBalance">Balance</string>
+    <string name="TLogPricesCurrency">All prices in currency: [X]</string>
+    <string name="exportedTransLogSheetName">Transactions_log</string>
+    <string name="exportedTransLogFile">Transactions_log.xls</string>
+    <string name="receiptPrinted">Printed :</string>
+    <string name="pin">PIN Code</string>
+    <string name="TLogPin2">Password</string>
+
+    <!--<editor-fold desc="SubHome">-->
+    <string name="total">Total:</string>
+    <string name="tranaction_log">Transaction log</string>
+    <string name="printed">Printed</string>
+    <string name="view_all">View all</string>
+    <!--</editor-fold>-->
+
+    <string-array name="channer_arr">
+        <item>All</item>
+        <item>Offline</item>
+        <item>POS</item>
+        <item>Integration</item>
+        <item>Wallet</item>
+    </string-array>
+    <string-array name="printed_arr">
+        <item>All</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="HOMEFRAGMENT">-->
+    <string name="daily_sales">Daily Sales</string>
+    <string name="daily_recharge">Daily Recharge</string>
+    <string name="average_sales_this_month">Average Sales this month</string>
+    <string name="average_sales_last_month">Average Sales last month</string>
+    <string name="homeDays">Days</string>
+    <string name="remaining">Remaining for the balance to run out</string>
+    <string name="averageLast7Days">Average Sales Last 7 Days</string>
+    <string name="home_this_month">This Month</string>
+    <string name="home_last_month">Last Month</string>
+    <string name="home_yesterday">Yesterday</string>
+    <string name="home_last_week">Last 7 days</string>
+    <string name="home_Today">Today</string>
+    <string name="homeSales">Sales</string>
+    <string name="recharge_now">Recharge now</string>
+    <string name="subaccounts">Sub Accounts</string>
+    <string name="manage_all">Manage All</string>
+    <string name="sales_report">Sales Report</string>
+    <string name="home_sales">(Sales)</string>
+    <string name="yourTopSelling">Your Top Selling Products</string>
+    <string name="bank_transfer_recharging_requests">Bank Transfer Recharging Requests</string>
+    <string name="newBankTransfere">New Bank Transfer</string>
+    <string name="total_Sales">Total Sales</string>
+    <string name="home_recharge_amount">Recharge amount</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Icons">-->
+    <string name="ic_hide" translatable="false">&#xf070;</string>
+    <string name="ic_show" translatable="false">&#xf06e;</string>
+    <string name="ic_error" translatable="false">&#xf06a;</string>
+    <string name="ic_correct" translatable="false">&#xf00c;</string>
+    <string name="ic_arrow_r">&#xf105;</string>
+    <string name="ic_arrow_l">&#xf053;</string>
+    <string name="ic_toolbar_arrow">&#xf054;</string>
+    <string name="ic_arrow_down" translatable="false">&#xf107;</string>
+    <string name="ic_store" translatable="false">&#xf54e;</string>
+    <string name="ic_support" translatable="false">&#xf590;</string>
+    <string name="ic_search_icon" translatable="false">&#xf002;</string>
+    <string name="ic_person" translatable="false">&#xf406;</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Non Translatable">-->
+    <string name="sign_dots" translatable="false">**********</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="your_licence_number" translatable="false">8646654</string>
+
+    <string name="dots" translatable="false">…</string>
+    <string name="transfer_date_format" translatable="false">dd/mm/yy</string>
+    <string name="checkout_ui_callback_scheme" translatable="false">checkoutui</string>
+    <string name="payment_button_callback_scheme" translatable="false">paymentbutton</string>
+    <string name="callback_scheme" translatable="false">oncardsync</string>
+    <string name="cardMada" translatable="false">Mada</string>
+    <string name="cardAmex" translatable="false">American Express</string>
+    <string name="cardVisa" translatable="false">Visa</string>
+    <string name="case_sensitive" translatable="false">[WORD] is case sensitive</string>
+    <string name="welcome_to_bitaqaty_business">Welcome to Bitaqaty Business</string>
+    <string name="you_don_t_have_permission_to_view_this_page">You don’t have permission to view this page</string>
+    <string name="no_printer">No printer connected</string>
+
+
+    <!--</editor-fold>-->
+    <string-array name="amex_alert_arr">
+        <item>Please note that only American Express Cards issued in from Saudi Arabia will be accepted.</item>
+    </string-array>
+
+    <string-array name="mada_alert_arr">
+        <item>Any attempt to charge by credit card illegally, will close your account without reference to you and a reservation on any balance in your account.</item>
+        <item>Any objection to any credit card transaction from the bank, will close your account and send all your data to the responsible.</item>
+        <item>Please don\'t use proxy or VPN as it may lead to rejecting your request.</item>
+    </string-array>
+
+    <string-array name="credit_alert_arr">
+        <item>Any attempt to charge by credit card illegally, will close your account without reference to you and a reservation on any balance in your account.</item>
+        <item>Any objection to any credit card transaction from the bank, will close your account and send all your data to the responsible.</item>
+        <item>Please don\'t use proxy or VPN as it may lead to rejecting your request.</item>
+    </string-array>
+
+
+    <string name="printer_out_of_paper">Printer is out of paper</string>
+    <string name="printer_over_heating">Printer is overheating</string>
+    <string name="printer_cutter_abnormal">Printer\'s cutter is abnormal</string>
+    <string name="printer_cover_not_closed">Printer\'s cover is not closed</string>
+    <string name="no_devices_found">No devices connected to bluetooth found</string>
+    <string name="devices">Devices</string>
+    <string name="renewal_limit_to_default">Renewal Limit to Default</string>
+    <string name="recommended_retail_price">Recommended Retail Price</string>
+
+    <string name="total_recommended_retail_price">Total Recommended Retail Price</string>
+    <string name="total_recommended_retail_price_after_vat">Total Recommended Retail Price after VAT</string>
+    <string name="recommended_retail_price_after_vat">Recommended Retail Price After VAT</string>
+    <string name="expected_profit">Expected Commission</string>
+    <string name="total_expected_profit">Total Expected Commission</string>
+    <string name="total_expected_price">Total Expected Price</string>
+    <string name="show_sales_in_recommended_retail_price">Show Sales in Recommended Retail Price</string>
+    <string name="total_sub_account_price">Total Sub Account Price</string>
+    <string name="total_profit">Total Commission</string>
+    <string name="show_sales_in_sub_account_price">Show Sales in Sub Account Price</string>
+    <string name="sub_account_price">Sub Account Price</string>
+    <string name="sub_account_price_after_vat">Sub Account Price after VAT</string>
+    <string name="sub_account_balance">Sub Account Balance</string>
+
+    <!--Daily Report-->
+    <string name="reseller_name">Reseller Name : </string>
+    <string name="from_date">From Date : </string>
+    <string name="to_date">To Date : </string>
+    <string name="current_balance">Current balance : </string>
+    <string name="no_of_trans">No. of Transactions : </string>
+    <string name="cost_price">Total Cost Price : </string>
+    <string name="sub_account">Account username : </string>
+    <string name="product_name">Product Name : </string>
+
+
+    <string name="receipt_name">اسم المنتج:</string>
+    <string name="receipt_name_en">Product Name:</string>
+
+    <string name="receipt_username">اسم المستخدم للحساب:</string>
+    <string name="receipt_username_en">Account username:</string>
+
+    <string name="receipt_voucher">رقم بطاقة الشحن:</string>
+    <string name="receipt_voucher_en">E-Voucher Number:</string>
+
+    <string name="receipt_date">التاريخ:</string>
+    <string name="receipt_date_en">Date:</string>
+
+    <string name="receipt_time">الوقت:</string>
+    <string name="receipt_time_en">Time:</string>
+
+    <string name="receipt_expiry">تاريخ الانتهاء:</string>
+    <string name="receipt_expiry_en">Expiry Date:</string>
+
+    <string name="receipt_instructions_en">Recharge Instructions:</string>
+    <string name="receipt_instructions">تعليمات الشحن:</string>
+
+    <string name="receipt_trx_id">رقم العملية:</string>
+    <string name="receipt_trx_id_en">Transaction ID:</string>
+
+    <string name="receipt_device_id">رقم الجهاز:</string>
+    <string name="receipt_device_id_en">Terminal ID:</string>
+
+    <string name="receipt_reseller_id">رقم الموزع:</string>
+    <string name="receipt_reseller_id_en">Reseller NO.:</string>
+
+    <string name="receipt_serial">الرقم التسلسلي:</string>
+    <string name="receipt_serial_en">Serial Number:</string>
+
+    <string name="receipt_print_date">طبعت في:</string>
+    <string name="receipt_print_date_en">Print Date:</string>
+
+    <string name="receipt_print_count">نسخة رقم </string>
+    <string name="receipt_print_count_en">Print Copy</string>
+
+    <string name="receipt_print_warning">القسائم المباعة لا ترد ولا تستبدل</string>
+    <string name="receipt_print_warning_en">Sold vouchers are not replaceable or refundable</string>
+
+
+    <string name="receipt_print_signature">Powered By: Bitaqaty/www.Bitaqaty.com</string>
+
+    <string name="receipt_print_url">www.Bitaqaty.com</string>
+
+    <string name="receipt_shop">المتجر:</string>
+    <string name="receipt_shop_en">Shop:</string>
+
+    <string name="receipt_sku">الكود التعريفي:</string>
+    <string name="receipt_sku_en">SKU Barcode:</string>
+
+    <string name="receipt_sk">SKU Barcode:</string>
+
+
+    <string name="purchase_expiry">Valid till</string>
+
+    <string name="profit">Commission</string>
+    <string name="no_printer_paper">No Printer Paper</string>
+    <string name="manage_product_price">Manage Product Price</string>
+    <string name="update_balance">Update Balance</string>
+    <string name="available_balance_to_transfer">Available balance to transfer</string>
+    <string name="deduct">Deduct</string>
+    <string name="add">Add</string>
+    <string name="balance_info">Balance Info</string>
+    <string name="input_the_amount_you_need_to_add_deduct">Input the amount you need to add / deduct</string>
+    <string name="negative_number_not_accepted">Negative number not accepted</string>
+    <string name="amount_should_be_equal_or_less_than_available_balance_to_transfer">Amount should be equal or less than Available balance to transfer</string>
+    <string name="amount_should_be_equal_or_less_than_sub_account_balance">Amount should be equal or less than Sub account’s balance</string>
+    <string name="edit">Edit</string>
+    <string name="edit_done">Edit Done</string>
+    <string name="remove">Remove</string>
+    <string name="notification">Notifications</string>
+    <string name="see_all_incoming_activity">See all incoming activity</string>
+    <string name="all_incoming_activity">All incoming activity</string>
+    <string name="homepage_should_contain_at_least">Homepage should contain at least </string>
+    <string name="merchants_categories">merchants/categories</string>
+    <string name="from_homepage">from homepage ?</string>
+    <string name="are_you_sure_you_want_to_remove">Are you sure you want to remove </string>
+    <string name="is_removed_from_homepage">is removed from homepage</string>
+    <string name="de_done">تم حذف</string>
+    <string name="from_home">من الصفحة الرئيسية</string>
+    <string name="added_to_homepage">Add to homepage</string>
+    <string name="you_have_reached_the_maximum_limit_allowed">You have reached the maximum limit allowed, You need to remove first from homepage</string>
+    <string name="add_to_home">Added to homepage</string>
+    <string name="product_id">Product Id</string>
+    <string name="sku_code">Sku barcode</string>
+    <string name="amount_should_be_less">Amount should be less than Sub account’s balance</string>
+    <string name="recharge_details">Recharge Details</string>
+    <string name="total_recharge">Total Recharge</string>
+    <string name="account_recharge_log">Account Recharge log</string>
+    <string name="mada_al_ahly">MADA/ Al-Ahly:</string>
+    <string name="mada_sales_profit">MADA Sales Commission</string>
+    <string name="manual_refill">Manual Refill:</string>
+    <string name="btn_print">Print</string>
+    <string name="payment_method">Payment method</string>
+    <string name="show_total">Show Total</string>
+    <string name="total_retail_price">Total retail price</string>
+    <string name="settlement_transactions">Settlement transactions</string>
+    <string name="transfer_request">Settlement request</string>
+    <string name="additional_notes">Additional Notes</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="date_time">Date/time</string>
+    <string name="retail_price_after_vat">Retail price after VAT</string>
+    <string name="there_is_no_minimum_amount_for_recharge">There is no minimum amount for recharge</string>
+    <string name="purchase_transaction">Purchase Transaction</string>
+    <string name="mada_ahly">Mada Ahly</string>
+    <string name="something_went_wrong">the request was not successful,Something went wrong</string>
+    <string name="pay_cash_using_your_balance">Pay cash using your balance</string>
+    <string name="pay_through_card">Pay through card</string>
+    <string name="pending">PENDING</string>
+    <string name="rejected">REJECTED</string>
+    <string name="done1">DONE</string>
+    <string name="the_requested_transfer_amount">The requested transfer amount</string>
+    <string name="your_request_has_been_submitted_successfully">Your request has been submitted successfully</string>
+    <string name="your_balance_is_not_enough_to_send_settlement_request">Your balance is not enough to send settlement request</string>
+    <string name="all">All</string>
+    <string name="sorry_the_request_was_not_successful">Sorry the request was not successful, Something went wrong</string>
+    <string name="recharged_successfully">Recharged successfully</string>
+    <string name="transaction_details">Transaction details:</string>
+    <string name="please_choose_the_payment_method">Please choose the payment method</string>
+    <string name="date_filter">Date</string>
+    <string name="cash">Cash</string>
+    <string name="recharge_amount">Recharge amount using MADA</string>
+    <string name="minimum_amount">The Minimum amount to request is</string>
+    <string name="transfer_status">Transfer Status</string>
+    <string name="show_total_transaction">Show Total</string>
+    <string name="recharge_wallet_report">Recharge Wallet Report</string>
+    <string name="available_balance">Available Balance</string>
+    <string name="cr_number">CR Number*</string>
+    <string name="company_name">Company Name*</string>
+    <string name="swift_code">Swift Code*</string>
+    <string name="bank_name">Bank Name*</string>
+    <string name="account_number">Account Number*</string>
+    <string name="iban">IBAN*</string>
+    <string name="branch_address">Branch Address</string>
+    <string name="cr_number_hint">CR number</string>
+    <string name="company_name_hint">Company Name</string>
+    <string name="swift_code_hint">Swift Code </string>
+    <string name="bank_name_hint">Bank Name</string>
+    <string name="your_account_number">Your Account Number</string>
+    <string name="iban_number_hint">Should be started with SA then 22 digits</string>
+    <string name="branch_address_hint">Branch Address</string>
+    <string name="minimum_amount_to_request">Minimum amount to request</string>
+    <string name="basic_data">Basic Data</string>
+    <string name="bank_statements">Bank Statements</string>
+    <string name="started_with_sa">IBAN code should be started with SA</string>
+    <string name="number_must_be_entered">22 number must be entered</string>
+    <string name="invalid_swift_code">Invalid IBAN code</string>
+    <string name="your_commission">Your Commission is </string>
+    <string name="a_fee_will_apply_for_card_payments">Card Payment fees will be applied</string>
+    <string name="settlement_request">Transfer request</string>
+    <string name="surepay_commission">SurePay Commission</string>
+    <string name="max_number_of_recharge_per_day">Max. number of recharge per day [X] transactions</string>
+
+    <string name="recommended_retail_priceEN">Price Before VAT</string>
+    <string name="recommended_retail_priceAR">السعر قبل الضريبة</string>
+
+    <string name="VAT_Amount_en">VAT</string>
+    <string name="VAT_Amount_ar">مبلغ الضريبة</string>
+
+    <string name="recommended_retail_price_after_vat_en">Price After VAT</string>
+    <string name="recommended_retail_price_after_vat_ar">السعر بعد الضريبة</string>
+    <string name="vat_code_en">VAT Code</string>
+    <string name="vat_code_ar">كود الضريبة</string>
+    <string name="send_verification_code_via">Send verification code via</string>
+    <string name="sms_message">sms message</string>
+    <string name="email">Email</string>
+    <string name="exceeded_allowed_verificcaation_trials">EXCEEDED ALLOWED VERIFICATION TRIALS</string>
+    <string name="you_should_updat_mada">يجب تحديث اصدار مدي</string>
+    <string name="username">Username*</string>
+    <string name="confirm_username">Confirm Username*</string>
+    <string name="full_name">Full Name*</string>
+    <string name="description1">Description*</string>
+    <string name="access_type1">Access Type*</string>
+    <string name="select_authentication_type">Select authentication type</string>
+    <string name="google_authenticator">Google authenticator</string>
+    <string name="send_sms_verification_code_via_mobile_number">Send sms verification code via mobile number</string>
+    <string name="length_should_be_between_12_15_numbers">Length should be between 12-15 numbers including country code</string>
+    <string name="confirm_username_doesnt_match">Confirm username doesn’t match with username</string>
+    <string name="choose">Choose</string>
+    <string name="reset_access_data">Reset Access Data</string>
+    <string name="err_reset_access_data">You don’t have authority to reset your access data</string>
+    <string name="invalid_username">Invalid Username</string>
+    <string name="reprint_receipt">Reprint Receipt</string>
+    <string name="this_account_can_reprint_the_invoice">This account can reprint the invoice</string>
+    <string name="manage_products_prices">Manage Products Prices</string>
+    <string name="edit_sub_account_price">Edit Sub Account Price</string>
+    <string name="sub_account_price_updated_succressfully">Sub Account price updated successfully</string>
+    <string name="some_products_are_set_with_sub_account_price_less">Some products are set with sub account price less than cost price, do you want to proceed ?</string>
+    <string name="other">Other</string>
+    <string name="edit_homepage">Edit Homepage</string>
+    <string name="this_account_can_remove_add_merchant_to_homepage">This account can remove/add merchant to homepage</string>
+    <string name="view_recommended_retail_price">View Recommended Retail Price</string>
+    <string name="this_account_can_view_recommended_retail_price_recommended_retail_price_after_vat_expected_profit_in_products_discount_list_transactions_log_products_list_and_sales_report">This account can view recommended retail price. Recommended retail price after VAT, Expected Profit in Products Discount List, Transactions log, Products List and Sales Report</string>
+    <string name="some_products_are_set_with_sub_account_price_less_than_cost_price">Some products are set with sub account price less than cost price</string>
+    <string name="added_successfully">Added Successfully</string>
+    <string name="verify">Verify</string>
+    <string name="message_containing_verification_code">A message containing verification code is sent to your mobile number which ends with 0411, please enter the verification code sent, then click Verify</string>
+    <string name="reset_access_data_changed_successfully">Reset Access Data changed successfully</string>
+    <string name="add_account">Add Account</string>
+    <string name="confirm_username_fields">Confirm Username fields should not accept more than 50 characters</string>
+    <string name="description_fields_should_not_accept">Description fields should not accept more than 255 characters</string>
+    <string name="fullName_fields_should_not_accept">FullName fields should not accept more than 255 characters</string>
+    <string name="username_fields_should_not">Username fields should not accept more than 50 characters</string>
+    <string name="this_account_can_view_product_details_username_password_in_transactions_log">this account can view product details (username, password) in transactions log</string>
+    <string name="view_pin">View PIN</string>
+    <string name="mobile_number_already_used_in_more_than_one_account">Mobile number already used in more than one account, please enter another one</string>
+    <string name="user_name_already_used_in_more_than_one_account">Username already exists, please enter another one</string>
+    <string name="actual_profit">Actual Profit</string>
+    <string name="sub_account_price_accepts">Sub Account Price accepts number only and shouldn’t accept negative values</string>
+    <string name="sub_account_price_greater_than_cost_price">Sub Account price should be greater than Cost Price</string>
+    <string name="unsuccessful_purchase">Unsuccessful purchase</string>
+    <string name="unsuccessful_recharge">unsuccessful recharge</string>
+    <string name="unable_to_pruchase">unable to purchase</string>
+    <string name="empty"> </string>
+    <string name="total_balance_commission">Total Balance Commission</string>
+    <string name="total_mada_alahly_commission">Total MADA Alahly Commission</string>
+    <string name="account_manager">Account Manager</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="there_is_new_version_of_Bitaqaty">There is new version of Bitaqaty</string>
+    <string name="update">Update</string>
+    <string name="please_update_mada_version">Please update mada version</string>
+    <string name="taxable_invoice_priceEN">Taxable invoice</string>
+    <string name="taxable_invoice_priceAR">فاتورة ضريبية</string>
+    <string name="please_allow_app_to_app">Please Allow APP TO APP</string>
+    <string name="transaction_verication">The validity of the MADA application is verified</string>
+    <string name="print_vat">Print Vat</string>
+    <string name="view_current_balance">View Current Balance</string>
+    <string name="in_case_of_hiding_current_balance_will_hidden_from_the_sales_report">In case of hiding, Current Balance will hidden from the sales report</string>
+    <string name="view_profit">View Profit</string>
+    <string name="in_case_of_hiding_expected_profit_will_hidden_from_the_sales_report">in case of hiding, Expected Profit will hidden from the sales report</string>
+    <string name="can_send_settlement">Can Send Settlement</string>
+    <string name="edit_recommended_retail_price">Edit Recommended Retail Price</string>
+    <string name="reset_all">Reset All</string>
+    <string name="recommended_retail_price_updated_successfully">Recommended retail price updated successfully</string>
+    <string name="reset_default_value">Are you sure you want to reset to default value ?</string>
+    <string name="reset_to_default_value_is_done">Reset to default value is done successfully for all products</string>
+    <string name="reset_to_default_value_of_product_is_done">Reset to default value is done successfully</string>
+    <string name="current_balance_sales_report">Current balance</string>
+    <string name="price_is_less_than_the_allowed">Price is less than the allowed</string>
+    <string name="recommended_price_accepts"> Recommended retail price accepts number only and shouldn’t accept negative values</string>
+    <string name="VAT_on_recommended">VAT on Recommended Retail Price</string>
+    <string name="partner_fees">Partner Fees</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="total_vat">Total Vat</string>
+    <string name="cost_price_after_vat">Cost price after VAT</string>
+    <string name="total_cost_per_item">Total Cost Per Item</string>
+    <string name="total_commission">Total Commission</string>
+    <string name="buy_now_label">Buy now</string>
+    <string name="add_to_cart_label">Add to cart</string>
+    <string name="cart_totals">Cart Totals</string>
+    <string name="total_cost_price_after_vat">Total cost price after Vat</string>
+    <string name="proceed_to_payment">Proceed to Payment</string>
+    <string name="remove_cart_item_msg">Are you sure you want to remove that card from the shopping cart?</string>
+    <string name="remove_card_label">Remove Card</string>
+    <string name="keep_card_label">Keep card </string>
+    <string name="cart_max_count">Cart Max count</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="back_to_home">Back To Home</string>
+    <string name="print_mada">Print Mada</string>
+    <string name="done_successfully">Done Successfully</string>
+    <string name="print_again">Print Again</string>
+    <string name="shopping_cart_is_empty">Shopping Cart is empty</string>
+    <string name="start_shopping">Start Shopping</string>
+    <string name="card_confirm">There are Cards added before to shopping cart. Would you like to buy \n</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="reports">Reports</string>
+    <string name="reseller_support">Reseller\n Support</string>
+    <string name="product_discount_list">Product \n Discount List</string>
+    <string name="settlement_transaction">Settlement\n Transaction</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome</string>
+    <string name="your_balance">Your Balance</string>
+    <string name="by_continue_recharging_you_agree_on">By continue recharging you agree on</string>
+    <string name="profile">Profile</string>
+    <string name="charge_balance">Charge Balance</string>
+    <string name="favorite">Favorite</string>
+    <string name="no_products">\"No Products\"</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="confirm_change_category">Are you sure you want to change &quot;%1$s&quot; category?</string>
 </resources>

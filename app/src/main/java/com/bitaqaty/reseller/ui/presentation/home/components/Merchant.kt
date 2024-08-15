@@ -45,7 +45,7 @@ fun MerchantItem(
     Card(
         shape = RoundedCornerShape(Dimens.cornerRadius10),
         modifier = Modifier
-            .noRippleClickable { onClickMerchant() }
+            .noRippleClickable { if(!isSelected) onClickMerchant() }
             .padding(horizontal = Dimens.padding8)
             .wrapContentSize()
     ) {
@@ -81,7 +81,8 @@ fun MerchantItem(
                     fontWeight = FontWeight.Light,
                     fontSize = 12.sp,
                 ),
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
         }
     }

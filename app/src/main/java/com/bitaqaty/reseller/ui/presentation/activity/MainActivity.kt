@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.ui.presentation.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
         setContent {
             BitaqatyTheme {
-                MainScreen()
+                MainScreen(mainViewModel = splashViewModel)
             }
         }
     }
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
+fun MainScreen(mainViewModel: MainActivityViewModel) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -70,7 +72,9 @@ fun MainScreen() {
         content = { innerPadding ->
             Box {
                 Navigation(
-                    navController, modifier = Modifier
+                    mainViewModel = mainViewModel,
+                    navController = navController,
+                    modifier = Modifier
                 )
             }
         }
@@ -79,7 +83,7 @@ fun MainScreen() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen2(modifier: Modifier) {
+fun MainScreen2(modifier: Modifier, mainViewModel: MainActivityViewModel) {
     val navController = rememberNavController()
     var haveBack: Boolean = false
     var appTitle: String = ""
@@ -87,7 +91,7 @@ fun MainScreen2(modifier: Modifier) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = { if(mainViewModel.showBottomNav.value) BottomNavigationBar(navController) },
         topBar = {
             when {
                 currentRoute(navController) == Screen.NotificationDetailsScreen.route -> {
@@ -198,6 +202,11 @@ fun MainScreen2(modifier: Modifier) {
                     haveTopBar = false
                 }
 
+                currentRoute(navController) == Screen.Search.route -> {
+                    haveBack = false
+                    haveTopBar = false
+                }
+
                 currentRoute(navController) == Screen.SettlementTransactionsScreen.route -> {
                     appTitle = "Settlement Transactions"
                     haveBack = true
@@ -215,12 +224,18 @@ fun MainScreen2(modifier: Modifier) {
                 }
                 currentRoute(navController) == Screen.Store.route -> {
                     appTitle = "Shopping Categories"
-                    haveBack = false
+                    haveBack = !mainViewModel.showBottomNav.value
+                    haveTopBar = true
+                }
+                currentRoute(navController) == Screen.CategoryDetails.route -> {
+                    appTitle = mainViewModel.categoryDetailsTitle.value
+                    haveBack = true
                     haveTopBar = true
                 }
             }
             if (haveTopBar) {
                 AppBarWithArrow(navigationTitle(navController, appTitle), haveBack = haveBack) {
+                    mainViewModel.showBottomNav.value = true
                     navController.popBackStack()
                 }
             }
@@ -229,18 +244,20 @@ fun MainScreen2(modifier: Modifier) {
         content = { innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
                 Navigation2(
-                    navController, modifier = Modifier
+                    navController = navController,
+                    modifier = Modifier,
+                    mainViewModel = mainViewModel
                 )
             }
         }
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomePreview() {
-    BitaqatyTheme {
-        MainScreen()
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun HomePreview() {
+//    BitaqatyTheme {
+//        MainScreen()
+//    }
+//}
 

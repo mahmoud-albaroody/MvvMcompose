@@ -1,10 +1,10 @@
-package com.bitaqaty.reseller.ui.presentation.components
+package com.bitaqaty.reseller.ui.presentation.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,10 +34,10 @@ fun SearchBar() {
 
     OutlinedTextField(
         modifier = Modifier
-            .wrapContentHeight()
+            .height(80.dp)
             .fillMaxWidth()
             .padding(
-                top = Dimens.padding30,
+                //top = Dimens.padding30,
                 start = Dimens.padding12,
                 end = Dimens.padding12
             )
@@ -79,7 +79,7 @@ fun SearchBar() {
     )
 }
 
-@Preview(showBackground = false)
+@Preview()
 @Composable
 fun SearchBarPreview() {
     SearchBar()

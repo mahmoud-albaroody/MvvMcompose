@@ -227,6 +227,8 @@ dependencies {
     implementation("androidx.compose.material:material:1.6.8")
     //sunmi
     implementation("com.sunmi:printerlibrary:1.0.18")
+    //lottie
+    implementation("com.airbnb.android:lottie-compose:6.0.0")
 }
 
 fun ApplicationProductFlavor.setSetting() {

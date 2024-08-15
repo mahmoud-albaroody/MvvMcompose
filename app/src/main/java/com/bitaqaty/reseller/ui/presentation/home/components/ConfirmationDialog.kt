@@ -1,9 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.home.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material.Icon
@@ -12,9 +9,9 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
+import com.bitaqaty.reseller.R
 
 @Composable
 fun ConfirmationDialog(
+    categoryName: String,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ){
@@ -36,7 +35,7 @@ fun ConfirmationDialog(
                 onClick = onConfirm
             ) {
                 Text(
-                    text = "Ok",
+                    text = stringResource(id = R.string.ok),
                     fontFamily = frutigerLTArabic,
                     color = Color.White
                 )
@@ -45,7 +44,7 @@ fun ConfirmationDialog(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = "Cancel",
+                    text = stringResource(id = R.string.cancel),
                     fontFamily = frutigerLTArabic,
                 )
             }
@@ -53,13 +52,13 @@ fun ConfirmationDialog(
         icon = {
             Icon(
                 imageVector = Icons.Default.Edit,
-                contentDescription = "Edit Icon",
+                contentDescription = "Edit Category",
                 tint = Color.Blue
             )
         },
         title = {
             Text(
-                text = "Edit Category",
+                text = stringResource(R.string.edit_category),
                 fontFamily = frutigerLTArabic,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp
@@ -67,7 +66,7 @@ fun ConfirmationDialog(
         },
         text = {
             Text(
-                text = "Are you sure you want to change category ?",
+                text = stringResource(id = R.string.confirm_change_category, categoryName),
                 fontFamily = frutigerLTArabic,
                 textAlign = TextAlign.Center,
                 fontSize = 14.sp
@@ -82,6 +81,7 @@ fun ConfirmationDialog(
 @Preview(showSystemUi = false)
 fun ConfirmationDialogPreview(){
     ConfirmationDialog(
+        categoryName = "itunes",
         onConfirm = {},
         onDismiss = {}
     )

@@ -1,6 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.home.components
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,6 +32,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
 import com.bitaqaty.reseller.ui.theme.Dimens
+import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @Composable
@@ -40,7 +45,7 @@ fun ProductItem(
         modifier = Modifier
             .width(IntrinsicSize.Min)
             .padding(Dimens.DefaultMargin10)
-            .noRippleClickable { onClick() },
+            .noRippleClickable { if(product.isInStock()) onClick() },
         shape = RoundedCornerShape(
             topEndPercent = Dimens.cornerRadius20,
             bottomStartPercent = Dimens.cornerRadius15,
@@ -49,17 +54,32 @@ fun ProductItem(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .wrapContentWidth()
-                .background(if(isSelected) Color(0xFF3255A4) else Color.LightGray),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            contentAlignment = Alignment.Center
         ) {
-            ProductLogo(product.productSmallImagePath)
-            ProductPrice(
-                product.getRecommendedRetailPriceDouble().toString(),
-                isSelected
-            )
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .alpha(if(!product.isInStock()) 0.25f else 1f)
+                    .background(if (isSelected) Color(0xFF3255A4) else Color.LightGray),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ProductLogo(product.productSmallImagePath)
+                ProductPrice(
+                    product.getRecommendedRetailPriceDouble().toString(),
+                    isSelected
+                )
+            }
+            if(!product.isInStock()){
+                Text(
+                    text = stringResource(id = R.string.out_of_stock),
+                    color = Color.DarkGray,
+                    fontFamily = frutigerLTArabic,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
@@ -118,7 +138,7 @@ fun ProductPrice(
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 4.dp),
-            text = "SAR",
+            text = stringResource(id = R.string.sar),
             fontSize = 10.sp,
             color = if(isSelected) Color.White else Color.DarkGray,
             textAlign = TextAlign.Center,

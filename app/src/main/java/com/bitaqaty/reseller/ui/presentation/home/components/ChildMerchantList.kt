@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.TopChildMerchant
-import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 

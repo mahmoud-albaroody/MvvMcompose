@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -90,7 +91,7 @@ fun TopBar(
                     )
                     Column {
                         Text(
-                            text = "Hello, $userName",
+                            text = stringResource(id = R.string.hello) + userName,
                             fontSize = 12.sp,
                             fontFamily = frutigerLTArabic,
                         )
@@ -101,7 +102,7 @@ fun TopBar(
                                     fontSize = 12.sp,
                                     fontFamily = frutigerLTArabic,
                                 )){
-                                    append("Balance: ")
+                                    append(stringResource(id = R.string.yourBalance))
                                 }
                                 withStyle(style = SpanStyle(
                                     color = Color.Black,
@@ -115,7 +116,7 @@ fun TopBar(
                                     fontSize = 12.sp,
                                     fontFamily = frutigerLTArabic,
                                 )){
-                                    append("SAR")
+                                    append(stringResource(id = R.string.sar))
                                 }
                             }
                         )

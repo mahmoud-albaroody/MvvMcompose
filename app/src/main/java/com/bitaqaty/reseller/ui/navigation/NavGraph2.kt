@@ -1,17 +1,25 @@
 package com.bitaqaty.reseller.ui.navigation
 
+import android.util.Log
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilterScreen
 import com.bitaqaty.reseller.ui.presentation.bankTransfer.BankTransferScreen
+import com.bitaqaty.reseller.ui.presentation.categoryDetails.CategoryDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePasswordScreen
 import com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen.ChargeBalanceScreen
-import com.bitaqaty.reseller.ui.presentation.components.SearchScreen
+import com.bitaqaty.reseller.ui.presentation.search.SearchScreen
 import com.bitaqaty.reseller.ui.presentation.favoriteScreen.FavoraiteScreen
 import com.bitaqaty.reseller.ui.presentation.home.HomeScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
@@ -25,7 +33,6 @@ import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogScre
 import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReportScreen
 import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
-import com.bitaqaty.reseller.ui.presentation.settlementRequest.SettlementRequestScreen
 import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTransactionsScreen
 import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
@@ -33,20 +40,74 @@ import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScre
 
 @Composable
 fun Navigation2(
+    mainViewModel: MainActivityViewModel,
     navController: NavHostController,
     modifier: Modifier
 ) {
     NavHost(navController, startDestination = Screen.Home.route, modifier) {
-        composable(Screen.Home.route) {
-            HomeScreen()
+        composable(
+            Screen.Home.route,
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(700)
+                )
+            }
+        ) {
+            HomeScreen(navController = navController, mainViewModel = mainViewModel)
         }
         composable(Screen.Search.route) {
             SearchScreen()
         }
 
-        composable(Screen.Store.route) {
-            //StoreScreen(navController = navController, modifier = modifier)
-            SettlementRequestScreen()
+        composable(
+            Screen.Store.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                )
+            },
+            arguments = listOf(navArgument("categoryId"){
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            })
+        ) { backStackEntry ->
+            var categoryId = backStackEntry.arguments?.getString("categoryId")
+            if(mainViewModel.showBottomNav.value){
+                categoryId = null
+            }
+            StoreScreen(navController = navController, modifier = modifier, categoryId = categoryId)
+            //SettlementRequestScreen()
+        }
+        composable(
+            Screen.CategoryDetails.route,
+            arguments = listOf(
+                navArgument("categoryId"){ type = NavType.StringType },
+                navArgument("categoryName"){ type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getString("categoryId")
+            val categoryName = backStackEntry.arguments?.getString("categoryName")
+            CategoryDetailsScreen(
+                navController = navController,
+                modifier = modifier,
+                categoryId = categoryId!!,
+            )
+            mainViewModel.categoryDetailsTitle.value = categoryName!!
         }
         composable(Screen.Notification.route) {
             NotificationScreen(navController = navController, modifier = modifier)
@@ -102,7 +163,7 @@ fun Navigation2(
         }
 
         composable(Screen.MainScreen.route) {
-            MainScreen()
+            MainScreen(mainViewModel = mainViewModel)
         }
         composable(Screen.SalesReportScreen.route) {
             SalesReportScreen(navController = navController, modifier = modifier)

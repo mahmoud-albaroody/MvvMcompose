@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">bitaqaty</string>
     <string name="app_title">Movie World</string>
     <string name="title">Title</string>
-    <string name="home">Home</string>
     <string name="popular">Popular</string>
     <string name="top_rate">Top rated</string>
     <string name="up_coming">Up coming</string>
-    <string name="description">Description</string>
     <string name="release_date">Release Date</string>
     <string name="rating">Rating</string>
-    <string name="language">Language</string>
     <string name="duration">Duration</string>
     <string name="movie_detail">Movie Detail</string>
     <string name="similar">Similar</string>
@@ -19,10 +15,8 @@
     <string name="screen_two">Screen two</string>
     <string name="open_drawer">Open drawer</string>
     <string name="rating_search">Rating :</string>
-    <string name="yes">Yes</string>
     <string name="do_you_want_to_exit_the_app">Do you want to exit the app?</string>
     <string name="close_the_app">Close the app</string>
-    <string name="no">No</string>
     <string name="there_is_no_internet">There is no internet!</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
@@ -38,7 +32,1115 @@
     <string name="search_place_holder">Card Name, Category</string>
     <string name="category_label">Category</string>
     <string name="merchant_label">Merchant</string>
-    <string name="recharged_successfully">Recharged Successfully</string>
     <string name="please_enter_valid_text">Please enter valid text</string>
-    <string name="password">Password</string>
+    <string name="password">كلمة المرور</string>
+    <string name="support_ticket">تذكرة دعم</string>
+
+    <string name="total_amount">Total Amount</string>
+
+    <string name="app_name">Bitaqaty Business</string>
+    <string name="copyright">جميع الحقوق محفوظة لصالح بطاقاتي 2020 © </string>
+    <string name="sign_welcome">مرحبا بك\nفي بطاقاتي أعمال</string>
+    <string name="ok">حسنا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="done">تم</string>
+    <string name="send">إرسال</string>
+    <string name="code">الكود</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="change_password">تغيير كلمة السر</string>
+    <string name="language">اللغة</string>
+    <string name="choose_language">إختيار اللغة</string>
+    <string name="current_lang">(العربية)</string>
+    <string name="loading">جار التحميل…</string>
+    <string name="export">تصدير</string>
+    <string name="print_report">طباعة</string>
+    <string name="filter">تصفية</string>
+    <string name="from">من</string>
+    <string name="to">إلى</string>
+    <string name="next">التالي</string>
+    <string name="back">عودة</string>
+    <string name="confirm">تأكيد</string>
+    <string name="days">أيام</string>
+    <string name="hours">ساعات</string>
+    <string name="mins">دقائق</string>
+    <string name="secs">ثواني</string>
+    <string name="share_to">شاركه مع</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Errors">-->
+    <string name="err_server">حدث خطأ ما</string>
+    <string name="err_request_failed">عذرا، يرجى المحاولة مرة أخرى</string>
+    <string name="err_internet">لا يوجد إتصال بالإنترنت.\n من فضلك تأكد من إتصال هاتفك بالإنترنت ثم أعد المحاولة.</string>
+    <string name="retry">أعد المحاولة</string>
+
+    <string name="no_data">لا توجد بيانات</string>
+    <string name="reLogin_error">خطأ في تسجيل الدخول</string>
+    <string name="refresh">تحديث</string>
+    <string name="err_field_required">هذا الحقل مطلوب</string>
+    <string name="err_invalid_email">البريد الإلكتروني يجب أن يكون example@example.com</string>
+    <string name="err_invalid_password">كلمة سر غير صالحه</string>
+    <string name="err_passwords_mismatch">كلمتي السر لا يتطابقان</string>
+    <string name="err_incorrect_username_password">اسم المستخدم/كلمة السر غير صحيحة</string>
+    <string name="err_incorrect_username">اسم المستخدم غير صحيحة</string>
+    <string name="err_new_pass_match_old_pass">كلمة السر الجديدة ﻻ يجب أن تكون ككلمة السر الحالية</string>
+    <string name="err_session_ended">انتهت جلسة تسجيل الدخول</string>
+    <string name="err_invalid_verification_code">كود التحقيق غير صحيح</string>
+    <string name="err_sms_exceeded">لقد وصلت للحد الأقصى للمحاولات , برجاء التواصل مع خدمة العملاء</string>
+    <string name="err_sms_resend_exceeded">لقد تجاوزت عدد الرسائل القصيرة المسموح بها حاول مرة أخرى لاحقا</string>
+    <string name="err_verification_code_expired">انتهت صلاحية كود التحقق \n\n برجاء طلب كود تحقق جديد</string>
+    <string name="err_try_again_later">لقد تجاوزت عدد الرسائل القصيرة المسموح بها حاول مرة أخرى بعد\n</string>
+    <string name="err_wrong_current_pass">كلمة السر غير صحيحة</string>
+    <string name="err_unauthorized">إنتهت جلسة تسجيل الدخول, برجاء تسجيل الدخول</string>
+    <string name="err_account_no_saved_before">رقم الحساب مسجل من قبل</string>
+    <string name="noPermission"> ليس لديك تصريح لمشاهدة هذه الصفحة</string>
+    <string name="err_bank_account_not_found">هذا الحساب غير موجود</string>
+    <string name="err_min_amount_per_request">الحد اﻷدنى المسموح للطلب الواحد : XSAR</string>
+    <string name="err_max_amount_per_request">الحد اﻷقصى المسموح للطلب الواحد : XSAR</string>
+    <string name="err_max_request_per_day">الحد اﻷقصى المسموح لطلبات التحويل في اليوم: D/R</string>
+    <string name="err_max_amount_per_day">الحد اﻷقصى المسموح لليوم الواحد: XSAR</string>
+    <string name="errSaveCredentials">تأكد من إدخال كافة بيانات البطاقة</string>
+    <string name="errWrongDate">تاريخ انتهاء البطاقة خطأ، تأكد من ادخال التاريخ بشكل صحيح</string>
+    <string name="errExpiryDate">تاريخ انتهاء الصلاحية غير صالح.</string>
+    <string name="errCardHolderName">اسم حامل البطاقة غير صالح.</string>
+    <string name="errCardNumber"> رقم البطاقة غير صالح.</string>
+    <string name="errCVV">.CVV غير صالحة</string>
+    <string name="err_out_of_stock">%s غير متوفر</string>
+    <string name="err_insufficient_stock">مخزون %s غير كافى</string>
+    <string name="err_insufficient_balance">الرصيد غير كافي</string>
+    <string name="err_price_changed">تم تغيير سعر المنتج , برجاء العودة و المحاولة مرة أخرى</string>
+    <string name="err_service_not_available">%s غير متوفر</string>
+    <string name="err_select_category">برجاء, اختيار تصنيف أولا</string>
+    <string name="err_select_merchant">برجاء, اختيار خدمة أولا</string>
+    <string name="err_select_from_first">إختر من أولاً</string>
+    <string name="err_invalid_custom_date">تاريخ محدد غير صالح</string>
+    <string name="err_invalid_ticket_details">الحد الأقصى المسموح به: 1500 حرف</string>
+    <!--</editor-fold>-->
+
+
+    <!--<editor-fold desc="Sign in Page">-->
+    <string name="sign_instruction">للقيام بتسجيل الدخول , يرجى إدخال البريد الإلكتروني و كلمة السر الخاصيين بك ثم انقر تسجيل الدخول</string>
+    <string name="sign_username">البريد الإلكتروني/إسم المستخدم*</string>
+    <string name="sign_password">كلمه السر*</string>
+    <string name="sign_forgot_password"><u>نسيت كلمة السر ؟</u></string>
+    <string name="sign_signing">جارى تسجيل الدخول…</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Change password Page">-->
+    <string name="pass_enter_new_password">أدخل كلمة سر جديدة</string>
+    <string name="pass_instruction">يرجى إدخال كلمة السر الجديدة و تأكيد كلمة السر الجديدة ثم انقر تغيير</string>
+    <string name="pass_change">تغيير</string>
+    <string name="pass_current_pass">كلمة السر الحالية*</string>
+    <string name="pass_new_pass">كلمة السر الجديدة*</string>
+    <string name="pass_conf_new_pass">تأكيد كلمة السر الجديدة*</string>
+    <string name="pass_validation_1">يجب أن تكتب باللغة اﻹنجليزية</string>
+    <string name="pass_validation_2">تحتوي على 8 أحرف كحد أدنى</string>
+    <string name="pass_validation_3">تحتوي على حرف صغير على اﻷقل</string>
+    <string name="pass_validation_4">تحتوي على حرف كبير على اﻷقل</string>
+    <string name="pass_validation_5">تحتوي على رقم</string>
+    <string name="pass_applying_change">جارى التغيير …</string>
+    <string name="pass_change_success">تم تغيير كلمة السر بنجاح, يمكنك تسجيل الدخول اﻵن بكلمة السر الجديدة</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Forget password Page">-->
+    <string name="reset_password">إستعادة كلمة السر</string>
+    <string name="reset_password_choose_code">برجاء اختيار الوسيلة التى تريد بها استقبال رمز التحقيق ثم انقر إرسال</string>
+    <string name="reset_instruction">لاستعادة كلمة السر الخاصة بك، يرجى ادخال البريد الإلكتروني الخاص بك، ثم انقر "إرسال". سوف يقوم النظام بإرسال رسالة تحتوى على رابط على بريدك الإلكتروني .قم باستخدام هذا الرابط لتغيير كلمة السر الخاصة بك ,ملحوظة هذا الرابط صالح لمدة ساعة واحدة فقط</string>
+    <string name="to_reset_access_data">لإعادة ضبط بيانات الدخول الخاصة بك. يرجى ادخال اسم المستخدم الخاص بك. ثم انقر “إرسال”. سوف يقوم النظام بإرسال رسالة تحتوى على كود التحقق. قم بإستخدام هذا الكود لإعادة ضبط بيانات الدخول الخاصة بك. ملحوظة هذا الكود صالح لمدة 3 دقيقة</string>
+
+    <string name="reset_email">البريد الإلكتروني/إسم المستخدم*</string>
+    <string name="reset_resend">إعادة إرسال الرابط</string>
+    <string name="reset_link_sent">تم إعادة إرسال الرابط</string>
+    <string name="reset_success_msg">تم إرسال رابط إعادة تعيين كلمة السر إلى EMAIL_TXT لإعادة تعيين كلمة سر جديدة, من فضلك قم بالضغط على الرابط المرسل من بطاقاتى \n\n للحصول على المساعدة, يمكنك الإتصال بخدمة موزعى بطاقاتى أعمال الآن \n\n\n إن لم تصلك الرسالة, يمكنك إعادة إرسال الرابط</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Verification Page">-->
+    <string name="verification_enter_code">أدخل كود التحقيق</string>
+    <string name="verification_instruction">يرجى إدخال كود التحقيق المرسل لرقم الجوال الخاص بحسابك ثم انقر تسجيل الدخول</string>
+    <string name="verification_code">كود التحقيق</string>
+    <string name="verification_resend">ارسال مرة اخري</string>
+    <string name="verification_resend_message">في حالة لم تستقبل كود التحقيق اضغط</string>
+    <string name="verification_resend_underline_resend_again"><u>ارسال مرة اخري</u></string>
+    <string name="verification_trial">محاولة</string>
+    <string name="verification_wait">انتظر</string>
+    <string name="verification_seconds">ثانية</string>
+    <string name="verification_verifying">جاري التحقق …</string>
+    <string name="verification_code_sent">تم ارسال كود التحقق</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Profile Dialog">-->
+    <string name="profile_account_no">رقم الحساب</string>
+    <string name="profile_last_visit_date">تاريخ آخر زيارة</string>
+    <string name="profile_reseller">(موزع)</string>
+    <string name="profile_sub_account">(حساب فرعي)</string>
+    <string name="profile_sign_out">تسجيل الخروج</string>
+    <string name="profile_signing_out">جارى تسجيل خروج…</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Main Page">-->
+    <string name="hello">مرحباً, </string>
+    <string name="home">الرئيسية</string>
+    <string name="transactionLog">العمليات</string>
+    <string name="productList">قائمة خصومات المنتجات</string>
+    <string name="more">المزيد</string>
+    <string name="recharge">شحن</string>
+    <string name="yourBalance">رصيدك:</string>
+    <string name="supportTitle">خدمة الموزعين</string>
+    <string name="store">المتجر</string>
+    <string name="cart">سلة التسوق</string>
+    <string name="sar">ر.س</string>
+    <string name="sar_full">ريال سعودي</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Recharge dialog">-->
+    <string name="bank_transfer">تحويل بنكي</string>
+    <string name="mada">مدى</string>
+    <string name="credit">بطاقة الائتمان</string>
+    <string name="amex">امكس</string>
+    <string name="paypal">باي بال</string>
+    <string name="rechargeLog">سجل الشحن</string>
+    <string name="rechargeRequests">طلبات الشحن</string>
+    <string name="bankTransferLog">تحويل بنكي</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Manage Account">-->
+    <string name="account_type">نوع الحساب</string>
+    <string name="status">الحالة</string>
+    <string name="purchasing_limit">الحد الأقصى للشراء</string>
+    <string name="manage">ادارة</string>
+    <string name="limit">محدد</string>
+    <string name="periodic">دوري</string>
+    <string name="notLimited">غير محدد</string>
+    <string name="enabled">مفعل</string>
+    <string name="disabled">غير مفعل</string>
+    <string name="search_hint">بحث</string>
+    <string name="export_error">حدث خطأ</string>
+    <string name="exportFileName">الحسابات الفرعية</string>
+    <string name="export_success"> تم تصدير البيانات بنجاح</string>
+    <string name="show_more">عرض المزيد</string>
+
+    <string name="export_user_name"> اسم المستخدم للحساب</string>
+    <string name="export_full_name"> الاسم بالكامل</string>
+    <string name="export_account_type">نوع الحساب</string>
+    <string name="export_status"> الحالة</string>
+    <string name="export_purchase_limit">  الحد الأقصى للشراء</string>
+    <string name="exportefFileName">الحسابات الفرعية.xls</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Manage Account Details">-->
+    <string name="enable_account">تفعيل الحساب</string>
+    <string name="fullName">الاسم بالكامل</string>
+    <string name="mobileNumber">رقم الجوال</string>
+    <string name="description">الوصف</string>
+    <string name="accessType">نوع الدخول</string>
+    <string name="purchase">الشراء</string>
+    <string name="canPurchase">يمكن لهذا الحساب شراء أي من المنتجات</string>
+    <string name="accountType">نوع الحساب</string>
+    <string name="amountLimited">سيتم تخصيص حد أقصى للشراء للحساب</string>
+    <string name="amountPeriodic">سيتم وضع رصيد بشكل دوري في الحساب</string>
+    <string name="amountNotLimited">رصيد هذا الحساب سيكون من رصيد الحساب الرئيسي</string>
+    <string name="balance">الرصيد</string>
+    <string name="purchaseLimit">الحد الأقصى للشراء</string>
+    <string name="amount">المبلغ</string>
+    <string name="currentRemaining">حد الشراء المتبقى</string>
+    <string name="viewPurchaseLimit">إظهار الحد الأقصى للشراء</string>
+    <string name="rechargingMethod">أختر طريقة الشحن</string>
+    <string name="rechargingLog">سجل الشحن</string>
+    <string name="chooseLogType">أختر نوع السجل</string>
+    <string name="transLogOption1">سجل عمليات الحساب فقط</string>
+    <string name="transLogOption2">سجل عمليات لكل الحسابات</string>
+    <string name="chooseReportTitle">أختر نوع التقارير</string>
+    <string name="reportsOption1">تقارير الحساب فقط</string>
+    <string name="reportsOption2">تقارير كل الحسابات</string>
+    <string name="resellerSupportAction">خدمة الموزعين</string>
+    <string name="resellerSupportActionDetail">هذا الحساب يمكنه التواصل مع خدمة الموزعين بالمحادثة , واتس آب أو عمل تذكرة</string>
+    <string name="viewProductDiscounts">إظهار خصومات المنتجات</string>
+    <string name="viewProductDiscountsDetails">في حالة الإخفاء سيتم إخفاء كل الأسعار (سعر المنتج و الضريبة و بعد الضريبة) في عمليات الشراء و قوائم المنتجات و التقاربر و السجلات </string>
+    <string name="productDiscountsList">قائمة خصومات المنتجات</string>
+    <string name="period">دوري</string>
+    <string name="save">حفظ</string>
+    <string name="daily">يومي</string>
+    <string name="weekly">أسبوعي</string>
+    <string name="monthly">شهري</string>
+    <string name="DEFAULT">أفتراضي</string>
+    <string name="web">الويب</string>
+    <string name="application">التطبيق</string>
+    <string name="viewMasterAccount">إتاحة إظهار رصيد الحساب الرئيسى</string>
+    <string name="errorRechargePermission">اختر تصريح واحد على الأقل</string>
+    <string name="updateSuccessful">تم التغيير بنجاح</string>
+    <string name="no_app_available">لا يوجد تطبيق لفتح الملف</string>
+    <string name="err_enterBalance">يجب أدخال قيمة للرصيد</string>
+    <string name="manage_account">إدارة الحساب</string>
+    <string name="error_export_data">لا يوجد بيانات للتصدير</string>
+    <string name="no_search_result">لا يوجد نتائج للبحث</string>
+    <string name="periodic_limit">محدد بمدة </string>
+
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Bank Transfer Recharging Requests">-->
+    <string name="btrr">سجل طلبات شحن التحويل البنكي</string>
+    <string name="btrr_status">الحالة</string>
+    <string name="btrr_status_all">الكل</string>
+    <string name="btrr_status_pending">قيد الإنتظار</string>
+    <string name="btrr_status_rejected">مرفوض</string>
+    <string name="btrr_status_accepted">مقبول</string>
+    <string name="btrr_rejection_reason">سبب الرفض</string>
+    <string name="btrr_no_data">لا توجد بيانات</string>
+    <string name="btrr_no_more_data">لا يوجد المزيد من البيانات</string>
+    <string name="btrr_instruction">برجاء إتباع الإرشادات</string>
+    <string name="btrr_select_bank">اختر الحساب البنكي</string>
+    <string name="btrr_sender_details">تفاصيل المرسل</string>
+    <string name="btrr_transfer_details">تفاصيل التحويل</string>
+    <string name="btrr_bank_transfer">تحويل بنكي</string>
+    <string name="btrr_countries">الدولة</string>
+    <string name="btrr_account_number">رقم حساب</string>
+    <string name="btrr_account_name">إسم الحساب</string>
+    <string name="btrr_bank_address">عنوان البنك</string>
+    <string name="btrr_iban">IBAN</string>
+    <string name="btrr_add_account">إضافة حساب جديد</string>
+    <string name="btrr_saved_accounts">الحسابات المحفوظة</string>
+    <string name="btrr_confirm_delete">هل أنت متأكد أنك تريد مسح بيانات هذا الحساب ؟</string>
+    <string name="btrr_sender_country">دولة البنك (المحول منه)</string>
+    <string name="btrr_sender_bank_name">اسم البنك المحول منه*</string>
+    <string name="btrr_other">أخرى</string>
+    <string name="btrr_add_bank_name">أضف اسم البنك</string>
+    <string name="btrr_select_sender_bank">اختر اسم البنك</string>
+    <string name="btrr_sender_bank_no">رقم الحساب المحول منه*</string>
+    <string name="btrr_sender_name">اسم صاحب التحويل*</string>
+    <string name="btrr_save_sender_bank">حفظ بيانات الحساب</string>
+    <string name="btrr_warning">لن يتم قبول أي حوالة بنكية من حساب بنكي يختلف عن إسم صاحب حساب بطاقاتي أعمال</string>
+    <string name="btrr_transfer_from">تحويل من\nبلد المرسل</string>
+    <string name="btrr_transfer_to">تحويل إلى\nالدولة</string>
+    <string name="btrr_transfer_amount">مبلغ التحويل</string>
+    <string name="btrr_transfer_amount_required">مبلغ التحويل*</string>
+    <string name="btrr_recharge_amount">مبلغ الشحن</string>
+    <string name="btrr_amount">المبلغ</string>
+    <string name="btrr_transfer_date">تاريخ التحويل</string>
+    <string name="btrr_transfer_date_required">تاريخ التحويل*</string>
+    <string name="btrr_reference_no">الرقم المرجعي</string>
+    <string name="btrr_reference_no_required">الرقم المرجعي*</string>
+    <string name="btrr_success">تم تسجيل الطلب</string>
+    <string name="btrr_success_msg">إضافة الرصيد يتم خلال ساعة عمل واحدة يومياً من الثامنة صباحاً حتى الساعة الثانية بعد منتصف الليل بتوقيت السعودية</string>
+    <string name="btrr_min_amount_per_request">الحد الأدني لمبلغ التحويل XSAR</string>
+    <string name="btrr_max_amount_per_request">الحد الأقصى لمبلغ التحويل XSAR</string>
+    <string name="btrr_export_date">التاريخ/الوقت</string>
+    <string name="btrr_export_name">اسم المرسل</string>
+    <string name="btrr_export_bank">تحويل إلى</string>
+    <string name="btrr_export_amount">مبلغ التحويل</string>
+    <string name="btrr_export_transfer_date">تاريخ التحويل</string>
+    <string name="btrr_export_status">الحالة</string>
+    <string name="btrr_export_reason">سبب الرفض</string>
+    <string name="btrr_file_name">سجل_طلبات شحن_التحويل_البنكي.xls</string>
+    <string name="retryPayment">إعادة المحاولة</string>
+
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Purchase">-->
+    <string name="shopping_categories">أقسام الشراء</string>
+    <string name="seeMore">المزيد</string>
+    <string name="how_to_use">كيفية الإستخدام</string>
+    <string name="total_cost_price">إجمالي سعر التكلفة</string>
+    <string name="vat_amount_per">مبلغ الضريبة (%)</string>
+    <string name="total_cost_after_vat">إجمالي التكلفة بعد الضريبة</string>
+    <string name="buy">شراء</string>
+    <string name="purchase_success">عملية شراء ناجحة</string>
+    <string name="purchase_date">تاريخ الشراء</string>
+    <string name="quantity">إجمالى الكمية</string>
+    <string name="choose_method">اختر الطريقة التي تفضلها</string>
+    <string name="proceed">تابع</string>
+    <string name="print">طباعة المنتج</string>
+    <string name="share">مشاركة</string>
+    <string name="reprint">هل تريد إعادة الطباعة ؟</string>
+    <string name="second_copy">تمت الطباعة : 2</string>
+    <string name="date">التاريخ:</string>
+    <string name="product">المنتج:</string>
+    <string name="service_provided_by">الخدمة مقدمة من</string>
+    <string name="printed_on">طبعت في:</string>
+    <string name="non_refundable">القسائم المباعة لا ترد و لا تستبدل</string>
+    <!--<editor-fold>-->
+
+    <!--<editor-fold desc="Report">-->
+    <string name="report_username">اسم المستخدم للحساب</string>
+    <string name="report_category">التصنيف</string>
+    <string name="report_service">الخدمة</string>
+    <string name="report_product">اسم المنتج</string>
+    <string name="report_date">التاريخ</string>
+    <string name="report_channel">القناة</string>
+    <string name="report_total_cost_price">إجمالي سعر التكلفة</string>
+    <string name="report_no_of_transactions">عدد العمليات</string>
+    <string name="report_trans_no">العدد</string>
+    <string name="report_cost_price">سعر التكلفة</string>
+    <string name="report_all">الكل</string>
+    <string name="report_this_month">هذا الشهر</string>
+    <string name="report_last_month">الشهر السابق</string>
+    <string name="report_yesterday">بالأمس</string>
+    <string name="report_last_week">آخر 7 أيام</string>
+    <string name="report_today">اليوم</string>
+    <string name="report_custom_date">تاريخ محدد</string>
+    <string name="report_portal">بدون ربط</string>
+    <string name="report_pos">نقطة البيع</string>
+    <string name="report_integration">ربط خارجي</string>
+    <string name="report_wallet">المحفظة</string>
+    <string name="report_export_file_name">تقرير المبيعات.xls</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Support">-->
+    <string name="support_choose_ticket_type">من فضلك اختر نوع الطلب*</string>
+    <string name="support_full_name">الإسم بالكامل</string>
+    <string name="support_email_address">البريد الإلكتروني*</string>
+    <string name="support_mobile_no">رقم الجوال</string>
+    <string name="support_ticket_details">تفاصيل التذكرة*</string>
+    <string name="support_how_to">كيفية عمل تذكرة</string>
+    <string name="support_how_to_1">نرجو إستخدام نظام الدردشة الموجود حاليا على موقع "بطاقاتي أعمال" فقط</string>
+    <string name="support_how_to_2">يرجى تعبئة الاستمارة و سنرد على استفسارك خلال 24 ساعة أو أقل، على حسب استفسارك.</string>
+    <string name="support_how_to_3">يمكنك مراجعة قسم الأسئلة الأكثر شيوعاً في الوقت الحالي، فقد تجد إجابة على سؤالك!</string>
+    <string name="support_how_to_4">اختر نوع الحساب وطبيعة المشكلة من القوائم المنسدلة التالية، برجاء تحرى الدقة أثناء إدخال البيانات</string>
+    <string name="support_talk_with_support_team">تحدث إلى خدمة الموزعين</string>
+    <string name="support_successful_message">شكرا لتواصلك معنا, سيتم الرد في خلال ساعة , يرجى العلم بأن مواعيد العمل من 9 صباحا حتى 2 صباحا</string>
+    <string name="support_chat">محادثة</string>
+    <string name="support_whats_app">واتس اب</string>
+    <string name="support_or">أو</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Agreement Page">-->
+    <string name="agreement_reseller">إتفاقية الإستخدام للموزعين</string>
+    <string name="agreement_terms_of_use_header">إتفاقية الاستخدام</string>
+    <string name="agreement_terms_of_use">يجب قراءة اتفاقية الاستخدام بنظام إعادة البيع الخاص بالموزعين بعناية قبل البدء باستخدام النظام وذلك لضمان أعلى درجة في الحماية والسرية من خلال تعاملكم مع موقع بطاقاتي بيزنس:</string>
+    <string name="agreement_copyright_notice_header">حقوق النشر والطبع</string>
+    <string name="agreement_copyright_notice">جميع حقوق الطبع والنشر وفكرة بطاقاتي بيزنس تابعة للمجموعة الوطنية للتقنية</string>
+    <string name="agreement_logos_and_trademarks_header">الشعارات والعلامة التجارية</string>
+    <string name="agreement_logos_and_trademarks">علامة بطاقاتي بيزنس التجارية هي علامة تجارية مسجلة باسم المجموعة الوطنية للتقنية</string>
+    <string name="agreement_reseller_services_header">خدمات نظام الموزعين</string>
+    <string name="agreement_reseller_services">يحق للموزع إعادة بيع جميع الخدمات و المنتجات التي يقدمها موقع بطاقاتي بيزنس بنسب الخصم الموضحة في جدول نسب الخصم الخاصة بنظام الموزعين، جميع الخدمات المدرجة بـ بطاقاتي بيزنس هي مدرجة باتفاق وعقود مع اصحابها ولا يحق لأحد الاقتباس من الموقع دون الرجوع إلى إدارة الموقع.
+يحق لبطاقاتي بيزنس بتغير نسبة اي وقت حسب اسعار السوق و بدون إعطاء اشعار مسبق للموزع, على ان يتم تحديث هذه النسب في جدول نسب الخصم الخاص بالموزعين و العروض داخل حسابالموزع على موقع بطاقاتي بيزنس</string>
+    <string name="agreement_privacy_and_confidentiality_header">الأمان والسرية</string>
+    <string name="agreement_privacy_and_confidentiality">جميع البيانات الموجودة بالموقع تعامل معاملة سرية تامة ، ولا يحق لأي موزع إعطاء أي معلومات سرية خاصة بحسابه لأي شخص و من ضمنهم فريق بطاقاتي بيزنس و الدعم الفني التابع لفريق بطاقاتي بيزنس ، وفي حال حصل غير ذلك فإن بطاقاتي بيزنس غير مسؤول عن اي نتائج ومترتبات تحصل جراء ذلك.
+فيجب على كل مستخدم تسجيل كآفة البيانات الصحيحة الخاصة به في الحساب والتي تضمن له استرجاع الرقم السري في حال فقدانه أو نسيانه ، وفي حالة عدم تسجيله فإن بطاقاتي بيزنس غير مسؤول تماماً عن أي فقدان الحساب من جراء عدم تسجيل كآفة البينات الصحيحة ، ولن يلتزم المسؤولون بـ بطاقاتي بيزنس باسترداد أي حساب للعميل ( البيانات الهامة هي : رقم الجوال ، الإيميل ، اسم صاحب الحساب ،عنوان صاحب الحساب )
+في حال حصول أي تغيير في البيانات الخاصة بالموزع فإن صاحب الحساب هو المسؤول عن تحديث بياناته لدى الموقع ولن يتم النظر في أي حساب لن يتم تحديثه ، وسيتم التعامل مع صاحب الحساب حسب آخر بيانات مدخلة بـ بطاقاتي بيزنس.
+إن أي إساءة في استخدام الحساب الخاص بك يعرض الحساب للإيقاف دون الرجوع إلى صاحب الحساب ، وهو حق خاص بـ بطاقاتي بيزنس.
+الدخول لموقع بطاقاتي بيزنس عبر الوصلة التالية فقط : - https://www.Bitaqaty Business.net ، وأي دخول على غير هذه العناوين يعتبر دخول غير شرعي ويعتبر بطاقاتي بيزنس غير مسؤول عن أي نتائج مترتبة جراء ذلك.
+ستتم التعامل مع الحسابات الغير مفعلة حسب السياسة التي يراها المسؤولين على بطاقاتي بيزنس في التعامل مع نوعية هذه الحسابات.</string>
+    <string name="agreement_agree">موافق</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="More Page">-->
+    <string name="more_manage_sub_account">إدارة الحسابات الفرعية</string>
+    <string name="more_reports">التقارير</string>
+    <string name="more_resellers_support_center">خدمة الموزعين</string>
+    <string name="more_sales_report">تقرير المبيعات</string>
+    <string name="more_faq">الأسئلة الأكثر شيوعاً</string>
+    <string name="more_terms_of_use">شروط الإستخدام</string>
+    <string name="more_privacy_policy">سياسة الخصوصية</string>
+    <string name="more_terms_of_use_overview">
+نرحب بك في موقع الإلكتروني “بطاقاتي أعمال“ “BITAQATYBUSINESS.COM“ ونرجو منك الاطلاع على الشروط والأحكام التالية:\n\nفي حال وصولك للموقع أو تسجيلك أو استمرارك في استخدام الموقع أو الوصول إليه، فأنت توافق على الالتزام بشروط الاستخدام هذه والوثائق والشروط الأخرى بأثر فوري\nان شروط الاستخدام هذه والوثائق القانونية خاضعة للتعديل من قبلنا في اي وقت. إن استمرار استخدامك للموقع بعد نشر أي تغيير يعني موافقتك على شروط الاستخدام هذه والوثائق القانونية التي تم تعديلها \n\n<u>
+        نُبذة عن الموقع</u> \nيعد هذا الموقع متجر إلكتروني يتيح للمستخدمين شراء مجموعة متنوعة من البطاقات و الخدمات الرقميه.
+تحتفظ بطاقاتي أعمال بحق تقديم خدمات جديدة وتحديث أي من الخدمات أو سحبها، وفقاً لتقديرنا الخاص دون اية مسؤولية
+</string>
+    <string name="more_privacy_policy_overview">تلتزم بطاقاتى أعمال إلى أقصى درجة بحماية بياناتك الشخصية، ومن خلال قبولكم لسياسة الخصوصية الخاصة بعملاء بطاقاتى أعمال، فإنكم تسمحون لنا بجمع واستخدام والكشف عن المعلومات الشخصية الخاصة بك فقط وفقا لسياسة الخصوصية وبشكل محدود جداً. يرجى العلم بأنه لن يتم أبدا بيع أو استخدام أو عرض بياناتك الشخصية إلى أية جهة بمقابل أو بدون </string>
+    <string-array name="more_faq_header_arr">
+        <item>كيف يمكن ان احصل على جهاز بطاقاتي لبيع بطاقات الشحن ؟</item>
+        <item>كيف اصبح موزعاً معتمداً ؟</item>
+        <item>ماهي نسب الخصم التي سأحصل عليها ؟</item>
+        <item>كيف اتواصل مع موظف مبيعات بطاقاتي في منطقتي؟</item>
+        <item>في حال واجهت انا او احد عملائي مشكلة في شحن احدى البطاقات، ماذا افعل؟</item>
+        <item>ماهي اتفاقية التوزيع؟ وهل من الضروري التوقيع على الاتفاقية للعمل معكم؟</item>
+        <item>اذا كان لدي طلب لمنتج معين وهو غير متوفر لديكم، ماذا افعل؟</item>
+        <item>هل استطيع الحصول على فاتورة ضريبية بعد شراء المنتجات منكم؟</item>
+        <item>ما هي الدول اللتي يتم قبول موزعين معتمدين بها حالياً ؟</item>
+        <item>ما هي الحسابات البنكية المعتمدة لديكم؟</item>
+        <item>ما هي طرق الدفع المتاحة لشحن حساب الموزع المعتمد ؟</item>
+        <item>اذا تعطل جهاز نقاط البيع الذي املكه، ماذا علي ان افعل؟</item>
+    </string-array>
+    <string-array name="more_faq_body_arr">
+        <item>○ يتوفر جهاز بطاقاتي لكافة موزعينا المعتمدين في مختلف دول منطقة الشرق الأوسط, يرجى التقدم بطلب عبر الصفحة التالية وسيقوم احد اعضاء فريق المبيعات لدينا بالتواصل معك.</item>
+        <item>○ يمكنك تقديم طلب عبر الصفحة التالية لكي يتم التواصل معك من قبل احد اعضاء فريق المبيعات لدينا لمساعدتك في الإنضمام إلى شبكة موزعينا.</item>
+        <item>○ تتوفر لدينا نسب خصم مميزة ومتنوعة وتعتمد نسب الخصم على فئة المنتج وكذلك على متوسط مبيعاتك الشهرية كموزع معتمد.</item>
+        <item>○ يمكنك التواصل مع خدمة العملاء لدينا وسيقوموا بتوجيه احد موظفينا للإتصال بك في أسرع وقت.</item>
+        <item>○ يمكنك التواصل مع خدمة عملاء بطاقاتي أعمال وسيقوم احد ممثلينا بمساعدتك لشحن البطاقة.</item>
+        <item>○ هي إتفاقية قانونية مبسطة توضح طبيعة العلاقة بين بطاقاتي أعمال وموزعيها المعتمدين وإلتزامات وحقوق كلاً من الطرفين.</item>
+        <item>○ نحن نقوم بإضافة منتجات جديدة بإستمرار ونرحب دائماً بالمقترحات من شركائنا, نرجو منك إبلاغ موظف المبيعات المسؤول عن حسابك بالخدمة المطلوبة وسنعمل على إضافتها في أسرع وقت ممكن.</item>
+        <item>○ نعم بكل تأكيد فنحن نحرص على التماشي مع كافة القوانين المحلية بكل الدول اللتي نعمل بها ويمكنك التواصل مع موظف المبيعات المسؤول عن حسابك لطلب فاتورة ضريبية في نهاية كل شهر ميلادي.</item>
+        <item>○ شبكة موزعينا المعتمدين تتركز بشكل رئيسي في منطقة الشرق الأوسط ولكن يمكنك الإنضمام لشبكة موزعينا المعتمدين من أي دولة من دول العالم</item>
+        <item>○ تتوفر لدينا شبكة من الحسابات في مختلف البنوك المحلية في الدول اللتي نعمل بها, نرجو التواصل مع موظف المبيعات المسوؤل عن حسابك وسيقوم بتزويدك بقائمة حساباتنا البنكية وفقاً لدولتك.</item>
+        <item>○ تتوفر لدينا طرق دفع مختلفة حسب الدولة المسجل بها حسابك مثل مدى,فيزا, ماستر كارد, باي بال وغيرها من الطرق; لمزيد من المعلومات يرجى الإطلاع على على التفاصيل في صفحة شحن حساب الموزع المعتمد.</item>
+        <item>○ نرجو منك التواصل مع موظف المبيعات المسؤول عن حسابك على الفور لكي يقوم بمساعدتك في حل المشكلة او إستبدال الجهاز إن لزم الأمر.</item>
+    </string-array>
+    <string-array name="more_terms_of_use_header_arr">
+        <item>أولا: الالتزامات الخاصة بالعميل</item>
+        <item>ثانيا: حقوق الملكية الفكرية</item>
+        <item>ثالثا: الضمانات والتعهدات والإقرارات</item>
+        <item>رابعا: المسؤولية والتعويضات</item>
+        <item>خامسا: الإبلاغ عن انتهاك شروط الاستخدام</item>
+        <item>سادسا: أحكام عامة</item>
+    </string-array>
+    <string-array name="more_terms_of_use_body_arr">
+        <item><![CDATA[عند استخدامك للخدمات أو وصولك إليها، فأنت توافق على ما يلي:
+            <ul>
+                <li>مسؤوليتك عن الحفاظ على الخصوصية وتقييد الوصول إلى الحساب الخاص بك واستخدامه هو وكلمة المرور، والموافقة على تحمل مسؤولية جميع الأنشطة التي تتم باسم الحساب الخاص بك وكلمة المرور الخاصة بك.</li>
+                <li>إخطارنا فورا عن أي استخدام غير مصرح به لكلمة المرور أو الحساب الخاص بك أو أي خرقٍ آخر لمعايير الاستخدام الآمن للموقع.</li>
+                <li>تقديم المعلومات الكاملة والحقيقية والدقيقة والحالية عن نفسك وعن استخدامك للخدمات كما هو محدد من قبلنا.</li>
+                <li>التعاون مع الطلبات الصادرة عنا للحصول على معلومات إضافية فيما يتعلق بأهليتكك واستخدامك لخدماتنا.</li>
+                <li>لا يحق لك اتخاذ أي إجراء من شأنه أن يقلل من تقييم الموقع وأنظمة التصنيف.</li>
+                <li>لا يحق لك نقل الحساب الخاص بك إلى طرف آخر.</li>
+                <li>التعهد بعدم نشر الفيروسات أو أيٍّ من التقنيات الآخرى التي قد تضر بخدماتنا أو بمصالح المستخدمين الآخرين أو أملاكهم.</li>
+                <li>التعهد بعدم خرق القوانين الخاصة بحقوق النشر، العلامة التجارية، براءة الاختراع، الأخلاق، الإعلان، قاعدة البيانات، و/ أو أي من حقوق الملكية الفكرية (ويُشار إليها مجتمعة بـ &quot;حقوق الملكية الفكرية&quot;) التي تتعلق بنا أو المرخصة لنا و الحقوق الملكية الفكرية التي تتعلق بالغير.</li>
+                <li>لا يحق لك جمع المعلومات الخاصة بالمستخدمين أو التحايل على أي من الإجراءات التقنية التي نتبعها لتقديم الخدمات.</li>
+            </ul>]]>
+        </item>
+        <item>
+            <![CDATA[<ul>
+                <li>جميع المحتويات الواردة في الموقع تدخل في إطار ملكيتنا الخاصة أو ضمن الملكية الخاصة بمرخصينا و موردينا، بما في ذلك على سبيل المثال لا الحصر البطاقات الرقميه و النصوص والرسوم البيانية والشعارات والصور والمقاطع الصوتية والتنزيلات الرقمية والبرمجيات. فنحن (أو المرخصون لنا أو موردينا، وفقاً لما تقتضيه الحالة) نحتفظ بجميع حقوقنا، وملكيتنا ومصلحتنا بالموقع والخدمات -وذلك على سبيل المثال لا الحصر- بجميع حقوق الملكية الفكرية الواردة ضمن شروط الاستخدام هذه.</li>
+                <li>لا يحق للعميل استخدام العلامات التجارية الخاصة بنا دون وجود موافقة خطية مسبقة.</li>
+                <li>لا يحق للعميل الادعاء أنه وكيل أو مسوق أو مندوب لشركة بطاقة الخليج الأولى أو موقع &quot;بطاقاتي أعمال bitaqatybusiness.com&quot;</li>
+            </ul>]]>
+        </item>
+        <item><![CDATA[تضمن وتتعهد وتقر بما يلي:
+            <ul>
+                <li>لامتثال التام للاستمرار بالعمل وفقاً للقوانين والأنظمة واللوائح المطبقة، بما في ذلك على سبيل المثال لا الحصر الالتزام بالتشريعات المتعلقة بقوانين الخصوصية وتنظيم المحتوى.</li>
+                <li>لديك السلطة الكاملة للتعاقد وفقاً لشروط الاستخدام الماثلة، وأن تنفيذك التزامك بموجب شروط الاستخدام هذه لا يتعارض مع:
+                    <br/>&nbsp;○ أي من القوانين أو القواعد أو اللوائح أو الإرشادات الحكومية التي تخضع لها.
+                    <br/>&nbsp;○ أي من الاتفاقيات الأخرى التي كنت طرفاً فيها أو التي عليك الالتزام بها.
+                </li>
+                <li>إذا قمت بإنشاء حساب أو استخدامه بالنيابة عن شركة فأنت بذلك مخول بالتصرف نيابة عن هذه الشركة وتضمن التزامها بالعمل بشروط الاستخدام الماثلة. ويُعد هذا الحساب ملكاً لهذه الشركة وتحت إدارتها.</li>
+                <li>أي محتوى قمت بتقديمه كجزء من استخدامك للخدمات ولأي من المنتجات التي تقوم بإدراجها، لا ينتهك حقوق الغير في أي مكان حول العالم، على سبيل المثال لا الحصر أي من حقوق الملكية الفكرية (سواء كانت مسجلة أم لا).</li>
+                <li>الخدمات تُقدم إليك على &quot;حالتها الحالية&quot; دون ضمانات أو تعهدات أو إقرارات. فنحن نخلي مسؤوليتنا عن جميع الضمانات أو التعهدات أو الإقرارات بجميع أشكالها، سواء الصريحة أو الضمنية أو الإضافية، على سبيل المثال لا الحصر جميع الضمانات أو التعهدات أو الإقرارات الخاصة بصلاحية المحتوى للأغراض التجارية أو ملاءمته لغرض محدد أو عام أو عدم مخالفته أو خرقه لأي حقوق أو كون خدماتنا آمنة أو خالية من العيوب أو سوف تعمل دون وجود أي عطل أو سيتم تقديمها في الوقت المناسب أو على العموم.</li>
+                <li>وعلاوة على ذلك، فعلى الرغم من أننا نحاول أن نتوخى الدقة قدر المستطاع، فإننا لا نضمن أن تكون مواصفات المنتج أو أي محتوى آخر لأي خدمة دقيقاً أو كاملاً أو موثوقاً به أو حديثاً أو خالياً من الأخطاء. بالإضافة إلى ذلك -وبناءً على كونك مشترياً- فأنت توافق على أننا غير مسؤولين عن فحص أو اختبار القوائم أو محتوى الخدمات المقدمة من قبلنا أو من قبل الغير، وأنك لن تحاول أن تضع على عاتقنا مسؤولية أي من الأخطاء او العيوب في اي من المعلومات.</li>
+            </ul>]]>
+        </item>
+        <item>
+            <![CDATA[<ul>
+                <li>في جميع الأحوال لن نتحمل نحن وشركتنا الأم وشركاتنا الفرعية والشركات التابعة ومديرونا ومديروهم والوكلاء والموظفون والموردون -سواء بناءً على دعوى أو مطالبة في العقد أو ضرر أو إهمال أو خرق واجب قانوني أو خرق لشروط الاستخدام هذه- مسؤوليةَ أي دعوى خاصة بخسارة الأرباح أو فقد البيانات أو المعلومات أو عطل في العمل أو أي خسارة مالية أو أي أضرار خاصة أو غير مباشرة أو عرضية حتى وإن تم إخطارنا نحن أو الشركات التابعة أو المديرين أو المسؤولين أو الوكلاء أو الموظفين أو المرخصين أو الموردين أو المقاولين من الباطن باحتمال وجود مثل هذه الأضرار</li>
+                <li>نحن (بما في ذلك، الشركة الأم أو الشركات الفرعية أو الشركات التابعة أو المديرون أو الوكلاء أو الموظفون أو الموردون) لن نتحمل المسؤولية، كما أنك تقر بأنك لن تضع على عاتقنا مسؤولية حدوث أي ضرر أو فقدان ناتجة بشكلٍ مباشر أو غير مباشر عن:
+                    <br/>&nbsp;○ المحتوى أو المعلومات الأخرى التي نقدمها عند استخدامك للخدمات.
+                    <br/>&nbsp;○ استخدامك للخدمات أو عدم قدرتك على استخدامها.
+                    <br/>&nbsp;○ التسعير أو الشحن أو التنسيق أو أيٍّ من الإرشادات المقدمة من قبلنا
+                    <br/>&nbsp;○ التأخر أو الانقطاع في تقديم الخدمات.
+                    <br/>&nbsp;○ الفيروسات أو غيرها من البرامج الضارة التي وجدت من خلال الوصول إلى الخدمات.
+                    <br/>&nbsp;○ وجود أخطاء في الخدمات أو أعطال أو عدم دقة بأي شكل من الأشكال.
+                    <br/>&nbsp;○ تلف الجهاز الخاص بك من خلال استخدام المنتجات التي تم بيعها على الموقع أو من خلال خدماتنا.
+                    <br/>&nbsp;○ المحتوى أو أفعال أو امتناع عن فعل الغير المستخدمين لخدماتنا.
+                    <br/>&nbsp;○ التعليق أو أي اجراءات أخرى نتخذها متعلقة باستخدامك للخدمات.
+                    <br/>&nbsp;○ حاجتك إلى تعديل الممارسات أو المحتوى أو السلوك أو خسارتك أو عدم قدرتك على القيام بالأعمال التجارية نتيجة لوجود تغيرات في شروط الاستخدام هذه.
+                </li>
+                <li>توافق على تعويضنا وإبراء ذمتنا، بما في ذلك تعويض وإبرام ذمة شركتنا الأم والشركات التابعة لها وفروعها والمديرين والوكلاء والموظفين والموردين المتعلقين بشركتنا أو بالشركة الأم والشركات الفرعية والتابعة من وضد أي خسائر وأضرار ونفقات (بما في ذلك الرسوم القانونية وأتعاب المحامين ) (&quot;المطالبات&quot;) التي تنشأ عن:
+                    <br/>&nbsp;○ أي ادعاءات أو مطالبات قدمها الغير نتيجة لاستخدامك الخدمات.
+                    <br/>&nbsp;○ انتهاك أي من الأحكام الواردة في شروط الاستخدام هذه، بما في ذلك على سبيل المثال لا الحصر أي من الضمانات والتعهدات والإقرارات.
+                    <br/>&nbsp;○ انتهاك أي من القوانين المعمول بها، على سبيل المثال لا الحصر قوانين حماية البيانات أو قوانين مكافحة البريد الإلكتروني العشوائي.
+                    <br/>&nbsp;○ الطريقة التي تقوم من خلالها استخدام خدماتنا، على سبيل المثال لا الحصر المحتوى الذي تقوم بنشره، والمنتجات التي تقوم بإدراجها أو العلامات التجارية الخاصة بك التي تنتهك أياً من حقوق الملكية الفكرية للغير أو أن يكون المحتوى الخاص بك به افتراءات أو هجاء أو قذف أو انتهاك لأي من الحقوق الأخرى (بما في ذلك حقوق الخصوصية) المتعلقة بالغير (بما في ذلك مستخدمي المواقع الأخرين)
+                </li>
+            </ul>]]>
+        </item>
+        <item>نلتزم بضمان امتثال المنتجات والمحتوى الوارد في الموقع لشروط الاستخدام هذه. إذا كان المحتوى الوارد لا يتناسب مع شروط الاستخدام هذه يُرجى إخطارنا وسنقوم نحن بالتحقيق في الأمر</item>
+        <item><![CDATA[<ul>
+            <li> <b>القانون المطبق:</b> إن شروط الاستخدام هذه وأياً من الحقوق أو الواجبات غير التعاقدية ذات الصلة يجب إخضاعها وتفسيرها للقوانين المطبقة في المملكة العربية السعودية</li>
+            <li> <b>حل النزاعات:</b> إذا كان لديك أي من المشكلات الخاصة بخدماتنا يُرجى الاتصال بناوسنعمل جاهدين على حل المشكلة التي تواجهك في أقرب فرصة ممكنة. يتم تسوية أي من النزاعات أو الخلافات المتعلقة بشروط الاستخدام هذه، بما في ذلك أي حقوق أو واجبات غير تعاقدية ذات صلة عن طريق محاكم المملكة العربية السعودية بمدينة الرياض.</li>
+            <li> <b>علاقة الأطراف:</b> لا يوجد في شروط الاستخدام هذه ما يمكن للأطراف أو للغير تأويله أو تفسيره ليفسر العلاقة بيننا على أنها بين شركاء أو وكلاء أو يوجِد مشروعاً مشتركاً بين الأطراف، ولكنه من المفهوم والواضح أن كل الأطراف في الاتفاق هي أطراف مستقلة</li>
+            <li> <b>التأكيدات الإضافية:</b> تقوم الأطراف بالتصرفات اللازمة أو الترتيب لاتخاذ التصرفات اللازمة وتحرير المستندات وغيرها من الأمور التي تقع ضمن سلطتها من أجل إنفاذ شروط الاستخدام هذه والتحقق من العمل بها، بما في ذلك على سبيل المثال لا الحصر مساعدة كل طرف على الالتزام بالقانون المعمول به.</li>
+            <li> <b>مجمل الاتفاق:</b> إن شروط الاستخدام هذه والوثائق المشار إليها أو المدرجة في شروط الاستخدام تمثل مجمل الاتفاق بين الأطراف فيما يتعلق بموضوع الاتفاقية وتسمو على وتحجب جميع الاتفاقيات والمفاوضات والإقرارات السابقة، الخطية أو الشفهية، ذات الصلة بالموضوع. باستثناء ما هو محدد في شروط الاستخدام والوثائق المشار إليها أو المدرجة في شروط الاستخدام الماثلة فلا توجد أي شروط أو إقرارات أو ضمانات أو تعهدات أو اتفاقيات بين الأطراف سواء كان ذلك مباشراً أو غير مباشر أو جماعياً أو صريحاً أو ضمنياً.</li>
+            <li> <b>التعديلات:</b> نحن نحتفظ بالحق في إدخال أي تعديل أو تغيير أو إضافة أو إكمال شروط الاستخدام هذه في أي وقت أو من وقتٍ لآخر. وسنقوم بنشر النسخة الحالية لشروط الاستخدام على الموقع وستكون سارية المفعول عند نشرها على الموقع أو بناء على الموعد المحدد من جانبنا بصفته &quot;تاريخ السريان&quot; (إن وجد). إن استخدامك المستمر للخدمات في حال حدوث أي تغييرات يُعد موافقة منك على الالتزام بشروط الاستخدام المعدلة</li>
+            <li> <b>قابلية الفصل بين البنود:</b> إذا تم اعتبار أي من أحكام شروط الاستخدام هذه ملغًى من قبل أيٍّ من المحاكم المختصة أو غير قانوني أو غير معمول به فإنه يتم إلغاء هذا لبند من شروط الاستخدام هذه وتستمر باقي الشروط والأحكام قائمة سارية نافذة طالما ظل الجوهر القانوني والاقتصادي للصفقات التي تمت تحت شروطها قائماً دون أي تأثير</li>
+            <li> <b>القوة القاهرة:</b> لا يتحمل أي طرف مسؤولية وجود الخسارة أو الضرر أو التأخير أو عدم الوفاء نتيجة للأعمال الخارجة عن السيطرة لأي من الأطراف سواء كان ذلك العمل يمكن توقعه (مثل القضاء والقدر والإجراءات الصادرة عن السلطات التشريعية أو القضائية أو التنظيمية لأي من الحكومة المحلية أو السلطات القضائية أو الإجراءات التي يقوم بها أي طرف ثالث أو مورد البضائع أو الاضطرابات العمالية أو الانقطاع الكامل للتيار الكهربائي أو المقاطعة الاقتصادية)</li>
+            <li> <b>عدم التنازل:</b> إن التنازل عن أي من الأحكام الواردة في شروط الاستخدام لا يُعد تنازلاً عن أي من الأحكام الأخرى (المشابهة أو غير المشابهة)، ولا يعد أي تنازل آخر تنازلاً مستمراً عن أي من الأحكام المعنية، ما لم ننص على ذلك صراحة وخطياً</li>
+            <li> <b>التواصل:</b> يمكنك التواصل معنا عبر البريد الإلكتروني &quot;support@bitaqatybusiness.com&quot;</li>
+            <li> <b>استمرار النفاذ:</b> جميع الأحكام التي يُنص على أنها تظل سارية أو التي تسري بطبيعتها بعد إنهاء التعاقد تظل نافذة المفعول بعد إنهاء أو تعليق عضويتك في الموقع.</li>
+        </ul>]]></item>
+    </string-array>
+    <string-array name="more_privacy_policy_header_arr">
+        <item>كيفية حصول بطاقاتى أعمال على المعلومات الشخصية للعملاء</item>
+        <item>المعلومات الشخصية التي نجمعها</item>
+        <item>الإجراءات الأمنية</item>
+    </string-array>
+    <string-array name="more_privacy_policy_body_arr">
+        <item>عند فتح حساب جديد على موقع بطاقاتى أعمال ، نقوم بطلب مجموعة من البيانات الشخصية للعميل، حيث يجب إكمال تلك البيانات بطريقة صحيحة لإتمام عملية التسجيل على الموقع وللتأكد من عدم وجود أي معلومات كاذبة أو مضللة.</item>
+        <item>
+            <![CDATA[<ul>
+                <li>اسمك، العنوان، البريد الإلكتروني، رقم الهاتف وغيرها من المعلومات المطلوبة.</li>
+                <li>معلومات مالية مثل بطاقة الائتمان/الخصم أو تفاصيل الحساب المصرفي في بعض المعاملات.</li>
+                <li>للتأكد من صحة بيانات العميل، قد نضطر لطلب إثبات لشخصيتك ومكان إقامتك، مثل: نسخة من بطاقة الهوية، جواز سفر، رخصة قيادة أو شهادة التسجيل/الضمان.</li>
+                <li>ملحوظة: قد يؤدي عدم توفير مثل هذه المعلومات والبيانات إلى قيود على استخدام جميع خدمات بطاقاتى أعمال أو إيقاف حساب العميل. أما بالنسبة لبعض المعاملات ذات القيمة العالية، قد تكون هناك حاجة لدينا لتقديم المعلومات الشخصية إلى السلطات المختصة</li>
+            </ul>]]>
+        </item>
+        <item>
+            <![CDATA[<ul>
+                <li>عند إتمام عملية التسجيل، يمكنك البدء في شراء خدمات بطاقاتى أعمال المحمية بشكل صارم ضد عمليات الاحتيال والإيذاء من خلال الإجراءات التالية</li>
+                <li>تسجيل وتخزين عنوان الـ IP الخاص بك وعدد مرات دخولك على الموقع.</li>
+                <li>تجميع بيانات الاستخدام والوصول التي تسمح لنا بمنع فتح الحسابات المتعددة أو السلوكيات الاحتيالية أو لحماية أنظمتنا ضد الاعتداءات الغير مشروعة.</li>
+                <li>يجوز لنا مشاركة هذه البيانات مع خدمات إدارة الاحتيال المتخصصة والجديرة بالثقة التي تساعدنا على تحليل هذه البيانات.</li>
+                <li>نحن نستخدم الكوكيز؛ وهي عبارة عن ملفات نصية صغيرة يتم تخزينها على جهاز الكمبيوتر الخاص بالعميل لأغراض حفظ السجلات. وقد تكون المعلومات التي تم تجميعها وتخزينها من خلال الكوكيز ضد البيانات الشخصية التي نحتفظ بها على أنظمتنا.</li>
+                <li>بناءاً على المعلومات التي قمت بتقديمها لنا (حالة التحقق الخاصة بك حاليا والعمليات التي ترغب في القيام بها)، قد نقوم بجمع المزيد من المعلومات من البنوك، وخدمات معالجة بطاقات الائتمان/الخصم، وخدمات التحقق من الهوية.</li>
+                <li>نقوم بالحصول على تلك المعلومات الشخصية والسرية من خلال المصادر التالية:</li>
+                <li>معلومات تقوم بتزويدنا بها أونلاين، من خلال استمارات ونماذج مكتوبة وغيرها من أشكال إدخال البيانات.</li>
+                <li>معلومات يتم إدخالها أونلاين من خلال تخزين معلوماتك الشخصية من غير استكمال أو تقديم نموذج.</li>
+                <li>معلومات من أطراف ثالثة يتم إدخالها بشكل غير مباشر للتأكد من صحة المستخدم ولمنع أي نصب أو احتيال.</li>
+                <li>معلومات من أطراف ثالثة تقوم بالتصديق عليها والموافقة على تزويدنا بها.</li>
+                <li>معلومات عن عمليات البيع والشراء وتاريخ الحساب</li>
+            </ul>]]>
+        </item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="btrr instruction">-->
+    <string-array name="btrr_instruction_arr">
+        <item>قم بداية بتحويل المبلغ من حسابك البنكي الى حساب بطاقاتي أعمال &quot;شركة الخليج للتوزيع المباشر&quot; قبل تسجيل  بيانات حوالتك على موقع بطاقاتي أعمال</item>
+        <item>بعد إتمام عملية التحويل, قم بإدخال بيانات الحوالة و ذلك بإتباع الخطوات المطلوبة : إختر الحساب البنكي الذي قمت بالتحويل له, تفاصيل المرسل و تفاصيل التحويل</item>
+        <item>يقوم قسم الدفع الالكتروني بمراجعة طلبك و مقارنة بياناته ببيانات حوالتك البنكية , سيتم اضافة الرصيد عندما تكون البيانات متطابقة</item>
+        <item>إضافة الرصيد يتم خالل 30 دقيقة على مدار االسبوع من الساعة 8 صباحا وحتى الساعة 2 صباحا.</item>
+        <item> لمعرفة حالة الطلب، يرجى تفقد البريد اإللكتروني المسجل بحسابكم</item>
+        <item>الحد الأدني للشحن 500 ريال سعودي</item>
+        <item>الحد األقصى للشحن 50,000 ريال سعودي</item>
+        <item>عدد طلبات الشحن المتاحه هو ثالثة مرات خلال 24ساعة</item>
+        <item>لن يتم قبول أي حوالة بنكية من حساب بنكي يختلف عن إسم صاحب حساب بطاقاتي أعمال</item>
+        <item>من الممكن أن يتم طلب صورة ايصال التحويل البنكي لذا يرجى االحتفاظ بها</item>
+        <item>قد يتم اإلتصال بكم فيرجى التأكد من أن يكون الهاتف متاحا</item>
+    </string-array>
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="credit and mada instruction">-->
+    <string-array name="credit_mada_instruction_arr">
+        <item>برجاء إتباع الإرشادات</item>
+        <item>الحد الأدني للشحن 100 ريال سعودي.</item>
+        <item>الحد الأقصى للشحن 50000 ريال سعودي خلال 24 ساعة.</item>
+        <item>يجب التأكد من أن تكون البطاقة المستخدمة 3D Secure.</item>
+        <item>قد يتم طلب صورة من بطاقة الإئتمان (موضح بها أول 6 أرقام فقط) وصورة الهوية الشخصية لإتمام عملية الشحن.</item>
+        <item>البطاقات الائتمانية المقبولة في الموقع هي البطاقات الصادرة من بنوك الشرق الاوسط  فقط. </item>
+        <item>قد يتم فرض رسوم على استخدام البطاقة الائتمانية في الموقع. </item>
+    </string-array>
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="amex instruction">-->
+    <string-array name="amex_instruction_arr">
+        <item>لا يمكنك تحويل اكثر من 20,000 ريال سعودي أو ما يعادلها من عملة حسابك خلال 24 ساعة.</item>
+        <item>لا يمكنك إجراء أكثر من 10 محاولة في اليوم لطلب تحويل عن طريق بطاقة أمريكان اكسبرس.</item>
+        <item>يجب أن تتراوح قيمة طلبك لشحن رصيدك عن طريق بطاقة أمريكان اكسبرس بين 500 و 3,000 ريال سعودي.</item>
+        <item>إن شحن حسابك بالبطاقة الائتمانية سيترتب عليه إضافة 4% من المبلغ المسجل في العملية وهذه الإضافة هي عباره عن رسوم إدارية، هذا في حال كانت عملة حسابك المفضلة هي الريال السعودي , أما إذا كانت عملة حسابك المفضلة غير الريال فسيترتب عليها أيضا فوارق التحويل بينها وبين الريال السعودي.</item>
+        <item>أي محاولة شحن ببطاقة أمريكان اكسبرس بطريقة غير شرعية سيؤدي إلى إغلاق حسابك دون الرجوع إليك والتحفظ على أي رصيد في حسابك.</item>
+        <item>إن أي اعتراض على أي عملية شحن ببطاقة أمريكان اكسبرس تردنا من قبل البنك سيؤدي إلى إغلاق حسابك وإرسال كافة بياناتك الى الجهة المسؤولة.</item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="RechargeLog">-->
+    <string name="rechargeAmount">مبلغ الشحن* </string>
+    <string name="rechargeAmountHint">مبلغ الشحن [CURRENCY]</string>
+    <string name="AmountAfterFeesHint">المبلغ بعد إضافة الرسوم ر.س </string>
+
+    <string name="amountAfterFees">المبلغ بعد التحويل و إضافة الرسوم</string>
+    <string name="madaAmountAfter">المبلغ بعد إضافة الرسوم</string>
+    <string name="minAmount">الحد الأدني للشحن [X] ريال سعودي</string>
+    <string name="minMessageAmount">الحد الأدني للشحن [X] ريال سعودي</string>
+    <string name="maxAmount">الحد الأقصى للشحن [X] ريال سعودي</string>
+    <string name="maxAmountMessage">الحد الأقصى للشحن [X] ريال سعودي</string>
+
+    <string name="agreeOn">أوافق على</string>
+    <string name="errOnlyNumber">مسموح بأرقام فقط</string>
+    <string name="termsAndConditions">الشروط و اﻷحكام</string>
+    <string name="credit_terms">شروط الشحن ببطاقة الإئتمان  \n\n\nالأحكام و الشروط الخاصة باستخدام خيار شحن الحساب عن طريق البطاقة الائتمانية (\"شروط استخدام خيار الشحن\")\n\nعند قيام المستخدم باستخدام خيار الشحن عن طريق البطاقة الائتمانية على موقع (\"www.bitaqatybusiness.com \")، فإنه بذلك يقر باطلاعه وفهمه وقبوله لشروط استخدام خيار الشحن وشروط الاستخدام وأي شروط أخرى وسياسة الخصوصية المبينة على الموقع والتي تحكم علاقة  بطاقاتي أعمال مع المستخدم فيما يتعلق بهذا الموقع بشكل كامل ويوافق على الامتثال والالتزام والتقيد بها بشكل كامل دون أي تحفظ أو شرط أو اعتراض (\"الشروط و الأحكام\") . \n\n\nكما ويقر المستخدم ويوافق أنه يمكن لـ/بطاقاتي أعمال تحديث و/أو تعديل شروط استخدام خيار الشحن و/أو شروط الاستخدام و/أو أي شروط أخرى و/أو سياسة الخصوصية المبينة على الموقع في أي وقت وحسب تقديرها المنفرد والمطلق دون الحاجة لموافقة المستخدم و/أو إشعاره، ويعتبر التحديث و/أو التعديل ساري المفعول بأثر فوري أو في الوقت الذي يتم تحديده من قِبل بطاقاتي أعمال:</string>
+
+    <!--    <string name="credit_content">-->
+    <!--        -->
+    <!--        • يكون استخدام هذا الخيار و/أو أي خيارات و/أو أي خدمات متوفرة على الموقع (\"الخدمات\") على مسؤولية المستخدم الكاملة وعلى نفقته الخاصة ويتحمل المستخدم كامل المسؤولية عن استخدام الخدمات و/أو أي أمور تترتب على ذلك.\n\n\n•  كما يقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة عما يترتب على قيام المستخدم باستخدام الخدمات سواء مسؤولية عقدية و/أو غير ذلك بأي شكل من الأشكال-->
+    <!--. \n\n\n•  يقر المستخدم ويتعهد ويوافق على أن استخدامه للخدمات يتفق مع كافة التشريعات سارية المفعول وأن هذا الاستخدام لا يخل بأي من التزاماته بما في ذلك أي التزامات تعاقدية و/أو غيرها من الالتزامات مع أي جهة بما في ذلك البنك مصدر البطاقة (\"<b>البنك مصدر البطاقة</b>\")، ويتحمل المستخدم كل ما يترتب على عدم صحة ذلك.\n\n\n•  إن بطاقاتي أعمال غير مسؤولة عن قيام المستخدم باستخدام الخدمات بشكل مخالف لما هو مبين في الشروط والأحكام بأي شكل من الأشكال.\n\n\n•  كما ويقر المستخدم ويوافق على أنه مسؤول مسؤولية كاملة عن عدم التزامه بالشروط والأحكام وأنه يعفي بطاقاتي أعمال بشكل كامل وغير مشروط وغير قابل للرجوع عنه عن أية مسؤولية تترتب على ذلك.\n\n\n•   يقر المستخدم ويوافق على أن الدخول على حسابه والقيام بأي عمليات و/أو استخدام أي خدمات على الموقع يعتبر استخداماً من قِبل المستخدم ويكون المستخدم مسؤولاً مسؤولية تامة عنه.\n\n\n•  بطاقاتي أعمال غير مسؤولة عن تأخر شحن حساب المستخدم و/أو عما يترتب على ذلك بأي شكل من الأشكال.\n\n\n•   يحق لبطاقاتي أعمال رفض طلب الشحن حسب تقديرها المطلق دون إبداء أسباب ودون أي مسؤولية بأي شكل من الأشكال.\n\n\n•   يكون إتمام عملية الشحن (\”<b>العملية</b>\") نهائياً وغير مشروط وغير قابل للرجوع عنه لأي سبب من الأسباب بحيث أنه لا يحق للمستخدم استرجاع مبلغ العملية بعد إتمامها و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر لأي سبب من الأسباب بما في ذلك – على سبيل المثال لا الحصر - عدم توفر سلعة و/أو خدمة معينة و/أو عدم استغلال و/أو انتفاع المستخدم من المبلغ المشحون و/أو المطالبة بذلك.\n\n\n•   إن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عن توفر و/أو عدم توفر أي سلعة و/أو خدمة على الموقع و/أو غيره من المواقع الالكترونية. وعليه لا يحق للمستخدم المطالبة باسترجاع مبلغ العملية و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر وذلك لعدم توفر سلعة و/أو خدمة معينة و/أو لأي أسباب أخرى.\n\n\n•  يقر المستخدم ويوافق على أنه على علم ودراية بكيفية وآلية وكافة الأمور التي تتعلق بالخدمات المتوفرة على الموقع بما فيها شراء السلع / الخدمات من الموقع وطريقة استخدامها بعد الشراء و/أو أمور أخرى، ويقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عما يترتب على عدم صحة ذلك.\n\n\n•  إن موافقة المستخدم على الشروط والأحكام بما فيها تلك المتعلقة باستخدام البطاقة الائتمانية في الموقع يتضمن تحمله كامل المسؤولية التي تترتب عن استخدام البطاقة الائتمانية بما فيها المسؤولية القانونية عن أي اعتراض من البنك مصدر البطاقة و/أو أي جهة أخرى حول استخدام البطاقة الائتمانية في حساب المستخدم في بطاقاتي أعمال.\n\n\n•    في حال وصول أي اعتراض لـ/بطاقاتي أعمال من قِبل البنك مصدر البطاقة و/أو أي جهة أخرى، فإن من حق بطاقاتي أعمال اتخاذ التدابير والإجراءات التي يراها مناسبة حسب تقديره المنفرد والمطلق بما في ذلك – على سبيل المثال لا الحصر - إيقاف حساب المستخدم فوراً أو في أي وقت يراه مناسباً حسب تقديره المنفرد والمطلق و/أو حجز أي مبالغ مالية متوفرة في الحساب.\n\n\n•   لا تتحمل بطاقاتي أعمال أي مسؤولية عن أي خلل في السلعة / الخدمة المشتراة من الموقع بأي شكل من الأشكال، حيث يكون على المستخدم مراجعة الدعم الفني لمزود السلعة / الخدمة و/أو أي جهة مسؤولة في حال وجود أي خلل في السلعة / الخدمة الذي يشتريها من الموقع في حال رغب المستخدم بذلك.\n\n\n•   يقر المستخدم ويوافق على أنه نظراً لطبيعة شبكة الانترنت فإن بطاقاتي أعمال غير مسؤولة عن توقف الخدمات و/أو انقطاعها و/أو عن أي أمور أخرى بأي شكل من الأشكال.\n\n\n•   يقر المستخدم ويوافق على أنه على علم تام بأن شبكة الانترنت شبكة عالمية وعامة، وعليه فقد يترتب على استخدام الخدمات مخاطر متعددة على الرغم من استخدام بطاقاتي أعمال وسائل وبرامج الأمان حسب ما تراه مناسباً. كما يقر المستخدم ويوافق على أن ون كارد غير مسؤولة عن أي مخاطر و/أو أضرار و/أو نتائج قد تترتب على ذلك بأي شكل من الأشكال.</string>-->
+
+    <string name="credit_content">
+        • يكون استخدام هذا الخيار و/أو أي خيارات و/أو أي خدمات متوفرة على الموقع ([SERV_TEXT]) على مسؤولية المستخدم الكاملة وعلى نفقته الخاصة ويتحمل المستخدم كامل المسؤولية عن استخدام الخدمات و/أو أي أمور تترتب على ذلك.\n\n\n•  كما يقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة عما يترتب على قيام المستخدم باستخدام الخدمات سواء مسؤولية عقدية و/أو غير ذلك بأي شكل من الأشكال.\n\n\n•  يقر المستخدم ويتعهد ويوافق على أن استخدامه للخدمات يتفق مع كافة التشريعات سارية المفعول وأن هذا الاستخدام لا يخل بأي من التزاماته بما في ذلك أي التزامات تعاقدية و/أو غيرها من الالتزامات مع أي جهة بما في ذلك البنك مصدر البطاقة ([BRB_TEXT])، ويتحمل المستخدم كل ما يترتب على عدم صحة ذلك.\n\n\n•  إن بطاقاتي أعمال غير مسؤولة عن قيام المستخدم باستخدام الخدمات بشكل مخالف لما هو مبين في الشروط والأحكام بأي شكل من الأشكال.\n\n\n•  كما ويقر المستخدم ويوافق على أنه مسؤول مسؤولية كاملة عن عدم التزامه بالشروط والأحكام وأنه يعفي بطاقاتي أعمال بشكل كامل وغير مشروط وغير قابل للرجوع عنه عن أية مسؤولية تترتب على ذلك.\n\n\n•   يقر المستخدم ويوافق على أن الدخول على حسابه والقيام بأي عمليات و/أو استخدام أي خدمات على الموقع يعتبر استخداماً من قِبل المستخدم ويكون المستخدم مسؤولاً مسؤولية تامة عنه.\n\n\n•  بطاقاتي أعمال غير مسؤولة عن تأخر شحن حساب المستخدم و/أو عما يترتب على ذلك بأي شكل من الأشكال.\n\n\n•   يحق لبطاقاتي أعمال رفض طلب الشحن حسب تقديرها المطلق دون إبداء أسباب ودون أي مسؤولية بأي شكل من الأشكال.\n\n\n•   يكون إتمام عملية الشحن ([PROC_TEXT]) نهائياً وغير مشروط وغير قابل للرجوع عنه لأي سبب من الأسباب بحيث أنه لا يحق للمستخدم استرجاع مبلغ العملية بعد إتمامها و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر لأي سبب من الأسباب بما في ذلك – على سبيل المثال لا الحصر - عدم توفر سلعة و/أو خدمة معينة و/أو عدم استغلال و/أو انتفاع المستخدم من المبلغ المشحون و/أو المطالبة بذلك.\n\n\n•   إن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عن توفر و/أو عدم توفر أي سلعة و/أو خدمة على الموقع و/أو غيره من المواقع الالكترونية. وعليه لا يحق للمستخدم المطالبة باسترجاع مبلغ العملية و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر وذلك لعدم توفر سلعة و/أو خدمة معينة و/أو لأي أسباب أخرى.\n\n\n•  يقر المستخدم ويوافق على أنه على علم ودراية بكيفية وآلية وكافة الأمور التي تتعلق بالخدمات المتوفرة على الموقع بما فيها شراء السلع / الخدمات من الموقع وطريقة استخدامها بعد الشراء و/أو أمور أخرى، ويقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عما يترتب على عدم صحة ذلك.\n\n\n•  إن موافقة المستخدم على الشروط والأحكام بما فيها تلك المتعلقة باستخدام البطاقة الائتمانية في الموقع يتضمن تحمله كامل المسؤولية التي تترتب عن استخدام البطاقة الائتمانية بما فيها المسؤولية القانونية عن أي اعتراض من البنك مصدر البطاقة و/أو أي جهة أخرى حول استخدام البطاقة الائتمانية في حساب المستخدم في بطاقاتي أعمال.\n\n\n•   في حال وصول أي اعتراض لـ/بطاقاتي أعمال من قِبل البنك مصدر البطاقة و/أو أي جهة أخرى، فإن من حق بطاقاتي أعمال اتخاذ التدابير والإجراءات التي يراها مناسبة حسب تقديره المنفرد والمطلق بما في ذلك – على سبيل المثال لا الحصر - إيقاف حساب المستخدم فوراً أو في أي وقت يراه مناسباً حسب تقديره المنفرد والمطلق و/أو حجز أي مبالغ مالية متوفرة في الحساب.\n\n\n•   لا تتحمل بطاقاتي أعمال أي مسؤولية عن أي خلل في السلعة / الخدمة المشتراة من الموقع بأي شكل من الأشكال، حيث يكون على المستخدم مراجعة الدعم الفني لمزود السلعة / الخدمة و/أو أي جهة مسؤولة في حال وجود أي خلل في السلعة / الخدمة الذي يشتريها من الموقع في حال رغب المستخدم بذلك.\n\n\n•   يقر المستخدم ويوافق على أنه نظراً لطبيعة شبكة الانترنت فإن بطاقاتي أعمال غير مسؤولة عن توقف الخدمات و/أو انقطاعها و/أو عن أي أمور أخرى بأي شكل من الأشكال.\n\n\n•   يقر المستخدم ويوافق على أنه على علم تام بأن شبكة الانترنت شبكة عالمية وعامة، وعليه فقد يترتب على استخدام الخدمات مخاطر متعددة على الرغم من استخدام بطاقاتي أعمال وسائل وبرامج الأمان حسب ما تراه مناسباً. كما يقر المستخدم ويوافق على أن ون كارد غير مسؤولة عن أي مخاطر و/أو أضرار و/أو نتائج قد تترتب على ذلك بأي شكل من الأشكال.
+    </string>>
+    <string name="mada_terms">شروط الشحن ببطاقة الإئتمان \n\n\n الأحكام و الشروط الخاصة باستخدام خيار شحن الحساب عن طريق البطاقة الائتمانية (\"شروط استخدام خيار الشحن\").\n\n عند قيام المستخدم باستخدام خيار الشحن عن طريق البطاقة الائتمانية على موقع (\"www.bitaqatybusiness.com\") ، فإنه بذلك يقر باطلاعه وفهمه وقبوله لشروط استخدام خيار الشحن وشروط الاستخدام وأي شروط أخرى وسياسة الخصوصية المبينة على الموقع والتي تحكم علاقة  بطاقاتي أعمال مع المستخدم فيما يتعلق بهذا الموقع بشكل كامل ويوافق على الامتثال والالتزام والتقيد بها بشكل كامل دون أي تحفظ أو شرط أو اعتراض (\"الشروط و الأحكام\") .كما ويقر المستخدم ويوافق أنه يمكن لـ/بطاقاتي أعمال تحديث و/أو تعديل شروط استخدام خيار الشحن و/أو شروط الاستخدام و/أو أي شروط أخرى و/أو سياسة الخصوصية المبينة على الموقع في أي وقت وحسب تقديرها المنفرد والمطلق دون الحاجة لموافقة المستخدم و/أو إشعاره، ويعتبر التحديث و/أو التعديل ساري المفعول بأثر فوري أو في الوقت الذي يتم تحديده من قِبل بطاقاتي أعمال:</string>
+    <string name="mada_content"> • يكون استخدام هذا الخيار و/أو أي خيارات و/أو أي خدمات متوفرة على الموقع ([SERV_TEXT]) على مسؤولية المستخدم الكاملة وعلى نفقته الخاصة ويتحمل المستخدم كامل المسؤولية عن استخدام الخدمات و/أو أي أمور تترتب على ذلك. كما يقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة عما يترتب على قيام المستخدم باستخدام الخدمات سواء مسؤولية عقدية و/أو غير ذلك بأي شكل من الأشكال.\n\n\n• يقر المستخدم ويتعهد ويوافق على أن استخدامه للخدمات يتفق مع كافة التشريعات سارية المفعول وأن هذا الاستخدام لا يخل بأي من التزاماته بما في ذلك أي التزامات تعاقدية و/أو غيرها من الالتزامات مع أي جهة بما في ذلك البنك مصدر البطاقة ([BRB_TEXT])، ويتحمل المستخدم كل ما يترتب على عدم صحة ذلك.\n\n\n•  إن بطاقاتي أعمال غير مسؤولة عن قيام المستخدم باستخدام الخدمات بشكل مخالف لما هو مبين في الشروط والأحكام بأي شكل من الأشكال. كما ويقر المستخدم ويوافق على أنه مسؤول مسؤولية كاملة عن عدم التزامه بالشروط والأحكام وأنه يعفي بطاقاتي أعمال بشكل كامل وغير مشروط وغير قابل للرجوع عنه عن أية مسؤولية تترتب على ذلك.\n\n\n• يقر المستخدم ويوافق على أن الدخول على حسابه والقيام بأي عمليات و/أو استخدام أي خدمات على الموقع يعتبر استخداماً من قِبل المستخدم ويكون المستخدم مسؤولاً مسؤولية تامة عنه.\n\n\n• بطاقاتي أعمال غير مسؤولة عن تأخر شحن حساب المستخدم و/أو عما يترتب على ذلك بأي شكل من الأشكال.\n\n\n• يحق لبطاقاتي أعمال رفض طلب الشحن حسب تقديرها المطلق دون إبداء أسباب ودون أي مسؤولية بأي شكل من الأشكال.\n\n\n• يكون إتمام عملية الشحن ([PROC_TEXT]) نهائياً وغير مشروط وغير قابل للرجوع عنه لأي سبب من الأسباب بحيث أنه لا يحق للمستخدم استرجاع مبلغ العملية بعد إتمامها و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر لأي سبب من الأسباب بما في ذلك – على سبيل المثال لا الحصر - عدم توفر سلعة و/أو خدمة معينة و/أو عدم استغلال و/أو انتفاع المستخدم من المبلغ المشحون و/أو المطالبة بذلك.\n\n\n•  إن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عن توفر و/أو عدم توفر أي سلعة و/أو خدمة على الموقع و/أو غيره من المواقع الالكترونية. وعليه لا يحق للمستخدم المطالبة باسترجاع مبلغ العملية و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر وذلك لعدم توفر سلعة و/أو خدمة معينة و/أو لأي أسباب أخرى.\n\n\n• يقر المستخدم ويوافق على أنه على علم ودراية بكيفية وآلية وكافة الأمور التي تتعلق بالخدمات المتوفرة على الموقع بما فيها شراء السلع / الخدمات من الموقع وطريقة استخدامها بعد الشراء و/أو أمور أخرى، ويقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عما يترتب على عدم صحة ذلك.\n\n\n•  إن موافقة المستخدم على الشروط والأحكام بما فيها تلك المتعلقة باستخدام البطاقة الائتمانية في الموقع يتضمن تحمله كامل المسؤولية التي تترتب عن استخدام البطاقة الائتمانية بما فيها المسؤولية القانونية عن أي اعتراض من البنك مصدر البطاقة و/أو أي جهة أخرى حول استخدام البطاقة الائتمانية في حساب المستخدم في بطاقاتي أعمال.\n\n\n•   في حال وصول أي اعتراض لـ/بطاقاتي أعمال من قِبل البنك مصدر البطاقة و/أو أي جهة أخرى، فإن من حق بطاقاتي أعمال اتخاذ التدابير والإجراءات التي يراها مناسبة حسب تقديره المنفرد والمطلق بما في ذلك – على سبيل المثال لا الحصر - إيقاف حساب المستخدم فوراً أو في أي وقت يراه مناسباً حسب تقديره المنفرد والمطلق و/أو حجز أي مبالغ مالية متوفرة في الحساب.\n\n\n•  لا تتحمل بطاقاتي أعمال أي مسؤولية عن أي خلل في السلعة / الخدمة المشتراة من الموقع بأي شكل من الأشكال، حيث يكون على المستخدم مراجعة الدعم الفني لمزود السلعة / الخدمة و/أو أي جهة مسؤولة في حال وجود أي خلل في السلعة / الخدمة الذي يشتريها من الموقع في حال رغب المستخدم بذلك.\n\n\n• يقر المستخدم ويوافق على أنه نظراً لطبيعة شبكة الانترنت فإن بطاقاتي أعمال غير مسؤولة عن توقف الخدمات و/أو انقطاعها و/أو عن أي أمور أخرى بأي شكل من الأشكال.\n\n\n•  يقر المستخدم ويوافق على أنه على علم تام بأن شبكة الانترنت شبكة عالمية وعامة، وعليه فقد يترتب على استخدام الخدمات مخاطر متعددة على الرغم من استخدام بطاقاتي أعمال وسائل وبرامج الأمان حسب ما تراه مناسباً. كما يقر المستخدم ويوافق على أن ون كارد غير مسؤولة عن أي مخاطر و/أو أضرار و/أو نتائج قد تترتب على ذلك بأي شكل من الأشكال.</string>
+    <string name="amex_terms">الشروط و الأحكام \n\n\n الأحكام و الشروط الخاصة باستخدام خيار شحن الحساب عن طريق بطاقة أمريكان اكسبرس (\"شروط استخدام خيار الشحن\").\n\nعند قيام المستخدم باستخدام خيار الشحن عن طريق بطاقة أمريكان اكسبرس على موقع (\"www.BitaqatyBusiness.com\")، فإنه بذلك يقر باطلاعه وفهمه وقبوله لشروط استخدام خيار الشحن وشروط الاستخدام وأي شروط أخرى وسياسة الخصوصية المبينة على الموقع والتي تحكم علاقة بطاقاتي أعمال مع المستخدم فيما يتعلق بهذا الموقع بشكل كامل ويوافق على الامتثال والالتزام والتقيد بها بشكل كامل دون أي تحفظ أو شرط أو اعتراض (\"الشروط و الأحكام\") .\n\n\n كما ويقر المستخدم ويوافق أنه يمكن لـ/بطاقاتي أعمال تحديث و/أو تعديل شروط استخدام خيار الشحن و/أو شروط الاستخدام و/أو أي شروط أخرى و/أو سياسة الخصوصية المبينة على الموقع في أي وقت وحسب تقديرها المنفرد والمطلق دون الحاجة لموافقة المستخدم و/أو إشعاره، ويعتبر التحديث و/أو التعديل ساري المفعول بأثر فوري أو في الوقت الذي يتم تحديده من قِبل بطاقاتي أعمال:</string>
+    <string name="amex_content">• يكون استخدام هذا الخيار و/أو أي خيارات و/أو أي خدمات متوفرة على الموقع (\"الخدمات\") على مسؤولية المستخدم الكاملة وعلى نفقته الخاصة ويتحمل المستخدم كامل المسؤولية عن استخدام الخدمات و/أو أي أمور تترتب على ذلك. كما يقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة عما يترتب على قيام المستخدم باستخدام الخدمات سواء مسؤولية عقدية و/أو غير ذلك بأي شكل من الأشكال.\n\n\n• يقر المستخدم ويتعهد ويوافق على أن استخدامه للخدمات يتفق مع كافة التشريعات سارية المفعول وأن هذا الاستخدام لا يخل بأي من التزاماته بما في ذلك أي التزامات تعاقدية و/أو غيرها من الالتزامات مع أي جهة بما في ذلك البنك مصدر البطاقة (\"<b>البنك مصدر البطاقة</b>\")،ويتحمل المستخدم كل ما يترتب على عدم صحة ذلك.\n\n\n• إن بطاقاتي أعمال غير مسؤولة عن قيام المستخدم باستخدام الخدمات بشكل مخالف لما هو مبين في الشروط والأحكام بأي شكل من الأشكال. كما ويقر المستخدم ويوافق على أنه مسؤول مسؤولية كاملة عن عدم التزامه بالشروط والأحكام وأنه يعفي بطاقاتي أعمال بشكل كامل وغير مشروط وغير قابل للرجوع عنه عن أية مسؤولية تترتب على ذلك.\n\n\n•   يقر المستخدم ويوافق على أن الدخول على حسابه والقيام بأي عمليات و/أو استخدام أي خدمات على الموقع يعتبر استخداماً من قِبل المستخدم ويكون المستخدم مسؤولاً مسؤولية تامة عنه.\n\n\n• بطاقاتي أعمال غير مسؤولة عن تأخر شحن حساب المستخدم و/أو عما يترتب على ذلك بأي شكل من الأشكال.\n\n\n•  يحق لبطاقاتي أعمال رفض طلب الشحن حسب تقديرها المطلق دون إبداء أسباب ودون أي مسؤولية بأي شكل من الأشكال.\n\n\n• يكون إتمام عملية الشحن نهائياً وغير مشروط وغير قابل للرجوع عنه لأي سبب من الأسباب بحيث أنه لا يحق للمستخدم استرجاع مبلغ العملية بعد إتمامها و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر لأي سبب من الأسباب بما في ذلك – على سبيل المثال لا الحصر - عدم توفر سلعة و/أو خدمة معينة و/أو عدم استغلال و/أو انتفاع المستخدم من المبلغ المشحون و/أو المطالبة بذلك.\n\n\n•  إن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عن توفر و/أو عدم توفر أي سلعة و/أو خدمة على الموقع و/أو غيره من المواقع الالكترونية. وعليه لا يحق للمستخدم المطالبة باسترجاع مبلغ العملية و/أو استرداد مبلغ العملية نقداً و/أو نقل المبلغ من حساب إلى آخر وذلك لعدم توفر سلعة و/أو خدمة معينة و/أو لأي أسباب أخرى.\n\n\n• يقر المستخدم ويوافق على أنه على علم ودراية بكيفية وآلية وكافة الأمور التي تتعلق بالخدمات المتوفرة على الموقع بما فيها شراء السلع / الخدمات من الموقع وطريقة استخدامها بعد الشراء و/أو أمور أخرى، ويقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة بأي شكل من الأشكال عما يترتب على عدم صحة ذلك.\n\n\n•  إن موافقة المستخدم على الشروط والأحكام بما فيها تلك المتعلقة باستخدام بطاقة أمريكان اكسبرس في الموقع يتضمن تحمله كامل المسؤولية التي تترتب عن استخدام بطاقة أمريكان اكسبرس بما فيها المسؤولية القانونية عن أي اعتراض من البنك مصدر البطاقة و/أو أي جهة أخرى حول استخدام البطاقة في حساب المستخدم في بطاقاتي أعمال.\n\n\n• في حال وصول أي اعتراض لـ/بطاقاتي أعمال من قِبل البنك مصدر البطاقة و/أو أي جهة أخرى، فإن من حق بطاقاتي أعمال اتخاذ التدابير والإجراءات التي يراها مناسبة حسب تقديره المنفرد والمطلق بما في ذلك – على سبيل المثال لا الحصر - إيقاف حساب المستخدم فوراً أو في أي وقت يراه مناسباً حسب تقديره المنفرد والمطلق و/أو حجز أي مبالغ مالية متوفرة في الحساب.\n\n\n• لا تتحمل بطاقاتي أعمال أي مسؤولية عن أي خلل في السلعة / الخدمة المشتراة من الموقع بأي شكل من الأشكال، حيث يكون على المستخدم مراجعة الدعم الفني لمزود السلعة / الخدمة و/أو أي جهة مسؤولة في حال وجود أي خلل في السلعة / الخدمة الذي يشتريها من الموقع في حال رغب المستخدم بذلك.\n\n\n• يقر المستخدم ويوافق على أنه نظراً لطبيعة شبكة الانترنت فإن بطاقاتي أعمال غير مسؤولة عن توقف الخدمات و/أو انقطاعها و/أو عن أي أمور أخرى بأي شكل من الأشكال.\n\n\n• يقر المستخدم ويوافق على أنه على علم تام بأن شبكة الانترنت شبكة عالمية وعامة، وعليه فقد يترتب على استخدام الخدمات مخاطر متعددة على الرغم من استخدام بطاقاتي أعمال وسائل وبرامج الأمان حسب ما تراه مناسباً. كما يقر المستخدم ويوافق على أن بطاقاتي أعمال غير مسؤولة عن أي مخاطر و/أو أضرار و/أو نتائج قد تترتب على ذلك بأي شكل من الأشكال.</string>
+    <string name="amex_alert">•	يرجى العلم ان كروت امريكان اكسبريس الصادرة من المملكة العربية السعودية هي فقط المسموح بها</string>
+
+    <string name="success_recharged">عملية الشحن تمت بنجاح</string>
+    <string name="error_recharged">نأسف لم تتم العملية بنجاح!</string>
+    <string name="error_recharged_sub">حدث خطأ أثناء عملية الشحن</string>
+    <string name="doneRecharge">تم</string>
+    <string name="retryRecharge">إعادة المحاولة</string>
+    <string name="saveCredentials">الأحتفاظ ببيانات البطاقة</string>
+
+    <string name="errTerms">يجب الموافقة على الشروط والأحكام</string>
+    <string name="errRequestPerDay">الحد اﻷقصى لعدد مرات الشحن في اليوم: [X]</string>
+    <string name="errAmoutPerDay"> الحد اﻷقصى للشحن لليوم الواحد: [X] ريال سعودي</string>
+    <string name="errAmoutPerDayPAYPAL"> الحد اﻷقصى للشحن لليوم الواحد: [X] دولار أمريكي</string>
+
+    <string name="errEnterAmount">هذا الحقل مطلوب</string>
+    <string name="cardType">نوع البطاقة</string>
+    <string name="cardNumber">رقم البطاقة</string>
+    <string name="expiryDate">تاريخ الإنتهاء</string>
+    <string name="cardHolder">اسم حامل البطاقة</string>
+    <string name="cvv">رمز التحقق(CVV)</string>
+    <string name="dateHint">شهر / سنة</string>
+    <string name="payNow">ادفع الأن</string>
+    <string name="progress_message_payment_status">الحصول على حالة الدفع ...</string>
+    <string name="progress_message_processing_payment">متابعة عملية الدفع</string>
+    <string name="progress_message_please_wait">أنتظر قليلا...</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="RechargeLog">-->
+    <string name="rechargeMethods">الطريقة</string>
+    <string name="dateTime">التاريخ/ الوقت</string>
+    <string name="method">طريقة الشحن</string>
+    <string name="amountRechargeLog">المبلغ</string>
+    <string name="balanceAfter">الرصيد بعد</string>
+    <string name="rechargeReason">سبب الشحن</string>
+
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="PAYPAL">-->
+    <string name="paypal_price">السعر</string>
+    <string name="cardAmount">قيمة البطاقة</string>
+    <string name="USD">دولار أمريكي</string>
+    <string name="rechargeLogFileName">سجل_الشحن.xls</string>
+    <string name="rechargeLogSheetName">سجل_الشحن</string>
+
+    <string name="recharginDateTime">التاريخ/الوقت </string>
+    <string name="rechargingExportMethod">طريقة الشحن</string>
+    <string name="recharging_amount">المبلغ</string>
+    <string name="balance_after">الرصيد بعد العملية</string>
+    <string name="rechargingReason">سبب الشحن</string>
+    <string name="paypal_terms">الشروط والأحكام\n\n\n• سيتم قبول حسابات باي بال المؤكدة/المكتملة فقط! (الحسابات التي تم التحقق منها بواسطة موقع باي بال)\n\n\n• تقبل بطاقتي أعمال الحسابات الصادرة من الشرق الأوسط وشمال إفريقيا فقط\n\n\n• الحد الادنى للشحن 500 ريال والاقصى 10000 ريال سعودي او ما يعادلها بالعملات الاخرى\n\n\n• هنالك رسوم خدمة ستخصم من المبلغ المراد شحنه في حسابك\n\n\n </string>
+    <string name="paypal_confirmation">هل تريد تأكيد عملية شحن [X] باستخدام بطاقة باي بال؟</string>
+    <string name="paypal_confirmation2">سيتم خصم مبلغ [Y] دولار أمريكي من حسابك في باي بال</string>
+
+    <string-array name="paypal_arr">
+        <item>باي بال هو موقع تجاري يسمح للمستخدم بتحويل المال عبر الإنترنت والبريد الإلكتروني لعناوين مختلفة. كما يمكن للمستخدم إرسال المال المرسل إليه إلى الآخرين أو تحويله لحساب المصرف باستخدام باي بال.</item>
+        <item> خطوات إضافة الرصيد باستخدام باي بال:\n\n - سجل دخولك على حسابك الخاص في بطاقاتي أعمال، ثم اضغط على ”شحن الحساب“.\n\n- اختر ”باي بال“ من طرق الشحن المتاحة.\n\n - اختر فئة البطاقة التي تريد شحنها في حسابك على بطاقاتي أعمال واضغط على ”شحن“، ثم أكد العملية.\n\n- سيتم تحويلك لموقع باي بال لإدخال بياناتك وتأكيد عملية الشحن.</item>
+        <item>
+            تنويهات أخرى:\n\n - تتم مراجعة الطلبات في خلال ساعة واحدة من الساعة 8 صباحًا إلى 2  صباحا / 7 أيام في الأسبوع.\n\n
+        - يرجى ملاحظة أنه من الممكن طلب صورة الهوية الشخصية الخاصة بك، وذلك لإتمام عملية تعبئة الرصيد، كما أنه من الممكن الاتصال بك أيضاً، فيرجى ترك هاتفك الجوال متاحاً.
+        </item>
+
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="DiscountList">-->
+    <string name="category">التصنيف</string>
+    <string name="service">الخدمة</string>
+    <string name="VAT_Amount">مبلغ الضريبة</string>
+    <string name="productName">اسم المنتج</string>>
+    <string name="costAfterVat">سعر التكلفة بعد الضريبة</string>
+    <string name="costPrice">سعر التكلفة </string>
+    <string name="ProductListSheetName">قائمة_خصومات_المنتجات</string>
+    <string name="exportedProductListFileName">قائمة_خصومات_المنتجات.xls</string>
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="TransactionLog">-->
+    <string name="TLogUserName">اسم المستخدم للحساب </string>
+    <string name="TLogSerialNo">الرقم التسلسلي</string>
+    <string name="TLogPin"> كلمة المرور</string>
+    <string name="TLogPassword">كلمة السر</string>
+    <string name="TLogChannel">القناة</string>
+    <string name="TLogPrinted"> طباعة ؟</string>
+    <string name="TLogFrom">من</string>
+    <string name="TLogTo">إلى</string>
+    <string name="TLogSupport">تذكرة دعم</string>
+    <string name="TLogPrint">طباعة</string>
+    <string name="TLogCanceled">ملفي</string>
+    <string name="TLogCostAfter">إجمالي التكلفة بعد الضريبة </string>
+    <string name="TLogTransID"> رقم العملية </string>
+    <string name="TLogCostPrice">سعر التكلفة</string>
+    <string name="TLogVATAmount">مبلغ الضريبة </string>
+    <string name="TLogBalance">الرصيد</string>
+    <string name="TLogPricesCurrency">كل الأسعار بعملة: [X]</string>
+    <string name="exportedTransLogSheetName">سجل_العمليات</string>
+    <string name="exportedTransLogFile">سجل_العمليات.xls</string>
+    <string name="receiptPrinted">تمت الطباعة : </string>
+    <string name="pin"> الرقم السري</string>
+    <string name="TLogPin2"> كلمة المرور</string>
+
+
+    <!--<editor-fold desc="SubHome">-->
+    <string name="total">الإجمالي</string>
+    <string name="tranaction_log">سجل العمليات</string>
+    <string name="printed">تمت الطباعة</string>
+    <string name="view_all">عرض الكل</string>
+    <!--</editor-fold>-->
+
+    <string-array name="channer_arr">
+        <item>الكل</item>
+        <item>بدون ربط</item>
+        <item>نقطة البيع</item>
+        <item>ربط خارجي</item>
+        <item>المحفظة</item>
+    </string-array>
+    <string-array name="printed_arr">
+        <item>الكل</item>
+        <item>نعم</item>
+        <item>لا</item>
+    </string-array>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="HOMEFRAGMENT">-->
+    <string name="daily_sales">المبيعات اليومية</string>
+    <string name="daily_recharge">الشحن اليومي</string>
+    <string name="average_sales_this_month">متوسط مبيعات هذا الشهر </string>
+    <string name="average_sales_last_month">متوسط مبيعات الشهر السابق</string>
+    <string name="homeDays">يوم</string>
+    <string name="remaining">باقي على نفاذ الرصيد</string>
+    <string name="averageLast7Days">متوسط مبيعات آخر 7 أيام</string>
+    <string name="home_this_month">هذا الشهر</string>
+    <string name="home_last_month">الشهر السابق</string>
+    <string name="home_yesterday">بالأمس</string>
+    <string name="home_last_week">آخر 7 أيام</string>
+    <string name="home_Today">اليوم</string>
+    <string name="recharge_now">إشحن الآن</string>
+    <string name="subaccounts">الحسابات الفرعية</string>
+    <string name="manage_all">إدارة الكل</string>
+    <string name="sales_report">تقرير المبيعات</string>
+    <string name="home_sales">(المبيعات)</string>
+    <string name="yourTopSelling">منتجاتك الأكثر مبيعا</string>
+    <string name="bank_transfer_recharging_requests">طلبات شحن التحويل البنكي</string>
+    <string name="newBankTransfere">تحويل بنكي جديد</string>
+    <string name="total_Sales">إجمالي المبيعات</string>
+    <string name="home_recharge_amount">مبلغ الشحن</string>
+    <string name="homeSales">المبيعات</string>
+    <!--</editor-fold>-->
+
+    <!--<editor-fold desc="SEARCH">-->
+    <string name="search_desc">ادخل بعض الكلمات للبحث في بطاقاتي أعمال</string>
+    <string name="search_results_for">نتائج البحث عن</string>
+    <string name="no_results_found">لا توجد نتائج ل </string>
+    <string name="product_cost_price">سعر تكلفة المنتج</string>
+    <string name="out_of_stock">غير متاح</string>
+    <string name="productSearchHint">بحث </string>
+
+    <!--</editor-fold>-->
+    <!--<editor-fold desc="Icons">-->
+    <string name="ic_arrow_r">&#xf104;</string>
+    <string name="ic_arrow_l">&#xf054;</string>
+    <string name="ic_toolbar_arrow">&#xf053;</string>
+    <string name="welcome_to_bitaqaty_business">مرحبا في بطاقاتي اعمال</string>
+    <string name="you_don_t_have_permission_to_view_this_page">ليس لديك صلاحية لرؤية هده الصفحة</string>
+    <string-array name="amex_alert_arr">
+        <item>يرجى العلم ان كروت امريكان اكسبريس الصادرة من المملكة العربية السعودية هي فقط المسموح بها.</item>
+    </string-array>
+
+    <string-array name="mada_alert_arr">
+        <item>إن أي محاولة شحن بالبطاقة الائتمانية بطريقة غير شرعية سيؤدي إلى إغلاق حسابك دون الرجوع إليك والتحفظ على أي رصيد في حسابك.</item>
+        <item>إن أي اعتراض على أي عملية شحن بالبطاقة الائتمانية تردنا من قبل البنك سيؤدي إلى إغلاق حسابك وإرسال كافة بياناتك الى الجهة المسؤولة.</item>
+        <item>برجاء عدم أستخدام proxy او VPN حيث قد يؤدى الي رفض الطلب الخاص بكم.</item>
+
+    </string-array>
+
+    <string-array name="credit_alert_arr">
+        <item>إن أي محاولة شحن بالبطاقة الائتمانية بطريقة غير شرعية سيؤدي إلى إغلاق حسابك دون الرجوع إليك والتحفظ على أي رصيد في حسابك.</item>
+        <item>إن أي اعتراض على أي عملية شحن بالبطاقة الائتمانية تردنا من قبل البنك سيؤدي إلى إغلاق حسابك وإرسال كافة بياناتك الى الجهة المسؤولة.</item>
+        <item>برجاء عدم أستخدام proxy او VPN حيث قد يؤدى الي رفض الطلب الخاص بكم.</item>
+    </string-array>
+    <!--</editor-fold>-->
+    <string name="no_printer">لا يوجد طابعة متصلة</string>
+    <string name="admition"> .لقد قرأت وفهمت ووافقت على الشروط والأحكام،كما أوافق على الالتزام بها دون أي تحفظ أو شرط أو اعتراض</string>
+
+
+    <string name="printer_out_of_paper">نفد الورق من الطابعة</string>
+    <string name="printer_over_heating">الطابعة ساخنه</string>
+    <string name="printer_cutter_abnormal">قاطع الطابعة غير طبيعي</string>
+    <string name="printer_cover_not_closed">غطاء الطابعة غير مغلق</string>
+    <string name="no_devices_found">لم يتم العثور على أجهزة متصلة بالبلوتوث</string>
+    <string name="devices">الأجهزة</string>
+    <string name="renewal_limit_to_default">إعادة تعيين حد الرصيد</string>
+    <string name="recommended_retail_price">سعر البيع المقترح </string>
+    <string name="total_recommended_retail_price">إجمالي سعر البيع المقترح</string>
+    <string name="total_recommended_retail_price_after_vat">إجمالي سعر البيع المقترح بعد إضافة الضريبة</string>
+    <string name="recommended_retail_price_after_vat">سعر البيع المقترح بعد الضريبة</string>
+    <string name="expected_profit">العمولة المتوقعة</string>
+    <string name="total_expected_profit">إجمالى العمولة المتوقعة</string>
+    <string name="total_expected_price">السعر الإجمالي المتوقعة</string>
+    <string name="show_sales_in_recommended_retail_price">إظهار المبيعات بسعر البيع المقترح</string>
+    <string name="total_sub_account_price">إجمالي سعر الحساب الفرعي</string>
+    <string name="total_profit">إجمالي العمولة</string>
+    <string name="show_sales_in_sub_account_price">إظهار المبيعات بسعر الحساب الفرعي</string>
+    <string name="sub_account_price">سعر الحساب الفرعي</string>
+    <string name="sub_account_price_after_vat">سعر الحساب الفرعي بعد الضريبة</string>
+    <string name="sub_account_balance">رصيد الحساب الفرعي</string>
+    <!--Daily Report-->
+    <string name="reseller_name">اسم الموزع : </string>
+    <string name="from_date">من تاريخ : </string>
+    <string name="to_date">الى تاريخ : </string>
+    <string name="current_balance">الرصيد الحالي : </string>
+    <string name="no_of_trans">عدد العمليات : </string>
+    <string name="cost_price">إجمالي سعر التكلفة : </string>
+    <string name="sub_account">اسم المستخدم للحساب : </string>
+    <string name="product_name">اسم المنتج : </string>
+
+    <string name="profit">العمولة</string>
+
+
+    <string name="receipt_name">اسم المنتج:</string>
+    <string name="receipt_name_en">Product Name:</string>
+
+    <string name="receipt_username">اسم المستخدم للحساب:</string>
+    <string name="receipt_username_en">Username:</string>
+
+    <string name="receipt_voucher">رقم بطاقة الشحن:</string>
+    <string name="receipt_voucher_en">E-Voucher Number:</string>
+
+    <string name="receipt_date">التاريخ:</string>
+    <string name="receipt_date_en">Date:</string>
+
+    <string name="receipt_time">الوقت:</string>
+    <string name="receipt_time_en">Time:</string>
+
+    <string name="receipt_expiry">تاريخ الانتهاء:</string>
+    <string name="receipt_expiry_en">Expiry Date:</string>
+
+    <string name="receipt_instructions_en">Recharge Instructions:</string>
+    <string name="receipt_instructions">تعليمات الشحن:</string>
+
+    <string name="receipt_trx_id">رقم العملية:</string>
+    <string name="receipt_trx_id_en">Transaction ID:</string>
+
+    <string name="receipt_device_id">رقم الجهاز:</string>
+    <string name="receipt_device_id_en">Terminal ID:</string>
+
+    <string name="receipt_reseller_id">رقم الموزع:</string>
+    <string name="receipt_reseller_id_en">Reseller NO.:</string>
+
+    <string name="receipt_serial">الرقم التسلسلي:</string>
+    <string name="receipt_serial_en">Serial Number:</string>
+
+    <string name="receipt_print_date">طبعت في:</string>
+    <string name="receipt_print_date_en">Print Date:</string>
+
+    <string name="receipt_print_count">نسخة رقم </string>
+    <string name="receipt_print_count_en">Print Copy </string>
+
+    <string name="receipt_print_warning">القسائم المباعة لا ترد ولا تستبدل</string>
+    <string name="receipt_print_warning_en">Sold vouchers are not replaceable or refundable</string>
+
+    <string name="receipt_print_signature">Powered By: Bitaqaty</string>
+
+    <string name="receipt_print_url">www.Bitaqaty.com</string>
+
+    <string name="receipt_shop">المتجر:</string>
+    <string name="receipt_shop_en">Shop:</string>
+
+    <string name="receipt_sku">الكود التعريفي:</string>
+    <string name="receipt_sku_en">SKU Barcode:</string>
+    <string name="receipt_sk">الكود التعريفي:</string>
+
+    <string name="purchase_expiry">صالح حتى</string>
+    <string name="no_printer_paper">لا يوجد ورق للطباعة</string>
+    <string name="manage_product_price">إدارة أسعار المنتجات</string>
+
+    <string name="update_balance">تحديث الرصيد</string>
+    <string name="available_balance_to_transfer">الرصيد المتاح للتحويل</string>
+    <string name="deduct">خصم</string>
+    <string name="add">إضافة</string>
+    <string name="balance_info">بيانات الرصيد</string>
+    <string name="input_the_amount_you_need_to_add_deduct">قم بوضع المبلغ الذي تريد إضافته/خصمه</string>
+    <string name="negative_number_not_accepted">الرقم السالب غير مقبول</string>
+    <string name="amount_should_be_equal_or_less_than_available_balance_to_transfer">المبلغ يجب أن يساوي أو يقل عن الرصيد المتاح للتحويل</string>
+    <string name="amount_should_be_equal_or_less_than_sub_account_balance">المبلغ يجب أن يساوي أو يقل عن رصيد الحساب الفرعي</string>
+    <string name="edit">تعديل</string>
+    <string name="edit_done">تم التعديل</string>
+    <string name="remove">حذف</string>
+    <string name="notification">اﻹشعارات</string>
+    <string name="see_all_incoming_activity">See all incoming activity</string>
+    <string name="all_incoming_activity">All incoming activity</string>
+    <string name="homepage_should_contain_at_least">يجب أن تحتوي الصفحة الرئيسية على الأقل على </string>
+    <string name="merchants_categories"> تاجر/قسم شراء</string>
+    <string name="from_homepage"> من الصفحة الرئيسية ؟</string>
+    <string name="are_you_sure_you_want_to_remove">هل أنت متأكد أنك تريد حذف  </string>
+    <string name="is_removed_from_homepage">تم حذف  من الصفحة الرئيسية</string>
+    <string name="de_done">تم حذف</string>
+    <string name="from_home">من الصفحة الرئيسية</string>
+    <string name="added_to_homepage">اضافة الى الصفحة الرئيسية</string>
+    <string name="you_have_reached_the_maximum_limit_allowed">لقد وصلت للحد الأقصى المسموح, تحتاج للقيام بالحذف أولا من الصفحة الرئيسية</string>
+    <string name="add_to_home">تم الاضافة للصفحة الرئيسية</string>
+    <string name="product_id">رقم المنتج</string>
+    <string name="sku_code">الكود التعريفي</string>
+    <string name="amount_should_be_less">المبلغ يجب أن يقل عن رصيد الحساب الفرعي</string>
+    <string name="recharge_details">الشحن التفصيلى</string>
+    <string name="total_recharge">إجمالى الشحن</string>
+    <string name="account_recharge_log">سجل شحن الحساب</string>
+    <string name="mada_al_ahly">مدى/ الأهلى:</string>
+    <string name="mada_sales_profit">عمولة مبيعات مدى</string>
+    <string name="manual_refill">شحن يدوى:</string>
+    <string name="btn_print">طباعة</string>
+    <string name="payment_method">طرق الدفع</string>
+    <string name="show_total">اظهار المزيد</string>
+    <string name="total_retail_price">إجمالى سعر البيع</string>
+    <string name="settlement_transactions">عمليات التسوية</string>
+    <string name="transfer_request">طلب تسوية</string>
+    <string name="additional_notes">ملاحظات أخرى</string>
+    <string name="transaction_id">رقم العملية</string>
+    <string name="date_time">التاريخ/ الوقت</string>
+    <string name="retail_price_after_vat">سعر البيع بعد الضريبة</string>
+    <string name="there_is_no_minimum_amount_for_recharge">لا يوجد حد أدنى للشحن</string>
+    <string name="purchase_transaction">عملية الشراء</string>
+    <string name="mada_ahly">مدى الاهلى</string>
+    <string name="something_went_wrong">نأسف لم تتم العملية بنجاح ! حدث خطأ أثناء عملية الشحن</string>
+    <string name="pay_cash_using_your_balance">الدفع كاش باستخدام الرصيد</string>
+    <string name="pay_through_card">الدفع باستخدام بطاقة</string>
+    <string name="pending">تحت الانتظار</string>
+    <string name="rejected">مرفوض</string>
+    <string name="done1">تم التنفيذ</string>
+    <string name="the_requested_transfer_amount">المبلغ المراد تحويله</string>
+    <string name="your_request_has_been_submitted_successfully">تم إرسال طلبك بنجاح</string>
+    <string name="your_balance_is_not_enough_to_send_settlement_request">الرصيد الخاص بكم غير كافى لإرسال طلب تسوية</string>
+    <string name="all">الكل</string>
+    <string name="sorry_the_request_was_not_successful">نأسف لم تتم العملية بنجاح ! حدث خطأ أثناء عملية الشحن</string>
+    <string name="recharged_successfully">عملية الشحن تمت بنجاح</string>
+    <string name="transaction_details">تفاصيل العملية:</string>
+    <string name="please_choose_the_payment_method"> برجاء اختيار طريقة الدفع</string>
+    <string name="date_filter">التاريخ</string>
+    <string name="cash">كاش</string>
+    <string name="recharge_amount">شحن الرصيد بإستخدام مدى</string>
+    <string name="minimum_amount">الحد الأدنى للمبلغ الذى يتم طلبه هو </string>
+    <string name="transfer_status">حالة التحويل</string>
+    <string name="show_total_transaction">إظهار الاجمالى</string>
+    <string name="recharge_wallet_report">تقرير إعادة شحن المحفظة</string>
+    <string name="available_balance">رصيدكم الحالى هو</string>
+    <string name="cr_number">رقم السجل التجارى*</string>
+    <string name="company_name">اسم الشركة*</string>
+    <string name="swift_code">كود التحويل المالى*</string>
+    <string name="bank_name">اسم البنك*</string>
+    <string name="account_number">رقم الحساب*</string>
+    <string name="iban">اى بان*</string>
+    <string name="branch_address">عنوان الفرع</string>
+    <string name="cr_number_hint">رقم السجل التجارى</string>
+    <string name="company_name_hint">اسم الشركة</string>
+    <string name="swift_code_hint">كود التحويل المالى</string>
+    <string name="bank_name_hint">اسم البنك</string>
+    <string name="your_account_number">رقم حسابك</string>
+    <string name="iban_number_hint">يجب أن تبدأ بـ SA ، ثم يجب إدخال 22 رقمًا)</string>
+    <string name="branch_address_hint">عنوان الفرع</string>
+    <string name="minimum_amount_to_request">الحد الأدنى للطلب</string>
+    <string name="basic_data">بيانات أساسية</string>
+    <string name="bank_statements">بيانات بنكية</string>
+    <string name="started_with_sa">يجب البدء ب SA</string>
+    <string name="number_must_be_entered">ادخل ٢٢ رقم</string>
+    <string name="invalid_swift_code">ادخال خطأ</string>
+    <string name="your_commission">العمولة الخاصة بكم هى</string>
+    <string name="a_fee_will_apply_for_card_payments">سيتم تطبيق رسوم على الدفع بإستخدام البطاقة</string>
+    <string name="settlement_request">طلب تحويل</string>
+    <string name="surepay_commission">عمولة مدفوعات شور</string>
+    <string name="max_number_of_recharge_per_day">الحد اﻷقصى لعدد مرات الشحن في اليوم [X] عمليات</string>
+
+    <string name="recommended_retail_priceEN">Price Before VAT</string>
+    <string name="recommended_retail_priceAR">السعر قبل الضريبة</string>
+
+    <string name="VAT_Amount_en">VAT</string>
+    <string name="VAT_Amount_ar">مبلغ الضريبة</string>
+
+    <string name="recommended_retail_price_after_vat_en">Price After VAT</string>
+    <string name="recommended_retail_price_after_vat_ar">السعر بعد الضريبة</string>
+    <string name="vat_code_en">VAT Code</string>
+    <string name="vat_code_ar">كود الضريبة</string>
+    <string name="send_verification_code_via">أرسل رمز التحقق عبر</string>
+    <string name="sms_message">رسالة جوال</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="exceeded_allowed_verificcaation_trials">تجاوزت محاولات التحقق المسموح بها</string>
+    <string name="you_should_updat_mada">يجب تحديث اصدار مدي</string>
+    <string name="username">اسم المستخدم*</string>
+    <string name="confirm_username">تأكيد اسم المستخدم*</string>
+    <string name="full_name">الاسم بالكامل*</string>
+    <string name="description1">الوصف*</string>
+    <string name="access_type1">نوع الدخول*</string>
+    <string name="select_authentication_type">اختر كيفية التحقق من الحساب</string>
+    <string name="google_authenticator">عملية التحقق الثنائية</string>
+    <string name="send_sms_verification_code_via_mobile_number">ارسال كود التحقيق لرقم الجوال</string>
+    <string name="length_should_be_between_12_15_numbers">عدد الأرقام يجب أن تتراوح بين 12-15 رقم بكود الدولة</string>
+    <string name="confirm_username_doesnt_match">تأكيد اسم المستخدم غير متطابق مع اسم المستخدم</string>
+    <string name="choose">اختر</string>
+    <string name="reset_access_data">إعادة ضبط بيانات الدخول</string>
+    <string name="err_reset_access_data">ليس لديك الصلاحية لإعادة ضبط بيانات دخولك</string>
+    <string name="invalid_username">اسم مستخدم غير صحيح</string>
+    <string name="reprint_receipt">إعادة طباعة الفاتورة</string>
+    <string name="this_account_can_reprint_the_invoice">يمكن لهذا الحساب إعادة طباعة الفاتورة</string>
+    <string name="manage_products_prices">إدارة أسعار المنتجات</string>
+    <string name="edit_sub_account_price">تعديل سعر الحساب الفرعي</string>
+    <string name="sub_account_price_updated_succressfully">تم تعديل سعر الحساب الفرعي بنجاح</string>
+    <string name="some_products_are_set_with_sub_account_price_less">لقد قمت بوضع سعر الحساب الفرعي أقل من سعر التكلفة لبعض المنتجات , هل تريد الإستمرار؟</string>
+    <string name="other">اخرى</string>
+    <string name="edit_homepage">تعديل الصفحة الرئيسية</string>
+    <string name="this_account_can_remove_add_merchant_to_homepage">يمكن لهذا الحساب حذف/إضافة تاجر من الصفحة الرئيسية</string>
+    <string name="view_recommended_retail_price">إظهار سعر البيع المقترح</string>
+    <string name="this_account_can_view_recommended_retail_price_recommended_retail_price_after_vat_expected_profit_in_products_discount_list_transactions_log_products_list_and_sales_report">يمكن لهذا الحساب رؤية سعر البيع المقترح, سعر البيع المقترح بعد الضريبة و الربح المتوقع في قائمة خصومات المنتج , سجل العمليات, قائمة المنتجات و تقرير المبيعات</string>
+    <string name="some_products_are_set_with_sub_account_price_less_than_cost_price">لقد قمت بوضع سعر الحساب الفرعي أقل من سعر التكلفة لبعض المنتجات</string>
+    <string name="added_successfully">تمت الإضافة بنجاح</string>
+    <string name="verify">تحقق</string>
+    <string name="message_containing_verification_code">تم أرسال كود التحقق لرقم الجوال المنتهى ب 0411 برجاء ادخال كود التحقق الذى تم إرسال ثم انقر تحقق</string>
+    <string name="reset_access_data_changed_successfully">إعادة ضبط بيانات الدخول تمت بنجاح</string>
+    <string name="add_account">إضافة حساب</string>
+    <string name="confirm_username_fields">يجب ألا تقبل حقول تأكيد اسم المستخدم أكثر من 50 حرفًا</string>
+    <string name="description_fields_should_not_accept">يجب ألا تقبل حقول الوصف أكثر من 255 حرفًا</string>
+    <string name="fullName_fields_should_not_accept">يجب ألا تقبل حقول الاسم الكاملة أكثر من 255 حرفًا</string>
+    <string name="username_fields_should_not">يجب ألا تقبل حقول اسم المستخدم أكثر من 50 حرفًا</string>
+    <string name="this_account_can_view_product_details_username_password_in_transactions_log">يمكن لهذا الحساب رؤية تفاصيل المنتج (اسم المستخدم , الرقم السري) في سجل العمليات</string>
+    <string name="view_pin">رؤية الرقم السري</string>
+    <string name="mobile_number_already_used_in_more_than_one_account">رقم الجوال موجود في أكثر من حساب, برجاء إدخال رقم جوال آخر</string>
+    <string name="user_name_already_used_in_more_than_one_account">اسم المستخدم موجود بالفعل, برجاء إدخال اسم مستخدم آخر</string>
+    <string name="actual_profit">الربح الفعلي</string>
+
+    <string name="sub_account_price_accepts">يقبل سعر الحساب الفرعي الأرقام فقط ويجب ألا يقبل القيم السالبة</string>
+    <string name="sub_account_price_greater_than_cost_price">سعر الحساب الفرعي يجب أن يكون أكبر من سعر التكلفة</string>
+    <string name="unsuccessful_purchase">عمليه شراء غير ناجحة</string>
+    <string name="unsuccessful_recharge">عملية شحن غير مقبولة</string>
+    <string name="unable_to_pruchase">لا يمكن شراء هذا المنتج</string>
+    <string name="empty"> </string>
+    <string name="total_balance_commission">إجمالى أرباح إستخدام الرصيد</string>
+    <string name="total_mada_alahly_commission">إجمالى أرباح مدى الاهلى</string>
+    <string name="account_manager">مدير الحساب</string>
+    <string name="contact_number">رقم التواصل</string>
+    <string name="there_is_new_version_of_Bitaqaty">يوجد اصدار احدث من تطبيق بطاقتي </string>
+    <string name="update">تحديث</string>
+    <string name="please_update_mada_version">قم بتحديث تطبيق مدى اولا</string>
+    <string name="taxable_invoice_priceEN">Taxable invoice</string>
+    <string name="taxable_invoice_priceAR">فاتورة ضريبية</string>
+    <string name="please_allow_app_to_app">من فضلك قم بتفعيل APP TO APP</string>
+    <string name="transaction_verication">يتم الان التحقق من العملية من تطبيق مدي</string>
+    <string name="print_vat">طباعة الضريبة</string>
+    <string name="view_current_balance">مشاهدة الرصيد</string>
+    <string name="in_case_of_hiding_current_balance_will_hidden_from_the_sales_report">فى حالة الاخفاء سيتم اخفاء الرصيد الحالى من تقرير المبيعات</string>
+    <string name="view_profit">مشاهدة الربح المتوقع</string>
+    <string name="in_case_of_hiding_expected_profit_will_hidden_from_the_sales_report">فى حالة الاخفاء سيتم اخفاء الربح المتوقع من تقرير المبيعات</string>
+    <string name="can_send_settlement">يمكن طلب تسوية</string>
+    <string name="edit_recommended_retail_price">تعديل سعر البيع المقترح</string>
+    <string name="reset_all">إعادة القيمة الأساسية للكل</string>
+    <string name="recommended_retail_price_updated_successfully">تم تعديل سعر البيع المقترح بنجاح</string>
+    <string name="reset_default_value">هل أنت متأكد أنك تريد إعادة القيمة الأساسية ؟</string>
+    <string name="reset_to_default_value_is_done">تمت إعادة القيمة الأساسية لكل المنتجات بنجاح</string>
+    <string name="reset_to_default_value_of_product_is_done">تمت إعادة القيمة الأساسية بنجاح</string>
+    <string name="current_balance_sales_report">الرصيد الحالي</string>
+    <string name="price_is_less_than_the_allowed">السعر أقل من الحد المسوح</string>
+    <string name="recommended_price_accepts"> يقبل سعر البيع المقترح الأرقام فقط ويجب ألا يقبل القيم السالبة</string>
+    <string name="VAT_on_recommended">الضريبة على سعر البيع المقترح</string>
+    <string name="partner_fees">رسوم الشريك</string>
+    <string name="total_cost">إجمالى التكلفة</string>
+    <string name="total_vat">إجمالى الضريبة</string>
+    <string name="cost_price_after_vat">سعر التكلفة بعد الضريبة</string>
+    <string name="total_cost_per_item">إجمالى التكلفة للمنتج</string>
+    <string name="total_commission">إجمالى العمولة</string>
+    <string name="buy_now_label">اشترى الان</string>
+    <string name="add_to_cart_label">أضف الى السلة</string>
+    <string name="cart_totals">اجمالى السلة</string>
+    <string name="total_cost_price_after_vat">إجمالى سعر التكلفة بعد الضريبة</string>
+    <string name="proceed_to_payment">متابعة عملية الدفع</string>
+    <string name="remove_cart_item_msg">هل أنت متأكد من أنك تريد حذف هذه البطاقة من سلة التسوق ؟</string>
+    <string name="remove_card_label">إزالة البطاقة</string>
+    <string name="keep_card_label">إحتفظ بالبطاقة</string>
+    <string name="cart_max_count">تم الوصول للحد الأقصى</string>
+    <string name="confirm_order">تأكيد الطلب</string>
+    <string name="back_to_home">عودة الى الرئيسية</string>
+    <string name="print_mada">طباعة مدي</string>
+    <string name="done_successfully">تم بنجاح</string>
+    <string name="print_again">طباعة مرة أخرى</string>
+    <string name="shopping_cart_is_empty">سلة التسوق فارغة</string>
+    <string name="start_shopping"> إبدأ التسوق</string>
+    <string name="card_confirm">يوجد بطاقات مضافة مسبقا الى السلة هل تود شرائها أيضاً \n</string>
+
+    /////////
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="add_balance">إضافة رصيد</string>
+    <string name="reseller_support">دعم الموزعين</string>
+    <string name="product_discount_list">قائمة تخفيضات المنتجات</string>
+    <string name="settlement_transaction">تسوية المعاملة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="welcome">أهلاً وسهلاً</string>
+    <string name="your_balance">رصيدك</string>
+    <string name="reports">التقارير</string>
+    <string name="by_continue_recharging_you_agree_on">من خلال الاستمرار في إعادة الشحن فإنك توافق على</string>
+    <string name="profile">Profile</string>
+    <string name="charge_balance">Charge Balance</string>
+    <string name="favorite">المفضلة</string>
+    <string name="no_products">\"لا يوجد منتجات\"</string>
+    <string name="edit_category">تغيير التصنيف</string>
+    <string name="confirm_change_category">هل أنت متأكد أنك تريد تغيير التصنيف &quot;%1$s&quot;؟</string>
 </resources>

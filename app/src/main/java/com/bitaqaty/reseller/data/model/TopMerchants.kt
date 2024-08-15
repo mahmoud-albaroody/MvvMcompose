@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.data.model
 
+import com.bitaqaty.reseller.utilities.Globals
 import java.io.Serializable
 
 data class TopMerchants(
@@ -35,6 +36,14 @@ data class TopMerchant(
             categoryId ?: merchantId ?: 0
         } else {
             merchantId ?: categoryId ?: 0
+        }
+    }
+
+    fun getName(): String {
+        return if (Globals.lang == "en") {
+            nameEn ?: nameAr ?: ""
+        } else {
+            nameAr ?: nameEn ?: ""
         }
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -18,14 +19,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.TopChildMerchant
 import com.bitaqaty.reseller.data.model.TopMerchants
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
+import com.bitaqaty.reseller.ui.presentation.common.Empty
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.presentation.home.components.ChildMerchantList
 import com.bitaqaty.reseller.ui.presentation.home.components.SideBar
@@ -33,14 +42,16 @@ import com.bitaqaty.reseller.ui.presentation.home.components.ProductList
 import com.bitaqaty.reseller.ui.presentation.home.components.TopBar
 import com.bitaqaty.reseller.ui.presentation.home.components.TopMerchantList
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
-import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
+import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.network.DataState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    mainViewModel: MainActivityViewModel ,
+    navController: NavController
 ) {
     val categoryState by viewModel.categoryState
     val topMerchantState by viewModel.topMerchantsState
@@ -87,9 +98,15 @@ fun HomeScreen(
                         }
                     }
 
-                    Row {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         SideBar(
                             viewModel = viewModel,
+                            mainViewModel = mainViewModel,
+                            navController = navController,
                             categories = categoryList
                         )
                         when(topMerchantState){
@@ -118,11 +135,26 @@ fun HomeScreen(
                                     }
                                     is DataState.Success -> {
                                         val products = (productsState as DataState.Success<ProductListResponse>).data
-                                        ProductList(products = products, isBottomSheetVisible) { product ->
-                                            selectedProduct = product
-                                            scope.launch {
-                                                isBottomSheetVisible = true
-                                                sheetState.expand()
+                                        if(products.products.isEmpty()){
+                                            Column() {
+                                                Empty()
+//                                                Text(
+//                                                    modifier = Modifier.fillMaxWidth(),
+//                                                    text = stringResource(R.string.no_products),
+//                                                    textAlign = TextAlign.Center,
+//                                                    fontSize = 16.sp,
+//                                                    fontWeight = FontWeight.SemiBold,
+//                                                    fontFamily = frutigerLTArabic,
+//                                                    color = Color.Blue
+//                                                )
+                                            }
+                                        }else{
+                                            ProductList(products = products, isBottomSheetVisible) { product ->
+                                                selectedProduct = product
+                                                scope.launch {
+                                                    isBottomSheetVisible = true
+                                                    sheetState.expand()
+                                                }
                                             }
                                         }
                                     }
@@ -163,6 +195,7 @@ fun HomeScreen(
                                 sheetState.hide()
                             }
                         })
+
                 }
             }
         }

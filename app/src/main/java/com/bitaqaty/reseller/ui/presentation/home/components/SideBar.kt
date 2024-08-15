@@ -2,14 +2,10 @@ package com.bitaqaty.reseller.ui.presentation.home.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,9 +14,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
@@ -28,9 +26,12 @@ import com.bitaqaty.reseller.utilities.noRippleClickable
 @Composable
 fun SideBar(
     viewModel: HomeViewModel,
+    mainViewModel: MainActivityViewModel,
+    navController: NavController,
     categories: List<Category>,
 ) {
     var selectedItem by remember { mutableStateOf<Category?>(categories.first()) }
+    var categoryToChangeId by remember { mutableStateOf<Int?>(null) }
     var showDialog by remember { mutableStateOf(false) }
 
     LazyColumn(
@@ -38,7 +39,7 @@ fun SideBar(
             .fillMaxHeight()
             .width(74.dp)
             .background(color = Color(0xFFBFCCEC)),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         items(categories.subList(0, 5)) { category ->
             CategoryItem(
@@ -57,15 +58,25 @@ fun SideBar(
                     }
                     selectedItem = category
                 },
-                onLongPress = {showDialog = true}
+                onLongPress = { index ->
+                    if(index != 0){
+                        categoryToChangeId = category.id
+                        showDialog = true
+                    }
+                }
             )
+            if(showDialog){
+                ConfirmationDialog(
+                    categoryName = category.getName(),
+                    onConfirm = {
+                        showDialog = false
+                        navController.navigate("store/$categoryToChangeId")
+                        mainViewModel.showBottomNav.value = false
+                    },
+                    onDismiss = {showDialog = false}
+                )
+            }
         }
-    }
-    if(showDialog){
-        ConfirmationDialog(
-            onConfirm = {},
-            onDismiss = {showDialog = false}
-        )
     }
 }
 
