@@ -230,6 +230,16 @@ dependencies {
     implementation("androidx.compose.material:material:1.6.8")
     //sunmi
     implementation("com.sunmi:printerlibrary:1.0.18")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    implementation ("androidx.room:room-rxjava3:2.3.0-rc01")
+    //permissions
+//    implementation ("com.nabinbhandari.android:permissions:3.8")
+    // Room components
+    implementation ("androidx.room:room-runtime:2.3.0-rc01")
+    implementation ("androidx.room:room-ktx:2.3.0-rc01")
+    kapt ("androidx.room:room-compiler:2.3.0-rc01")
+    // live chat
+    implementation ("com.github.livechat:chat-window-android:v2.1.5")
 }
 
 fun ApplicationProductFlavor.setSetting() {

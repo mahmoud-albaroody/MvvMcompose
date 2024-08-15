@@ -1,6 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,10 +33,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +47,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.TransactionLog
+import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -53,15 +55,88 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.initCashIn
+import com.bitaqaty.reseller.utilities.printTransaction
+import io.nearpay.sdk.NearPay
+import io.nearpay.sdk.utils.enums.AuthenticationData
+import io.nearpay.sdk.utils.enums.GetDataFailure
+import io.nearpay.sdk.utils.enums.TransactionData
+import io.nearpay.sdk.utils.listeners.GetTransactionListener
+import io.nearpay.sdk.utils.toImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 
 @Composable
-fun TransactionsScreen(navController: NavController, modifier: Modifier) {
+fun TransactionsScreen(navController: NavController, modifier: Modifier, obj: JSONObject?) {
     val transactionsViewModel: TransactionsViewModel = hiltViewModel()
     val transactionLogList = remember { mutableStateListOf<TransactionLog>() }
+    var accountNo: Int? = Utils.getUserData()?.reseller?.id
+    var channel: String? = null
+    var paymentMethod: String? = null
+    var selectedDateTo: String? = null
+    var selectedDateFrom: String? = null
+    var serialNo: String? = null
+    var pinCode: String? = null
+    var showTotal: Boolean = false
+    var isPrinted: String? = null
+
+    var searchPeriod: String? = Globals.DATE.CURRENT_MONTH.value
+    val transactionRequestBody = TransactionRequestBody()
+
+
+    obj?.let {
+
+        if (obj.getInt("accountNo") != 0) {
+            accountNo = obj.get("accountNo") as Int?
+        }
+        if (!obj.getString("channel").isNullOrEmpty()) {
+            channel = obj.getString("channel")
+        }
+        if (!obj.getString("searchPeriod").isNullOrEmpty()) {
+            searchPeriod = obj.getString("searchPeriod")
+        }
+        if (!obj.getString("paymentMethod").isNullOrEmpty()) {
+            paymentMethod = obj.getString("paymentMethod")
+        }
+
+        if (!obj.getString("selectedDateTo").isNullOrEmpty()) {
+            selectedDateTo = obj.getString("selectedDateTo")
+        }
+        if (!obj.getString("selectedDateFrom").isNullOrEmpty()) {
+            selectedDateFrom = obj.getString("selectedDateFrom")
+        }
+        if (!obj.getString("serialNo").isNullOrEmpty()) {
+            serialNo = obj.getString("serialNo")
+        }
+        if (!obj.getString("pinCode").isNullOrEmpty()) {
+            pinCode = obj.getString("pinCode")
+        }
+        if (!obj.getString("isPrinted").isNullOrEmpty()) {
+            isPrinted = obj.getString("isPrinted")
+        }
+        if (obj.getBoolean("showTotal")) {
+            showTotal = obj.getBoolean("showTotal")
+        }
+    }
     LaunchedEffect(key1 = true) {
-        transactionsViewModel.transactionsLog()
+        transactionRequestBody.subAccountId = accountNo
+        transactionRequestBody.pageNumber = 1
+        transactionRequestBody.pageSize = Globals.PAGE_SIZE
+        transactionRequestBody.serialNo = serialNo
+        transactionRequestBody.pinCode = pinCode
+        transactionRequestBody.channel = channel
+        transactionRequestBody.showTotal = showTotal
+        transactionRequestBody.isPrinted = isPrinted
+        transactionRequestBody.paymentMethod = paymentMethod
+        transactionRequestBody.customDateTo = selectedDateTo
+        transactionRequestBody.customDateFrom = selectedDateFrom
+        transactionRequestBody.searchPeriod = searchPeriod
+        transactionsViewModel.transactionsLog(transactionRequestBody)
         transactionsViewModel.transactionLogs.collect {
             transactionLogList.clear()
             transactionLogList.addAll(it.transactionLogList)
@@ -70,10 +145,12 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier) {
     }
 
     screen(transactionLogList = transactionLogList) {
-        navController.navigate(Screen.ApplyFilterScreen.route.plus(
-            Screen.ApplyFilterScreen.objectName
-                    + "TransactionLog"
-        ))
+        navController.navigate(
+            Screen.ApplyFilterScreen.route.plus(
+                Screen.ApplyFilterScreen.objectName
+                        + "TransactionLog"
+            )
+        )
     }
 }
 
@@ -109,6 +186,7 @@ fun Transactions(transactionLogList: List<TransactionLog>) {
 @Composable
 fun TransactionsItem(transactionLog: TransactionLog) {
     var viewDetails by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     var arrow = R.drawable.ic_forward_arrow
     Card(
         Modifier
@@ -205,7 +283,10 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .weight(1f),
+                            .weight(1f)
+                            .clickable {
+                                printNearReceipt(transactionLog, context.initCashIn(), context)
+                            },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
@@ -390,5 +471,49 @@ fun Filter(onFilterClick: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+fun printNearReceipt(transactionLog: TransactionLog, nearPay: NearPay, context: Context) {
+
+
+    transactionLog.transactionUUID?.let {
+        nearPay.getTransactionByUuid(it, false, 0L, object :
+            GetTransactionListener {
+            override fun onSuccess(transactionData: TransactionData) {
+                transactionData.receipts?.get(0)?.toImage(
+                    context,
+                    380, 12
+                ) { transactionBitmap ->
+                    Log.e("dddd", transactionBitmap.toString())
+                    CoroutineScope(Dispatchers.IO).launch {
+                        transactionBitmap?.let { it1 -> printTransaction(it1) }
+                    }
+
+                }
+            }
+
+            override fun onFailure(getDataFailure: GetDataFailure) {
+                when (getDataFailure) {
+                    is GetDataFailure.AuthenticationFailed -> {
+                        // when the Authentication is failed
+                        // You can use the following method to update your JWT
+                        nearPay.updateAuthentication(AuthenticationData.Jwt("JWT HERE"))
+                    }
+
+                    is GetDataFailure.FailureMessage -> {
+                        // when there is FailureMessage
+                    }
+
+                    is GetDataFailure.GeneralFailure -> {
+                        // when there is general error
+                    }
+
+                    is GetDataFailure.InvalidStatus -> {
+                        // you can get the status using reconcileFailure.status
+                    }
+                }
+            }
+        })
     }
 }

@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -32,6 +33,11 @@ import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
 import com.bitaqaty.reseller.ui.presentation.verificationCode.VerificationCodeScreen
+import com.bitaqaty.reseller.utilities.extention.getMap
+import com.bitaqaty.reseller.utilities.extention.toJson
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import org.json.JSONObject
 
 @Composable
 fun Navigation2(
@@ -56,7 +62,16 @@ fun Navigation2(
             NotificationDetailsScreen(navController = navController, modifier = modifier)
         }
         composable(Screen.RechargeLogScreen.route) {
-            RechargeLogScreen(navController = navController, modifier = modifier)
+            var obj: JSONObject? = null
+            it.savedStateHandle.get<String>("filterObject")?.let {
+                obj = JSONObject(it)
+            }
+            SalesReportScreen(
+                navController = navController, modifier = modifier,
+                obj
+            )
+            it.savedStateHandle.remove<String>("filterObject")
+            RechargeLogScreen(navController = navController, modifier = modifier, obj)
         }
         composable(Screen.SelectMainCategoryScreen.route) {
             SelectMainCategoryScreen(navController = navController, modifier = modifier)
@@ -99,7 +114,16 @@ fun Navigation2(
             BankTransferScreen(navController = navController, modifier = modifier)
         }
         composable(Screen.Transactions.route) {
-            TransactionsScreen(navController = navController, modifier = modifier)
+            var obj: JSONObject? = null
+            it.savedStateHandle.get<String>("filterObject")?.let {
+                obj = JSONObject(it)
+            }
+
+            TransactionsScreen(
+                navController = navController, modifier = modifier,
+                obj
+            )
+            it.savedStateHandle.remove<String>("filterObject")
         }
         composable(Screen.SuccessfulPurchaseScreen.route) {
             SuccessfulPurchaseScreen(navController = navController, modifier = modifier)
@@ -122,15 +146,31 @@ fun Navigation2(
             MainScreen()
         }
         composable(Screen.SalesReportScreen.route) {
-            SalesReportScreen(navController = navController, modifier = modifier)
+            var obj: JSONObject? = null
+            it.savedStateHandle.get<String>("filterObject")?.let {
+                obj = JSONObject(it)
+            }
+            SalesReportScreen(
+                navController = navController, modifier = modifier,
+                obj
+            )
+            it.savedStateHandle.remove<String>("filterObject")
         }
         composable(Screen.ProductsDiscountsScreen.route) {
-            ProductsDiscountsScreen(navController = navController, modifier = modifier)
+            var obj: JSONObject? = null
+            it.savedStateHandle.get<String>("filterObject")?.let {
+                obj = JSONObject(it)
+            }
+            ProductsDiscountsScreen(navController = navController, modifier = modifier, obj)
+            it.savedStateHandle.remove<String>("filterObject")
         }
+
         composable(Screen.SettlementTransactionsScreen.route) {
             SettlementTransactionsScreen(navController = navController, modifier = modifier)
         }
 
     }
 }
+
+
 

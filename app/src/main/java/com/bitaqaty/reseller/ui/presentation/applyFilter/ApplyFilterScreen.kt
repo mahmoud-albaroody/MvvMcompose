@@ -50,6 +50,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -70,6 +73,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.RechargeMethod
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
@@ -80,6 +84,8 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.extention.toJson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -132,18 +138,34 @@ fun ApplyFilterScreen(
         onApplyFilterClick = { accountNo, categoryId,
                                merchantId, productId,
                                channel, paymentMethod,
-                               searchPeriod, selectedDateTo,
-                               selectedDateFrom ->
-            Log.e("ssss", accountNo.toString())
-            Log.e("ssss", categoryId.toString())
-            Log.e("ssss", merchantId.toString())
-            Log.e("ssss", productId.toString())
-            Log.e("ssss", channel.toString())
-            Log.e("ssss", paymentMethod.toString())
-            Log.e("ssss", searchPeriod.toString())
-            Log.e("ssss", selectedDateTo.toString())
-            Log.e("ssss", selectedDateFrom.toString())
-            // navController.popBackStack()
+                               searchPeriod,
+                               selectedDateFrom,
+                               selectedDateTo,
+                               isChecked, serialNo, pinCode, isPrinted, discrmenationVal
+            ->
+
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("accountNo", accountNo)
+            jsonObject.addProperty("categoryId", categoryId)
+            jsonObject.addProperty("merchantId", merchantId)
+            jsonObject.addProperty("productId", productId)
+            jsonObject.addProperty("channel", channel)
+            jsonObject.addProperty("searchPeriod", searchPeriod)
+            jsonObject.addProperty("paymentMethod", paymentMethod)
+            jsonObject.addProperty("selectedDateTo", selectedDateTo)
+            jsonObject.addProperty("selectedDateFrom", selectedDateFrom)
+            jsonObject.addProperty("isChecked", isChecked)
+            jsonObject.addProperty("serialNo", serialNo)
+            jsonObject.addProperty("pinCode", pinCode)
+            jsonObject.addProperty("isPrinted", isPrinted)
+            jsonObject.addProperty("showTotal", isChecked)
+            jsonObject.addProperty("discrmenationVal", discrmenationVal)
+
+            navController.popBackStack()
+            navController.currentBackStackEntry
+                ?.savedStateHandle
+                ?.set("filterObject", jsonObject.toJson())
+
         })
 
 }
@@ -158,10 +180,11 @@ fun ApplyFilter(
     viewModel: ApplyFilterViewModel, comeFrom: String,
     onApplyFilterClick: (
         Int, Int, Int, Int, String,
-        String, String, String, String
+        String, String, String, String,
+        Boolean, String, String, String, String
     ) -> Unit
 ) {
-    var context = LocalContext.current
+    val context = LocalContext.current
     val accountName = arrayListOf<String>()
     accountName.add(stringResource(id = R.string.btrr_account_name))
     Utils.getUserData()?.reseller?.username?.let { accountName.add(it) }
@@ -212,21 +235,24 @@ fun ApplyFilter(
     printedList.addAll(stringArrayResource(id = R.array.printed_arr))
 
     var viewCustomDate by remember { mutableStateOf(false) }
-
+    var isChecked by remember { mutableStateOf(false) }
     var categoryId by remember { mutableIntStateOf(0) }
     var merchantId by remember { mutableIntStateOf(0) }
     var productId by remember { mutableIntStateOf(0) }
     var channel by remember { mutableStateOf("") }
     var paymentMethod by remember { mutableStateOf("") }
     var searchPeriod by remember { mutableStateOf("") }
+    var isPrinted by remember { mutableStateOf("") }
     var subAccountId by remember { mutableIntStateOf(0) }
+    var serialNo by remember { mutableStateOf("") }
+    var pinCode by remember { mutableStateOf("") }
+    var discrmenationVal by remember { mutableStateOf("") }
     var selectedDateTo by remember {
         mutableStateOf("")
     }
     var selectedDateFrom by remember {
         mutableStateOf("")
     }
-    //   {"categoryId":18,"channel":"PORTAL","merchantId":200189,"pageNumber":1,"pageSize":10,"paymentMethod":"CASH","productId":3304,"searchPeriod":"LAST_MONTH","subAccountId":311346}
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -245,10 +271,14 @@ fun ApplyFilter(
                     }
                 }
             if (comeFrom == "TransactionLog") {
-                TextFiledd()
-                TextFiledd()
+                TextFiledd(stringResource(id = R.string.TLogSerialNo)) {
+                    serialNo = it
+                }
+                TextFiledd(stringResource(id = R.string.TLogPin)) {
+                    pinCode = it
+                }
             }
-            if (comeFrom == "SalesReport")
+            if (comeFrom == "SalesReport" || comeFrom == "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
                     categoryList, true
@@ -257,7 +287,7 @@ fun ApplyFilter(
                     viewModel.getSimpleMerchantList(categoryId)
                 }
 
-            if (comeFrom == "SalesReport")
+            if (comeFrom == "SalesReport" || comeFrom == "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
                     serviceList, true
@@ -289,26 +319,31 @@ fun ApplyFilter(
                     TextAlign.Center,
                     printedList, true
                 ) {
+                    isPrinted = it
+                }
+            if (comeFrom != "productDiscount")
+                DynamicSelectTextField(
+                    TextAlign.Center,
+                    methodList, true
+                ) { payment ->
+                    paymentMethod = payment
+                    discrmenationVal =
+                        rechargeMethodsList.find { it.getName() == payment }?.discriminatorValue.toString()
 
                 }
-            DynamicSelectTextField(
-                TextAlign.Center,
-                methodList, true
-            ) {
-                paymentMethod = it
-            }
-            DynamicSelectTextField(
-                TextAlign.Center,
-                dateList, true
-            ) {
-                if (it == context.getString(R.string.report_custom_date)) {
-                    viewCustomDate = true
-                } else {
-                    viewCustomDate = false
-                    searchPeriod = it
-                }
+            if (comeFrom != "productDiscount")
+                DynamicSelectTextField(
+                    TextAlign.Center,
+                    dateList, true
+                ) {
+                    if (it == context.getString(R.string.report_custom_date)) {
+                        viewCustomDate = true
+                    } else {
+                        viewCustomDate = false
+                        searchPeriod = it
+                    }
 
-            }
+                }
             if (viewCustomDate) {
                 CustomDate(dateTo = {
                     selectedDateTo = it
@@ -316,13 +351,15 @@ fun ApplyFilter(
                     selectedDateFrom = it
                 })
             }
-
-            CheckBox()
-
+            if (comeFrom != "rechargeLog" && comeFrom != "productDiscount")
+                CheckBox {
+                    isChecked = it
+                }
         }
         Column {
             FilterButton(
-                backgroundTex = Blue100, text = stringResource(id = R.string.filter),
+                backgroundTex = Blue100,
+                text = stringResource(id = R.string.filter),
                 iconVisibility = true,
                 textColor = White,
                 horizontalPadding = Dimens.DefaultMargin,
@@ -330,9 +367,10 @@ fun ApplyFilter(
                     onApplyFilterClick(
                         subAccountId, categoryId,
                         merchantId, productId,
-                        channel, searchPeriod,
-                        paymentMethod,
-                        selectedDateFrom, selectedDateTo
+                        channel,
+                        paymentMethod, searchPeriod,
+                        selectedDateFrom, selectedDateTo,
+                        isChecked, serialNo, pinCode, isPrinted, discrmenationVal
                     )
                 }
             )
@@ -342,9 +380,12 @@ fun ApplyFilter(
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun TextFiledd() {
+fun TextFiledd(title: String, onEnterString: (String) -> Unit) {
+    var text by remember { mutableStateOf("") }
+    var viewPlaceholder by remember {
+        mutableStateOf(true)
+    }
     Card(
         Modifier
             .padding(
@@ -356,16 +397,36 @@ fun TextFiledd() {
         border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
+        val focusRequester = FocusRequester()
+
         TextField(
             modifier = Modifier
-                .fillMaxWidth(),
-            readOnly = true,
-            value = "esfddssdsad",
+                .fillMaxWidth()
+                .padding(end = 40.dp)
+                .focusRequester(focusRequester)
+                .onFocusChanged {
+                    viewPlaceholder = !it.isFocused
+                },
+            value = text,
             textStyle = TextStyle(
                 color = BebeBlue,
                 textAlign = TextAlign.Center
             ),
-            onValueChange = { },
+            placeholder = {
+                if (viewPlaceholder)
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = title,
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                        color = BebeBlue
+                    )
+            },
+            onValueChange = {
+                text = it
+                onEnterString(it)
+            },
             shape = RoundedCornerShape(8.dp),
             colors = ExposedDropdownMenuDefaults.textFieldColors(
                 cursorColor = BebeBlue,
@@ -475,13 +536,14 @@ fun DynamicSelectTextField(
     }
 }
 
-@Preview
 @Composable
-fun CheckBox() {
+fun CheckBox(isChecked: (Boolean) -> Unit) {
+    var checked by remember { mutableStateOf(false) }
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Checkbox(
-            checked = true, onCheckedChange = {
-
+            checked = checked, onCheckedChange = {
+                checked = !checked
+                isChecked(checked)
             },
             colors = CheckboxDefaults.colors(
                 uncheckedColor = BebeBlue,

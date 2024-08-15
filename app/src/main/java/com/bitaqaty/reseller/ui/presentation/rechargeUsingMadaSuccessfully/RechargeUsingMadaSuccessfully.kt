@@ -34,6 +34,7 @@ import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.Green
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
+import com.bitaqaty.reseller.utilities.Utils
 
 @Composable
 fun RechargeUsingMadaScreen(navController: NavController, modifier: Modifier) {
@@ -112,7 +113,7 @@ fun RechargeSuccessfully(
                 style = TextStyle(
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = 20.sp
                 )
             )
 
@@ -148,23 +149,25 @@ fun NewBalance(
                 modifier = Modifier.padding(
                     bottom = Dimens.halfDefaultMargin,
                     top = Dimens.DefaultMargin
-                ), text = "Your New Balance",
+                ), text = stringResource(R.string.your_new_balance),
                 style = TextStyle(
                     color = LightGrey200,
                     fontSize = 16.sp
                 )
             )
-            Text(
-                modifier = Modifier.padding(
-                    bottom = Dimens.halfDefaultMargin,
-                    top = Dimens.halfDefaultMargin
-                ), text = "15000,00",
-                style = TextStyle(
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
+            Utils.getUserData()?.reseller?.getBalance()?.let {
+                Text(
+                    modifier = Modifier.padding(
+                        bottom = Dimens.halfDefaultMargin,
+                        top = Dimens.halfDefaultMargin
+                    ), text = it,
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 22.sp
+                    )
                 )
-            )
+            }
 
 
         }

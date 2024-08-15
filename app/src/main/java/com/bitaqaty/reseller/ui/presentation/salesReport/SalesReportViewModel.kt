@@ -8,6 +8,7 @@ import com.bitaqaty.reseller.data.model.CurrentUser
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.ReportLog
+import com.bitaqaty.reseller.data.model.ReportRequestBody
 import com.bitaqaty.reseller.domain.GetProductUseCase
 import com.bitaqaty.reseller.domain.GetReportLogUseCase
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
@@ -33,32 +34,12 @@ class SalesReportViewModel @Inject constructor(private val getReportLogUseCase: 
 
 
     fun getSalesReportList(
-        pageNumber: Int, categoryId: Int = -1, merchantId: Int, allowPaging: Boolean = true,
+        reportRequestBody: ReportRequestBody
     ) {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("searchPeriod", "LAST_MONTH")
-        jsonObject.addProperty("subAccountId", "311346")
-        if (allowPaging) {
-            jsonObject.addProperty("pageSize", Globals.PAGE_SIZE)
-            jsonObject.addProperty("pageNumber", pageNumber)
-        }
-//        jsonObject.addProperty("customDateFrom", "")
-//        jsonObject.addProperty("customDateTo", "")
-//        jsonObject.addProperty("productId", "")
-//
-//        if (categoryId != -1) {
-//            jsonObject.addProperty("categoryId", categoryId)
-//        }
-//        if (merchantId != -1) {
-//            jsonObject.addProperty("merchantId", merchantId)
-//        }
-//        jsonObject.addProperty("channel", "")
-//        jsonObject.addProperty("showRecommendedPrices", false)
-//        jsonObject.addProperty("showSubResellerPrices", false)
-//        jsonObject.addProperty("paymentMethod", "")
+
 
         viewModelScope.launch {
-            getReportLogUseCase.generateHomeSalesReport(jsonObject)
+            getReportLogUseCase.generateHomeSalesReport(reportRequestBody)
                 .catch {
 
                 }

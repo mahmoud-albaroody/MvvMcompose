@@ -45,24 +45,56 @@ import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey300
 import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import org.json.JSONObject
 
 @Composable
-fun RechargeLogScreen(navController: NavController, modifier: Modifier) {
+fun RechargeLogScreen(navController: NavController, modifier: Modifier,obj: JSONObject?) {
     val rechargeLogViewModel: RechargeLogViewModel = hiltViewModel()
-    val discrmenationVal = ""
-    val dateFrom = ""
-    val dateTo = ""
+    var discrmenationVal = ""
     val pageIndex = 1
-    val dateMethod: String? = null
+    var accountNo: Int? = Utils.getUserData()?.reseller?.id
+    var channel: String? = null
+    var paymentMethod: String? = null
+    var selectedDateTo: String = ""
+    var selectedDateFrom: String = ""
+
+
+    var searchPeriod: String? = Globals.DATE.CURRENT_MONTH.value
+    obj?.let {
+
+        if (obj.getInt("accountNo") != 0) {
+            accountNo = obj.get("accountNo") as Int?
+        }
+
+        if (!obj.getString("searchPeriod").isNullOrEmpty()) {
+            searchPeriod = obj.getString("searchPeriod")
+        }
+        if (!obj.getString("paymentMethod").isNullOrEmpty()) {
+            paymentMethod = obj.getString("paymentMethod")
+        }
+
+        if (!obj.getString("selectedDateTo").isNullOrEmpty()) {
+            selectedDateTo = obj.getString("selectedDateTo")
+        }
+        if (!obj.getString("selectedDateFrom").isNullOrEmpty()) {
+            selectedDateFrom = obj.getString("selectedDateFrom")
+        }
+        if (!obj.getString("discrmenationVal").isNullOrEmpty()) {
+            discrmenationVal = obj.getString("discrmenationVal")
+        }
+
+
+    }
 
     LaunchedEffect(key1 = true) {
         rechargeLogViewModel.getRechargingList(
             pageIndex,
             discrmenationVal,
-            dateFrom,
-            dateTo,
-            dateMethod
+            selectedDateFrom,
+            selectedDateTo,
+            searchPeriod
         )
     }
     rechargeLogViewModel.rechargeLogs.value.let {

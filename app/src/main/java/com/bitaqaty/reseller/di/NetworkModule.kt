@@ -1,7 +1,7 @@
 package com.bitaqaty.reseller.di
 
 import android.content.Context
-import com.bitaqaty.reseller.HiltApplication
+import com.bitaqaty.reseller.MainApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
 import com.bitaqaty.reseller.utilities.Globals.lang
@@ -39,13 +39,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApplication(@ApplicationContext app: Context): HiltApplication {
-        return app as HiltApplication
+    fun provideApplication(@ApplicationContext app: Context): MainApplication {
+        return app as MainApplication
     }
 
     @Singleton
     @Provides
-    fun provideContext(application: HiltApplication): Context {
+    fun provideContext(application: MainApplication): Context {
         return application.applicationContext
     }
 
@@ -104,11 +104,10 @@ object NetworkModule {
             }
             val requestBuilder = it.request().newBuilder()
                 //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
-                .header("Authorization", "")
                 .header("Content-Type", "application/json; charset=utf-8")
                 .header("Content-Type", "application/json")
                 .header("locale", lang)
-                .header("device-id", "96baed0207d76e88")
+                .header("device-id", "94d2eb615c7a291a")
                 .header("whitelabel-code", "BITAQATY_BUSINESS")
                 .header("OS", "ANDROID")
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
@@ -116,8 +115,7 @@ object NetworkModule {
                     "Authorization",
                     "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJTdWJMaW1Nb2IiLCJpc3MiOiJCaXRhcWF0eSBCdXNpbmVzcyIsImV4cCI6MTc1NDMxNjk0OCwiaWF0IjoxNzIyNzgwOTQ4LCJqdGkiOiI0MjZiYTI1MC04ZThiLTQzMWUtODgxNS1jODBkOWJkN2RkZGIifQ.GOqpMVQkOXxELooTykssSkkT7np_hA5ftgma6dwrbTYBY32PS8PCF2jX-2feNIBrWxalZ6NwhRWMU4vxfH5eF_gHvU062gPAkt-fC3adMUJK20J--idqdvpcopjmZcgTifadBn7EWIFlk4LjxcKF57l5w2W1gMkfMDZEUGPVki4lo1bqQAh0C5PVMGWxTTE_FUF1ELZV_23hUCSja1hfK0iNfZGME5P4aWhegNFECNo1kSzNlw7ui-UobExxS67BzZf1OQSx1zUzJHTtViYqNKlHle-Ad4CTFl13yJVICY0_kDbvTRIzBexxHDSTxI0X3D3_iCAIsH_laeKX6orMug"
                 )
-                .header("partner-device", "SUREPAY")
-
+//                .header("partner-device", "CACHIN")
             it.proceed(requestBuilder.build())
         }
     }

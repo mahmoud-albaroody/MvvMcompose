@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.salesReport
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +31,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -46,10 +46,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
-import com.bitaqaty.reseller.data.model.Category
-import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.Report
 import com.bitaqaty.reseller.data.model.ReportLog
+import com.bitaqaty.reseller.data.model.ReportRequestBody
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
@@ -65,21 +64,84 @@ import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.ui.theme.clickedMerchant
+import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 @Composable
-fun SalesReportScreen(navController: NavController, modifier: Modifier) {
+fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSONObject?) {
     val salesReportViewModel: SalesReportViewModel = hiltViewModel()
-
     var report by remember { mutableStateOf(ReportLog()) }
 
+    var accountNo: Int? = Utils.getUserData()?.reseller?.id
+    var categoryId: Int? = -1
+    var merchantId: Int? = -1
+    var productId: Int? = null
+    var channel: String? = null
+    var paymentMethod: String? = null
+    var selectedDateTo: String? = null
+    var selectedDateFrom: String? = null
+    var searchPeriod: String? = Globals.DATE.CURRENT_MONTH.value
+    var isChecked: Boolean = false
+    val reportRequestBody = ReportRequestBody()
+    obj?.let {
+
+        if (obj.getInt("accountNo") != 0) {
+            accountNo = obj.get("accountNo") as Int?
+        }
+        if (obj.getInt("categoryId") != 0) {
+            categoryId = obj.get("categoryId") as Int?
+        }
+        if (obj.getInt("merchantId") != 0) {
+            merchantId = obj.get("merchantId") as Int?
+        }
+        if (obj.getInt("productId") != 0) {
+            productId = obj.get("productId") as Int?
+        }
+        if (!obj.getString("channel").isNullOrEmpty()) {
+            channel = obj.getString("channel")
+        }
+        if (!obj.getString("searchPeriod").isNullOrEmpty()) {
+            searchPeriod = obj.getString("searchPeriod")
+        }
+        if (!obj.getString("paymentMethod").isNullOrEmpty()) {
+            paymentMethod = obj.getString("paymentMethod")
+        }
+        if (!obj.getString("selectedDateTo").isNullOrEmpty()) {
+            selectedDateTo = obj.getString("selectedDateTo")
+        }
+        if (!obj.getString("selectedDateFrom").isNullOrEmpty()) {
+            selectedDateFrom = obj.getString("selectedDateFrom")
+        }
+        isChecked = obj.getBoolean("isChecked")
+    }
+
     LaunchedEffect(key1 = true) {
-        salesReportViewModel.getSalesReportList(1, -1, -1, true)
+        reportRequestBody.subAccountId = accountNo
+        reportRequestBody.pageNumber = 1
+        reportRequestBody.pageSize = Globals.PAGE_SIZE
+        if (categoryId != -1) {
+            reportRequestBody.categoryId = categoryId
+        }
+        if (merchantId != -1) {
+            reportRequestBody.merchantId = merchantId
+        }
+        reportRequestBody.channel = channel
+        reportRequestBody.paymentMethod = paymentMethod
+        reportRequestBody.productId = productId
+        reportRequestBody.customDateTo = selectedDateTo
+        reportRequestBody.customDateFrom = selectedDateFrom
+        reportRequestBody.searchPeriod = searchPeriod
+        reportRequestBody.showRecommendedPrices = isChecked
+//        jsonObject.addProperty("showRecommendedPrices", false)
+//        jsonObject.addProperty("showSubResellerPrices", false)
+
+        salesReportViewModel.getSalesReportList(reportRequestBody)
         salesReportViewModel.viewModelScope.launch {
             salesReportViewModel.getReport.collect {
                 report = it
-
             }
         }
 

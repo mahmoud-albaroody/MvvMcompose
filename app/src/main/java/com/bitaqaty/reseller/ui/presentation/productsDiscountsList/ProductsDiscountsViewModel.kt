@@ -26,7 +26,7 @@ class ProductsDiscountsViewModel @Inject constructor(private val getProductList:
         get() = _getProduct
 
     fun getProductDiscountList(
-        pageNumber: Int, categoryId: Int = -1, merchantId: Int,
+        pageNumber: Int, categoryId: Int = -1, merchantId: Int?,
         searchText: String = "", allowPaging: Boolean = true,
         orderByProducts: Boolean = true
     ) {

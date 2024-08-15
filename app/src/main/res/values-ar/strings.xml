@@ -1140,4 +1140,5 @@
     <string name="profile">Profile</string>
     <string name="charge_balance">Charge Balance</string>
     <string name="favorite">المفضلة</string>
+    <string name="your_new_balance">Your New Balance</string>
 </resources>

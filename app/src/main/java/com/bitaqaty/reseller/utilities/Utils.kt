@@ -29,8 +29,8 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import com.bitaqaty.reseller.BuildConfig
-import com.bitaqaty.reseller.HiltApplication.Companion.gson
-import com.bitaqaty.reseller.HiltApplication.Companion.mPrefs
+import com.bitaqaty.reseller.MainApplication.Companion.gson
+import com.bitaqaty.reseller.MainApplication.Companion.mPrefs
 
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.CurrentUser

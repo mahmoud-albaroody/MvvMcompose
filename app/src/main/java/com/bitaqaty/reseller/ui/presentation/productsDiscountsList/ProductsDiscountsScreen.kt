@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.productsDiscountsList
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,13 +33,13 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,7 +47,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.salesReport.PrintExportButton
+import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Black
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -55,17 +58,28 @@ import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey200
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
+import org.json.JSONObject
 
 
 @Composable
-fun ProductsDiscountsScreen(navController: NavController, modifier: Modifier) {
+fun ProductsDiscountsScreen(navController: NavController, modifier: Modifier, obj: JSONObject?) {
     val productsDiscountsViewModel: ProductsDiscountsViewModel = hiltViewModel()
-    val products: SnapshotStateList<Product> = remember { mutableStateListOf<Product>() }
+    val products: SnapshotStateList<Product> = remember { mutableStateListOf() }
+    var categoryId: Int = -1
+    var merchantId: Int? = null
+    obj?.let {
+        if (obj.getInt("categoryId") != 0) {
+            categoryId = obj.getInt("categoryId")
+        }
+        if (obj.getInt("merchantId") != 0) {
+            merchantId = obj.getInt("merchantId")
+        }
+    }
     LaunchedEffect(key1 = true) {
         productsDiscountsViewModel
             .getProductDiscountList(
-                0, 89,
-                312052, "", false
+                0, categoryId,
+                merchantId, "", false
             )
         productsDiscountsViewModel.getProduct.collect {
             products.clear()
@@ -73,31 +87,48 @@ fun ProductsDiscountsScreen(navController: NavController, modifier: Modifier) {
 
         }
     }
-    ProductsDiscounts(products)
+    ProductsDiscounts(products) {
+        navController.navigate(
+            Screen.ApplyFilterScreen.route.plus(
+                Screen.ApplyFilterScreen.objectName
+                        + "productDiscount"
+            )
+        )
+    }
 
 }
 
 @Composable
-fun ProductsDiscounts(products: SnapshotStateList<Product>) {
+fun ProductsDiscounts(products: SnapshotStateList<Product>, onFilterClick: () -> Unit) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
     Column(
         Modifier
             .fillMaxSize()
             .background(White)
     ) {
         PrintExportButton()
-        LazyColumn(
-            Modifier
-                .fillMaxSize()
-                .background(White),
-            content = {
-                items(products) {
-                    ProductsDiscountsItem(it)
-                }
-            })
+        Box(Modifier.height(screenHeight * 0.58f)) {
+            LazyColumn(
+                Modifier
+                    .fillMaxSize()
+                    .background(White),
+                content = {
+                    items(products) {
+                        ProductsDiscountsItem(it)
+                    }
+                })
+        }
 
-
+        Box(Modifier.height(screenHeight * 0.15f)) {
+            Filter(
+                onFilterClick = {
+                    onFilterClick.invoke()
+                })
+        }
     }
 }
+
 
 @Preview
 @Composable

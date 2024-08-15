@@ -1,22 +1,32 @@
 package com.bitaqaty.reseller.data.datasource.remote
 
+import com.bitaqaty.reseller.data.model.AccountsByCountry
+import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.PaymentStatus
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ReportLog
+import com.bitaqaty.reseller.data.model.ReportRequestBody
+import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
+import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
 import com.bitaqaty.reseller.data.model.ResetAccessData
+import com.bitaqaty.reseller.data.model.SavedAccount
+import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
+import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
@@ -37,7 +47,7 @@ interface ApiService {
             DataState<ArrayList<Category>>
 
     @POST(Globals.GET_TRANSACTIONS_LIST)
-    suspend fun getTransactionLogList(@Body jsonObject: JsonObject):
+    suspend fun getTransactionLogList(@Body transactionRequestBody: TransactionRequestBody):
             TransactionLogResult
 
     @POST(Globals.GET_SETTLEMENT_REQUEST)
@@ -105,7 +115,7 @@ interface ApiService {
     suspend fun getProductList(@Body jsonObject: JsonObject): ProductListResult
 
     @POST(Globals.GENERATE_SALES_REPORT)
-    suspend fun generateHomeSalesReport(@Body jsonObject: JsonObject): ReportLog
+    suspend fun generateHomeSalesReport(@Body reportRequestBody: ReportRequestBody): ReportLog
 
     @POST(Globals.GET_CATEGORY_LIST)
     suspend fun getSimpleCategoryList(): ArrayList<Category>
@@ -121,22 +131,33 @@ interface ApiService {
 
     @POST(Globals.GET_MERCHANTS)
     suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
+
     @POST(Globals.GET_USERNAMES_LIST)
     suspend fun getUserNamesList(): ArrayList<LogUserName>
 
+    @POST(Globals.SEARCH_BANK_TRANSFER_REQUEST)
+    suspend fun searchBankTransfer(@Body body: RequestBankTransferLogBody):SearchBank
 
-//    lookups/list-categories
-//
-//    lookups/list-merchants/18
-//
-//    lookups/list-products
-//
-//    {"resellerId":311346,"categoryId":18,"merchantId":283851,"applyPagination":false}
+    @POST(Globals.ONE_CARD_COUNTRIES)
+    suspend fun onecardCountries(): AccountsCountries
 
-    //partner-recharge/get-charging-methods
+    @POST(Globals.ONE_CARD_ACCOUNTS)
+    suspend fun onecardAccount(@Body  requestOneCardAccountsBody: RequestOneCardAccountsBody): AccountsByCountry
 
-    //categories/list-categories
-    //merchants/list-merchants/77
+    @POST(Globals.SENDER_COUNTRIES)
+    suspend fun senderCounters(): ArrayList<AccountsCountries>
 
-    //transaction-log/list-sub-accounts
+    @POST(Globals.SAVED_ACCOUNTS)
+    suspend fun saveAccount(): ArrayList<SavedAccount>
+
+
+    @POST(Globals.SENDER_ACCOUNTS_BY_COUNTRY)
+    suspend fun senderAccountByCounter(@Path("id") id: String): ArrayList<AccountsCountries>
+
+    @POST(Globals.VALIDATE_SUREPAY_CHARGING)
+    suspend fun validateSurePayCharging(@Body jsonObject: JsonObject): ValidationSurpayChargeResult
+
+    @POST(Globals.SUREPAY_CHARGING)
+    suspend fun surePayCharging(@Body jsonObject: JsonObject): PaymentStatus
+
 }

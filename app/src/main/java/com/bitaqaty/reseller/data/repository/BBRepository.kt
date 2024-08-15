@@ -2,23 +2,33 @@ package com.bitaqaty.reseller.data.repository
 
 import android.util.Log
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
+import com.bitaqaty.reseller.data.model.AccountsByCountry
+import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.PaymentStatus
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ReportLog
+import com.bitaqaty.reseller.data.model.ReportRequestBody
+import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
+import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
 import com.bitaqaty.reseller.data.model.ResetAccessData
+import com.bitaqaty.reseller.data.model.SavedAccount
+import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
+import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
@@ -78,12 +88,13 @@ class BBRepository @Inject constructor(
 
     }
 
-    override suspend fun generateHomeSalesReport(jsonObject: JsonObject): Flow<ReportLog> = flow {
-        //   emit(DataState.Loading)
-        val logoutResult = apiService.generateHomeSalesReport(jsonObject)
-        emit(logoutResult)
+    override suspend fun generateHomeSalesReport(reportRequestBody: ReportRequestBody): Flow<ReportLog> =
+        flow {
+            //   emit(DataState.Loading)
+            val logoutResult = apiService.generateHomeSalesReport(reportRequestBody)
+            emit(logoutResult)
 
-    }
+        }
 
     override suspend fun getSimpleCategoryList(): Flow<ArrayList<Category>> = flow {
         //   emit(DataState.Loading)
@@ -122,6 +133,51 @@ class BBRepository @Inject constructor(
         val logoutResult = apiService.getUserNamesList()
         emit(logoutResult)
     }
+
+    override suspend fun searchBankTransfer(bankTransferLogBody: RequestBankTransferLogBody): Flow<SearchBank> =
+        flow {
+            val searchBankTransfer = apiService.searchBankTransfer(bankTransferLogBody)
+            emit(searchBankTransfer)
+        }
+
+    override suspend fun onecardCountries(): Flow<AccountsCountries> = flow {
+        val searchBankTransfer = apiService.onecardCountries()
+        emit(searchBankTransfer)
+    }
+
+    override suspend fun onecardAccount(requestOneCardAccountsBody: RequestOneCardAccountsBody): Flow<AccountsByCountry> =
+        flow {
+            val onecardAccount = apiService.onecardAccount(requestOneCardAccountsBody)
+            emit(onecardAccount)
+        }
+
+    override suspend fun senderCounters(): Flow<ArrayList<AccountsCountries>> = flow {
+        val senderCounters = apiService.senderCounters()
+        emit(senderCounters)
+    }
+
+    override suspend fun saveAccount(): Flow<ArrayList<SavedAccount>> = flow {
+        val saveAccount = apiService.saveAccount()
+        emit(saveAccount)
+    }
+
+    override suspend fun senderAccountByCounter(id: String): Flow<ArrayList<AccountsCountries>> =
+        flow {
+            val senderAccountByCounter = apiService.senderAccountByCounter(id)
+            emit(senderAccountByCounter)
+        }
+
+    override suspend fun validateSurePayCharging(jsonObject: JsonObject): Flow<ValidationSurpayChargeResult> =
+        flow {
+            val senderAccountByCounter = apiService.validateSurePayCharging(jsonObject)
+            emit(senderAccountByCounter)
+        }
+
+    override suspend fun surePayCharging(jsonObject: JsonObject): Flow<PaymentStatus> =
+        flow {
+            val senderAccountByCounter = apiService.surePayCharging(jsonObject)
+            emit(senderAccountByCounter)
+        }
 
 
     override suspend fun forgetPassword(jsonObject: JsonObject):
@@ -260,11 +316,11 @@ class BBRepository @Inject constructor(
         }
 
 
-    override suspend fun getTransactionLogList(jsonObject: JsonObject):
+    override suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody):
             Flow<TransactionLogResult> =
         flow {
             //   emit(DataState.Loading)
-            val searchResult = apiService.getTransactionLogList(jsonObject)
+            val searchResult = apiService.getTransactionLogList(transactionRequestBody)
             emit(searchResult)
             Log.e("sssdd", "adsasd")
 
@@ -302,5 +358,6 @@ class BBRepository @Inject constructor(
                 emit(DataState.Error(e))
             }
         }
+
 
 }

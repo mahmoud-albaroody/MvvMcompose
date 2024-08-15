@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.domain.TransactionLogUseCase
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.google.gson.JsonObject
@@ -29,13 +30,9 @@ class TransactionsViewModel @Inject constructor(private val repo: TransactionLog
         get() = _transactionLogs
 
 
-
-    fun transactionsLog() {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("pageSize", 20)
-        jsonObject.addProperty("pageNumber", 1)
+    fun transactionsLog(transactionRequestBody: TransactionRequestBody) {
         viewModelScope.launch {
-            repo.invoke(jsonObject)
+            repo.invoke(transactionRequestBody)
                 .catch {
                 }
                 .onEach {

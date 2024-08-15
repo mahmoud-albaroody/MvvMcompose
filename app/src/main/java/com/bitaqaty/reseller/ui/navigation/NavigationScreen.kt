@@ -63,7 +63,9 @@ sealed class Screen(
 
     object MainScreen2 : Screen("MainScreen2", 0, "MainScreen2")
     object MainScreen : Screen("MainScreen", 0, "MainScreen")
-    object SalesReportScreen : Screen("SalesReportScreen", 0, "SalesReportScreen")
+    object SalesReportScreen : Screen("SalesReportScreen", 0, "SalesReportScreen",
+         objectName = "salesReportScreen/",
+        objectPath = "{username}")
 
     object ProductsDiscountsScreen : Screen("ProductsDiscountsScreen", 0, "ProductsDiscountsScreen")
 
