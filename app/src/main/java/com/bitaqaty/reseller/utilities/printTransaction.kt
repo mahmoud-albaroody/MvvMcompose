@@ -9,7 +9,7 @@ import com.bitaqaty.reseller.utilities.bluetooth.ESCUtil
     if (!BluetoothUtil.isBlueToothPrinter) {
         SunmiPrintHelper.getInstance().printBitmap(transaction)
         SunmiPrintHelper.getInstance().feedPaper()
-
+        SunmiPrintHelper.getInstance().exitPrinterPrinter()
     } else {
         BluetoothUtil.sendData(ESCUtil.printBitmap(transaction))
         BluetoothUtil.sendData(ESCUtil.nextLine(3))

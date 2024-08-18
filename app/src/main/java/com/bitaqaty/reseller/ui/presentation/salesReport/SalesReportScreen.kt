@@ -1,6 +1,9 @@
 package com.bitaqaty.reseller.ui.presentation.salesReport
 
+import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -49,6 +53,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Report
 import com.bitaqaty.reseller.data.model.ReportLog
 import com.bitaqaty.reseller.data.model.ReportRequestBody
+import com.bitaqaty.reseller.ui.component.ReportPrintComponent
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
@@ -66,7 +71,10 @@ import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.ui.theme.clickedMerchant
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.printTransaction
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -86,6 +94,7 @@ fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSO
     var searchPeriod: String? = Globals.DATE.CURRENT_MONTH.value
     var isChecked: Boolean = false
     val reportRequestBody = ReportRequestBody()
+    val context = LocalContext.current
     obj?.let {
 
         if (obj.getInt("accountNo") != 0) {
@@ -153,12 +162,19 @@ fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSO
                         + "SalesReport"
             )
         )
+    }, onPrintClick = {
+        printSalesReport(
+            body = it,
+            request = reportRequestBody,
+            ctx = context,
+            viewRecommended = true
+        )
     })
 }
 
 
 @Composable
-fun SalesReport(report: ReportLog, onFilterClick: () -> Unit) {
+fun SalesReport(report: ReportLog, onFilterClick: () -> Unit, onPrintClick: (ReportLog) -> Unit) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     val reportLogList = remember { mutableStateListOf<Report>() }
@@ -172,7 +188,9 @@ fun SalesReport(report: ReportLog, onFilterClick: () -> Unit) {
     ) {
         Box(Modifier.height(screenHeight * 0.67f)) {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                PrintExportButton()
+                PrintExportButton() {
+                    onPrintClick(report)
+                }
                 SalesReportDetails(report)
                 LazyColumn(
                     Modifier
@@ -195,9 +213,9 @@ fun SalesReport(report: ReportLog, onFilterClick: () -> Unit) {
     }
 }
 
-@Preview
+
 @Composable
-fun PrintExportButton() {
+fun PrintExportButton(onPrintClick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -212,7 +230,7 @@ fun PrintExportButton() {
                 textColor = White,
                 horizontalPadding = Dimens.halfDefaultMargin,
             ) {
-
+                onPrintClick()
             }
         }
         Box(Modifier.weight(1f)) {
@@ -566,4 +584,21 @@ fun SalesReportItemDetails(title: String, valuee: String) {
             ),
         )
     }
+}
+
+fun printSalesReport(
+    body: ReportLog,
+    request: ReportRequestBody,
+    ctx: Context,
+    viewRecommended: Boolean
+) {
+    val view = ReportPrintComponent(ctx, viewRecommended)
+    view.layoutParams = ViewGroup.LayoutParams(180, ViewGroup.LayoutParams.WRAP_CONTENT)
+    view.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
+    view.setDailyReportData(body, request)
+    CoroutineScope(Dispatchers.IO).launch {
+        Utils.view2Bitmap(view)?.let { printTransaction(it) }
+    }
+
+
 }

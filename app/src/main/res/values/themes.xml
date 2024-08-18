@@ -21,4 +21,8 @@
     <style name="Theme.Bitaqaty.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Bitaqaty.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="bold_small_font" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/cairo_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

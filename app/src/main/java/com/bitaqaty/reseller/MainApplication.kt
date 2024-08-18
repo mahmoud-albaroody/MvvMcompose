@@ -8,6 +8,7 @@ import com.bitaqaty.reseller.data.localStorage.getDatabase
 import com.bitaqaty.reseller.data.model.MadaResponse
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.MySharedPreferences
+import com.bitaqaty.reseller.utilities.SunmiPrintHelper
 import com.bitaqaty.reseller.utilities.SurePayReceiver
 import com.google.gson.Gson
 import com.iovation.mobile.android.FraudForceConfiguration
@@ -62,6 +63,7 @@ class MainApplication : MultiDexApplication() {
         applicationInstance = this
      //   PicassoUtils.initPicasso(this)
         database = getDatabase(this)
+        SunmiPrintHelper.getInstance().initSunmiPrinterService(this)
 //        if (myReceiver == null) {
 //            myReceiver = SurePayReceiver(callback = this)
 //            val filter = IntentFilter()

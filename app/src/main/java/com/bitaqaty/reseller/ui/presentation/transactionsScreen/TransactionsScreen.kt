@@ -3,6 +3,9 @@ package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,6 +51,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
+import com.bitaqaty.reseller.ui.component.ReceiptComponent1
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -57,7 +61,7 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
-import com.bitaqaty.reseller.utilities.initCashIn
+import com.bitaqaty.reseller.utilities.Utils.view2Bitmap
 import com.bitaqaty.reseller.utilities.printTransaction
 import io.nearpay.sdk.NearPay
 import io.nearpay.sdk.utils.enums.AuthenticationData
@@ -152,6 +156,7 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier, obj: JS
             )
         )
     }
+
 }
 
 //@Preview
@@ -188,19 +193,19 @@ fun TransactionsItem(transactionLog: TransactionLog) {
     var viewDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
     var arrow = R.drawable.ic_forward_arrow
+
     Card(
         Modifier
             .fillMaxWidth()
-
             .padding(
                 vertical = Dimens.halfDefaultMargin,
                 horizontal = Dimens.DefaultMargin
             ),
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
-
         colors = CardDefaults.cardColors(containerColor = LightGrey100)
-
     ) {
+
+
         Row(
             Modifier
                 .fillMaxWidth()
@@ -215,12 +220,6 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                 .padding(Dimens.halfDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-//            Image(
-//                modifier = Modifier
-//                    .padding(Dimens.halfDefaultMargin),
-//                painter = painterResource(R.drawable.logo),
-//                contentDescription = ""
-//            )
             Image(
                 painter = rememberAsyncImagePainter(
                     model = transactionLog.merchantLogoPath
@@ -285,7 +284,8 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                             .fillMaxWidth()
                             .weight(1f)
                             .clickable {
-                                printNearReceipt(transactionLog, context.initCashIn(), context)
+                                printReceipt(transactionLog, context)
+                                //  printNearReceipt(transactionLog, context.initCashIn(), context)
                             },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -486,7 +486,7 @@ fun printNearReceipt(transactionLog: TransactionLog, nearPay: NearPay, context: 
                     380, 12
                 ) { transactionBitmap ->
                     Log.e("dddd", transactionBitmap.toString())
-                    CoroutineScope(Dispatchers.IO).launch {
+                    if (Utils.isNearPayApp()) {
                         transactionBitmap?.let { it1 -> printTransaction(it1) }
                     }
 
@@ -515,5 +515,23 @@ fun printNearReceipt(transactionLog: TransactionLog, nearPay: NearPay, context: 
                 }
             }
         })
+    }
+}
+
+
+fun printReceipt(transactionLog: TransactionLog, context: Context) {
+    val view: FrameLayout = ReceiptComponent1(context)
+    view.layoutParams = ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    (view as ReceiptComponent1).setTransLogReceipt(transactionLog)
+    view.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
+    CoroutineScope(Dispatchers.IO).launch {
+        view2Bitmap(view)?.let { it1 ->
+            printTransaction(
+                it1
+            )
+        }
     }
 }

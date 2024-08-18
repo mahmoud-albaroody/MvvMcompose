@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.data.model
 
 
+import android.view.View
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
@@ -70,9 +71,16 @@ data class TransactionLog(
     val showSkuBarcode: Boolean? = false,
     val skuBarcode: String? = null,
     val vatCode: String? = null,
-    val vatPercentage: String? = null
-
+    val vatPercentage: String? = null,
+    var vi: View? = null
 ) : Serializable {
+    fun getMerchant(): String {
+        return merchantId ?: ""
+    }
+
+    fun getMerchantLogo(): String {
+        return merchantLogoPath ?: ""
+    }
 
     fun getPaymentMethod(): String {
         return if (lang == "en") {
@@ -80,6 +88,17 @@ data class TransactionLog(
         } else {
             paymentMethodAr ?: ""
         }
+    }
+
+    fun getProductSeriall(): String {
+        return productSerial ?: ""
+    }
+
+    fun getProductSecrett(): String {
+        if (productSecret.isNullOrBlank()) {
+            return productPassword ?: ""
+        }
+        return productSecret ?: productPassword ?: ""
     }
 
     fun getCheckingRecommendedRetailPrice(): String {

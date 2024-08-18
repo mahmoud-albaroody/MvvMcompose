@@ -1003,6 +1003,7 @@ object Utils {
     }
 
     fun view2Bitmap(view: View?): Bitmap? {
+       // Log.e("vvvvv",view.toString())
         if (view == null) return null
         val drawingCacheEnabled = view.isDrawingCacheEnabled
         val willNotCacheDrawing = view.willNotCacheDrawing()

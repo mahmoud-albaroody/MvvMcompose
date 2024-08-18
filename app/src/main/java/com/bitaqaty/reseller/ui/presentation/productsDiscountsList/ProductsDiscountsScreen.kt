@@ -107,7 +107,9 @@ fun ProductsDiscounts(products: SnapshotStateList<Product>, onFilterClick: () ->
             .fillMaxSize()
             .background(White)
     ) {
-        PrintExportButton()
+        PrintExportButton() {
+
+        }
         Box(Modifier.height(screenHeight * 0.58f)) {
             LazyColumn(
                 Modifier
@@ -133,8 +135,9 @@ fun ProductsDiscounts(products: SnapshotStateList<Product>, onFilterClick: () ->
 @Preview
 @Composable
 fun CancelDone() {
+    PrintExportButton() {
 
-    PrintExportButton()
+    }
 
 }
 

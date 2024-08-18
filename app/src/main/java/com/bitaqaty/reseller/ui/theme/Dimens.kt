@@ -25,6 +25,11 @@ object Dimens {
     val fontSize9 = 9.sp
     val padding = 10.dp
 
+
+    val height_barcode = 60
+    val width_barcode = 160
+
+
     val textFieldHeight = 48.dp
     val padding30: Dp = 30.dp
     val padding32: Dp = 32.dp

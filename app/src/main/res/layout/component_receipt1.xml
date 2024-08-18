@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="384px"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+
+    <ImageView
+        android:id="@+id/imgMerchant"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginBottom="@dimen/_1sdp"
+        android:layout_gravity="center"
+       />
+
+    <View
+        android:id="@+id/line0"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:id="@+id/layoutShop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_shop_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_shop"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/resellerCommercialName"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_name_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_name"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/productName"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layoutUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/usernameTitleEn"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_username_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/usernameTitleAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_username"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/productUsername"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:id="@+id/layoutSecret"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtSecretTitleEn"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_voucher_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/txtSecretTitle"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_voucher"
+            android:textColor="#000000"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_8ssp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutProductSecret"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/drawable_password_box"
+        android:minHeight="35dp">
+
+        <TextView
+            android:id="@+id/productSecret"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxWidth="384px"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="#000"
+            app:autoSizeMaxTextSize="30sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/layoutPasswordBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/drawable_password_box"
+        android:minHeight="35dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtSecretInBox"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxWidth="384px"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="#000"
+            app:autoSizeMaxTextSize="30sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutBarCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgBarCode"
+            android:layout_width="380px"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_date_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:id="@+id/purchaseDate"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_date"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_time_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:id="@+id/purchaseTime"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_time"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutExpiryDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_expiry_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:id="@+id/itemExpirationDate"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_expiry"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line6"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:id="@+id/layoutHowToUseEn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:text="@string/receipt_instructions_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_7ssp" />
+
+        <TextView
+            android:id="@+id/howToUseEn"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:textSize="@dimen/_7ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutHowToUseAr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:textDirection="rtl"
+        android:visibility="gone">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="2dp"
+            android:textSize="@dimen/_8ssp"
+            android:text="@string/receipt_instructions"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/howToUseAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/_8ssp"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/lineHowToUse"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000"
+        android:visibility="gone" />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/serialTitleEn"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_serial_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/serialTitleAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_serial"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/productSerialTxt"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <View
+        android:id="@+id/line9"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="2dp"
+        android:background="#000"
+        android:visibility="visible" />
+
+
+    <RelativeLayout
+        android:id="@+id/layoutSkuBarCodeTitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/skuTitleEn"
+                android:fontFamily="@font/cairo_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receipt_sku_en"
+                android:textColor="#000000" />
+
+
+            <TextView
+                android:id="@+id/skuTitleAr"
+                android:fontFamily="@font/cairo_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receipt_sku"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSkuBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSkuBarCode"
+            android:layout_width="380px"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_print_date_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_print_date"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtPrintDate"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/printCounter"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="2dp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receipt_print_count"
+            android:textColor="#000000"
+            android:textSize="@dimen/_7ssp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receipt_print_count_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_7ssp" />
+
+
+        <TextView
+            android:id="@+id/printCounter2"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="2dp"
+            android:textColor="#000000" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/receipt_print_warning"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+    <TextView
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/receipt_print_warning_en"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:lineSpacingExtra="2sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="2dp"
+        android:layerType="software"
+        android:src="@drawable/drawable_dash" />
+
+</LinearLayout>

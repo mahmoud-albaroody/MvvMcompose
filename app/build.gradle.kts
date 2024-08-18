@@ -144,6 +144,9 @@ android {
         }
         true
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {

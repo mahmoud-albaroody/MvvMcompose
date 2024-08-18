@@ -117,7 +117,8 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
 private fun printBitmap(
     transaction: Bitmap,
     compositeDisposable: CompositeDisposable,
-    viewModel: RechargeViewModel, onFinishRecharge: () -> Unit
+    viewModel: RechargeViewModel,
+    onFinishRecharge: () -> Unit
 ) {
     deleteCartDB(compositeDisposable) {
         viewModel.viewModelScope.launch(Dispatchers.IO) {
@@ -338,7 +339,6 @@ private fun purchaseWithCashIn(
         enableReversal, finishTimeOut, transactionId, enableUiDismiss, object :
             PurchaseListener {
             override fun onPurchaseApproved(transactionData: TransactionData) {
-                SunmiPrintHelper.getInstance().initSunmiPrinterService(context)
                 transactionData.receipts?.get(0)?.toImage(
                     context,
                     380, 12
