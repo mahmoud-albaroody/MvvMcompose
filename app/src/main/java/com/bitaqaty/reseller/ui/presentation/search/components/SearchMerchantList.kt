@@ -1,8 +1,7 @@
-package com.bitaqaty.reseller.ui.presentation.search
+package com.bitaqaty.reseller.ui.presentation.search.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,8 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.ProductListRequest
-import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
-import com.bitaqaty.reseller.ui.presentation.home.components.MerchantItem
+import com.bitaqaty.reseller.ui.presentation.common.MerchantItem
+import com.bitaqaty.reseller.ui.presentation.search.SearchViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable

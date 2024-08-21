@@ -3,8 +3,10 @@ package com.bitaqaty.reseller.ui.presentation.home
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -21,9 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
@@ -44,6 +46,7 @@ import com.bitaqaty.reseller.ui.presentation.home.components.TopMerchantList
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.utilities.noRippleClickable
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,7 +89,7 @@ fun HomeScreen(
                 Column(modifier = Modifier.fillMaxSize()) {
                     when(merchantState){
                         is DataState.Error -> {
-                            val error = (categoryState as DataState.Error).exception
+                            val error = (merchantState as DataState.Error).exception
                             Text(text = "Error: ${error.message}")
                         }
                         is DataState.Success -> {
@@ -130,13 +133,13 @@ fun HomeScreen(
                                         Loading()
                                     }
                                     is DataState.Error -> {
-                                        val error = (topMerchantState as DataState.Error).exception
+                                        val error = (productsState as DataState.Error).exception
                                         Text(text = "Error: ${error.message}")
                                     }
                                     is DataState.Success -> {
                                         val products = (productsState as DataState.Success<ProductListResponse>).data
                                         if(products.products.isEmpty()){
-                                            Column() {
+                                            Column{
                                                 Empty()
 //                                                Text(
 //                                                    modifier = Modifier.fillMaxWidth(),
@@ -147,9 +150,37 @@ fun HomeScreen(
 //                                                    fontFamily = frutigerLTArabic,
 //                                                    color = Color.Blue
 //                                                )
+                                                Spacer(Modifier.weight(1f))
+                                                if(merchantState == null){
+                                                    Text(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .padding(
+                                                                vertical = 4.dp,
+                                                                horizontal = 10.dp
+                                                            )
+                                                            .noRippleClickable {
+                                                                if(viewModel.isCategory.value){
+                                                                    viewModel.getChildMerchants(viewModel._categoryId.value!!)
+                                                                }else{
+                                                                    viewModel.getTopMerchants()
+                                                                }
+                                                            },
+                                                        text = stringResource(id = R.string.back),
+                                                        fontFamily = frutigerLTArabic,
+                                                        color = Color.Blue,
+                                                        textDecoration = TextDecoration.Underline,
+                                                        textAlign = TextAlign.End
+                                                    )
+                                                }
                                             }
                                         }else{
-                                            ProductList(products = products, isBottomSheetVisible) { product ->
+                                            ProductList(
+                                                viewModel = viewModel,
+                                                products = products,
+                                                isBottomSheetVisible,
+                                                haveBack = merchantState == null
+                                            ) { product ->
                                                 selectedProduct = product
                                                 scope.launch {
                                                     isBottomSheetVisible = true

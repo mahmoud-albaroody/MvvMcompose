@@ -35,12 +35,15 @@ import javax.inject.Inject
 fun SettlementTransactionsScreen(navController: NavController, modifier: Modifier) {
     val notificationViewModel: SettlementTransactionsViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    SettlementTransactions()
+    SettlementTransactions(
+        onTransactionRequestClick = {navController.navigate(Screen.SettlementRequestScreen.route)}
+    )
 }
 
-@Preview
 @Composable
-fun SettlementTransactions() {
+fun SettlementTransactions(
+    onTransactionRequestClick: () -> Unit
+) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     Column(
@@ -51,7 +54,7 @@ fun SettlementTransactions() {
 
         FilterButton(backgroundTex = Blue100, text = "Transaction Request",
             iconVisibility = true, horizontalPadding =  Dimens.DefaultMargin,textColor = Color.White ) {
-
+            onTransactionRequestClick()
         }
         RechargeLogHeader(
             LightGrey300,
@@ -68,4 +71,10 @@ fun SettlementTransactions() {
         }
 
     }
+}
+
+@Preview
+@Composable
+fun SettlementTransactionsPreview(){
+    SettlementTransactions(onTransactionRequestClick = {})
 }

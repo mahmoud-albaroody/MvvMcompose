@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.presentation.common.Loading
-import com.bitaqaty.reseller.ui.presentation.search.SearchCategory
+import com.bitaqaty.reseller.ui.presentation.search.components.SearchCategory
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.network.DataState
 

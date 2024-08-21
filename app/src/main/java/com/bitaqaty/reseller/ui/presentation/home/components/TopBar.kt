@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.ui.presentation.common.MerchantItem
 import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic

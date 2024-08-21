@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResponse
-import com.bitaqaty.reseller.ui.presentation.home.components.ProductItem
+import com.bitaqaty.reseller.ui.presentation.common.ProductItem
 import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable

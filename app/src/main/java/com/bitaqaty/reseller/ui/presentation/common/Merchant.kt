@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.ui.presentation.home.components
+package com.bitaqaty.reseller.ui.presentation.common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

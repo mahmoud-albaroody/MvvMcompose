@@ -40,11 +40,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.BalancePayButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ConfirmBalancePayButton
@@ -54,11 +56,15 @@ import com.bitaqaty.reseller.ui.presentation.productDetails.components.MadaPayBu
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.PrintVatButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ProductInfo
 import com.bitaqaty.reseller.ui.theme.arial
+import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.noRippleClickable
+import com.bitaqaty.reseller.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsBottomSheet(
+    viewModel: ProductDetailsViewModel = hiltViewModel(),
     product: Product? = null,
     isBottomSheetVisible: Boolean,
     sheetState: SheetState,
@@ -102,14 +108,9 @@ fun ProductDetailsBottomSheet(
                 )
             }
 
-            val productDetailsList = mapOf(
-                "Total Cost Price" to "72.08",
-                "VAT 15%" to "2.00",
-                "Total After VAT" to "77.00",
-                "Suggested Selling Price" to "75.08",
-                "Suggested Total Selling Price" to "2.00",
-                "Suggested Total Selling Price After VAT" to "80.00",
-            ).entries.toList()
+            val showCost = Utils.showCost()
+            val showRecommendedCost = Utils.showRecommended()
+            val qty = viewModel.counter
 
             Box(
                 modifier = Modifier
@@ -126,7 +127,7 @@ fun ProductDetailsBottomSheet(
                     if (isExpanded) {
                         Text(
                             modifier = Modifier.padding(top = 24.dp),
-                            text = "${product?.getName() ?: ""} (US Store)\n",
+                            text = "${product?.getName() ?: ""}\n",
                             fontFamily = arial,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 14.sp,
@@ -135,32 +136,43 @@ fun ProductDetailsBottomSheet(
                         LazyColumn(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                         ) {
-                            items(items = productDetailsList) { productDetails ->
-                                Row {
-                                    Text(
-                                        text = productDetails.key,
-                                        fontFamily = arial,
-                                        fontSize = 12.sp,
-                                        color = Color(0xFF8D8D8D)
+                            item {
+                                if(true){
+                                    val totalPrice = (product?.getPriceDouble()?.times(qty.value))?.fmt()
+                                    ProductDetail(label = stringResource(id = R.string.total_cost_price), value = totalPrice ?: "")
+
+                                    val vatValue = (product?.getVatDouble()?.times(qty.value))?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.vat_amount_per).replace("Amount (%)", "${product?.vatPercentage ?: ""}%"),
+                                        value = vatValue ?: ""
                                     )
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    Text(
-                                        text = productDetails.value,
-                                        fontFamily = arial,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 12.sp,
-                                        color = Color.Black
-                                    )
-                                    Spacer(modifier = Modifier.width(2.dp))
-                                    Text(
-                                        text = "SAR",
-                                        fontFamily = arial,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontSize = 12.sp,
-                                        color = Color(0xFF5F5F5F)
+
+                                    val totalCostAfterVat = (product?.getPriceAfterVatDouble(qty.value))?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.total_cost_after_vat),
+                                        value = totalCostAfterVat ?: ""
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(6.dp))
+
+                                if(true){
+                                    val recommendedRetailPrice = (product?.getRecommendedRetailPriceDouble())?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.recommended_retail_price),
+                                        value = recommendedRetailPrice ?: ""
+                                    )
+
+                                    val totalRecommendedRetailPrice = (product?.getRecommendedRetailPriceDouble()?.times(qty.value))?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.total_recommended_retail_price),
+                                        value = totalRecommendedRetailPrice ?: ""
+                                    )
+
+                                    val totalRecommendedRetailPriceAfterVat = (product?.getRecommendedRetailPriceAfterVatDouble(qty.value))?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.total_recommended_retail_price_after_vat),
+                                        value = totalRecommendedRetailPriceAfterVat ?: ""
+                                    )
+                                }
                             }
                         }
                     }
@@ -181,9 +193,18 @@ fun ProductDetailsBottomSheet(
                         .padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Counter()
+                    Counter(viewModel)
                     Spacer(modifier = Modifier.width(32.dp))
-                    ProductInfo( onClickInfo = { isExpanded = !isExpanded })
+
+                    val totalAmount = if(showCost){
+                        (product?.getPriceAfterVatDouble(qty.value))?.fmt() ?: ""
+                    }else{
+                        (product?.getSubResellerPrice())?.fmt() ?: ""
+                    }
+                    ProductInfo(
+                        totalAmount = totalAmount,
+                        onClickInfo = { isExpanded = !isExpanded }
+                    )
                 }
                 Divider(
                     modifier = Modifier
@@ -214,6 +235,38 @@ fun ProductDetailsBottomSheet(
             }
         }
     }
+}
+
+@Composable
+fun ProductDetail(
+    label: String,
+    value: String
+){
+    Row {
+        Text(
+            text = label,
+            fontFamily = arial,
+            fontSize = 12.sp,
+            color = Color(0xFF8D8D8D)
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Text(
+            text = value,
+            fontFamily = arial,
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.width(2.dp))
+        Text(
+            text = "SAR", //Utils.getUserCurrency(),
+            fontFamily = arial,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.sp,
+            color = Color(0xFF5F5F5F)
+        )
+    }
+    Spacer(modifier = Modifier.height(6.dp))
 }
 
 //@OptIn(ExperimentalMaterial3Api::class)

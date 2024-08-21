@@ -1,7 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.home.components
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -21,7 +20,6 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.utilities.TrapezoidShape
 import com.bitaqaty.reseller.utilities.noRippleCombinedClickable
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CategoryItem(
     category: Category,

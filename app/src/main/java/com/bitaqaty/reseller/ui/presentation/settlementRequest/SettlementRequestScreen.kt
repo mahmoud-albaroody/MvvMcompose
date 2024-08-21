@@ -53,6 +53,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.ui.presentation.common.Loading
@@ -65,6 +66,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SettlementRequestScreen(
+    navController: NavController,
     viewModel: SettlementRequestViewModel = hiltViewModel()
 ){
     val systemSettingsState by viewModel.systemSettingsState
@@ -111,6 +113,7 @@ fun SettlementRequestScreen(
                     .alpha(if (settlementRequestState is DataState.Loading) 0.5f else 1f)
                     .padding(horizontal = 12.dp)
             ){
+                item { Spacer(modifier = Modifier.height(12.dp)) }
                 item { SettlementHeader(viewModel = viewModel) }
                 item { Spacer(modifier = Modifier.height(16.dp)) }
                 item { BasicData(

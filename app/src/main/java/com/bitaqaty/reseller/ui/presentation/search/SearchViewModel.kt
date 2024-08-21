@@ -30,7 +30,13 @@ class SearchViewModel @Inject constructor(
         mutableStateOf<DataState<ProductListResponse>>(DataState.Loading)
     val productsState: State<DataState<ProductListResponse>> = _productsState
 
+    private val _searchProductsState =
+        mutableStateOf<DataState<ProductListResponse>>(DataState.Loading)
+    val searchProductsState: State<DataState<ProductListResponse>> = _searchProductsState
+
     val _categoryId = mutableStateOf<Int?>(null)
+
+    val query = mutableStateOf("")
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -63,6 +69,14 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             repo.getProducts(productsInfo).collect{state ->
                 _productsState.value = state
+            }
+        }
+    }
+
+    fun getSearchProducts(productsInfo: ProductListRequest){
+        viewModelScope.launch {
+            repo.getProducts(productsInfo).collect{state ->
+                _searchProductsState.value = state
             }
         }
     }

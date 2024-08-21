@@ -31,12 +31,14 @@ fun TopMerchantList(
                          if(topMerchant.category!!){
                              viewModel.getChildMerchants(topMerchant.categoryId!!)
                              viewModel._categoryId.value = topMerchant.categoryId
+                             viewModel.isCategory.value = true
                          }else{
                              val productsInfo = ProductListRequest(
                                  categoryId = topMerchant.categoryId!!,
                                  merchantId = topMerchant.merchantId!!
                              )
                              viewModel.getProducts(productsInfo)
+                             viewModel.isCategory.value = false
                          }
                 },
                 topMerchant = topMerchant

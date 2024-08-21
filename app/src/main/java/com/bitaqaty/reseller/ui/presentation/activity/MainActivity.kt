@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.CurrentUser
 import com.bitaqaty.reseller.ui.navigation.Navigation
 import com.bitaqaty.reseller.ui.navigation.BottomNavigationBar
 import com.bitaqaty.reseller.ui.navigation.Navigation2
@@ -87,6 +88,7 @@ fun MainScreen2(modifier: Modifier, mainViewModel: MainActivityViewModel) {
     val navController = rememberNavController()
     var haveBack: Boolean = false
     var appTitle: String = ""
+    var haveSubTitle = false
     var haveTopBar = true
     Scaffold(
         modifier = Modifier
@@ -98,143 +100,173 @@ fun MainScreen2(modifier: Modifier, mainViewModel: MainActivityViewModel) {
                     appTitle = "Notifications"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.Notification.route -> {
                     appTitle = "Notifications"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.MyProfileScreen.route -> {
                     appTitle = "Profile"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.ChargeBalanceScreen.route -> {
                     appTitle = "Charge Balance"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.ChangePasswordScreen.route -> {
                     appTitle = "Change Password"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.RechargeScreen.route -> {
                     appTitle = "Recharge Using Mada"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.RechargeLogScreen.route -> {
                     appTitle = "Recharge Log"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.ApplyFilterScreen.route -> {
                     appTitle = "Recharge Log"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.BankTransferScreen.route -> {
                     appTitle = "Bank Transfer"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.More.route -> {
                     appTitle = "More"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.RechargeUsingMadaScreen.route -> {
                     appTitle = "Recharge Using Mada"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.Transactions.route -> {
                     appTitle = "Transactions"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.SuccessfulPurchaseScreen.route -> {
                     appTitle = "Transactions"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.SelectMainCategoryScreen.route -> {
                     appTitle = "Select Main Category"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.Favorite.route -> {
                     appTitle = "Favorite"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.SelectSubCategoryScreen.route -> {
                     appTitle = "Select Sub Category"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.SalesReportScreen.route -> {
                     appTitle = "Sales Report"
                     haveBack = false
                     haveTopBar = true
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.Home.route -> {
                     appTitle = "Transactions"
                     haveBack = false
                     haveTopBar = false
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.Search.route -> {
                     haveBack = false
                     haveTopBar = false
+                    haveSubTitle = false
                 }
 
                 currentRoute(navController) == Screen.SettlementTransactionsScreen.route -> {
                     appTitle = "Settlement Transactions"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
                 currentRoute(navController) == Screen.ProductsDiscountsScreen.route -> {
                     appTitle = "Products Discount List"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
                 currentRoute(navController) == Screen.SalesReportScreen.route -> {
                     appTitle = "Sales Report"
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
                 }
                 currentRoute(navController) == Screen.Store.route -> {
                     appTitle = "Shopping Categories"
                     haveBack = !mainViewModel.showBottomNav.value
                     haveTopBar = true
+                    haveSubTitle = false
                 }
                 currentRoute(navController) == Screen.CategoryDetails.route -> {
                     appTitle = mainViewModel.categoryDetailsTitle.value
                     haveBack = true
                     haveTopBar = true
+                    haveSubTitle = false
+                }
+                currentRoute(navController) == Screen.SettlementRequestScreen.route -> {
+                    appTitle = "Settlement Request"
+                    haveBack = true
+                    haveTopBar = true
+                    haveSubTitle = true
                 }
             }
             if (haveTopBar) {
-                AppBarWithArrow(navigationTitle(navController, appTitle), haveBack = haveBack) {
+                AppBarWithArrow(navigationTitle(navController, appTitle),haveSubTitle, haveBack = haveBack) {
                     mainViewModel.showBottomNav.value = true
                     navController.popBackStack()
                 }

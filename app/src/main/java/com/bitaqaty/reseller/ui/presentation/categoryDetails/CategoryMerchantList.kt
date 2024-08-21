@@ -13,8 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.ProductListRequest
-import com.bitaqaty.reseller.ui.presentation.home.components.MerchantItem
-import com.bitaqaty.reseller.ui.presentation.search.SearchViewModel
+import com.bitaqaty.reseller.ui.presentation.common.MerchantItem
 import com.bitaqaty.reseller.ui.theme.Dimens
 
 @Composable

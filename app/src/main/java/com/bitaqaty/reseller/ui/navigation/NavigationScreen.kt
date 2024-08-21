@@ -55,4 +55,6 @@ sealed class Screen(
 
     object SettlementTransactionsScreen : Screen("SettlementTransactionsScreen", 0, "SettlementTransactionsScreen")
 
+    object SettlementRequestScreen : Screen("SettlementRequestScreen", 0 , "Settlement Request")
+
 }

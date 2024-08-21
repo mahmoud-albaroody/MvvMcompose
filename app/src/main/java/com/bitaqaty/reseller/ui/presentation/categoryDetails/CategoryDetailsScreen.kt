@@ -28,9 +28,6 @@ import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
-import com.bitaqaty.reseller.ui.presentation.search.SearchMerchantList
-import com.bitaqaty.reseller.ui.presentation.search.SearchProductList
-import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.Label
 import com.bitaqaty.reseller.ui.theme.label
 import com.bitaqaty.reseller.utilities.network.DataState

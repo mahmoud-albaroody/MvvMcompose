@@ -43,6 +43,8 @@ class HomeViewModel @Inject constructor(
 
     val _categoryId = mutableStateOf<Int?>(null)
 
+    val isCategory = mutableStateOf(false)
+
     fun getCategoryList() {
         viewModelScope.launch {
             val featuredCategory = Category(nameEn = "Featured")

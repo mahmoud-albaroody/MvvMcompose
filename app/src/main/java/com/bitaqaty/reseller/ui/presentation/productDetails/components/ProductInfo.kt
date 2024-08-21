@@ -31,7 +31,10 @@ import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @Composable
-fun ProductInfo(onClickInfo: () -> Unit) {
+fun ProductInfo(
+    totalAmount: String,
+    onClickInfo: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.Bottom
     ) {
@@ -69,7 +72,7 @@ fun ProductInfo(onClickInfo: () -> Unit) {
                 textAlign = TextAlign.Center
             )
             Text(
-                text = "80.87 SAR",
+                text = "$totalAmount SAR",
                 fontFamily = frutigerLTArabic,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF535353),
@@ -80,8 +83,8 @@ fun ProductInfo(onClickInfo: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProductInfoPreview() {
-    ProductInfo(onClickInfo = {})
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProductInfoPreview() {
+//    ProductInfo(onClickInfo = {})
+//}

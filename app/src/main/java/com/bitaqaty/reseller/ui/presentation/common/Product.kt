@@ -1,6 +1,5 @@
-package com.bitaqaty.reseller.ui.presentation.home.components
+package com.bitaqaty.reseller.ui.presentation.common
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,13 +23,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
-import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.noRippleClickable

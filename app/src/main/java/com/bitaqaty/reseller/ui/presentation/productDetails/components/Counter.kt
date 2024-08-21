@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsViewModel
 import com.bitaqaty.reseller.ui.theme.Counter
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.counterText
@@ -32,8 +33,10 @@ import com.bitaqaty.reseller.ui.theme.merchantBg
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @Composable
-fun Counter() {
-    var counter by remember { mutableIntStateOf(1) }
+fun Counter(
+    viewModel: ProductDetailsViewModel
+) {
+    val counter by viewModel.counter
 
     Box(
         modifier = Modifier
@@ -48,7 +51,7 @@ fun Counter() {
         ) {
             Text(
                 modifier = Modifier
-                    .noRippleClickable { if (counter > 1) counter-- }
+                    .noRippleClickable { viewModel.onDecrease() }
                     .padding(horizontal = 18.dp),
                 text = "-",
                 style = MaterialTheme.typography.Counter,
@@ -75,7 +78,7 @@ fun Counter() {
             )
             Text(
                 modifier = Modifier
-                    .noRippleClickable { counter++ }
+                    .noRippleClickable { viewModel.onIncrease() }
                     .padding(horizontal = 18.dp),
                 text = "+",
                 color = counterText,
@@ -85,8 +88,8 @@ fun Counter() {
     }
 }
 
-@Preview(showBackground = false)
-@Composable
-fun CounterPreview() {
-    Counter()
-}
+//@Preview(showBackground = false)
+//@Composable
+//fun CounterPreview() {
+//    Counter()
+//}
