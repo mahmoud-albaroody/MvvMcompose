@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.presentation.resetPassword
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,18 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
@@ -51,7 +46,6 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
 import com.google.gson.JsonObject
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -60,22 +54,24 @@ fun ResetPasswordScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = true) {
         resetPasswordViewModel.viewModelScope.launch {
             resetPasswordViewModel.resetPassword.collect {
-              //  resetPasswordViewModel.getRemainingTrials(it.token)
+                resetPasswordViewModel.getRemainingTrials(it.token)
                 val jsonObject = JsonObject()
                 jsonObject.addProperty("mobileNumber", it.mobileNumber)
                 jsonObject.addProperty("token", it.token)
                 navController.navigate(
                     Screen.VerificationCodeScreen
-                        .route.plus(Screen.VerificationCodeScreen.objectName
-                                + "$jsonObject")
+                        .route.plus(
+                            Screen.VerificationCodeScreen.objectName
+                                    + "$jsonObject"
+                        )
                 )
             }
         }
-        resetPasswordViewModel.viewModelScope.launch {
-            resetPasswordViewModel.remainingTrials.collect {
-
-            }
-        }
+//        resetPasswordViewModel.viewModelScope.launch {
+//            resetPasswordViewModel.remainingTrials.collect {
+//
+//            }
+//        }
     }
     ResetPassword(stringResource(id = R.string.to_reset_access_data)) {
         resetPasswordViewModel.resendResetAccess(it)
@@ -152,6 +148,7 @@ fun ResetPassword(
                         modifier = Modifier
                             .fillMaxWidth(),
                         value = email,
+
                         placeholder = {
                             Text(
                                 text = stringResource(id = R.string.reset_email),
@@ -175,7 +172,7 @@ fun ResetPassword(
                         shape = RoundedCornerShape(8.dp),
                         singleLine = true,
                         isError = isNotValid,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     )
                 }
             }

@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.ui.presentation.verificationCode
 
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -95,6 +96,7 @@ fun VerificationCodeScreen(
     val verificationCodeViewModel: VerificationCodeViewModel = hiltViewModel()
 
     LaunchedEffect(key1 = true) {
+      //  verificationCodeViewModel.resendResetAccessDataSms(token)
         verificationCodeViewModel.viewModelScope.launch {
             verificationCodeViewModel.validateResetAccessData.collect {
                 navController.navigate(Screen.LoginScreen.route)
@@ -143,22 +145,31 @@ fun VerificationCodeScreen(
                 }
             }
         }
-        verificationCodeViewModel.getRemainingTrials(token)
+        verificationCodeViewModel.viewModelScope.launch {
+            verificationCodeViewModel.resendResetAccess.collect { resend ->
+                verificationCodeViewModel.getRemainingTrials(token)
+            }
+        }
+
+
     }
-    VerificationCode(showTimer,
+    VerificationCode(
+        showTimer,
         speed,
         timeOutTxt,
         remainingTrialsNo,
         mobileNumber,
         onResendClick = {
-            verificationCodeViewModel.getRemainingTrials(token)
+            //  verificationCodeViewModel.getRemainingTrials(token)
+            verificationCodeViewModel.resendResetAccessDataSms(token)
         },
         onVerifyClick = {
             verificationCodeViewModel.validateResetVerificationCode(token, it)
         })
 }
 
-fun updateWaitTime(ctx: Context, resendSmsLink: Double, viewModel: VerificationCodeViewModel) {
+fun updateWaitTime(ctx: Context, resendSmsLink: Double,
+                   viewModel: VerificationCodeViewModel) {
     var sec = resendSmsLink * 60
     CoroutineScope(IO).launch {
         while (sec >= 0) {
@@ -335,7 +346,7 @@ fun VerificationCode(
                 Text(
                     text = stringResource(id = R.string.verification_resend_message),
                     style = TextStyle(
-                        fontSize = Dimens.fontSize12, color = Gray
+                        fontSize = Dimens.fontSize10, color = Gray
                     )
                 )
                 Text(
@@ -346,47 +357,49 @@ fun VerificationCode(
                         },
                     text = stringResource(id = R.string.verification_resend_underline_resend_again),
                     style = TextStyle(
-                        fontSize = Dimens.fontSize12, color = BebeBlue
+                        fontSize = Dimens.fontSize10, color = BebeBlue
                     )
                 )
                 Text(
                     modifier = Modifier.padding(start = Dimens.padding2),
                     text = remainingTrialsNo,
                     style = TextStyle(
-                        fontSize = Dimens.fontSize12, color = FontColor
+                        fontSize = Dimens.fontSize10, color = FontColor
                     )
                 )
             }
-            if (showTimer) Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Row(
-                    modifier = Modifier
-                        .padding(top = Dimens.padding8)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.verification_wait), style = TextStyle(
-                            fontSize = Dimens.fontSize12, color = Gray
+            if (showTimer)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = Dimens.padding8)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.verification_wait),
+                            style = TextStyle(
+                                fontSize = Dimens.fontSize12, color = Gray
+                            )
                         )
-                    )
 
-                    Text(text = timeOutTxt)
-                    Text(
-                        modifier = Modifier.padding(start = Dimens.padding2),
-                        text = stringResource(id = R.string.verification_seconds),
-                        style = TextStyle(
-                            fontSize = Dimens.fontSize12, color = BebeBlue
+                        Text(text = timeOutTxt)
+                        Text(
+                            modifier = Modifier.padding(start = Dimens.padding2),
+                            text = stringResource(id = R.string.verification_seconds),
+                            style = TextStyle(
+                                fontSize = Dimens.fontSize12, color = BebeBlue
+                            )
                         )
+                    }
+                    LottieAnimation(
+                        composition,
+                        progress,
+                        dynamicProperties = dynamicProperties,
+                        modifier = Modifier.size(50.dp)
                     )
                 }
-                LottieAnimation(
-                    composition,
-                    progress,
-                    dynamicProperties = dynamicProperties,
-                    modifier = Modifier.size(50.dp)
-                )
-            }
         }
 
         Button(modifier = Modifier
@@ -602,7 +615,7 @@ fun VerificationCodee(
                 )
                 Text(
                     modifier = Modifier.padding(start = Dimens.padding2),
-                    text = "1/2",
+                    text = "1/3",
                     style = TextStyle(
                         fontSize = Dimens.fontSize12, color = FontColor
                     )
@@ -668,3 +681,4 @@ fun VerificationCodee(
 
     }
 }
+

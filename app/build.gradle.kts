@@ -155,6 +155,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
     implementation(files("libs/fraudforce-lib-release-5.1.0.aar"))
     implementation("io.nearpay:nearpay-sdk:2.1.87")
+   // implementation("androidx.compose.material3:material3:1.2.0-beta01")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

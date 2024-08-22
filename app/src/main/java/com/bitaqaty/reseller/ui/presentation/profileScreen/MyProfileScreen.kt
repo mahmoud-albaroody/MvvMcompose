@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -43,9 +44,20 @@ import com.bitaqaty.reseller.utilities.Utils
 @Composable
 fun MyProfileScreen(navController: NavController, modifier: Modifier) {
     val myProfileViewModel: MyProfileViewModel = hiltViewModel()
+    val context = LocalContext.current
     LaunchedEffect(key1 = true) {}
     Profile(onItemClick = {
-        navController.navigate(Screen.ChangePasswordScreen.route)
+        if (it == "Account Manager") {
+            navController.navigate(Screen.AccountManagerScreen.route)
+        } else if (it == context.getString(R.string.termsAndConditions)) {
+            navController.navigate(Screen.PrivacyScreen.route.plus("1"))
+        } else if (it == context.getString(R.string.more_faq)) {
+            navController.navigate(Screen.PrivacyScreen.route.plus("2"))
+        } else if (it == context.getString(R.string.more_privacy_policy)) {
+            navController.navigate(Screen.PrivacyScreen.route.plus("3"))
+        } else {
+            navController.navigate(Screen.ChangePasswordScreen.route)
+        }
     })
 }
 
@@ -93,15 +105,21 @@ fun Profile(onItemClick: (String) -> Unit) {
             ProfileFooter(
                 stringResource(id = R.string.more_faq),
                 R.drawable.ic_check_faq_help_infor
-            )
+            ) {
+                onItemClick(it)
+            }
             ProfileFooter(
                 stringResource(id = R.string.termsAndConditions),
                 R.drawable.ic_verified_check_svgre
-            )
+            ) {
+                onItemClick(it)
+            }
             ProfileFooter(
                 stringResource(id = R.string.more_privacy_policy),
                 R.drawable.ic_shield_user_svgrepo
-            )
+            ) {
+                onItemClick(it)
+            }
         }
 
 
@@ -223,8 +241,10 @@ fun ProfileDetails() {
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .padding(start = Dimens.halfDefaultMargin,
-                            top = Dimens.padding2),
+                        .padding(
+                            start = Dimens.halfDefaultMargin,
+                            top = Dimens.padding2
+                        ),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Utils.getUserData()?.reseller?.lastLoginDate?.let {
@@ -310,7 +330,7 @@ fun AccountManager(
 
 
 @Composable
-fun ProfileFooter(text: String, icon: Int) {
+fun ProfileFooter(text: String, icon: Int, onItemClick: (String) -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -325,10 +345,13 @@ fun ProfileFooter(text: String, icon: Int) {
         )
         Text(
             modifier = Modifier
+                .clickable {
+                    onItemClick(text)
+                }
                 .padding(
                     vertical = Dimens.fourDefaultMargin
-                )
-                .fillMaxWidth(), style = TextStyle(
+                ),
+            style = TextStyle(
                 textAlign = TextAlign.Start,
                 color = BebeBlue,
                 fontSize = 12.sp,

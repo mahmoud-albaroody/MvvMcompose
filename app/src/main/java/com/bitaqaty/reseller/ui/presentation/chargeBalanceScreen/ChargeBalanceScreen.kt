@@ -57,6 +57,10 @@ fun ChargeBalanceScreen(navController: NavController, modifier: Modifier) {
             context.resources.getString(R.string.rechargeLog) -> {
                 navController.navigate(Screen.RechargeLogScreen.route)
             }
+
+            "list" -> {
+                navController.navigate(Screen.BankTransferListScreen.route)
+            }
         }
     })
 }
@@ -259,6 +263,7 @@ fun FooterChangeBalance(onItemClick: (String) -> Unit) {
                 R.drawable.ic_calendar_date_schedu,
                 12,
                 onItemClick = {
+                    onItemClick("list")
                 })
         }
     }

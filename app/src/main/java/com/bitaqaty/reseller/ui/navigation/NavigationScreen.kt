@@ -24,9 +24,11 @@ sealed class Screen(
 
     object SelectSubCategoryScreen : Screen("selectSubCategoryScreen", 0, "selectSubCategoryScreen")
 
-    object ApplyFilterScreen : Screen("applyFilterScreen", 0, "applyFilterScreen",
-         objectName = "applyFilterScreen/",
-        objectPath = "{comeFrom}")
+    object ApplyFilterScreen : Screen(
+        "applyFilterScreen", 0, "applyFilterScreen",
+        objectName = "applyFilterScreen/",
+        objectPath = "{comeFrom}"
+    )
 
     object MyProfileScreen : Screen("myProfileScreen", 0, "myProfileScreen")
     object ChargeBalanceScreen : Screen("chargeBalanceScreen", 0, "chargeBalanceScreen")
@@ -35,6 +37,9 @@ sealed class Screen(
     object RechargeScreen : Screen("rechargeScreen", 0, "rechargeScreen")
 
     object BankTransferScreen : Screen("bankTransferScreen", 0, "bankTransferScreen")
+
+    object BankTransferListScreen : Screen("bankTransferListScreen", 0, "bankTransferListScreen")
+
 
     object SuccessfulPurchaseScreen : Screen("transactionsScreen", 0, "transactionsScreen")
     object LoginScreen : Screen("loginScreen", 0, "loginScreen")
@@ -53,6 +58,14 @@ sealed class Screen(
         "verificationCodeScreen", objectName = "verificationCodeScreen/",
         objectPath = "{object}"
     )
+
+    object CodeForgetPasswordScreen : Screen(
+        "codeForgetPasswordScreen",
+        0,
+        "codeForgetPasswordScreen", objectName = "codeForgetPasswordScreen/",
+        objectPath = "{object}"
+    )
+
     object RestorePasswordScreen : Screen(
         "restorePasswordScreen",
         0,
@@ -63,13 +76,24 @@ sealed class Screen(
 
     object MainScreen2 : Screen("MainScreen2", 0, "MainScreen2")
     object MainScreen : Screen("MainScreen", 0, "MainScreen")
-    object SalesReportScreen : Screen("SalesReportScreen", 0, "SalesReportScreen",
-         objectName = "salesReportScreen/",
-        objectPath = "{username}")
+    object SalesReportScreen : Screen(
+        "SalesReportScreen", 0, "SalesReportScreen",
+        objectName = "salesReportScreen/",
+        objectPath = "{username}"
+    )
 
     object ProductsDiscountsScreen : Screen("ProductsDiscountsScreen", 0, "ProductsDiscountsScreen")
 
     object SettlementTransactionsScreen :
         Screen("SettlementTransactionsScreen", 0, "SettlementTransactionsScreen")
+
+    object AccountManagerScreen :
+        Screen("AccountManagerScreen", 0, "AccountManagerScreen")
+
+    object TermsAndConditionsScreen :
+        Screen("TermsAndConditionsScreen", 0, "TermsAndConditionsScreen")
+
+    object PrivacyScreen :
+        Screen("PrivacyScreen", 0, "PrivacyScreen", objectPath = "{object}")
 
 }

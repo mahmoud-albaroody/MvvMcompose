@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.navigation
 
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -8,10 +9,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-
+import com.bitaqaty.reseller.ui.presentation.accountManager.AccountManagerScreen
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.ApplyFilterScreen
 import com.bitaqaty.reseller.ui.presentation.bankTransfer.BankTransferScreen
+import com.bitaqaty.reseller.ui.presentation.bankTransferList.BankTransferListScreen
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePasswordScreen
 import com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen.ChargeBalanceScreen
 import com.bitaqaty.reseller.ui.presentation.components.SearchScreen
@@ -20,6 +22,7 @@ import com.bitaqaty.reseller.ui.presentation.home.HomeScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
+import com.bitaqaty.reseller.ui.presentation.privacyScreen.PrivacyScreen
 import com.bitaqaty.reseller.ui.presentation.productsDiscountsList.ProductsDiscountsScreen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.MyProfileScreen
 import com.bitaqaty.reseller.ui.presentation.recharge.RechargeScreen
@@ -31,14 +34,11 @@ import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategory
 import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTransactionsScreen
 import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
+import com.bitaqaty.reseller.ui.presentation.termsAndConditions.TermsAndConditionsScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
-import com.bitaqaty.reseller.ui.presentation.verificationCode.VerificationCodeScreen
-import com.bitaqaty.reseller.utilities.extention.getMap
-import com.bitaqaty.reseller.utilities.extention.toJson
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import org.json.JSONObject
 
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun Navigation2(
     navController: NavHostController,
@@ -113,6 +113,10 @@ fun Navigation2(
         composable(Screen.BankTransferScreen.route) {
             BankTransferScreen(navController = navController, modifier = modifier)
         }
+        composable(Screen.BankTransferListScreen.route) {
+            BankTransferListScreen(navController = navController, modifier = modifier)
+        }
+
         composable(Screen.Transactions.route) {
             var obj: JSONObject? = null
             it.savedStateHandle.get<String>("filterObject")?.let {
@@ -168,7 +172,33 @@ fun Navigation2(
         composable(Screen.SettlementTransactionsScreen.route) {
             SettlementTransactionsScreen(navController = navController, modifier = modifier)
         }
+        composable(Screen.AccountManagerScreen.route) {
+            AccountManagerScreen(navController = navController, modifier = modifier)
+        }
 
+        composable(Screen.TermsAndConditionsScreen.route) {
+            TermsAndConditionsScreen(
+                navController = navController,
+                modifier = modifier
+            )
+        }
+        composable(
+            Screen.PrivacyScreen.route.plus(
+                "{comeFrom}"
+            ),
+            arguments = listOf(navArgument("comeFrom") {
+                type = NavType.StringType
+                nullable = true
+            })
+        ) {
+            it.arguments?.getString("comeFrom")?.let { comeFr ->
+                PrivacyScreen(
+                    navController = navController,
+                    modifier = modifier, comFrom = comeFr
+                )
+            }
+
+        }
     }
 }
 

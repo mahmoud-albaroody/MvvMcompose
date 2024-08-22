@@ -21,4 +21,11 @@ data class RequestsLog(
             bankNameAr
         }
     }
+    fun getCurrentCurrency(): String {
+        return if (lang == "en") {
+            currencyEn
+        } else {
+            currencyAr
+        }
+    }
 }

@@ -1,8 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.restorePassword
 
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,19 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,25 +27,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
-import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -70,8 +55,7 @@ fun RestorePasswordScreen(
     val jsonObject = Gson().fromJson(jsonString, JsonObject::class.java)
     val email = jsonObject.get("email").asString
     val resetPasswordViewModel: RestorePasswordViewModel = hiltViewModel()
-//    val email = jsonObject.get("email").asString
-//    val mobileNumber = jsonObject.get("mobileNumber").asString
+
     LaunchedEffect(key1 = true) {
         resetPasswordViewModel.viewModelScope.launch {
             resetPasswordViewModel.resetPassword.collect {
@@ -87,19 +71,26 @@ fun RestorePasswordScreen(
     RestorePassword(
         jsonString,
         stringResource(id = R.string.to_reset_access_data)
-    ) { emai, methodSelected ->
-        resetPasswordViewModel.forgetPasswordSend(email, methodSelected)
+    ) {  methodSelected ->
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("username", email)
+        jsonObject.addProperty("verificationType", methodSelected)
+        navController.navigate(
+            Screen.CodeForgetPasswordScreen
+                .route.plus(
+                    Screen.CodeForgetPasswordScreen.objectName
+                            + "$jsonObject"
+                )
+        )
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RestorePassword(
     text: String,
     text2: String? = null,
-    onResetClick: (email: String, methodSelected: String) -> Unit
+    onResetClick: ( methodSelected: String) -> Unit
 ) {
-    val email by rememberSaveable { mutableStateOf("") }
     var methodSelected by rememberSaveable { mutableStateOf("") }
     val scrollState = rememberScrollState()
     Column(
@@ -165,7 +156,7 @@ fun RestorePassword(
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(BebeBlue),
             onClick = {
-                onResetClick(email, methodSelected)
+                onResetClick( methodSelected)
             }) {
             Text(
                 text = stringResource(id = R.string.send),

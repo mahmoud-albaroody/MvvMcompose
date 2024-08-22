@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,6 +14,7 @@ import androidx.navigation.navArgument
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen2
 import com.bitaqaty.reseller.ui.presentation.forgetPassword.ForgetPasswordScreen
+import com.bitaqaty.reseller.ui.presentation.forgetPasswordCod.CodeForgetPasswordScreen
 import com.bitaqaty.reseller.ui.presentation.login.LoginScreen
 import com.bitaqaty.reseller.ui.presentation.resetPassword.ResetPasswordScreen
 import com.bitaqaty.reseller.ui.presentation.restorePassword.RestorePasswordScreen
@@ -26,11 +26,14 @@ fun Navigation(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    NavHost(navController, startDestination = Screen.MainScreen2.route, modifier) {
+    NavHost(navController, startDestination = Screen.LoginScreen.route, modifier) {
 
         composable(Screen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier = modifier)
         }
+//        composable(Screen.CodeForgetPasswordScreen.route) {
+//            CodeForgetPasswordScreen(navController = navController, modifier = modifier)
+//        }
         composable(Screen.ResetPasswordScreen.route) {
             ResetPasswordScreen(navController = navController, modifier = modifier)
         }
@@ -51,7 +54,19 @@ fun Navigation(
                 )
             }
         }
-
+        composable(Screen.CodeForgetPasswordScreen.route.plus(Screen.CodeForgetPasswordScreen.objectName
+                + "{object}"),
+            arguments = listOf(navArgument("object") {
+                type = NavType.StringType
+                nullable = true
+            })
+        ) {
+            it.arguments?.getString("object")?.let { jsonString ->
+                CodeForgetPasswordScreen(
+                    navController, modifier, jsonString
+                )
+            }
+        }
         composable(
             Screen.RestorePasswordScreen.route.plus(Screen.RestorePasswordScreen.objectName + "{username}"),
             arguments = listOf(navArgument("username") {

@@ -132,7 +132,7 @@ fun MainScreen2(modifier: Modifier) {
                 }
 
                 currentRoute(navController) == Screen.ChangePasswordScreen.route -> {
-                    appTitle =stringResource(id = R.string.change_password)
+                    appTitle = stringResource(id = R.string.change_password)
                     haveBack = true
                     haveTopBar = true
                 }
@@ -150,7 +150,7 @@ fun MainScreen2(modifier: Modifier) {
                 }
 
                 currentRoute(navController) == Screen.ApplyFilterScreen.route -> {
-                    appTitle =stringResource(id = R.string.rechargeLog)
+                    appTitle = stringResource(id = R.string.rechargeLog)
                     haveBack = true
                     haveTopBar = true
                 }
@@ -160,6 +160,13 @@ fun MainScreen2(modifier: Modifier) {
                     haveBack = true
                     haveTopBar = true
                 }
+
+                currentRoute(navController) == Screen.BankTransferListScreen.route -> {
+                    appTitle = stringResource(id = R.string.bank_transfer)
+                    haveBack = true
+                    haveTopBar = true
+                }
+
 
                 currentRoute(navController) == Screen.More.route -> {
                     appTitle = stringResource(id = R.string.more)
@@ -174,7 +181,7 @@ fun MainScreen2(modifier: Modifier) {
                 }
 
                 currentRoute(navController) == Screen.Transactions.route -> {
-                    appTitle =  stringResource(id = R.string.tranaction_log)
+                    appTitle = stringResource(id = R.string.tranaction_log)
                     haveBack = false
                     haveTopBar = true
                 }
@@ -221,6 +228,25 @@ fun MainScreen2(modifier: Modifier) {
                     haveTopBar = true
                 }
 
+                currentRoute(navController) == Screen.AccountManagerScreen.route -> {
+                    appTitle = stringResource(id = R.string.account_manager)
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.TermsAndConditionsScreen.route -> {
+                    appTitle = stringResource(id = R.string.termsAndConditions)
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+                currentRoute(navController) == Screen.PrivacyScreen.route -> {
+                    appTitle = stringResource(id = R.string.more_privacy_policy)
+                    haveBack = true
+                    haveTopBar = true
+                }
+
+
                 currentRoute(navController) == Screen.ProductsDiscountsScreen.route -> {
                     appTitle = stringResource(id = R.string.product_discount_list)
                     haveBack = true
@@ -240,7 +266,7 @@ fun MainScreen2(modifier: Modifier) {
             }
 
         },
-        content = {  contentPadding->
+        content = { contentPadding ->
             Box(modifier = Modifier.padding(contentPadding)) {
                 Navigation2(
                     navController, modifier = Modifier

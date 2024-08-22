@@ -46,6 +46,6 @@ val Red = Color(0xFFEB0303)
 val White = Color(0xFFFFFFFF)
 
 val Green = Color(0xff23A212)
-
+val LiteGreen = Color(0xC631B020)
 
 val counterText = Color(0xFF4B4B4B)

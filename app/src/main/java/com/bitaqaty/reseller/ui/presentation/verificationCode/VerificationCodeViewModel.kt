@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.verificationCode
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,6 +36,10 @@ class VerificationCodeViewModel @Inject constructor(private val repo: Authentica
         MutableSharedFlow<RemainingTrials>()
     val remainingTrials: MutableSharedFlow<RemainingTrials>
         get() = _remainingTrials
+    private val _resendResetAccess =
+        MutableSharedFlow<String>()
+    val resendResetAccess: MutableSharedFlow<String>
+        get() = _resendResetAccess
 
     fun validateResetVerificationCode(token: String?, code: String?) {
         val jsonObject = JsonObject()
@@ -57,6 +62,19 @@ class VerificationCodeViewModel @Inject constructor(private val repo: Authentica
                 .catch {
                 }.buffer().collect {
                     _remainingTrials.emit(it)
+                }
+        }
+    }
+
+    fun resendResetAccessDataSms(resetPasswordToken: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("token", resetPasswordToken)
+        viewModelScope.launch {
+            repo.resendResetAccessDataSms(jsonObject)
+                .catch {
+                    Log.e("dddd",it.toString())
+                    _resendResetAccess.emit("")
+                }.buffer().collect {
                 }
         }
     }

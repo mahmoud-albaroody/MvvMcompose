@@ -59,6 +59,7 @@ import com.bitaqaty.reseller.utilities.addProductToBag
 import com.bitaqaty.reseller.utilities.deleteCartDB
 import com.bitaqaty.reseller.utilities.initCashIn
 import com.bitaqaty.reseller.utilities.madaConnectionResult
+import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.utilities.printTransaction
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -83,8 +84,7 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = true) {
         rechargeViewModel.viewModelScope.launch {
             rechargeViewModel.validatePartnerCharging.collect {
-                makeRecharge(
-                    it,
+                makeRecharge(it,
                     compositeDisposable,
                     amount,
                     context,
@@ -110,6 +110,8 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
         rechargeViewModel.validatePartnerCharging("MADA_AHLI", amount.toDouble())
     }, amount = {
         amount = it
+    }, onTermsCondition = {
+        navController.navigate(Screen.TermsAndConditionsScreen.route)
     })
 }
 
@@ -132,7 +134,11 @@ private fun printBitmap(
 
 
 @Composable
-fun Recharge(onRechargeClick: () -> Unit, amount: (String) -> Unit) {
+fun Recharge(
+    onRechargeClick: () -> Unit,
+    amount: (String) -> Unit,
+    onTermsCondition: () -> Unit = {},
+) {
     val type: Int = -1
     var min = ""
     var max = ""
@@ -207,7 +213,8 @@ fun Recharge(onRechargeClick: () -> Unit, amount: (String) -> Unit) {
         Box(Modifier.padding(top = Dimens.padding12, bottom = Dimens.padding12)) {
             DynamicSelectTextField(
                 TextAlign.Start,
-                stringArrayResource(R.array.credit_mada_instruction_arr).toList(), false
+                stringArrayResource(R.array.credit_mada_instruction_arr).toList(),
+                false
             ) {
 
             }
@@ -222,33 +229,31 @@ fun Recharge(onRechargeClick: () -> Unit, amount: (String) -> Unit) {
                 R.drawable.ic_info_circle
             )
             ProfileFooter(minText, R.drawable.ic_info_circle)
-            if (isPartnerApp())
-                ProfileFooter(
-                    stringResource(id = R.string.max_number_of_recharge_per_day).replace(
-                        "[X]",
-                        perRequest
-                    ),
-                    R.drawable.ic_info_circle
-                )
+            if (isPartnerApp()) ProfileFooter(
+                stringResource(id = R.string.max_number_of_recharge_per_day).replace(
+                    "[X]", perRequest
+                ), R.drawable.ic_info_circle
+            )
         }
         Box(Modifier.padding(top = Dimens.DefaultMargin20)) {
-            FilterButton(
-                backgroundTex = Blue100, text = stringResource(id = R.string.recharge),
+            FilterButton(backgroundTex = Blue100,
+                text = stringResource(id = R.string.recharge),
                 iconVisibility = false,
                 textColor = White,
                 horizontalPadding = Dimens.DefaultMargin,
                 onApplyFilterClick = {
                     onRechargeClick.invoke()
-                }
-            )
+                })
         }
         Row(
             Modifier
                 .fillMaxWidth()
+                .noRippleClickable {
+                    onTermsCondition()
+                }
                 .padding(horizontal = Dimens.padding30)
                 .padding(top = Dimens.halfDefaultMargin),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+            horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 text = stringResource(R.string.by_continue_recharging_you_agree_on),
                 style = TextStyle(color = LightGrey200, fontSize = 11.sp)
@@ -298,31 +303,26 @@ fun RechargeAmount(countries: AccountsCountries? = null, onCounterSelectedClick:
                     horizontal = Dimens.DefaultMargin,
                 )
                 .padding(
-                    top = Dimens.DefaultMargin20,
-                    bottom = Dimens.quarterDefaultMargin
-                ),
-            text = title,
-            style = TextStyle(color = LightGrey400, fontSize = 14.sp)
+                    top = Dimens.DefaultMargin20, bottom = Dimens.quarterDefaultMargin
+                ), text = title, style = TextStyle(color = LightGrey400, fontSize = 14.sp)
         )
         Box(
             modifier = Modifier.padding(
                 bottom = Dimens.padding30
             )
         ) {
-            if (countriesList.isNotEmpty())
-                DynamicSelectTextField(
-                    TextAlign.Center,
-                    countriesList,
-                    true
-                ) {
-                    onCounterSelectedClick(it)
-                }
+            if (countriesList.isNotEmpty()) DynamicSelectTextField(
+                TextAlign.Center, countriesList, true
+            ) {
+                onCounterSelectedClick(it)
+            }
         }
     }
 }
 
 private fun purchaseWithCashIn(
-    nearpay: NearPay, amount: Long,
+    nearpay: NearPay,
+    amount: Long,
     paymentRefNumber: String,
     context: Context,
     onCallRecharge: (JsonObject) -> Unit,
@@ -335,13 +335,17 @@ private fun purchaseWithCashIn(
     val enableUiDismiss = true // [optional] it will allow you to control dismissing the UI
     val transactionId = null
 
-    nearpay.purchase(amount, paymentRefNumber, enableReceiptUi,
-        enableReversal, finishTimeOut, transactionId, enableUiDismiss, object :
-            PurchaseListener {
+    nearpay.purchase(amount,
+        paymentRefNumber,
+        enableReceiptUi,
+        enableReversal,
+        finishTimeOut,
+        transactionId,
+        enableUiDismiss,
+        object : PurchaseListener {
             override fun onPurchaseApproved(transactionData: TransactionData) {
                 transactionData.receipts?.get(0)?.toImage(
-                    context,
-                    380, 12
+                    context, 380, 12
                 ) {
                     it?.let { it1 -> transactionListener(it1) }
 //                    if (versionCode > BuildConfig.VERSION_CODE && (isMadaApp()) && isUpdateMandatory) {
@@ -456,43 +460,34 @@ private fun purchaseWithCashIn(
                         transactionData.receipts?.get(0).let {
                             val jsonObject = JsonObject()
                             jsonObject.addProperty(
-                                "amount",
-                                it?.amount_authorized?.value
+                                "amount", it?.amount_authorized?.value
                             )
                             jsonObject.addProperty(
-                                "resellerId",
-                                Utils.getUserData()?.reseller?.id
+                                "resellerId", Utils.getUserData()?.reseller?.id
                             )
                             jsonObject.addProperty("deviceId", Globals.DEV_ID)
                             jsonObject.addProperty(
-                                "requestStatus",
-                                it?.status_message?.english?.toUpperCase()
+                                "requestStatus", it?.status_message?.english?.toUpperCase()
                             )
                             jsonObject.addProperty(
-                                "paymentRefNumber",
-                                paymentRefNumber
+                                "paymentRefNumber", paymentRefNumber
                             )
                             jsonObject.addProperty(
-                                "responseBody",
-                                Gson().toJson(it).toString()
+                                "responseBody", Gson().toJson(it).toString()
                             )
                             jsonObject.addProperty(
-                                "signature",
-                                it?.transaction_uuid.toString()
+                                "signature", it?.transaction_uuid.toString()
                             )
                             jsonObject.addProperty(
-                                "rrn",
-                                it?.retrieval_reference_number
+                                "rrn", it?.retrieval_reference_number
                             )
                             jsonObject.addProperty(
-                                "usedCard",
-                                it?.card_scheme?.name?.english
+                                "usedCard", it?.card_scheme?.name?.english
                             )
                             jsonObject.addProperty("cardNumber", it?.pan)
                             jsonObject.addProperty("cardHolderName", "")
                             jsonObject.addProperty(
-                                "authorizationCode",
-                                it?.approval_code?.value
+                                "authorizationCode", it?.approval_code?.value
                             )
                             onCallRecharge.invoke(jsonObject)
                         }
@@ -507,14 +502,12 @@ private fun purchaseWithCashIn(
                 val jsonObject = JsonObject()
 
                 jsonObject.addProperty(
-                    "resellerId",
-                    Utils.getUserData()?.reseller?.id
+                    "resellerId", Utils.getUserData()?.reseller?.id
                 )
                 jsonObject.addProperty("deviceId", Globals.DEV_ID)
 
                 jsonObject.addProperty(
-                    "paymentRefNumber",
-                    paymentRefNumber
+                    "paymentRefNumber", paymentRefNumber
                 )
 
                 when (purchaseFailure) {
@@ -523,48 +516,38 @@ private fun purchaseWithCashIn(
                         // Your Code Here
                         transactionReceipt = purchaseFailure.transactionData.receipts?.get(0)
                         statusMessage =
-                            transactionReceipt?.status_message?.english.toString() + "\n" +
-                                    transactionReceipt?.status_message?.arabic.toString()
+                            transactionReceipt?.status_message?.english.toString() + "\n" + transactionReceipt?.status_message?.arabic.toString()
                         transactionReceipt.let {
                             val jsonObject = JsonObject()
                             jsonObject.addProperty(
-                                "amount",
-                                it?.amount_authorized?.value
+                                "amount", it?.amount_authorized?.value
                             )
                             jsonObject.addProperty(
-                                "resellerId",
-                                Utils.getUserData()?.reseller?.id
+                                "resellerId", Utils.getUserData()?.reseller?.id
                             )
                             jsonObject.addProperty("deviceId", Globals.DEV_ID)
                             jsonObject.addProperty(
-                                "requestStatus",
-                                statusMessage
+                                "requestStatus", statusMessage
                             )
                             jsonObject.addProperty(
-                                "paymentRefNumber",
-                                paymentRefNumber
+                                "paymentRefNumber", paymentRefNumber
                             )
                             jsonObject.addProperty(
-                                "responseBody",
-                                Gson().toJson(it).toString()
+                                "responseBody", Gson().toJson(it).toString()
                             )
                             jsonObject.addProperty(
-                                "signature",
-                                it?.transaction_uuid.toString()
+                                "signature", it?.transaction_uuid.toString()
                             )
                             jsonObject.addProperty(
-                                "rrn",
-                                it?.retrieval_reference_number
+                                "rrn", it?.retrieval_reference_number
                             )
                             jsonObject.addProperty(
-                                "usedCard",
-                                it?.card_scheme?.name?.english
+                                "usedCard", it?.card_scheme?.name?.english
                             )
                             jsonObject.addProperty("cardNumber", it?.pan)
                             jsonObject.addProperty("cardHolderName", "")
                             jsonObject.addProperty(
-                                "authorizationCode",
-                                it?.approval_code?.value
+                                "authorizationCode", it?.approval_code?.value
                             )
                         }
 
@@ -601,8 +584,7 @@ private fun purchaseWithCashIn(
                     else -> {}
                 }
                 jsonObject.addProperty(
-                    "requestStatus",
-                    statusMessage
+                    "requestStatus", statusMessage
                 )
                 onCallRecharge.invoke(jsonObject)
             }
@@ -610,9 +592,12 @@ private fun purchaseWithCashIn(
 }
 
 private fun makeRecharge(
-    it: ValidationSurpayChargeResult, compositeDisposable: CompositeDisposable, amount: String,
+    it: ValidationSurpayChargeResult,
+    compositeDisposable: CompositeDisposable,
+    amount: String,
     context: Context,
-    onCallRecharge: (JsonObject) -> Unit, transactionListener: (transaction: Bitmap) -> Unit
+    onCallRecharge: (JsonObject) -> Unit,
+    transactionListener: (transaction: Bitmap) -> Unit
 ) {
     var paymentRefNumber = ""
     if (it.chargeValid) {
@@ -629,24 +614,27 @@ private fun makeRecharge(
                 )
             } else if (isCashInApp() || isNearPayApp()) {
                 if (amount.substringAfter(".").length == 2) {
-                    purchaseWithCashIn(
-                        context.initCashIn(),
+                    purchaseWithCashIn(context.initCashIn(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
-                        paymentRefNumber, context, onCallRecharge = {
+                        paymentRefNumber,
+                        context,
+                        onCallRecharge = {
                             onCallRecharge(it)
-                        }, transactionListener = {
+                        },
+                        transactionListener = {
                             transactionListener(it)
                         })
                 } else {
-                    purchaseWithCashIn(
-                        context.initCashIn(),
+                    purchaseWithCashIn(context.initCashIn(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
-                        paymentRefNumber, context, onCallRecharge = {
+                        paymentRefNumber,
+                        context,
+                        onCallRecharge = {
                             onCallRecharge(it)
-                        }, transactionListener = {
+                        },
+                        transactionListener = {
                             transactionListener(it)
-                        }
-                    )
+                        })
                 }
             }
 

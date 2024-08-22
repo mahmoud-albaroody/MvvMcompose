@@ -25,4 +25,9 @@
         <item name="android:fontFamily">@font/cairo_bold</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorSecondary">@color/purple_700</item>
+        <item name="android:colorAccent">@color/purple_700</item>
+        <item name="colorAccent">@color/purple_700</item>
+    </style>
 </resources>

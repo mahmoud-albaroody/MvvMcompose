@@ -2,8 +2,10 @@ package com.bitaqaty.reseller.ui.presentation.applyFilter
 
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.util.Log
 import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -75,6 +78,7 @@ import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
+import com.bitaqaty.reseller.ui.theme.BanKTransferBackgroundColor
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
@@ -87,6 +91,7 @@ import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.extention.toJson
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 
@@ -627,7 +632,12 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
     var switchItem by remember {
         mutableStateOf(true)
     }
-
+    var deleteDateTo by remember {
+        mutableStateOf(false)
+    }
+    var deleteDateFrom by remember {
+        mutableStateOf(false)
+    }
     var selectedDateTo by remember {
         mutableStateOf(mContext.getString(R.string.to))
     }
@@ -643,15 +653,15 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
             Modifier
                 .weight(1f)
                 .padding(
-                    horizontal = Dimens.DefaultMargin,
                     vertical = Dimens.halfDefaultMargin
                 )
+                .padding(start = Dimens.DefaultMargin, end = Dimens.halfDefaultMargin)
                 .clickable {
                     showDatePicker = true
                     switchItem = true
                 },
             shape = RoundedCornerShape(Dimens.DefaultMargin10),
-            colors = CardDefaults.cardColors(containerColor = DefaultBackgroundColor)
+            colors = CardDefaults.cardColors(containerColor = BanKTransferBackgroundColor)
 
         ) {
             Row(
@@ -659,11 +669,13 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    modifier = Modifier.padding(
-                        start = Dimens.halfDefaultMargin,
-                        top = Dimens.halfDefaultMargin,
-                        bottom = Dimens.halfDefaultMargin
-                    ),
+                    modifier = Modifier
+                        .padding(
+                            start = Dimens.halfDefaultMargin,
+                            top = Dimens.halfDefaultMargin,
+                            bottom = Dimens.halfDefaultMargin
+                        )
+                        .weight(1f),
                     painter = painterResource(R.drawable.ic_calendar_date_schedu),
                     contentDescription = ""
                 )
@@ -671,17 +683,35 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
                     modifier =
                     Modifier
                         .fillMaxWidth()
+                        .weight(2f)
                         .padding(
                             vertical = Dimens.DefaultMargin,
                             horizontal = Dimens.padding4
                         ),
                     text = selectedDateFrom,
                     style = TextStyle(
-                        fontSize = 13.sp,
+                        fontSize = Dimens.fontSize12,
                         textAlign = TextAlign.Center,
                         color = BebeBlue,
                     )
                 )
+                if (deleteDateFrom)
+                    Image(
+                        modifier = Modifier
+                            .padding(
+                                start = Dimens.halfDefaultMargin,
+                                top = Dimens.halfDefaultMargin,
+                                bottom = Dimens.halfDefaultMargin
+                            )
+                            .weight(1f)
+                            .clickable {
+                                selectedDateFrom = mContext.getString(R.string.from)
+                                deleteDateFrom = false
+                                dateFrom("")
+                            },
+                        painter = painterResource(R.drawable.baseline_close_24),
+                        contentDescription = ""
+                    )
             }
 
         }
@@ -689,15 +719,15 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
             Modifier
                 .weight(1f)
                 .padding(
-                    horizontal = Dimens.DefaultMargin,
                     vertical = Dimens.halfDefaultMargin
                 )
+                .padding(start = Dimens.halfDefaultMargin, end = Dimens.DefaultMargin)
                 .clickable {
                     showDatePicker = true
                     switchItem = false
                 },
             shape = RoundedCornerShape(Dimens.DefaultMargin10),
-            colors = CardDefaults.cardColors(containerColor = DefaultBackgroundColor)
+            colors = CardDefaults.cardColors(containerColor = BanKTransferBackgroundColor)
 
         ) {
             Row(
@@ -705,11 +735,13 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    modifier = Modifier.padding(
-                        start = Dimens.halfDefaultMargin,
-                        top = Dimens.halfDefaultMargin,
-                        bottom = Dimens.halfDefaultMargin
-                    ),
+                    modifier = Modifier
+                        .padding(
+                            start = Dimens.halfDefaultMargin,
+                            top = Dimens.halfDefaultMargin,
+                            bottom = Dimens.halfDefaultMargin
+                        )
+                        .weight(1f),
                     painter = painterResource(R.drawable.ic_calendar_date_schedu),
                     contentDescription = ""
                 )
@@ -717,6 +749,7 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
                     modifier =
                     Modifier
                         .fillMaxWidth()
+                        .weight(2f)
                         .padding(
                             vertical = Dimens.DefaultMargin,
                             horizontal = Dimens.padding4
@@ -724,11 +757,28 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
 
                     text = selectedDateTo,
                     style = TextStyle(
-                        fontSize = 13.sp,
+                        fontSize = Dimens.fontSize12,
                         textAlign = TextAlign.Center,
                         color = BebeBlue,
                     )
                 )
+                if (deleteDateTo)
+                    Image(
+                        modifier = Modifier
+                            .padding(
+                                start = Dimens.halfDefaultMargin,
+                                top = Dimens.halfDefaultMargin,
+                                bottom = Dimens.halfDefaultMargin
+                            )
+                            .weight(1f)
+                            .clickable {
+                                selectedDateTo = mContext.getString(R.string.to)
+                                deleteDateTo = false
+                                dateTo("")
+                            },
+                        painter = painterResource(R.drawable.baseline_close_24),
+                        contentDescription = ""
+                    )
             }
         }
     }
@@ -736,8 +786,10 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
         DatePickerModal(onDateSelected = {
             if (switchItem) {
                 selectedDateFrom = it
+                deleteDateFrom = true
             } else {
                 selectedDateTo = it
+                deleteDateTo = true
             }
             showDatePicker = false
             showTimerPicker = true
@@ -750,9 +802,11 @@ fun CustomDate(dateTo: (String) -> Unit, dateFrom: (String) -> Unit) {
             showTimerPicker = false
             if (switchItem) {
                 selectedDateFrom += " $it"
+                deleteDateFrom = true
                 dateFrom(selectedDateFrom)
             } else {
                 selectedDateTo += " $it"
+                deleteDateTo = true
                 dateTo(selectedDateTo)
             }
 
@@ -776,20 +830,25 @@ fun DatePickerModal(
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
     mCalendar.time = Date()
+
     val mDate = remember { mutableStateOf("") }
     val mDatePickerDialog = android.app.DatePickerDialog(
-        mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+        mContext, R.style.DatePickerTheme,
+        { mDatePicker: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
             onDateSelected(mDate.value)
         }, mYear, mMonth, mDay
     )
+
+    mDatePickerDialog.datePicker.maxDate = mCalendar.timeInMillis
     mDatePickerDialog.setOnDismissListener {
         onDismiss.invoke()
     }
+
     mDatePickerDialog.show()
 
 }
+
 
 @Composable
 fun TimePickerDialog(
@@ -802,7 +861,7 @@ fun TimePickerDialog(
     val mMinute = mCalendar[Calendar.MINUTE]
     val mTime = remember { mutableStateOf("") }
     val timePickerDialog = TimePickerDialog(
-        mContext,
+        mContext, R.style.DatePickerTheme,
         { _, mHour: Int, mMinute: Int ->
             mTime.value = "$mHour:$mMinute"
             onTimeSelected(mTime.value)
@@ -813,3 +872,4 @@ fun TimePickerDialog(
     }
     timePickerDialog.show()
 }
+
