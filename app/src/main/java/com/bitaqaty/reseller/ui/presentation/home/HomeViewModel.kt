@@ -2,18 +2,14 @@ package com.bitaqaty.reseller.ui.presentation.home
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.Category
-import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.repository.BBRepository
-import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.domain.SettingUseCase
-import com.bitaqaty.reseller.utilities.network.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -29,7 +25,7 @@ class HomeViewModel @Inject constructor(
     //    private val _categoryState =
 //        mutableStateOf<DataState<ArrayList<Category>>?>(DataState.Loading)
 //    val categoryState: State<DataState<ArrayList<Category>>?> = _categoryState
-    val categoryState: MutableState<DataState<ArrayList<Category>>?> = mutableStateOf(null)
+    val categoryState: MutableState<Nothing?> = mutableStateOf(null)
 
     private val _getProfile =
         MutableSharedFlow<User>()
@@ -43,15 +39,15 @@ class HomeViewModel @Inject constructor(
 
 
     fun getCategoryList() {
-        viewModelScope.launch {
-            repo.getCategoryList()
-                .catch {
-                    Log.e("dddd", "sdfdsf")
-                }
-                .onEach {
-                    categoryState.value = it
-                }.launchIn(viewModelScope)
-        }
+//        viewModelScope.launch {
+//            repo.getCategoryList()
+//                .catch {
+//                    Log.e("dddd", "sdfdsf")
+//                }
+//                .onEach {
+//                 //   categoryState.value = it
+//                }.launchIn(viewModelScope)
+//        }
     }
 
     fun getProfile() {

@@ -66,10 +66,10 @@ fun Navigation2(
             it.savedStateHandle.get<String>("filterObject")?.let {
                 obj = JSONObject(it)
             }
-            SalesReportScreen(
-                navController = navController, modifier = modifier,
-                obj
-            )
+//            SalesReportScreen(
+//                navController = navController, modifier = modifier,
+//                obj
+//            )
             it.savedStateHandle.remove<String>("filterObject")
             RechargeLogScreen(navController = navController, modifier = modifier, obj)
         }

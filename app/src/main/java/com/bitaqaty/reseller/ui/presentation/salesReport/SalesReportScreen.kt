@@ -26,14 +26,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -53,6 +57,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Report
 import com.bitaqaty.reseller.data.model.ReportLog
 import com.bitaqaty.reseller.data.model.ReportRequestBody
+import com.bitaqaty.reseller.data.model.RequestsLog
 import com.bitaqaty.reseller.ui.component.ReportPrintComponent
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
@@ -82,6 +87,9 @@ import org.json.JSONObject
 fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSONObject?) {
     val salesReportViewModel: SalesReportViewModel = hiltViewModel()
     var report by remember { mutableStateOf(ReportLog()) }
+
+    var totalElementsCount by remember { mutableIntStateOf(0) }
+    val reportLog = remember { mutableStateListOf<Report>() }
 
     var accountNo: Int? = Utils.getUserData()?.reseller?.id
     var categoryId: Int? = -1
@@ -151,11 +159,13 @@ fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSO
         salesReportViewModel.viewModelScope.launch {
             salesReportViewModel.getReport.collect {
                 report = it
+                totalElementsCount = report.totalElementsCount!!
+                report.elements?.let { it1 -> reportLog.addAll(it1) }
             }
         }
 
     }
-    SalesReport(report, onFilterClick = {
+    SalesReport(report, totalElementsCount, reportLog, onFilterClick = {
         navController.navigate(
             Screen.ApplyFilterScreen.route.plus(
                 Screen.ApplyFilterScreen.objectName
@@ -169,18 +179,25 @@ fun SalesReportScreen(navController: NavController, modifier: Modifier, obj: JSO
             ctx = context,
             viewRecommended = true
         )
+    }, onClick = {
+        reportRequestBody.pageNumber++
+        salesReportViewModel.getSalesReportList(reportRequestBody)
     })
 }
 
 
 @Composable
-fun SalesReport(report: ReportLog, onFilterClick: () -> Unit, onPrintClick: (ReportLog) -> Unit) {
+fun SalesReport(
+    report: ReportLog,
+    totalElementsCount: Int,
+    reportLog: SnapshotStateList<Report>,
+    onFilterClick: () -> Unit,
+    onPrintClick: (ReportLog) -> Unit,
+    onClick: () -> Unit,
+) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
-    val reportLogList = remember { mutableStateListOf<Report>() }
 
-    reportLogList.clear()
-    report.elements?.let { it1 -> reportLogList.addAll(it1) }
     Column(
         Modifier
             .fillMaxSize()
@@ -197,9 +214,24 @@ fun SalesReport(report: ReportLog, onFilterClick: () -> Unit, onPrintClick: (Rep
                         .height(300.dp)
                         .background(White),
                     content = {
-                        items(reportLogList) { report ->
+                        items(reportLog) { report ->
                             SalesReportItem(report)
                         }
+                        if (totalElementsCount > reportLog.size)
+                            item {
+                                if (reportLog.isNotEmpty())
+                                    onClick()
+                                Row(
+                                    Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.width(14.dp),
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    )
+                                }
+                            }
                     })
             }
         }

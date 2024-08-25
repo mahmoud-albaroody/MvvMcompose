@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.utilities.network
 
 
+
 /**
  * Data state for processing api response Loading, Success and Error
  */
@@ -14,7 +15,7 @@ sealed class DataState<out R> {
 //
     /**
      * Success response with body
-//     */
+    //     */
 //    data class Success<T : Any>(val body: T, val msg: String? = null) :
 //        DataState<PairType<T, Nothing>>()
 //

@@ -1,17 +1,12 @@
 package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.domain.TransactionLogUseCase
-import com.bitaqaty.reseller.utilities.network.DataState
-import com.google.gson.JsonObject
+import com.bitaqaty.reseller.utilities.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -25,18 +20,24 @@ class TransactionsViewModel @Inject constructor(private val repo: TransactionLog
     ViewModel() {
 
     private val _transactionLogs =
-        MutableSharedFlow<TransactionLogResult>()
-    val transactionLogs: MutableSharedFlow<TransactionLogResult>
+        MutableSharedFlow<Resource<TransactionLogResult>>()
+    val transactionLogs: MutableSharedFlow<Resource<TransactionLogResult>>
         get() = _transactionLogs
 
 
     fun transactionsLog(transactionRequestBody: TransactionRequestBody) {
         viewModelScope.launch {
-            repo.invoke(transactionRequestBody)
+            repo.transactionLog(transactionRequestBody)
                 .catch {
+                    _transactionLogs.emit(
+                        Resource.DataError(
+                            null,
+                            0, null
+                        )
+                    )
                 }
                 .onEach {
-                    transactionLogs.emit(it)
+                    _transactionLogs.emit(it)
                 }.launchIn(viewModelScope)
         }
     }

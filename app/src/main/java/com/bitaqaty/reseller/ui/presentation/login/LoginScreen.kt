@@ -78,7 +78,9 @@ fun LoginScreen(navController: NavController, modifier: Modifier) {
     LaunchedEffect(key1 = 0) {
         loginScreenViewModel.viewModelScope.launch {
             loginScreenViewModel.signInState.collect {
-                loginScreenViewModel.authenticatedLogin(it.loginProcessToken)
+//                Log.e("ssssss",it.errorCode.toString())
+//                Log.e("ssssss", it.data?.errors?.get(0)?.errorCode.toString())
+                loginScreenViewModel.authenticatedLogin(it.data?.loginProcessToken)
             }
         }
         loginScreenViewModel.viewModelScope.launch {

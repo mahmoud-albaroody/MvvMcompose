@@ -11,6 +11,7 @@ import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.isMobily
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,21 +26,22 @@ import javax.inject.Inject
 class LoginScreenViewModel @Inject constructor(private val repo: AuthenticationUseCase) :
     ViewModel() {
     private val _signInState =
-        MutableSharedFlow<DataResult>()
-    val signInState: MutableSharedFlow<DataResult>
+        MutableSharedFlow<Resource<DataResult>>()
+    val signInState: MutableSharedFlow<Resource<DataResult>>
         get() = _signInState
 
     private val _authenticatedLoginState =
         MutableSharedFlow<User>()
     val authenticatedLoginState: MutableSharedFlow<User>
         get() = _authenticatedLoginState
+
     fun signIn(
         userName: String,
         password: String,
-        tid: String?=null,
-        termType: String?=null,
-        hwSerial: String?=null,
-        mnc: String?=null,
+        tid: String? = null,
+        termType: String? = null,
+        hwSerial: String? = null,
+        mnc: String? = null,
     ) {
         val jsonObject = JsonObject()
         jsonObject.addProperty("username", userName)
@@ -84,6 +86,7 @@ class LoginScreenViewModel @Inject constructor(private val repo: AuthenticationU
         viewModelScope.launch {
             repo.authenticatedLogin(jsonObject)
                 .catch {
+
                 }.buffer().collect {
                     _authenticatedLoginState.emit(it)
                 }

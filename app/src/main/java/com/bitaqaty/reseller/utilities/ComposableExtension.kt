@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.bitaqaty.reseller.utilities.network.DataState
 
 fun <T : Any> LazyGridScope.items(
     lazyPagingItems: LazyPagingItems<T>,
@@ -48,37 +47,6 @@ fun <T : Any> LazyPagingItems<T>.pagingLoadingState(
     }
 }
 
-fun <T : Any, U : Any> MutableState<DataState<T>?>.pagingLoadingState(isLoaded: (pagingState: Boolean) -> Unit) {
-    when (this.value) {
-        is DataState.Success<T> -> {
-            isLoaded(false)
-        }
-
-        is DataState.Loading -> {
-            isLoaded(true)
-        }
-
-//        is DataState.ApiError -> {
-//            isLoaded(false)
-//        }
-//
-//        is DataState.EmptyResponse -> {
-//            isLoaded(false)
-//        }
-//
-//        is DataState.NetworkError -> {
-//            isLoaded(false)
-//        }
-//
-//        is DataState.UnknownError -> {
-//            isLoaded(false)
-//        }
-
-        else -> {
-
-        }
-    }
-}
 
 fun Modifier.conditional(condition: Boolean, modifier: Modifier.() -> Modifier): Modifier {
     return if (condition) {

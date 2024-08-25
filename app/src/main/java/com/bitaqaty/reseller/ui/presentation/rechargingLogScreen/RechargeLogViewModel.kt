@@ -9,11 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.data.model.CurrentUser
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.SettlementResponse
+import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.domain.RechargeLogUseCase
 import com.bitaqaty.reseller.domain.SettlementUseCase
 import com.bitaqaty.reseller.utilities.Globals
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,8 +27,11 @@ import javax.inject.Inject
 @HiltViewModel
 class RechargeLogViewModel @Inject constructor(private val repo: RechargeLogUseCase) :
     ViewModel() {
-    val rechargeLogs: MutableState<RechargingLogResult?> =
-        mutableStateOf(null)
+
+    private val _rechargeLogs =
+        MutableSharedFlow<Resource<RechargingLogResult>>()
+    val rechargeLogs: MutableSharedFlow<Resource<RechargingLogResult>>
+        get() = _rechargeLogs
 
     fun getRechargingList(
         pageNumber: Int, discriminatorValue: String,
@@ -54,11 +60,17 @@ class RechargeLogViewModel @Inject constructor(private val repo: RechargeLogUseC
 
 
         viewModelScope.launch {
-            repo.invoke(jsonObject)
+            repo.rechargeLog(jsonObject)
                 .catch {
+                    _rechargeLogs.emit(
+                        Resource.DataError(
+                            null,
+                            0, null
+                        )
+                    )
                 }
                 .onEach {
-                    rechargeLogs.value = it
+                    _rechargeLogs.emit(it)
                 }.launchIn(viewModelScope)
         }
     }

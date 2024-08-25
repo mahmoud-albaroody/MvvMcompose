@@ -19,16 +19,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -88,6 +94,7 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier, obj: JS
     var pinCode: String? = null
     var showTotal: Boolean = false
     var isPrinted: String? = null
+    var totalElementsCount by remember { mutableIntStateOf(0) }
 
     var searchPeriod: String? = Globals.DATE.CURRENT_MONTH.value
     val transactionRequestBody = TransactionRequestBody()
@@ -142,57 +149,98 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier, obj: JS
         transactionRequestBody.searchPeriod = searchPeriod
         transactionsViewModel.transactionsLog(transactionRequestBody)
         transactionsViewModel.transactionLogs.collect {
-            transactionLogList.clear()
-            transactionLogList.addAll(it.transactionLogList)
+            //   transactionLogList.clear()
+            it.data?.transactionLogList?.let { it1 ->
+                transactionLogList.addAll(it1)
+            }
+            totalElementsCount = it.data?.totalElementsCount!!
 
         }
     }
 
-    screen(transactionLogList = transactionLogList) {
-        navController.navigate(
-            Screen.ApplyFilterScreen.route.plus(
-                Screen.ApplyFilterScreen.objectName
-                        + "TransactionLog"
+    screen(
+        transactionLogList = transactionLogList,
+        totalElementsCount = totalElementsCount,
+        onClick = {
+            transactionRequestBody.pageNumber++
+            transactionsViewModel.transactionsLog(transactionRequestBody)
+        },
+        onFilterClick = {
+            navController.navigate(
+                Screen.ApplyFilterScreen.route.plus(
+                    Screen.ApplyFilterScreen.objectName
+                            + "TransactionLog"
+                )
             )
-        )
-    }
-
+        })
 }
 
 //@Preview
 @Composable
-fun screen(transactionLogList: List<TransactionLog>, onFilterClick: () -> Unit) {
+fun screen(
+    transactionLogList: List<TransactionLog>, totalElementsCount: Int,
+    onFilterClick: () -> Unit,
+    onClick: () -> Unit
+) {
     Box(
         Modifier
             .fillMaxSize()
             .background(White)
     ) {
-        Transactions(transactionLogList)
-        Box(Modifier.align(Alignment.BottomEnd)) {
-            Filter(onFilterClick = {
-                onFilterClick.invoke()
-            })
+        Transactions(transactionLogList, totalElementsCount) {
+            onClick()
         }
+
+//        Box(Modifier.align(Alignment.BottomEnd)) {
+//            Filter(onFilterClick = {
+//                onFilterClick.invoke()
+//            })
+//        }
 
     }
 }
 
+
 @Composable
-fun Transactions(transactionLogList: List<TransactionLog>) {
-    LazyColumn(
-        Modifier
-            .background(White), content = {
-            items(transactionLogList) {
-                TransactionsItem(it)
+fun Transactions(
+    transactionLogList: List<TransactionLog>,
+    totalElementsCount: Int,
+    onClick: () -> Unit
+) {
+    val listState = rememberLazyListState()
+    LazyColumn(state = listState, modifier =
+    Modifier
+        .background(White), content = {
+        items(transactionLogList) {
+            TransactionsItem(it)
+        }
+        if (totalElementsCount>transactionLogList.size)
+            item {
+                if (transactionLogList.isNotEmpty()) {
+                    onClick()
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.width(14.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
+
             }
-        })
+    })
+
 }
 
 @Composable
 fun TransactionsItem(transactionLog: TransactionLog) {
     var viewDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    var arrow = R.drawable.ic_forward_arrow
+    var arrow =  if (transactionLog.visible) {
+        R.drawable.ic_drop_down_arrow
+    } else {
+        R.drawable.ic_forward_arrow
+    }
 
     Card(
         Modifier
@@ -210,19 +258,20 @@ fun TransactionsItem(transactionLog: TransactionLog) {
             Modifier
                 .fillMaxWidth()
                 .clickable {
-                    arrow = if (viewDetails) {
-                        R.drawable.ic_forward_arrow
-                    } else {
-                        R.drawable.ic_drop_down_arrow
-                    }
                     viewDetails = !viewDetails
+                    transactionLog.visible = !transactionLog.visible
+                    arrow = if (transactionLog.visible) {
+                        R.drawable.ic_drop_down_arrow
+                    } else {
+                        R.drawable.ic_forward_arrow
+                    }
                 }
                 .padding(Dimens.halfDefaultMargin),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    model = transactionLog.merchantLogoPath
+                    model = transactionLog.getMerchantLogo()
                 ),
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
@@ -313,7 +362,8 @@ fun TransactionsItem(transactionLog: TransactionLog) {
             )
 
         }
-        if (viewDetails) {
+        viewDetails
+        if (transactionLog.visible) {
             Column(
                 Modifier.padding(
                     bottom = Dimens.DefaultMargin

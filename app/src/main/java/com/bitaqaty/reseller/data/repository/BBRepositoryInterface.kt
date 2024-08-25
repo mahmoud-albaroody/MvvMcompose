@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.data.repository
 
+import androidx.paging.PagingData
 import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
@@ -28,19 +29,19 @@ import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
-import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.POST
 
 interface BBRepositoryInterface {
-    suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody): Flow<TransactionLogResult>
+    suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody):
+            Resource<TransactionLogResult>
     suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>>
-    suspend fun getSettlementRequest(jsonObject: JsonObject): Flow<SettlementResponse>
-    suspend fun getRechargeLogRequest(jsonObject: JsonObject): Flow<RechargingLogResult>
-    suspend fun signIn(jsonObject: JsonObject): Flow<DataResult>
-    suspend fun loginChangePassword(jsonObject: JsonObject): Flow<DataResult>
+    suspend fun getSettlementRequest(jsonObject: JsonObject): Resource<SettlementResponse>
+    suspend fun getRechargeLogRequest(jsonObject: JsonObject): Resource<RechargingLogResult>
+    suspend fun signIn(jsonObject: JsonObject): Resource<DataResult>
+    suspend fun loginChangePassword(jsonObject: JsonObject): Resource<DataResult>
     suspend fun resetChangePassword(jsonObject: JsonObject): Flow<DataResult>
     suspend fun verifyForgetPassword(jsonObject: JsonObject): Flow<DataResult>
 

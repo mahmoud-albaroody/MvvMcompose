@@ -27,13 +27,14 @@ import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
-import com.bitaqaty.reseller.data.model.artist.Artist
 import com.bitaqaty.reseller.data.model.artist.ArtistDetail
 import com.bitaqaty.reseller.data.model.moviedetail.MovieDetail
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -48,21 +49,21 @@ interface ApiService {
 
     @POST(Globals.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body transactionRequestBody: TransactionRequestBody):
-            TransactionLogResult
+            Response<TransactionLogResult>
 
     @POST(Globals.GET_SETTLEMENT_REQUEST)
     suspend fun getSettlementRequest(@Body jsonObject: JsonObject):
-            SettlementResponse
+            Response<SettlementResponse>
 
 
     @POST(Globals.CHARGING_LOG_LIST)
-    suspend fun getRechargingLogList(@Body jsonObject: JsonObject): RechargingLogResult
+    suspend fun getRechargingLogList(@Body jsonObject: JsonObject): Response<RechargingLogResult>
 
     @POST(Globals.SIGN_IN)
-    suspend fun signIn(@Body jsonObject: JsonObject): DataResult
+    suspend fun signIn(@Body jsonObject: JsonObject): Response<DataResult>
 
     @POST(Globals.LOGIN_CHANGE_PASSWORD)
-    suspend fun loginChangePassword(@Body jsonObject: JsonObject): DataResult
+    suspend fun loginChangePassword(@Body jsonObject: JsonObject): Response<DataResult>
 
     @POST(Globals.RESET_CHANGE_PASSWORD)
     suspend fun resetChangePassword(@Body jsonObject: JsonObject): DataResult
@@ -136,13 +137,13 @@ interface ApiService {
     suspend fun getUserNamesList(): ArrayList<LogUserName>
 
     @POST(Globals.SEARCH_BANK_TRANSFER_REQUEST)
-    suspend fun searchBankTransfer(@Body body: RequestBankTransferLogBody):SearchBank
+    suspend fun searchBankTransfer(@Body body: RequestBankTransferLogBody): SearchBank
 
     @POST(Globals.ONE_CARD_COUNTRIES)
     suspend fun onecardCountries(): AccountsCountries
 
     @POST(Globals.ONE_CARD_ACCOUNTS)
-    suspend fun onecardAccount(@Body  requestOneCardAccountsBody: RequestOneCardAccountsBody): AccountsByCountry
+    suspend fun onecardAccount(@Body requestOneCardAccountsBody: RequestOneCardAccountsBody): AccountsByCountry
 
     @POST(Globals.SENDER_COUNTRIES)
     suspend fun senderCounters(): ArrayList<AccountsCountries>

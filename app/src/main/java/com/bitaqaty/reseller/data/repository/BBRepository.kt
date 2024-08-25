@@ -1,7 +1,12 @@
 package com.bitaqaty.reseller.data.repository
 
+import android.provider.SyncStateContract
 import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
+import com.bitaqaty.reseller.data.datasource.remote.paging.TransactionPagingDataSource
 import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
@@ -31,29 +36,40 @@ import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 
 import javax.inject.Inject
 
 
 class BBRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : BBRepositoryInterface {
 
 
     override suspend fun signIn(jsonObject: JsonObject):
-            Flow<DataResult> =
-        flow {
-            //   emit(DataState.Loading)
-
-            val searchResult = apiService.signIn(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+            Resource<DataResult> {
+        val response = apiService.signIn(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
+
+    override suspend fun loginChangePassword(jsonObject: JsonObject): Resource<DataResult> {
+        val response = apiService.loginChangePassword(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
 
     override suspend fun resetAccessData(jsonObject: JsonObject):
             Flow<ResetAccessData> =
@@ -200,16 +216,6 @@ class BBRepository @Inject constructor(
 
         }
 
-    override suspend fun loginChangePassword(jsonObject: JsonObject):
-            Flow<DataResult> =
-        flow {
-            //   emit(DataState.Loading)
-
-            val searchResult = apiService.loginChangePassword(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
-        }
 
     override suspend fun resetChangePassword(jsonObject: JsonObject): Flow<DataResult> =
         flow {
@@ -317,31 +323,38 @@ class BBRepository @Inject constructor(
 
 
     override suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody):
-            Flow<TransactionLogResult> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.getTransactionLogList(transactionRequestBody)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+            Resource<TransactionLogResult> {
+        val response = apiService.getTransactionLogList(transactionRequestBody)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+
+    }
 
 
     override suspend fun getSettlementRequest(jsonObject: JsonObject):
-            Flow<SettlementResponse> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.getSettlementRequest(jsonObject)
-            emit(searchResult)
+            Resource<SettlementResponse> {
+        val response = apiService.getSettlementRequest(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
+
 
     override suspend fun getRechargeLogRequest(jsonObject: JsonObject):
-            Flow<RechargingLogResult> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.getRechargingLogList(jsonObject)
-            emit(searchResult)
+            Resource<RechargingLogResult> {
+        val response = apiService.getRechargingLogList(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+
+    }
 
 
     override suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>> =

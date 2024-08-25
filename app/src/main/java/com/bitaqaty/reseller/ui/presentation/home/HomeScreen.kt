@@ -36,9 +36,7 @@ import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
-import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.saveUserData
-import com.bitaqaty.reseller.utilities.network.DataState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,15 +70,15 @@ fun HomeScreen(
     }
     categoryStatee.value.let {
         when (it) {
-            is DataState.Loading -> {
-                Log.e("dddd", "sfsdfdsf")
-            }
-
-            is DataState.Success<ArrayList<Category>> -> {
-                categoryList.clear()
-                categoryList.addAll(it.data)
-
-            }
+//            is DataState.Loading -> {
+//                Log.e("dddd", "sfsdfdsf")
+//            }
+//
+//            is DataState.Success<ArrayList<Category>> -> {
+//                categoryList.clear()
+//                categoryList.addAll(it.data)
+//
+//            }
 
             else -> {
 

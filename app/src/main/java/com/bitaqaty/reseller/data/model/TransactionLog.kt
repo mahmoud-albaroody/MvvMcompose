@@ -72,7 +72,7 @@ data class TransactionLog(
     val skuBarcode: String? = null,
     val vatCode: String? = null,
     val vatPercentage: String? = null,
-    var vi: View? = null
+    var visible: Boolean
 ) : Serializable {
     fun getMerchant(): String {
         return merchantId ?: ""

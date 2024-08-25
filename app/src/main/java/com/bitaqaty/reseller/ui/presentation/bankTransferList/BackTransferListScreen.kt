@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,13 +17,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
@@ -38,6 +44,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
 import com.bitaqaty.reseller.data.model.RequestsLog
 import com.bitaqaty.reseller.data.model.SearchBank
+import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.ui.presentation.applyFilter.CustomDate
 import com.bitaqaty.reseller.ui.presentation.applyFilter.DynamicSelectTextField
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.Filter
@@ -51,28 +58,31 @@ import com.bitaqaty.reseller.ui.theme.SecondaryFontColor
 import kotlinx.coroutines.launch
 import java.util.TimeZone
 
-//{"dateFrom":"2024-08-22 00:00","dateTo":"2024-08-08 23:59","pageNumber":1,"pageSize":10,"requestStatus":"accepted","timeZone":"Africa/Cairo"}
 @Composable
 fun BankTransferListScreen(navController: NavController, modifier: Modifier) {
     val bankTransferViewModel: BankTransferListViewModel = hiltViewModel()
-    var searchBank by remember { mutableStateOf(SearchBank()) }
+    var totalElementsCount by remember { mutableIntStateOf(0) }
+    val bankRequestsLog = remember { mutableStateListOf<RequestsLog>() }
 
     val bankTransferLogBody = RequestBankTransferLogBody()
     LaunchedEffect(key1 = true) {
-
         bankTransferLogBody.timeZone = TimeZone.getDefault().id
         bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
         bankTransferViewModel.viewModelScope.launch {
             bankTransferViewModel.searchBankTransfer.collect {
-                searchBank = it
+                bankRequestsLog.addAll(it.requestsLogs)
+                totalElementsCount = it.requestTotalCount
             }
         }
 
     }
-    BankTransfer(searchBank, onFilterClick = { selectedStatus, selectedDateTo, selectedDateFrom ->
+    BankTransfer(bankRequestsLog,totalElementsCount, onFilterClick = { selectedStatus, selectedDateTo, selectedDateFrom ->
         bankTransferLogBody.requestStatus = selectedStatus
         bankTransferLogBody.dateTo = selectedDateTo
         bankTransferLogBody.dateFrom = selectedDateFrom
+        bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
+    }, onClick = {
+        bankTransferLogBody.pageNumber++
         bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
     })
 
@@ -80,7 +90,8 @@ fun BankTransferListScreen(navController: NavController, modifier: Modifier) {
 
 
 @Composable
-fun BankTransfer(searchBank: SearchBank, onFilterClick: (String, String, String) -> Unit) {
+fun BankTransfer(bankRequestsLog: SnapshotStateList<RequestsLog>,totalElementsCount:Int,
+                 onFilterClick: (String, String, String) -> Unit,onClick:()->Unit) {
     var selectedDateTo by remember {
         mutableStateOf("")
     }
@@ -130,8 +141,20 @@ fun BankTransfer(searchBank: SearchBank, onFilterClick: (String, String, String)
 
         )
         LazyColumn(modifier = Modifier.padding(top = Dimens.padding16), content = {
-            items(searchBank.requestsLogs) {
+            items(bankRequestsLog) {
                 BankTransferItem(it)
+            }
+            if (totalElementsCount>bankRequestsLog.size)
+            item {
+                if (bankRequestsLog.isNotEmpty())
+                    onClick()
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.width(14.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
             }
         })
 

@@ -1,11 +1,28 @@
 package com.bitaqaty.reseller.domain
 
+import com.bitaqaty.reseller.data.model.DataResult
+import com.bitaqaty.reseller.data.model.TransactionLogResult
+import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.data.repository.BBRepository
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class AuthenticationUseCase @Inject constructor(private val repo: BBRepository) {
-    suspend fun signIn(jsonObject: JsonObject) = repo.signIn(jsonObject)
+
+    suspend fun signIn(jsonObject: JsonObject):
+            Flow<Resource<DataResult>> {
+        return flow {
+            emit(
+                repo.signIn(jsonObject)
+            )
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun loginChangePassword(jsonObject: JsonObject) = repo.loginChangePassword(jsonObject)
     suspend fun resetChangePassword(jsonObject: JsonObject) = repo.resetChangePassword(jsonObject)
     suspend fun verifyForgetPassword(jsonObject: JsonObject) = repo.verifyForgetPassword(jsonObject)
@@ -13,13 +30,16 @@ class AuthenticationUseCase @Inject constructor(private val repo: BBRepository) 
     suspend fun getRemainingTrials(jsonObject: JsonObject) = repo.getRemainingTrials(jsonObject)
     suspend fun getVerificationRemainingTrials(jsonObject: JsonObject) =
         repo.getVerificationRemainingTrials(jsonObject)
+
     suspend fun resendResetAccessDataSms(jsonObject: JsonObject) =
         repo.resendResetAccessDataSms(jsonObject)
+
     suspend fun resetAccessData(jsonObject: JsonObject) =
         repo.resetAccessData(jsonObject)
 
     suspend fun forgetPassword(jsonObject: JsonObject) =
         repo.forgetPassword(jsonObject)
+
     suspend fun forgetPasswordSend(jsonObject: JsonObject) =
         repo.forgetPasswordSend(jsonObject)
 
@@ -27,9 +47,9 @@ class AuthenticationUseCase @Inject constructor(private val repo: BBRepository) 
 
     suspend fun validateVerificationCode(jsonObject: JsonObject) =
         repo.validateVerificationCode(jsonObject)
+
     suspend fun validateResetVerificationCode(jsonObject: JsonObject) =
         repo.validateResetVerificationCode(jsonObject)
-
 
 
     suspend fun logout() = repo.logout()
