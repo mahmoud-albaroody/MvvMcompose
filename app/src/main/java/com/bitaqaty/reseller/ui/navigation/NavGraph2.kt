@@ -91,7 +91,12 @@ fun Navigation2(
             if(mainViewModel.showBottomNav.value){
                 categoryId = null
             }
-            StoreScreen(navController = navController, modifier = modifier, categoryId = categoryId)
+            StoreScreen(
+                mainViewModel = mainViewModel,
+                navController = navController,
+                modifier = modifier,
+                categoryId = categoryId
+            )
             //SettlementRequestScreen()
         }
         composable(

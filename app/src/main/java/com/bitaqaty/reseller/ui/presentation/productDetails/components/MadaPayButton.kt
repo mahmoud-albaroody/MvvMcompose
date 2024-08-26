@@ -18,17 +18,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
 
 @Composable
 fun MadaPayButton(
+    viewModel: ProductDetailsViewModel,
     onClick: () -> Unit
 ){
     Button(
@@ -38,6 +41,7 @@ fun MadaPayButton(
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5F5F5)),
         contentPadding = PaddingValues(),
         modifier = Modifier
+            .alpha(viewModel.alpha.value)
             .background(Color(0xFFF5F5F5), shape = RoundedCornerShape(Dimens.cornerRadius15))
             .border(color = Color(0xFF3155A5), width = 2.dp, shape = RoundedCornerShape(Dimens.cornerRadius15))
             .padding(horizontal = 28.dp, vertical = 10.dp)
@@ -66,10 +70,10 @@ fun MadaPayButton(
     }
 }
 
-@Preview(showBackground = false)
-@Composable
-fun MadaPayButtonPreview() {
-    MadaPayButton(
-        onClick = {}
-    )
-}
+//@Preview(showBackground = false)
+//@Composable
+//fun MadaPayButtonPreview() {
+//    MadaPayButton(
+//        onClick = {}
+//    )
+//}

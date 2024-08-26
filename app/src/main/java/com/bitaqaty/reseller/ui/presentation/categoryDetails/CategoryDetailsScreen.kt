@@ -82,7 +82,7 @@ fun CategoryDetailsScreen(
                         val products = (productsState as DataState.Success<ProductListResponse>).data
                         Text(
                             modifier = Modifier.padding(horizontal = 12.dp),
-                            text = "Select Card",
+                            text = stringResource(id = R.string.select_card),
                             style = MaterialTheme.typography.Label,
                             fontSize = 16.sp,
                             color = label
@@ -102,6 +102,7 @@ fun CategoryDetailsScreen(
             }
         }
         ProductDetailsBottomSheet(
+            product = selectedProduct,
             isBottomSheetVisible = isBottomSheetVisible,
             sheetState = sheetState,
             onDismiss = {

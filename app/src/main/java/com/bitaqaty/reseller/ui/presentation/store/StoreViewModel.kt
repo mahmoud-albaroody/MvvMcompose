@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.store
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -20,10 +21,22 @@ class StoreViewModel @Inject constructor(
         mutableStateOf<DataState<ArrayList<Category>>>(DataState.Loading)
     val categoryState: State<DataState<ArrayList<Category>>> = _categoryState
 
+    private val _editState =
+        mutableStateOf<DataState<Unit>?>(null)
+    val editState: State<DataState<Unit>?> = _editState
+
     fun getCategoryList() {
         viewModelScope.launch {
             repo.getCategoryList().collect { categoryState ->
                 _categoryState.value = categoryState
+            }
+        }
+    }
+
+    fun editCategory(currentCategoryId: Int, newCategoryId: Int){
+        viewModelScope.launch{
+            repo.editCategory(currentCategoryId, newCategoryId).collect{ state ->
+                _editState.value = state
             }
         }
     }

@@ -1,18 +1,9 @@
 package com.bitaqaty.reseller.ui.presentation.search
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
@@ -26,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -43,13 +33,13 @@ import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.ui.presentation.common.Empty
 import com.bitaqaty.reseller.ui.presentation.common.Loading
-import com.bitaqaty.reseller.ui.presentation.common.ProductItem
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
+import com.bitaqaty.reseller.ui.presentation.search.components.ProductList
 import com.bitaqaty.reseller.ui.presentation.search.components.SearchBar
-import com.bitaqaty.reseller.ui.presentation.search.components.SearchCategory
+import com.bitaqaty.reseller.ui.presentation.search.components.SearchCategoryList
 import com.bitaqaty.reseller.ui.presentation.search.components.SearchMerchantList
+import com.bitaqaty.reseller.ui.presentation.search.components.SearchProductList
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
-import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.Label
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.ui.theme.label
@@ -169,7 +159,7 @@ fun SearchScreen(
 
                                     Text(
                                         modifier = Modifier.padding(horizontal = 12.dp),
-                                        text = "Select Card",
+                                        text = stringResource(R.string.select_card),
                                         style = MaterialTheme.typography.Label,
                                         fontSize = 16.sp,
                                         color = label
@@ -187,7 +177,9 @@ fun SearchScreen(
                                         }
                                     }else{
                                         Text(
-                                            modifier = Modifier.fillMaxSize().padding(top = 32.dp),
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(top = 32.dp),
                                             text = stringResource(R.string.no_products),
                                             textAlign = TextAlign.Center,
                                             fontSize = 16.sp,
@@ -214,80 +206,6 @@ fun SearchScreen(
         )
     }
 }
-
-@Composable
-fun SearchCategoryList(
-    viewModel: SearchViewModel,
-    categories: ArrayList<Category>
-) {
-    var selectedItem by remember { mutableStateOf<Category?>(categories.first()) }
-
-    LazyRow(
-        contentPadding = PaddingValues(start = Dimens.padding12)
-    ) {
-        items(categories) { category ->
-            SearchCategory(
-                category = category,
-                isSelected = selectedItem == category,
-                onClickCategory = { inedx ->
-                    viewModel.getMerchants(category.id)
-                    selectedItem = category
-                }
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ProductList(
-    products: ProductListResponse,
-    isSheetStateVisible: Boolean,
-    onClickProduct: (Product) -> Unit
-) {
-    var selectedProduct by remember { mutableStateOf<Product?>(null) }
-
-    LazyRow(
-        contentPadding = PaddingValues(start = Dimens.padding12)
-    ) {
-        items(products.products) { product ->
-            ProductItem(
-                product = product,
-                isSelected = product == selectedProduct && isSheetStateVisible
-            ){
-                selectedProduct = product
-                onClickProduct(product)
-            }
-        }
-    }
-}
-
-@Composable
-fun SearchProductList(
-    products: ProductListResponse,
-    isSheetStateVisible: Boolean,
-    onClickProduct: (Product) -> Unit
-) {
-    var selectedProduct by remember { mutableStateOf<Product?>(null) }
-    LazyVerticalGrid(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = Dimens.halfDefaultMargin),
-        columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(Dimens.fourDefaultMargin),
-    ) {
-        items(products.products) { product ->
-            ProductItem(
-                product = product,
-                isSelected = product == selectedProduct && isSheetStateVisible
-            ){
-                selectedProduct = product
-                onClickProduct(product)
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SearchScreenPreview() {

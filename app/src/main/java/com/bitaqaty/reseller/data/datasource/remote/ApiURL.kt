@@ -12,9 +12,12 @@ object ApiURL {
     const val SUB_ACCOUNT_HOME_CHILD = "sub-acc-home/list-child-merchants"
     const val MERCHANTS = "merchants/list-merchants/{category_id}"
     const val PRODUCT_LIST = "products/list-products"
+    const val CATEGORY_EDIT = "categories/edit-category-order/{currentCategoryId}/{newCategoryId}"
 
     const val SYSTEM_SETTING = "system-settings/system-settings"
     const val SETTLEMENT_REQUEST_DATA = "partner-settlement/get-settelement-request-data"
     const val CREATE_SETTLEMENT_REQUEST = "partner-settlement/create-settelement-request"
     const val PROFILE = "auth/get-reseller"
+
+    const val PURCHASE_ORDER = "shopping-cart/purchase-order"
 }

@@ -41,9 +41,11 @@ class HomeViewModel @Inject constructor(
         mutableStateOf<DataState<ProductListResponse>?>(null)
     val productsState: State<DataState<ProductListResponse>?> = _productsState
 
-    val _categoryId = mutableStateOf<Int?>(null)
+    private val _categoryId = mutableStateOf<Int?>(null)
+    val categoryId: State<Int?> = _categoryId
 
-    val isCategory = mutableStateOf(false)
+    private val _isCategory = mutableStateOf(false)
+    val isCategory: State<Boolean> = _isCategory
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -103,5 +105,13 @@ class HomeViewModel @Inject constructor(
         }
         _childMerchantsState.value = null
         _topMerchantsState.value = null
+    }
+
+    fun onChangeCategoryId(id: Int){
+        _categoryId.value = id
+    }
+
+    fun toggleCategory(isCategory: Boolean){
+        _isCategory.value = isCategory
     }
 }

@@ -1001,7 +1001,7 @@
     <string name="your_account_number">رقم حسابك</string>
     <string name="iban_number_hint">يجب أن تبدأ بـ SA ، ثم يجب إدخال 22 رقمًا)</string>
     <string name="branch_address_hint">عنوان الفرع</string>
-    <string name="minimum_amount_to_request">الحد الأدنى للطلب</string>
+    <string name="minimum_amount_to_request">الحد الأدنى للطلب </string>
     <string name="basic_data">بيانات أساسية</string>
     <string name="bank_statements">بيانات بنكية</string>
     <string name="started_with_sa">يجب البدء ب SA</string>
@@ -1143,4 +1143,5 @@
     <string name="no_products">\"لا يوجد منتجات\"</string>
     <string name="edit_category">تغيير التصنيف</string>
     <string name="confirm_change_category">هل أنت متأكد أنك تريد تغيير التصنيف &quot;%1$s&quot;؟</string>
+    <string name="select_card">اختر بطاقة</string>
 </resources>

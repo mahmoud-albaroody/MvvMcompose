@@ -104,7 +104,7 @@ object NetworkModule {
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
                 .header(
                     "Authorization",
-                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzU0MzE2MTE0LCJpYXQiOjE3MjI3ODAxMTQsImp0aSI6ImFlMWY5MWU2LTA1OWMtNGIwNC1iMjFmLWMzM2U2MDNhMmVlNCJ9.G0ojSTu2anPfQKT2OWkYfQdlR63PQ2CqNVnwQCZhUiUMDEYeUT35WOUe92OsjJ_rlWPUPUy6LDafLxlfugPyIHObMgfcl6qcX3eUNWjfqm5cZFcWEbTOPe4SgzSpdAJeaYprSIeyAiT1HXdJcyjzPZUYEGwm4OBhGQeGrXvZHxEeMlOLy_RI8CRUcRR9W7AUpaNoVgkH44vkeyYPuZtP1De39l4opE3ObTfIsNQn694_hpE3NouFssaUtKEQxuKzNhYb3TCuvC-ZKaATHtV2qK4ATQN85F0u0XxwVHKkW2TOU9zeiehgW3q78bVpt1QFhIT2l7lLnzN9JDeiO8781A"
+                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzU2MjE4Mjg5LCJpYXQiOjE3MjQ2ODIyODksImp0aSI6IjI3M2EyN2QxLWRkM2MtNDgxYi05NjBjLTYwNzMwYTQxYmNmNCJ9.erP-V8XRKW2Gue6v9EdMgZmM78vcsuDLipK3SzXOHnN6fm1GoULofkJWsQPyuUQQBLqUAH396L2fKmBLOelyL_Cd7Ibw9etIY3kNrLAg7lW2qeAnnDCHqI5FJ07G7jLCS66Rq7mVL_Eyo6TCpRBqBiF3g2vv-i0c1NPeZrgI_QRilF5m3CM2l7Y608exD1_40Z0EO6VsBP2WHUENCG5XAthDrPSoLIkh16e-MC-zLdB2QFrs5lcE2idqm-J4qMYDJfkgetUo9S9VOl3ViaNrFf6scFNiEoknUBP0IA6dgkh62coMc7zS2mDyJqTrtup9MUaUIbmMEbgzuK9TUJHG_g"
                 )
             it.proceed(requestBuilder.build())
         }

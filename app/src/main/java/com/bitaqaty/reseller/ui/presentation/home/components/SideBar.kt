@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
@@ -25,7 +24,7 @@ import com.bitaqaty.reseller.utilities.noRippleClickable
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SideBar(
-    viewModel: HomeViewModel,
+    homeViewModel: HomeViewModel,
     mainViewModel: MainActivityViewModel,
     navController: NavController,
     categories: List<Category>,
@@ -33,6 +32,7 @@ fun SideBar(
     var selectedItem by remember { mutableStateOf<Category?>(categories.first()) }
     var categoryToChangeId by remember { mutableStateOf<Int?>(null) }
     var showDialog by remember { mutableStateOf(false) }
+    var categoryName by remember { mutableStateOf("") }
 
     LazyColumn(
         modifier = Modifier
@@ -52,13 +52,14 @@ fun SideBar(
                     .noRippleClickable { selectedItem = category },
                 onClickCategory = { index ->
                     if(index != 0){
-                        viewModel.getMerchants(category.id)
+                        homeViewModel.getMerchants(category.id)
                     }else{
-                        viewModel.getTopMerchants()
+                        homeViewModel.getTopMerchants()
                     }
                     selectedItem = category
                 },
                 onLongPress = { index ->
+                    categoryName = category.getName()
                     if(index != 0){
                         categoryToChangeId = category.id
                         showDialog = true
@@ -67,7 +68,7 @@ fun SideBar(
             )
             if(showDialog){
                 ConfirmationDialog(
-                    categoryName = category.getName(),
+                    categoryName = categoryName,
                     onConfirm = {
                         showDialog = false
                         navController.navigate("store/$categoryToChangeId")

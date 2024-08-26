@@ -2,23 +2,17 @@ package com.bitaqaty.reseller.ui.presentation.search.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,12 +30,12 @@ import com.bitaqaty.reseller.ui.theme.border
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 
-@OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
+@OptIn(FlowPreview::class)
 @Composable
 fun SearchBar(
     viewModel: SearchViewModel
 ) {
-    var query by viewModel.query
+    val query by viewModel.query
 
     LaunchedEffect(query){
         if(query.length >= 3){
@@ -61,7 +55,6 @@ fun SearchBar(
             .height(60.dp)
             .fillMaxWidth()
             .padding(
-                //top = Dimens.padding30,
                 start = Dimens.padding12,
                 end = Dimens.padding12
             )
@@ -72,7 +65,7 @@ fun SearchBar(
                 MaterialTheme.shapes.medium
             ),
         value = query,
-        onValueChange = { query = it },
+        onValueChange = { viewModel.onChangeQuery(it) },
         textStyle = MaterialTheme.typography.PlaceHolder,
         leadingIcon = {
             Icon(

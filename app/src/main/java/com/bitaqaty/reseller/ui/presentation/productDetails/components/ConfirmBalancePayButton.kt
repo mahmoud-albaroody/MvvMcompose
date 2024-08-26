@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.ui.presentation.productDetails.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,35 +20,66 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsViewModel
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
 import com.bitaqaty.reseller.utilities.NoRippleInteractionSource
+import kotlin.math.abs
 
 @Composable
 fun ConfirmBalancePayButton(
-    onClick: () -> Unit
+    viewModel: ProductDetailsViewModel,
+    onSwipe: () -> Unit
 ){
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    val maxOffsetX = 180f
+
     Button(
         modifier = Modifier
-            .background(Color(0xFF3155A4), shape = RoundedCornerShape(Dimens.cornerRadius15))
             .fillMaxHeight()
+            .offset(x = offsetX.dp)
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragStart = {viewModel.toggleOpacity(0.5f)},
+                    onDragEnd = {
+                        if (abs(offsetX) < maxOffsetX) {
+                            offsetX = 0f
+                            viewModel.toggleOpacity(1f)
+                        }else{
+                            onSwipe()
+                        }
+                    }
+                ) { change, dragAmount ->
+                    change.consume()
+                    offsetX = (offsetX + dragAmount.x).coerceIn(0f, maxOffsetX)
+                    if(offsetX == maxOffsetX) viewModel.toggleOpacity(0f)
+                    if(offsetX < maxOffsetX) viewModel.toggleOpacity(0.5f)
+                }
+            }
+            .zIndex(if (offsetX > 0f) 1f else 0f)
+            .background(Color(0xFF3155A4), shape = RoundedCornerShape(Dimens.cornerRadius15))
             .padding(horizontal = 18.dp, vertical = 8.dp),
         contentPadding = PaddingValues(),
         interactionSource = NoRippleInteractionSource(),
-        onClick = onClick,
+        onClick = {},
         shape = RoundedCornerShape(Dimens.cornerRadius15),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3155A4)),
     ) {
@@ -161,10 +194,10 @@ fun ConfirmBalancePayButton(
     }
 }
 
-@Preview(showBackground = false)
-@Composable
-fun ConfirmBalancePayButtonPreview() {
-    ConfirmBalancePayButton(
-        onClick = {}
-    )
-}
+//@Preview(showBackground = false)
+//@Composable
+//fun ConfirmBalancePayButtonPreview() {
+//    ConfirmBalancePayButton(
+//        onClick = {}
+//    )
+//}

@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.presentation.store
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,11 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.presentation.search.components.SearchCategory
 import com.bitaqaty.reseller.ui.theme.frutigerLTArabic
@@ -39,11 +41,14 @@ import com.bitaqaty.reseller.utilities.network.DataState
 fun StoreScreen(
     modifier: Modifier = Modifier,
     viewModel: StoreViewModel = hiltViewModel(),
+    mainViewModel: MainActivityViewModel,
     navController: NavController,
     categoryId: String?
 ){
     val categoryState by viewModel.categoryState
+    val editState by viewModel.editState
     var selectedItem by remember { mutableStateOf<Category?>(null) }
+    var alpha by remember { mutableFloatStateOf(1f) }
 
     LaunchedEffect(key1 = true) {
         viewModel.getCategoryList()
@@ -58,7 +63,9 @@ fun StoreScreen(
         is DataState.Success -> {
             val categoryList = (categoryState as DataState.Success<ArrayList<Category>>).data
             LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(alpha),
                 columns = GridCells.Fixed(4),
                 contentPadding = PaddingValues(12.dp)
             ){
@@ -74,9 +81,13 @@ fun StoreScreen(
                             isSelected = selectedItem == category,
                             onClickCategory = {
                                 selectedItem = category
-                                Log.v("categoryId", categoryId.toString())
                                 if(categoryId == null){
                                     navController.navigate("categoryDetails/${category.id}/${category.getName()}")
+                                }else{
+                                    viewModel.editCategory(
+                                        currentCategoryId = categoryId.toInt(),
+                                        newCategoryId = it
+                                    )
                                 }
                             }
                         )
@@ -96,6 +107,18 @@ fun StoreScreen(
                         Spacer(modifier = Modifier.height(24.dp))
                     }
                 }
+            }
+            when(editState){
+                is DataState.Loading -> {
+                    alpha = 0.5f
+                    Loading()
+                }
+                is DataState.Error -> {}
+                is DataState.Success -> {
+                    navController.navigate("home")
+                    mainViewModel.showBottomNav.value = true
+                }
+                else -> {}
             }
         }
     }

@@ -37,7 +37,10 @@ fun ProductList(
     haveBack: Boolean = false,
     onClickProduct: (Product) -> Unit,
 ){
+    val categoryId by viewModel.categoryId
+    val isCategory by viewModel.isCategory
     var selectedProduct by remember { mutableStateOf<Product?>(null) }
+
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
@@ -61,8 +64,8 @@ fun ProductList(
                         .fillMaxWidth()
                         .padding(vertical = 4.dp, horizontal = 10.dp)
                         .noRippleClickable {
-                            if(viewModel.isCategory.value){
-                                viewModel.getChildMerchants(viewModel._categoryId.value!!)
+                            if(isCategory){
+                                viewModel.getChildMerchants(categoryId!!)
                             }else{
                                 viewModel.getTopMerchants()
                             }

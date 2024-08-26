@@ -1,5 +1,9 @@
 package com.bitaqaty.reseller.ui.presentation.productDetails
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +23,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,14 +37,17 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,8 +69,12 @@ import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.presentation.common.Loading
+import com.bitaqaty.reseller.utilities.network.DataState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ProductDetailsBottomSheet(
     viewModel: ProductDetailsViewModel = hiltViewModel(),
@@ -70,6 +83,8 @@ fun ProductDetailsBottomSheet(
     sheetState: SheetState,
     onDismiss: () -> Unit
 ) {
+    val purchaseState by viewModel.purchaseState
+
     if (isBottomSheetVisible) {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
@@ -84,6 +99,12 @@ fun ProductDetailsBottomSheet(
 
             var isBalancePayClicked by remember { mutableStateOf(false) }
             var isConfirmBalancePayClicked by remember { mutableStateOf(false) }
+
+            val alpha by viewModel.alpha
+            
+            LaunchedEffect(key1 = isExpanded){
+                viewModel.toggleOpacity(1f)
+            }
 
             Box(
                 modifier = Modifier
@@ -216,20 +237,29 @@ fun ProductDetailsBottomSheet(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(IntrinsicSize.Min)
-                        .padding(bottom = 12.dp),
+                        .height(IntrinsicSize.Min),
+                        //.padding(bottom = 12.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     if(!isBalancePayClicked){
                         BalancePayButton {isBalancePayClicked = true}
                         Spacer(modifier = Modifier.width(2.dp))
-                        MadaPayButton {}
+                        MadaPayButton(viewModel) {}
                     }else if(isBalancePayClicked && !isConfirmBalancePayClicked){
-                        ConfirmBalancePayButton {isConfirmBalancePayClicked = true}
-                        MadaPayButton {}
+                        ConfirmBalancePayButton(viewModel){
+                            viewModel.purchaseOrder(product = product!!)
+                            isConfirmBalancePayClicked = true
+                        }
+                        MadaPayButton(viewModel) {}
                     }else{
-                        PrintVatButton {}
-                        DoneButton {}
+                        when(purchaseState){
+                            is DataState.Loading -> Loading(color = Color.Blue)
+                            is DataState.Error -> {}
+                            is DataState.Success -> {
+                                PrintVatButton {}
+                                DoneButton {onDismiss()}
+                            }
+                        }
                     }
                 }
             }

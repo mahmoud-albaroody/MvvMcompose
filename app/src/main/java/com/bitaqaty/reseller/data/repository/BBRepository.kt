@@ -7,6 +7,8 @@ import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.PurchaseRequest
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
@@ -110,6 +112,20 @@ class BBRepository @Inject constructor(
             }
         }
 
+    override suspend fun editCategory(
+        currentCategoryId: Int,
+        newCategoryId: Int
+    ): Flow<DataState<Unit>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val editResult = apiService.editCategory(currentCategoryId, newCategoryId)
+                emit(DataState.Success(editResult))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
     override suspend fun getSystemSettings(): Flow<DataState<ArrayList<SystemSettings>>> =
         flow {
             emit(DataState.Loading)
@@ -149,6 +165,17 @@ class BBRepository @Inject constructor(
             try {
                 val profile = apiService.getProfile()
                 emit(DataState.Success(profile))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun purchaseOrder(products: PurchaseRequest): Flow<DataState<PurchaseResponse>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val purchaseResponse = apiService.purchaseOrder(products)
+                emit(DataState.Success(purchaseResponse))
             }catch (e: Exception){
                 emit(DataState.Error(e))
             }

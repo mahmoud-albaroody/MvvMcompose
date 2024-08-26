@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.TopMerchants
@@ -30,15 +31,15 @@ fun TopMerchantList(
                 onClick = {
                          if(topMerchant.category!!){
                              viewModel.getChildMerchants(topMerchant.categoryId!!)
-                             viewModel._categoryId.value = topMerchant.categoryId
-                             viewModel.isCategory.value = true
+                             viewModel.onChangeCategoryId(topMerchant.categoryId!!)
+                             viewModel.toggleCategory(true)
                          }else{
                              val productsInfo = ProductListRequest(
                                  categoryId = topMerchant.categoryId!!,
                                  merchantId = topMerchant.merchantId!!
                              )
                              viewModel.getProducts(productsInfo)
-                             viewModel.isCategory.value = false
+                             viewModel.toggleCategory(false)
                          }
                 },
                 topMerchant = topMerchant

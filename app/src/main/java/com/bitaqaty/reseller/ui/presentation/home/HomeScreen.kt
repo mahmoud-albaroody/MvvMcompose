@@ -61,6 +61,8 @@ fun HomeScreen(
     val merchantState by viewModel.merchantsState
     val productsState by viewModel.productsState
     val childMerchantsState by viewModel.childMerchantsState
+    val categoryId by viewModel.categoryId
+    val isCategory by viewModel.isCategory
 
     val scope = rememberCoroutineScope()
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
@@ -107,7 +109,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         SideBar(
-                            viewModel = viewModel,
+                            homeViewModel = viewModel,
                             mainViewModel = mainViewModel,
                             navController = navController,
                             categories = categoryList
@@ -160,8 +162,8 @@ fun HomeScreen(
                                                                 horizontal = 10.dp
                                                             )
                                                             .noRippleClickable {
-                                                                if(viewModel.isCategory.value){
-                                                                    viewModel.getChildMerchants(viewModel._categoryId.value!!)
+                                                                if(isCategory){
+                                                                    viewModel.getChildMerchants(categoryId!!)
                                                                 }else{
                                                                     viewModel.getTopMerchants()
                                                                 }
@@ -226,7 +228,6 @@ fun HomeScreen(
                                 sheetState.hide()
                             }
                         })
-
                 }
             }
         }

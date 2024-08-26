@@ -160,6 +160,7 @@ fun MerchantList(
     merchants: List<Merchant>,
     scrollState: LazyListState,
 ) {
+    val categoryId by viewModel.categoryId
     var selectedMerchant by remember { mutableStateOf(if(merchants.isEmpty()) null else merchants.first()) }
     LazyRow(
         modifier = Modifier
@@ -175,7 +176,7 @@ fun MerchantList(
                     selectedMerchant = merchant
 
                     val productsInfo = ProductListRequest(
-                        categoryId = viewModel._categoryId.value!!,
+                        categoryId = categoryId!!,
                         merchantId = merchant.id
                     )
                     viewModel.getProducts(productsInfo)

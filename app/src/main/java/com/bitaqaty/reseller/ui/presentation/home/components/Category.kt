@@ -22,10 +22,10 @@ import com.bitaqaty.reseller.utilities.noRippleCombinedClickable
 
 @Composable
 fun CategoryItem(
+    modifier: Modifier = Modifier,
     category: Category,
     isSelected: Boolean,
     onClickCategory: (Int) -> Unit,
-    modifier: Modifier = Modifier,
     onLongPress: (Int) -> Unit
 ) {
     val backgroundModifier = if (isSelected) {

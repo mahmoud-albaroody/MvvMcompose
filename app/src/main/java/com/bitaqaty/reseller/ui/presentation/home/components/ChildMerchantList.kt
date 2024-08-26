@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -29,6 +30,8 @@ fun ChildMerchantList(
     viewModel: HomeViewModel,
     childMerchants: TopChildMerchant
 ){
+    val categoryId by viewModel.categoryId
+
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +43,7 @@ fun ChildMerchantList(
             ChildMerchantItem(
                 onClick = {
                     val productsInfo = ProductListRequest(
-                        categoryId = viewModel._categoryId.value!!,
+                        categoryId = categoryId,
                         merchantId = childMerchant.id
                     )
                     viewModel.getProducts(productsInfo)

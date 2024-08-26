@@ -6,6 +6,8 @@ import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.PurchaseRequest
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SystemSettings
@@ -36,6 +38,11 @@ interface ApiService {
     suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
     @POST(ApiURL.PRODUCT_LIST)
     suspend fun getProductList(@Body productsInfo: ProductListRequest): ProductListResponse
+    @POST(ApiURL.CATEGORY_EDIT)
+    suspend fun editCategory(
+        @Path("currentCategoryId") currentCategoryId: Int,
+        @Path("newCategoryId") newCategoryId: Int
+    ): Unit
     @POST(ApiURL.SYSTEM_SETTING)
     suspend fun getSystemSetting(): ArrayList<SystemSettings>
     @POST(ApiURL.SETTLEMENT_REQUEST_DATA)
@@ -44,7 +51,8 @@ interface ApiService {
     suspend fun createSettlementRequest(@Body settlementRequest: SettlementRequestDataRequest): SettlementRequestResult
     @POST(ApiURL.PROFILE)
     suspend fun getProfile(): User
-
+    @POST(ApiURL.PURCHASE_ORDER)
+    suspend fun purchaseOrder(@Body products: PurchaseRequest): PurchaseResponse
     @POST(Globals.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body jsonObject: JsonObject):
             DataState<TransactionLogResult>

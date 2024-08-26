@@ -34,9 +34,11 @@ class SearchViewModel @Inject constructor(
         mutableStateOf<DataState<ProductListResponse>>(DataState.Loading)
     val searchProductsState: State<DataState<ProductListResponse>> = _searchProductsState
 
-    val _categoryId = mutableStateOf<Int?>(null)
+    private val _categoryId = mutableStateOf<Int?>(null)
+    val categoryId: State<Int?> = _categoryId
 
-    val query = mutableStateOf("")
+    private val _query = mutableStateOf("")
+    val query: State<String> = _query
 
     fun getCategoryList() {
         viewModelScope.launch {
@@ -79,5 +81,9 @@ class SearchViewModel @Inject constructor(
                 _searchProductsState.value = state
             }
         }
+    }
+
+    fun onChangeQuery(value: String){
+        _query.value = value
     }
 }

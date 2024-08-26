@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -158,7 +159,7 @@ fun SettlementHeader(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Available Balance",
+                text = stringResource(id = R.string.available_balance),
                 color = Color.Gray
             )
             Text(
@@ -184,13 +185,13 @@ fun BasicData(
 ){
     Column {
         Text(
-            text = "Basic Data",
+            text = stringResource(id = R.string.basic_data),
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Transfer amount*"
+            text = stringResource(id = R.string.btrr_transfer_amount_required)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -198,13 +199,13 @@ fun BasicData(
             focusRequester = focusRequesters[0],
             value = viewModel.settlementRequestUiState.collectAsState().value.amount,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(amount = value)} },
-            placeHolder = "The requested transfer amount",
+            placeHolder = stringResource(id = R.string.the_requested_transfer_amount),
             validationType = ValidationType.TRANSFER_AMOUNT,
             keyBoardType = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next)
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "CR number*"
+            text = stringResource(id = R.string.cr_number)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -212,12 +213,12 @@ fun BasicData(
             focusRequester = focusRequesters[1],
             value = viewModel.settlementRequestUiState.collectAsState().value.crNum,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(crNum = value)} },
-            placeHolder = "CR number",
+            placeHolder = stringResource(id = R.string.cr_number_hint),
             validationType = ValidationType.CR_NUM
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Company Name*"
+            text = stringResource(id = R.string.company_name)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -225,7 +226,7 @@ fun BasicData(
             focusRequester = focusRequesters[2],
             value = viewModel.settlementRequestUiState.collectAsState().value.companyName,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(companyName = value)} },
-            placeHolder = "Company Name",
+            placeHolder = stringResource(id = R.string.company_name_hint),
             validationType = ValidationType.COMPANY_NAME
         )
     }
@@ -238,13 +239,13 @@ fun BankStatements(
 ){
     Column {
         Text(
-            text = "Bank Statements",
+            text = stringResource(id = R.string.bank_statements),
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Swift Code*"
+            text = stringResource(id = R.string.swift_code)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -252,12 +253,12 @@ fun BankStatements(
             focusRequester = focusRequesters[0],
             value = viewModel.settlementRequestUiState.collectAsState().value.swiftCode,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(swiftCode = value)} },
-            placeHolder = "Swift Code",
+            placeHolder = stringResource(id = R.string.swift_code_hint),
             validationType = ValidationType.SWIFT_CODE
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Bank Name*"
+            text = stringResource(id = R.string.bank_name)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -265,12 +266,12 @@ fun BankStatements(
             focusRequester = focusRequesters[1],
             value = viewModel.settlementRequestUiState.collectAsState().value.bankName,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(bankName = value)} },
-            placeHolder = "Bank Name",
+            placeHolder = stringResource(id = R.string.bank_name_hint),
             validationType = ValidationType.BANK_NAME
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "IBAN*"
+            text = stringResource(id = R.string.iban)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -278,7 +279,7 @@ fun BankStatements(
             focusRequester = focusRequesters[2],
             value = viewModel.settlementRequestUiState.collectAsState().value.IBAN,
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(IBAN = value)} },
-            placeHolder = "IBAN",
+            placeHolder = stringResource(id = R.string.btrr_iban),
             validationType = ValidationType.IBAN
         )
     }
@@ -291,13 +292,13 @@ fun AdditionalNotes(
 ){
     Column {
         Text(
-            text = "Additional Notes",
+            text = stringResource(id = R.string.additional_notes),
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Additional Notes"
+            text = stringResource(id = R.string.additional_notes)
         )
         Spacer(modifier = Modifier.height(4.dp))
         ValidationTextField(
@@ -306,7 +307,7 @@ fun AdditionalNotes(
             onValueChange = { value -> viewModel.settlementRequestUiState.update {it.copy(notes = value)} },
             modifier = Modifier
                 .height(120.dp),
-            placeHolder = "Additional Notes",
+            placeHolder = stringResource(id = R.string.additional_notes),
             singleLine = false,
             validationType = ValidationType.NOTES,
             keyBoardType = KeyboardOptions(imeAction = ImeAction.Done),
@@ -328,7 +329,7 @@ fun AdditionalNotes(
                 tint = Color.Blue
             )
             Text(
-                text = "Minimum amount to request ${viewModel.minTransferAmount} SAR",
+                text = stringResource(id = R.string.minimum_amount_to_request) + viewModel.minTransferAmount + " " + stringResource(id = R.string.sar),
                 color = Color.Blue,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold
@@ -394,7 +395,7 @@ fun SendButton(
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
         Text(
-            text = "Send",
+            text = stringResource(id = R.string.send),
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
         )
