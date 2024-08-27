@@ -1140,6 +1140,10 @@
     <string name="profile">Profile</string>
     <string name="charge_balance">Charge Balance</string>
     <string name="favorite">المفضلة</string>
+    <string name="no_products">\"لا يوجد منتجات\"</string>
+    <string name="edit_category">تغيير التصنيف</string>
+    <string name="confirm_change_category">هل أنت متأكد أنك تريد تغيير التصنيف &quot;%1$s&quot;؟</string>
+    <string name="select_card">اختر بطاقة</string>
     <string name="your_new_balance">Your New Balance</string>
 
 </resources>

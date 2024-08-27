@@ -83,18 +83,20 @@ fun BottomNavigationBar(navController: NavController) {
                         this@NavigationBar.BottomNavigationItem(
                             alwaysShowLabel = true,
                             icon = {
-                                Image(
-                                    painter = painterResource(item.icon),
-                                    contentDescription = item.title,
-                                    modifier = Modifier
-                                        .height(28.dp)
-                                        .width(28.dp),
-                                    colorFilter = if (isSelected) {
-                                        ColorFilter.tint(colorResource(id = R.color.purple_700))
-                                    } else {
-                                        ColorFilter.tint(colorResource(id = R.color.grey))
-                                    }
-                                )
+                                item.icon?.let { painterResource(it) }?.let {
+                                    Image(
+                                        painter = it,
+                                        contentDescription = item.title,
+                                        modifier = Modifier
+                                            .height(28.dp)
+                                            .width(28.dp),
+                                        colorFilter = if (isSelected) {
+                                            ColorFilter.tint(colorResource(id = R.color.purple_700))
+                                        } else {
+                                            ColorFilter.tint(colorResource(id = R.color.grey))
+                                        }
+                                    )
+                                }
                             },
                             label = {
                                 Text(
@@ -105,8 +107,8 @@ fun BottomNavigationBar(navController: NavController) {
                                     },
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
-                                    text = item.title,
-
+                                    text = item.title?:"",
+                                    fontFamily = frutigerLTArabic,
                                     fontSize = Dimens.fontSize9,
                                     fontWeight = if (isSelected) {
                                         FontWeight.Bold

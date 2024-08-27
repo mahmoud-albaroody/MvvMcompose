@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen2
 import com.bitaqaty.reseller.ui.presentation.forgetPassword.ForgetPasswordScreen
 import com.bitaqaty.reseller.ui.presentation.forgetPasswordCod.CodeForgetPasswordScreen
@@ -27,6 +28,7 @@ import com.bitaqaty.reseller.ui.presentation.verificationCode.VerificationCodeSc
 @Composable
 fun Navigation(
     navController: NavHostController,
+    mainViewModel: MainActivityViewModel,
     modifier: Modifier
 ) {
     NavHost(navController, startDestination = Screen.LoginScreen.route, modifier) {
@@ -34,9 +36,6 @@ fun Navigation(
         composable(Screen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier = modifier)
         }
-//        composable(Screen.CodeForgetPasswordScreen.route) {
-//            CodeForgetPasswordScreen(navController = navController, modifier = modifier)
-//        }
         composable(Screen.ResetPasswordScreen.route) {
             ResetPasswordScreen(navController = navController, modifier = modifier)
         }
@@ -86,18 +85,18 @@ fun Navigation(
 
 
         composable(Screen.MainScreen2.route) {
-            MainScreen2()
+          //  MainScreen2()
+            MainScreen2(  mainViewModel = mainViewModel)
         }
 
     }
 }
 
 @Composable
-fun navigationTitle(navController: NavController, title: String): String {
+fun navigationTitle(navController: NavController,title:String): String {
     return when (currentRoute(navController)) {
         Screen.Home.route -> stringResource(id = R.string.movie_detail)
-        Screen.Search.route -> stringResource(id = R.string.artist_detail)
-        Screen.Store.route -> stringResource(id = R.string.login)
+        Screen.Store.route -> "Shopping Categories"
         else -> {
             title
         }
@@ -107,5 +106,5 @@ fun navigationTitle(navController: NavController, title: String): String {
 @Composable
 fun currentRoute(navController: NavController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    return navBackStackEntry?.destination?.route?.substringBeforeLast("/")
+    return navBackStackEntry?.destination?.route//.substringBeforeLast("/")
 }

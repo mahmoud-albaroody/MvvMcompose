@@ -1,6 +1,8 @@
 package com.bitaqaty.reseller.utilities
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -62,4 +64,17 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
         interactionSource = remember { MutableInteractionSource() }) {
         onClick()
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+fun Modifier.noRippleCombinedClickable(
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
+): Modifier = composed {
+    this.combinedClickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+        onClick = onClick,
+        onLongClick = onLongClick,
+    )
 }

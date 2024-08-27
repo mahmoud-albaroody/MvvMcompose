@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.activity
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,4 +21,8 @@ class MainActivityViewModel @Inject constructor() : ViewModel() {
             _isLoading.value = false
         }
     }
+
+    val showBottomNav = mutableStateOf(true)
+
+    val categoryDetailsTitle = mutableStateOf("")
 }

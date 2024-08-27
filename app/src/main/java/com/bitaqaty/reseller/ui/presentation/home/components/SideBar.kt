@@ -15,23 +15,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.bitaqaty.reseller.data.model.Category
-import com.bitaqaty.reseller.ui.theme.LightGrey80
+import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
+import com.bitaqaty.reseller.ui.presentation.home.HomeViewModel
 import com.bitaqaty.reseller.utilities.noRippleClickable
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CategoryList(categories: List<Category>) {
-    var selectedItem by remember { mutableStateOf<Category?>(null) }
+fun SideBar(
+    homeViewModel: HomeViewModel,
+    mainViewModel: MainActivityViewModel,
+    navController: NavController,
+    categories: List<Category>,
+) {
+    var selectedItem by remember { mutableStateOf<Category?>(categories.first()) }
+    var categoryToChangeId by remember { mutableStateOf<Int?>(null) }
+    var showDialog by remember { mutableStateOf(false) }
+    var categoryName by remember { mutableStateOf("") }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
             .width(74.dp)
-            .background(color = LightGrey80),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(color = Color(0xFFBFCCEC)),
+        horizontalAlignment = Alignment.Start
     ) {
-        items(categories) { category ->
+        items(categories.subList(0, 5)) { category ->
             CategoryItem(
                 category = category,
                 isSelected = selectedItem == category,
@@ -39,17 +49,37 @@ fun CategoryList(categories: List<Category>) {
                     .fillParentMaxWidth()
                     .animateItemPlacement()
                     .background(color = Color(0xFFBFCCEC))
-                    .noRippleClickable { selectedItem = category }
+                    .noRippleClickable { selectedItem = category },
+                onClickCategory = { index ->
+                    if(index != 0){
+                        homeViewModel.getMerchants(category.id)
+                    }else{
+                        homeViewModel.getTopMerchants()
+                    }
+                    selectedItem = category
+                },
+                onLongPress = { index ->
+                    categoryName = category.getName()
+                    if(index != 0){
+                        categoryToChangeId = category.id
+                        showDialog = true
+                    }
+                }
             )
+            if(showDialog){
+                ConfirmationDialog(
+                    categoryName = categoryName,
+                    onConfirm = {
+                        showDialog = false
+                        navController.navigate("store/$categoryToChangeId")
+                        mainViewModel.showBottomNav.value = false
+                    },
+                    onDismiss = {showDialog = false}
+                )
+            }
         }
     }
 }
-
-//val sampleCategories = listOf(
-//    Category("Star", "Category 1"),
-//    Category("Star", "Category 2"),
-//    Category("Star", "Category 3"),
-//)
 
 //@Preview(showBackground = true)
 //@Composable

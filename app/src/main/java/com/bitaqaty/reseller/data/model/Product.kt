@@ -73,7 +73,8 @@ data class Product(
     var showSkuBarcode: Boolean? = false,
     var skuBarcode: String? = null,
     var isServiceCredential: Boolean = false,
-    var cartItemCount: Int = 0
+    var cartItemCount: Int = 0,
+    val vatPercentage:String?=null
 ) {
     fun getUserNameTitle(): String {
         return if (Globals.lang == "en") {

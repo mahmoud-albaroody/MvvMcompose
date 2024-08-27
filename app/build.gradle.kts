@@ -90,15 +90,15 @@ android {
     }
 
 
-//    bundle {
-//        language {
-//            // Specifies that the app bundle should not support
-//            // configuration APKs for language resources. These
-//            // resources are instead packaged with each base and
-//            // dynamic feature APK.
-//            enableSplit = false
-//        }
-//    }
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
     flavorDimensions+=  "default"
 
     productFlavors {
@@ -155,7 +155,6 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
     implementation(files("libs/fraudforce-lib-release-5.1.0.aar"))
     implementation("io.nearpay:nearpay-sdk:2.1.87")
-   // implementation("androidx.compose.material3:material3:1.2.0-beta01")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

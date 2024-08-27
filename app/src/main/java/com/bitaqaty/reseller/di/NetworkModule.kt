@@ -145,7 +145,6 @@ object NetworkModule {
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()
     }
-
     /**
      * Provides ApiServices client for Retrofit
      */

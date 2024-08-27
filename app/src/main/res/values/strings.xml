@@ -1002,7 +1002,7 @@ Inactive accounts will be handled in accordance with Bitaqaty Business policy in
     <string name="your_account_number">Your Account Number</string>
     <string name="iban_number_hint">Should be started with SA then 22 digits</string>
     <string name="branch_address_hint">Branch Address</string>
-    <string name="minimum_amount_to_request">Minimum amount to request</string>
+    <string name="minimum_amount_to_request">Minimum amount to request </string>
     <string name="basic_data">Basic Data</string>
     <string name="bank_statements">Bank Statements</string>
     <string name="started_with_sa">IBAN code should be started with SA</string>
@@ -1138,6 +1138,10 @@ Inactive accounts will be handled in accordance with Bitaqaty Business policy in
     <string name="profile">Profile</string>
     <string name="charge_balance">Charge Balance</string>
     <string name="favorite">Favorite</string>
+    <string name="no_products">\"No Products\"</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="confirm_change_category">Are you sure you want to change &quot;%1$s&quot; category?</string>
+    <string name="select_card">Select Card</string>
     <string name="your_new_balance">Your New Balance</string>
 
 </resources>

@@ -23,11 +23,19 @@ class TrapezoidShape : Shape {
         density: Density
     ): Outline {
         val path = Path().apply {
-            moveTo(0f, size.height - size.height * 0.15f)
-            lineTo(size.width, size.height)
-            lineTo(size.width, 0f)
-            lineTo(0f, size.height * 0.15f)
-            close()
+            if(Globals.lang == "en"){
+                moveTo(0f, size.height - size.height * 0.15f)
+                lineTo(size.width, size.height)
+                lineTo(size.width, 0f)
+                lineTo(0f, size.height * 0.15f)
+                close()
+            }else{
+                moveTo(0f, size.height)
+                lineTo(size.width, size.height - size.height * 0.15f)
+                lineTo(size.width, size.height * 0.15f)
+                lineTo(0f, 0f)
+                close()
+            }
         }
         return Outline.Generic(path)
     }

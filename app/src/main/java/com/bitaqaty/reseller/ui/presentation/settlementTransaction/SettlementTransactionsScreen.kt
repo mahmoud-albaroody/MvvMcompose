@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.airbnb.lottie.utils.Utils
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.SettlementLog
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogHeader
 import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogItems
@@ -56,7 +57,11 @@ fun SettlementTransactionsScreen(navController: NavController, modifier: Modifie
         }
     }
 
-    SettlementTransactions(settlementLogList, totalElementsCount, onClick = {
+    SettlementTransactions(settlementLogList, totalElementsCount, onTransactionRequestClick = {
+        navController.navigate(
+            Screen.SettlementRequestScreen.route
+        )
+    }, onClick = {
         com.bitaqaty.reseller.utilities.Utils.getUserData()?.reseller?.id?.let {
             settlementTransactionsViewModel.settlementLog(
                 it, ++pageIndex
@@ -68,7 +73,8 @@ fun SettlementTransactionsScreen(navController: NavController, modifier: Modifie
 @Composable
 fun SettlementTransactions(
     settlementLog:
-    SnapshotStateList<SettlementLog>, totalElementsCount: Int, onClick: () -> Unit
+    SnapshotStateList<SettlementLog>, totalElementsCount: Int, onClick: () -> Unit,
+    onTransactionRequestClick: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
@@ -82,6 +88,7 @@ fun SettlementTransactions(
             backgroundTex = Blue100, text = stringResource(id = R.string.transfer_request),
             iconVisibility = true, horizontalPadding = Dimens.DefaultMargin, textColor = White
         ) {
+            onTransactionRequestClick()
 
         }
         RechargeLogHeader(
@@ -106,3 +113,4 @@ fun SettlementTransactions(
 
     }
 }
+

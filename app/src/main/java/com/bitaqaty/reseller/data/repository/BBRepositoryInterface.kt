@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.data.repository
 
-import androidx.paging.PagingData
 import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
@@ -25,12 +24,22 @@ import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
 import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
+import com.bitaqaty.reseller.data.model.Merchant
+import com.bitaqaty.reseller.data.model.PersonalBankData
+import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.ProductListResponse
+import com.bitaqaty.reseller.data.model.PurchaseRequest
+import com.bitaqaty.reseller.data.model.PurchaseResponse
+import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
+import com.bitaqaty.reseller.data.model.SettlementRequestResult
+import com.bitaqaty.reseller.data.model.TopChildMerchant
+import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
-import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
-import com.bitaqaty.reseller.ui.presentation.home.Merchant
+import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
@@ -39,7 +48,19 @@ import kotlinx.coroutines.flow.Flow
 interface BBRepositoryInterface {
     suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody):
             Resource<TransactionLogResult>
+
     suspend fun getCategoryList(): Flow<DataState<ArrayList<Category>>>
+    suspend fun getTopMerchants(): Flow<DataState<TopMerchants>>
+    suspend fun getChildMerchants(childMerchantRequest: ChildMerchantRequest): Flow<DataState<TopChildMerchant>>
+    suspend fun getMerchants(categoryId: Int): Flow<DataState<ArrayList<Merchant>>>
+    suspend fun getProducts(productsInfo: ProductListRequest): Flow<DataState<ProductListResponse>>
+    suspend fun editCategory(currentCategoryId: Int, newCategoryId: Int): Flow<DataState<Unit>>
+    suspend fun getSystemSettings(): Flow<DataState<ArrayList<SystemSettings>>>
+    suspend fun getSettlementRequestData(): Flow<DataState<PersonalBankData>>
+    suspend fun createSettlementRequest(settlementRequest: SettlementRequestDataRequest): Flow<DataState<SettlementRequestResult>>
+    suspend fun getProfile(): Flow<DataState<User>>
+    suspend fun purchaseOrder(products: PurchaseRequest): Flow<DataState<PurchaseResponse>>
+
     suspend fun getSettlementRequest(jsonObject: JsonObject): Resource<SettlementResponse>
     suspend fun getRechargeLogRequest(jsonObject: JsonObject): Resource<RechargingLogResult>
     suspend fun signIn(jsonObject: JsonObject): Resource<DataResult>
@@ -57,7 +78,6 @@ interface BBRepositoryInterface {
 
     suspend fun authenticatedLogin(jsonObject: JsonObject): Resource<User>
 
-    suspend fun getProfile(): Flow<User>
 
     suspend fun validateVerificationCode(jsonObject: JsonObject): Resource<User>
 
@@ -75,11 +95,10 @@ interface BBRepositoryInterface {
     suspend fun generateHomeSalesReport(reportRequestBody: ReportRequestBody): Flow<ReportLog>
 
     suspend fun getSimpleCategoryList(): Flow<ArrayList<Category>>
-    suspend fun getSimpleMerchantList(categoryId: Int): Flow<ArrayList<Merchant>>
+    suspend fun getSimpleMerchantList(categoryId: Int): Flow<DataState<ArrayList<Merchant>>>
     suspend fun getProductLookList(jsonObject: JsonObject): Flow<ArrayList<Product>>
 
     suspend fun getSurePayRechargeMethods(): Flow<ArrayList<RechargeMethod>>
-    suspend fun getMerchants(categoryId: Int): Flow<ArrayList<Merchant>>
     suspend fun getUserNamesList(): Flow<ArrayList<LogUserName>>
 
 
@@ -94,4 +113,5 @@ interface BBRepositoryInterface {
     suspend fun validateSurePayCharging(jsonObject: JsonObject): Flow<ValidationSurpayChargeResult>
 
     suspend fun surePayCharging(jsonObject: JsonObject): Flow<PaymentStatus>
+
 }

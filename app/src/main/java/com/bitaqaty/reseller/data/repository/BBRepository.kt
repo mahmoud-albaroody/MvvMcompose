@@ -10,14 +10,21 @@ import com.bitaqaty.reseller.data.datasource.remote.paging.TransactionPagingData
 import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
+import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
+import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PaymentStatus
+import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.Product
+import com.bitaqaty.reseller.data.model.ProductListRequest
+import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.ProductListResult
+import com.bitaqaty.reseller.data.model.PurchaseRequest
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.data.model.RechargeMethod
 import com.bitaqaty.reseller.data.model.RechargingLogResult
 import com.bitaqaty.reseller.data.model.RemainingTrials
@@ -28,15 +35,18 @@ import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
 import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
 import com.bitaqaty.reseller.data.model.SearchBank
+import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
+import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.SettlementResponse
 import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
+import com.bitaqaty.reseller.data.model.TopChildMerchant
+import com.bitaqaty.reseller.data.model.TopMerchants
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
-import com.bitaqaty.reseller.ui.presentation.home.Merchant
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
@@ -134,11 +144,17 @@ class BBRepository @Inject constructor(
 
     }
 
-    override suspend fun getSimpleMerchantList(categoryId: Int): Flow<ArrayList<Merchant>> = flow {
-        //   emit(DataState.Loading)
-        val logoutResult = apiService.getSimpleMerchantList(categoryId)
-        emit(logoutResult)
-    }
+    override suspend fun getSimpleMerchantList(categoryId: Int): Flow<DataState<ArrayList<Merchant>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val merchants = apiService.getMerchants(categoryId)
+                emit(DataState.Success(merchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
 
     override suspend fun getProductLookList(jsonObject: JsonObject): Flow<ArrayList<Product>> =
         flow {
@@ -153,11 +169,6 @@ class BBRepository @Inject constructor(
         emit(logoutResult)
     }
 
-    override suspend fun getMerchants(categoryId: Int): Flow<ArrayList<Merchant>> = flow {
-        //   emit(DataState.Loading)
-        val logoutResult = apiService.getMerchants(categoryId)
-        emit(logoutResult)
-    }
 
     override suspend fun getUserNamesList(): Flow<ArrayList<LogUserName>> = flow {
         //   emit(DataState.Loading)
@@ -296,14 +307,7 @@ class BBRepository @Inject constructor(
     }
 
 
-    override suspend fun getProfile(): Flow<User> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.getProfile()
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
 
-        }
 
 
     override suspend fun validateVerificationCode(jsonObject: JsonObject): Resource<User> {
@@ -366,13 +370,122 @@ class BBRepository @Inject constructor(
         flow {
             emit(DataState.Loading)
             try {
-                val searchResult = apiService.getCategoryList()
-                Log.e(
-                    "dddd",
-                    (searchResult as DataState.Success<ArrayList<Category>>).data.toString()
-                )
-                emit(searchResult)
+                val categoryList = apiService.getCategoryList()
+                emit(DataState.Success(categoryList))
             } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getTopMerchants(): Flow<DataState<TopMerchants>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val topMerchants = apiService.getTopMerchants()
+                emit(DataState.Success(topMerchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getChildMerchants(childMerchantRequest: ChildMerchantRequest): Flow<DataState<TopChildMerchant>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val childMerchants = apiService.getChildMerchants(childMerchantRequest)
+                emit(DataState.Success(childMerchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getMerchants(categoryId: Int): Flow<DataState<ArrayList<Merchant>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val merchants = apiService.getMerchants(categoryId)
+                emit(DataState.Success(merchants))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getProducts(productsInfo: ProductListRequest): Flow<DataState<ProductListResponse>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val products = apiService.getProductList(productsInfo)
+                emit(DataState.Success(products))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun editCategory(
+        currentCategoryId: Int,
+        newCategoryId: Int
+    ): Flow<DataState<Unit>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val editResult = apiService.editCategory(currentCategoryId, newCategoryId)
+                emit(DataState.Success(editResult))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getSystemSettings(): Flow<DataState<ArrayList<SystemSettings>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val systemSettings = apiService.getSystemSetting()
+                emit(DataState.Success(systemSettings))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getSettlementRequestData(): Flow<DataState<PersonalBankData>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val bankData = apiService.getSettlementRequestData()
+                emit(DataState.Success(bankData))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun createSettlementRequest(settlementRequest: SettlementRequestDataRequest): Flow<DataState<SettlementRequestResult>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val settlementRequestResult = apiService.createSettlementRequest(settlementRequest)
+                emit(DataState.Success(settlementRequestResult))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getProfile(): Flow<DataState<User>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val profile = apiService.getProfile()
+                emit(DataState.Success(profile))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun purchaseOrder(products: PurchaseRequest): Flow<DataState<PurchaseResponse>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val purchaseResponse = apiService.purchaseOrder(products)
+                emit(DataState.Success(purchaseResponse))
+            }catch (e: Exception){
                 emit(DataState.Error(e))
             }
         }

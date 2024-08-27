@@ -3,13 +3,14 @@ package com.bitaqaty.reseller.ui.navigation
 import com.bitaqaty.reseller.R
 
 sealed class Screen(
-    var route: String, var icon: Int, var title: String, val objectName: String = "",
+    var route: String, var icon: Int? = null, var title: String? = null, val objectName: String = "",
     val objectPath: String = ""
 ) {
     object Home : Screen("home", R.drawable.ic_home, "Home")
     object Search : Screen("search", R.drawable.ic_search, "Search")
     object Favorite : Screen("favorite", R.drawable.ic_favorite, "Favorite")
-    object Store : Screen("store", R.drawable.ic_store, "Store")
+    object Store : Screen("store/{categoryId}", R.drawable.ic_store, "Store")
+    object CategoryDetails : Screen("categoryDetails/{categoryId}/{categoryName}")
     object Transactions : Screen("transactions", R.drawable.ic_transaction, "Transactions")
     object More : Screen("more", R.drawable.ic_more, "More")
 
@@ -95,5 +96,7 @@ sealed class Screen(
 
     object PrivacyScreen :
         Screen("PrivacyScreen", 0, "PrivacyScreen", objectPath = "{object}")
+
+    object SettlementRequestScreen : Screen("SettlementRequestScreen", 0 , "Settlement Request")
 
 }

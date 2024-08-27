@@ -18,9 +18,9 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
-import com.bitaqaty.reseller.data.model.ProductDetails
 import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.data.model.UserInfo
+import com.bitaqaty.reseller.data.models.ProductDetails
 import com.bitaqaty.reseller.databinding.ComponentReceipt1Binding
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.utilities.DateUtils

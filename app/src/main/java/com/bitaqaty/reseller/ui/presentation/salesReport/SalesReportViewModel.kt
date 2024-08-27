@@ -3,17 +3,9 @@ package com.bitaqaty.reseller.ui.presentation.salesReport
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bitaqaty.reseller.data.model.Category
-import com.bitaqaty.reseller.data.model.CurrentUser
-import com.bitaqaty.reseller.data.model.Product
-import com.bitaqaty.reseller.data.model.ProductListResult
 import com.bitaqaty.reseller.data.model.ReportLog
 import com.bitaqaty.reseller.data.model.ReportRequestBody
-import com.bitaqaty.reseller.domain.GetProductUseCase
 import com.bitaqaty.reseller.domain.GetReportLogUseCase
-import com.bitaqaty.reseller.ui.presentation.home.Merchant
-import com.bitaqaty.reseller.utilities.Globals
-import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch

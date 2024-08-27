@@ -1,4 +1,4 @@
-package com.bitaqaty.reseller.data.model
+package com.bitaqaty.reseller.data.models
 
 import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.Product
