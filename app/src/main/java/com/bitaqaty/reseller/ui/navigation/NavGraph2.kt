@@ -41,6 +41,7 @@ import com.bitaqaty.reseller.ui.presentation.rechargingLogScreen.RechargeLogScre
 import com.bitaqaty.reseller.ui.presentation.salesReport.SalesReportScreen
 import com.bitaqaty.reseller.ui.presentation.selectMainCategory.SelectMainCategoryScreen
 import com.bitaqaty.reseller.ui.presentation.selectSubCategory.SelectSubCategoryScreen
+import com.bitaqaty.reseller.ui.presentation.settlementRequest.SettlementRequestScreen
 import com.bitaqaty.reseller.ui.presentation.settlementTransaction.SettlementTransactionsScreen
 import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
@@ -107,7 +108,7 @@ fun Navigation2(
                 modifier = modifier,
                 categoryId = categoryId
             )
-            //SettlementRequestScreen()
+
         }
         composable(
             Screen.CategoryDetails.route,
@@ -254,6 +255,13 @@ fun Navigation2(
                 modifier = modifier
             )
         }
+        composable(Screen.SettlementRequestScreen.route) {
+            SettlementRequestScreen(
+                navController = navController
+            )
+        }
+
+
         composable(
             Screen.PrivacyScreen.route.plus(
                 "{comeFrom}"

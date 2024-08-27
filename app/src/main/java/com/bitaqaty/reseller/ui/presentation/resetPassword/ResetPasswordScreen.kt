@@ -77,6 +77,7 @@ fun ResetPasswordScreen(navController: NavController, modifier: Modifier) {
                         val jsonObject = JsonObject()
                         jsonObject.addProperty("mobileNumber", resetAccessDate?.mobileNumber)
                         jsonObject.addProperty("token", resetAccessDate?.token)
+                        jsonObject.addProperty("comeFrom", "ResetAccess")
                         navController.navigate(
                             Screen.VerificationCodeScreen
                                 .route.plus(
