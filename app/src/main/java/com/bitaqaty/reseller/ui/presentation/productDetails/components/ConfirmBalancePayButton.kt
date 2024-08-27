@@ -105,7 +105,7 @@ fun ConfirmBalancePayButton(
                     colorFilter = ColorFilter.tint(Color.White),
                     contentScale = ContentScale.FillBounds
                 )
-                Column() {
+                Column {
                     Text(
                         text = "Slide to",
                         style = TextStyle(
