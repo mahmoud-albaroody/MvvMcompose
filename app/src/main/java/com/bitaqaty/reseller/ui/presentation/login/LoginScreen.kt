@@ -1,6 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.login
 
-import android.util.Log
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,22 +23,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -46,6 +45,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,40 +60,80 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.DataResult
+import com.bitaqaty.reseller.data.model.ErrorMessage
+import com.bitaqaty.reseller.data.model.RechargingLog
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.Grey
-import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.Red
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.HandleError
+import com.bitaqaty.reseller.utilities.Utils
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavController, modifier: Modifier) {
     val loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+    val errors = remember { SnapshotStateList<ErrorMessage>() }
+    var username by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
     LaunchedEffect(key1 = 0) {
         loginScreenViewModel.viewModelScope.launch {
             loginScreenViewModel.signInState.collect {
-//                Log.e("ssssss",it.errorCode.toString())
-//                Log.e("ssssss", it.data?.errors?.get(0)?.errorCode.toString())
-                loginScreenViewModel.authenticatedLogin(it.data?.loginProcessToken)
+                it.data?.let { data ->
+                    if (data.errors?.isNotEmpty() == true) {
+                        errors.clear()
+                        errors.addAll(it.data.errors!!)
+                        showDialog = true
+                    } else {
+                        token = data.loginProcessToken?.substringBefore("/").toString()
+                        loginScreenViewModel.authenticatedLogin(token)
+                    }
+                }
             }
         }
         loginScreenViewModel.viewModelScope.launch {
             loginScreenViewModel.authenticatedLoginState.collect {
-                if (it.errors.isNotEmpty()) {
-                    Log.e("ddd", it.errors[0].errorMessage)
-                } else {
-                    navController.navigate(Screen.MainScreen2.route)
+                it.data.let { data ->
+                    if (it.data?.errors?.isNotEmpty() == true) {
+                        errors.clear()
+                        errors.addAll(it.data.errors)
+                        showDialog = true
+                    } else {
+                        Utils.saveUserData(data)
+                        navController.navigate(Screen.MainScreen2.route)
+                    }
                 }
             }
         }
     }
+    errors.apply {
+        HandleError(this, showDialog,
+            navController, context, goToVerificationCodeScreen = {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("mobileNumber", username)
+                jsonObject.addProperty("token", token)
+                jsonObject.addProperty("comeFrom", "Login")
 
+                navController.navigate(
+                    Screen.VerificationCodeScreen
+                        .route.plus(
+                            Screen.VerificationCodeScreen.objectName
+                                    + "$jsonObject"
+                        )
+                )
+            }, onDismissClick = {
+                showDialog = false
+            })
+    }
 
 
 
@@ -103,12 +143,13 @@ fun LoginScreen(navController: NavController, modifier: Modifier) {
         navController.navigate(Screen.ForgetPasswordScreen.route)
 
     }, onLoginClick = { userName, password ->
+        username = userName
         loginScreenViewModel.signIn(userName = userName, password = password)
-        //  navController.navigate(Screen.MainScreen2.route)
     })
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginItem(
     onResetAccessClick: () -> Unit, onForgetClick: () -> Unit,
@@ -124,6 +165,7 @@ fun LoginItem(
     val (focusRequester) = FocusRequester.createRefs()
     val keyboardController = LocalSoftwareKeyboardController.current
     var borderColor: Color = BebeBlue
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -171,7 +213,7 @@ fun LoginItem(
                         value = email,
                         placeholder = {
                             Text(
-                                text = stringResource(id = R.string.email),
+                                text = stringResource(id = R.string.sign_username),
                                 style = TextStyle(color = Grey)
                             )
                         },
@@ -241,7 +283,7 @@ fun LoginItem(
                         placeholder = {
                             Text(
                                 text = stringResource(R.string.password),
-                                style = TextStyle(color = LightGrey100)
+                                style = TextStyle(color = Grey)
                             )
                         },
                         colors = OutlinedTextFieldDefaults.colors(
@@ -289,7 +331,8 @@ fun LoginItem(
                     }
                 }) {
                 Text(
-                    text = stringResource(R.string.login), style = TextStyle(
+                    text = stringResource(R.string.err_incorrect_username_password),
+                    style = TextStyle(
                         textAlign = TextAlign.Center, fontSize = 13.sp,
                         color = White
                     )

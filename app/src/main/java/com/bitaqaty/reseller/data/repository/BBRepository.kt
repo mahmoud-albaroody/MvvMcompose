@@ -11,6 +11,7 @@ import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
@@ -28,6 +29,7 @@ import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
 import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
+import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
@@ -71,15 +73,34 @@ class BBRepository @Inject constructor(
         }
     }
 
-    override suspend fun resetAccessData(jsonObject: JsonObject):
-            Flow<ResetAccessData> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.resetAccessData(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+    override suspend fun logout(): Resource<ErrorMessage> {
+        val response = apiService.logout()
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
+
+    override suspend fun authenticatedLogin(jsonObject: JsonObject): Resource<User> {
+        val response = apiService.authenticatedLogin(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
+
+    override suspend fun resetAccessData(jsonObject: JsonObject):
+            Resource<ResetAccessData> {
+        val response = apiService.resetAccessData(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
+
 
     override suspend fun systemSettings():
             Flow<ArrayList<SystemSettings>> =
@@ -90,12 +111,6 @@ class BBRepository @Inject constructor(
 
         }
 
-    override suspend fun logout(): Flow<Void> = flow {
-        //   emit(DataState.Loading)
-        val logoutResult = apiService.logout()
-        emit(logoutResult)
-
-    }
 
     override suspend fun getProductList(jsonObject: JsonObject): Flow<ProductListResult> = flow {
         //   emit(DataState.Loading)
@@ -228,15 +243,14 @@ class BBRepository @Inject constructor(
         }
 
 
-    override suspend fun verifyForgetPassword(jsonObject: JsonObject): Flow<DataResult> =
-        flow {
-            //   emit(DataState.Loading)
-
-            val searchResult = apiService.verifyForgetPassword(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+    override suspend fun verifyForgetPassword(jsonObject: JsonObject): Resource<DataResult> {
+        val response = apiService.verifyForgetPassword(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
 
 
     override suspend fun changePassword(jsonObject: JsonObject): Flow<DataResult> =
@@ -261,34 +275,25 @@ class BBRepository @Inject constructor(
         }
 
 
-    override suspend fun getVerificationRemainingTrials(jsonObject: JsonObject): Flow<RemainingTrials> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.getVerificationRemainingTrials(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+    override suspend fun getVerificationRemainingTrials(jsonObject: JsonObject):
+            Resource<RemainingTrials> {
+        val response = apiService.getVerificationRemainingTrials(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
 
 
-    override suspend fun resendResetAccessDataSms(jsonObject: JsonObject): Flow<Void> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.resendResetAccessDataSms(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+    override suspend fun resendResetAccessDataSms(jsonObject: JsonObject): Resource<StatusResponse> {
+        val response = apiService.resendResetAccessDataSms(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
-
-
-    override suspend fun authenticatedLogin(jsonObject: JsonObject): Flow<User> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.authenticatedLogin(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
-        }
+    }
 
 
     override suspend fun getProfile(): Flow<User> =
@@ -301,25 +306,25 @@ class BBRepository @Inject constructor(
         }
 
 
-    override suspend fun validateVerificationCode(jsonObject: JsonObject): Flow<User> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.validateVerificationCode(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+    override suspend fun validateVerificationCode(jsonObject: JsonObject): Resource<User> {
+        val response = apiService.validateVerificationCode(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
 
 
     override suspend fun validateResetVerificationCode(jsonObject: JsonObject):
-            Flow<ValidateResetAccessData> =
-        flow {
-            //   emit(DataState.Loading)
-            val searchResult = apiService.validateResetVerificationCode(jsonObject)
-            emit(searchResult)
-            Log.e("sssdd", "adsasd")
-
+            Resource<ValidateResetAccessData> {
+        val response = apiService.validateResetVerificationCode(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
 
 
     override suspend fun getTransactionLogList(transactionRequestBody: TransactionRequestBody):

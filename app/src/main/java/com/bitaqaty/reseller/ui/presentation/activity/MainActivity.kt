@@ -2,11 +2,14 @@ package com.bitaqaty.reseller.ui.presentation.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +33,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.CurrentUser
 import com.bitaqaty.reseller.ui.navigation.Navigation
 import com.bitaqaty.reseller.ui.navigation.BottomNavigationBar
 import com.bitaqaty.reseller.ui.navigation.Navigation2
@@ -41,6 +45,7 @@ import com.bitaqaty.reseller.ui.presentation.appbar.HomeAppBar
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.LocaleHelper
+import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.loadLocale
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +53,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val splashViewModel: MainActivityViewModel by viewModels()
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,13 +66,18 @@ class MainActivity : ComponentActivity() {
             setKeepOnScreenCondition { splashViewModel.isLoading.value }
         }
         setContent {
-
             BitaqatyTheme {
 
-                MainScreen()
+                Log.e("token", CurrentUser.getInstance()?.token.toString())
+                if (CurrentUser.getInstance()?.token == null) {
+                    MainScreen()
+                } else {
+                    MainScreen2()
+                }
             }
         }
     }
+
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(
@@ -76,6 +87,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
@@ -94,9 +106,10 @@ fun MainScreen() {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen2(modifier: Modifier) {
+fun MainScreen2() {
     val navController = rememberNavController()
     var haveBack = false
     var appTitle = ""
@@ -276,6 +289,7 @@ fun MainScreen2(modifier: Modifier) {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomePreview() {

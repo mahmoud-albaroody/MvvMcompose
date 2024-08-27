@@ -8,6 +8,7 @@ import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,14 +28,14 @@ class CodeForgetPasswordViewModel @Inject constructor(private val repo: Authenti
         get() = _forgetPasswordSend
 
     private val _verifyForgetPassword =
-        MutableSharedFlow<DataResult>()
-    val verifyForgetPassword: MutableSharedFlow<DataResult>
+        MutableSharedFlow<Resource<DataResult>>()
+    val verifyForgetPassword: MutableSharedFlow<Resource<DataResult>>
         get() = _verifyForgetPassword
 
 
     private val _remainingTrials =
-        MutableSharedFlow<RemainingTrials>()
-    val remainingTrials: MutableSharedFlow<RemainingTrials>
+        MutableSharedFlow<Resource<RemainingTrials>>()
+    val remainingTrials: MutableSharedFlow<Resource<RemainingTrials>>
         get() = _remainingTrials
 
     fun forgetPasswordSend(email: String?, typeOfMethod: String?) {

@@ -34,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,6 +62,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue
@@ -69,6 +72,9 @@ import com.bitaqaty.reseller.ui.theme.LightGrey100
 import com.bitaqaty.reseller.ui.theme.LightGrey50
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Globals
+import com.bitaqaty.reseller.utilities.HandleError
+import com.bitaqaty.reseller.utilities.ShowAlertDialog
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.Utils.localized
@@ -87,58 +93,86 @@ fun VerificationCodeScreen(
     val jsonObject = Gson().fromJson(jsonString, JsonObject::class.java)
     val mobileNumber = jsonObject.get("mobileNumber").asString
     val token = jsonObject.get("token").asString
+    val comeFrom = jsonObject.get("comeFrom").asString
     val context = LocalContext.current
     var showTimer by remember { mutableStateOf(false) }
     var timeOutTxt by remember { mutableStateOf("") }
     var remainingTrialsNo by remember { mutableStateOf("") }
     var speed by remember { mutableFloatStateOf(0f) }
-
+    val errors = remember { SnapshotStateList<ErrorMessage>() }
+    var showDialog by remember { mutableStateOf(false) }
+    var confirmationDialog by remember { mutableStateOf(false) }
     val verificationCodeViewModel: VerificationCodeViewModel = hiltViewModel()
 
     LaunchedEffect(key1 = true) {
-      //  verificationCodeViewModel.resendResetAccessDataSms(token)
         verificationCodeViewModel.viewModelScope.launch {
             verificationCodeViewModel.validateResetAccessData.collect {
-                navController.navigate(Screen.LoginScreen.route)
+                it.data.let { data ->
+                    if (!data?.errors.isNullOrEmpty()) {
+                        errors.clear()
+                        data?.errors?.let { it1 -> errors.addAll(it1) }
+                        showDialog = true
+                    } else {
+                        confirmationDialog = true
+                    }
+                }
             }
         }
         verificationCodeViewModel.viewModelScope.launch {
-            verificationCodeViewModel.remainingTrials.collect { remainingTrials ->
-                if (remainingTrials.getResendSmsTrials() >= remainingTrials.getRemainingResendSmsTrial() && remainingTrials.getRemainingResendSmsTrial() != 0) {
-                    val trialNo =
-                        remainingTrials.getResendSmsTrials() - remainingTrials.getRemainingResendSmsTrial()
-                    remainingTrialsNo = "$trialNo / ${remainingTrials.getResendSmsTrials()} ${
-                        context.getString(
-                            R.string.verification_trial
-                        )
-                    }".localized()
-                    var timeOut = remainingTrials.getWaitingSecondsToResendSms().toFloat()
-                    timeOutTxt = " ${timeOut.fmt()} "
-                    speed = 1 / remainingTrials.getWaitingSecondsToResendSms().toFloat()
-                    showTimer = true
-                    CoroutineScope(IO).launch {
-                        delay(2000)
-                        while (timeOut > 0) {
-                            timeOut -= 1f
-                            delay(1000)
-                            timeOutTxt = " ${timeOut.fmt()} "
-                            if (timeOut <= 0) {
-                                showTimer = false
-                            }
-                        }
-                    }
-                    if (remainingTrials.getResendSmsTrials() == remainingTrials.getRemainingResendSmsTrial()) {
-                        showTimer = false
-                    }
-                } else {
-                    updateWaitTime(
-                        context, remainingTrials.getWaitTime(), verificationCodeViewModel
-                    )
-                    verificationCodeViewModel.timer.value?.let {
-                        if (it == "-1") {
-                            showTimer = false
+            verificationCodeViewModel.remainingTrials.collect { it ->
+                it.data.let { remaining ->
+                    remaining?.let {
+                        if (it.errors?.isEmpty() == true) {
+                            errors.clear()
+                            errors.addAll(it.errors!!)
+                            showDialog = true
                         } else {
-                            timeOutTxt = it
+
+                            if (it.getResendSmsTrials() >= it.getRemainingResendSmsTrial()
+                                && it.getRemainingResendSmsTrial() != 0
+                            ) {
+                                val trialNo =
+                                    it.getResendSmsTrials() - it.getRemainingResendSmsTrial()
+                                remainingTrialsNo =
+                                    "$trialNo / ${it.getResendSmsTrials()} ${
+                                        context.getString(
+                                            R.string.verification_trial
+                                        )
+                                    }".localized()
+                                var timeOut =
+                                    it.getWaitingSecondsToResendSms().toFloat()
+                                timeOutTxt = " ${timeOut.fmt()} "
+                                speed = 1 / it.getWaitingSecondsToResendSms().toFloat()
+                                showTimer = true
+                                CoroutineScope(IO).launch {
+                                    delay(2000)
+                                    while (timeOut > 0) {
+                                        timeOut -= 1f
+                                        delay(1000)
+                                        timeOutTxt = " ${timeOut.fmt()} "
+                                        if (timeOut <= 0) {
+                                            showTimer = false
+                                        }
+                                    }
+                                }
+                                if (it.getResendSmsTrials() == it.getRemainingResendSmsTrial()) {
+                                    showTimer = false
+                                }
+                            } else {
+                                updateWaitTime(
+                                    context,
+                                    it.getWaitTime(),
+                                    verificationCodeViewModel
+                                )
+                                verificationCodeViewModel.timer.value?.let {
+                                    if (it == "-1") {
+                                        showTimer = false
+                                    } else {
+                                        timeOutTxt = it
+                                    }
+                                }
+
+                            }
                         }
                     }
 
@@ -147,12 +181,49 @@ fun VerificationCodeScreen(
         }
         verificationCodeViewModel.viewModelScope.launch {
             verificationCodeViewModel.resendResetAccess.collect { resend ->
-                verificationCodeViewModel.getRemainingTrials(token)
+                resend.data.let { data ->
+                    if (data?.errors.isNullOrEmpty()) {
+                        errors.clear()
+                        data?.errors?.let { it1 -> errors.addAll(it1) }
+                        showDialog = true
+                    } else {
+                        verificationCodeViewModel.getRemainingTrials(token)
+                    }
+                }
             }
         }
-
-
+        verificationCodeViewModel.viewModelScope.launch {
+            verificationCodeViewModel.validateCode.collect{
+                it.data.let { data ->
+                    if (it.data?.errors?.isNotEmpty() == true) {
+                        errors.clear()
+                        errors.addAll(it.data.errors)
+                        showDialog = true
+                    } else {
+                        Utils.saveUserData(data)
+                        navController.navigate(Screen.MainScreen2.route)
+                    }
+                }
+            }
+        }
     }
+
+    errors.apply {
+        HandleError(this, showDialog, navController, context, onDismissClick = {
+            showDialog = false
+        })
+    }
+    if (confirmationDialog)
+        ShowAlertDialog(
+            context,
+            context.getString(R.string.reset_access_data_changed_successfully),
+            Globals.IconType.Success, onDismiss = {
+                confirmationDialog = false
+                navController.navigate(Screen.LoginScreen.route)
+            }
+        )
+
+
     VerificationCode(
         showTimer,
         speed,
@@ -164,12 +235,19 @@ fun VerificationCodeScreen(
             verificationCodeViewModel.resendResetAccessDataSms(token)
         },
         onVerifyClick = {
-            verificationCodeViewModel.validateResetVerificationCode(token, it)
+            if(comeFrom=="Login"){
+                verificationCodeViewModel.validateVerificationCode(token, it)
+            }else{
+                verificationCodeViewModel.validateResetVerificationCode(token, it)
+
+            }
         })
 }
 
-fun updateWaitTime(ctx: Context, resendSmsLink: Double,
-                   viewModel: VerificationCodeViewModel) {
+fun updateWaitTime(
+    ctx: Context, resendSmsLink: Double,
+    viewModel: VerificationCodeViewModel
+) {
     var sec = resendSmsLink * 60
     CoroutineScope(IO).launch {
         while (sec >= 0) {
@@ -335,7 +413,10 @@ fun VerificationCode(
                         shape = RoundedCornerShape(8.dp),
                         singleLine = true,
                         isError = isNotValid,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
                     )
                 }
             }
@@ -588,7 +669,7 @@ fun VerificationCodee(
                         shape = RoundedCornerShape(8.dp),
                         singleLine = true,
                         isError = isNotValid,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     )
                 }
             }

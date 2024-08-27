@@ -4,6 +4,7 @@ import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
@@ -21,6 +22,7 @@ import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
 import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
+import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
@@ -69,7 +71,7 @@ interface ApiService {
     suspend fun resetChangePassword(@Body jsonObject: JsonObject): DataResult
 
     @POST(Globals.VERIFY_FORGET_PASSWORD)
-    suspend fun verifyForgetPassword(@Body jsonObject: JsonObject): DataResult
+    suspend fun verifyForgetPassword(@Body jsonObject: JsonObject): Response<DataResult>
 
     @POST(Globals.FORGET_PASSWORD_SEND)
     suspend fun forgetPasswordSend(@Body jsonObject: JsonObject): ForgetPasswordSend
@@ -82,20 +84,20 @@ interface ApiService {
     suspend fun changePassword(@Body jsonObject: JsonObject): DataResult
 
     @POST(Globals.ACCESS_DATA)
-    suspend fun resetAccessData(@Body jsonObject: JsonObject): ResetAccessData
+    suspend fun resetAccessData(@Body jsonObject: JsonObject): Response<ResetAccessData>
 
 
     @POST(Globals.REMAINING_TRAILS)
     suspend fun getRemainingTrials(@Body jsonObject: JsonObject): RemainingTrials
 
     @POST(Globals.VERIFICATION_REMAINING_TRAILS)
-    suspend fun getVerificationRemainingTrials(@Body jsonObject: JsonObject): RemainingTrials
+    suspend fun getVerificationRemainingTrials(@Body jsonObject: JsonObject): Response<RemainingTrials>
 
     @POST(Globals.RESEND_SMS_VERIFICATION_CODE)
-    suspend fun resendResetAccessDataSms(@Body jsonObject: JsonObject): Void
+    suspend fun resendResetAccessDataSms(@Body jsonObject: JsonObject): Response<StatusResponse>
 
     @POST(Globals.AUTHENTICATED_LOGIN)
-    suspend fun authenticatedLogin(@Body jsonObject: JsonObject): User
+    suspend fun authenticatedLogin(@Body jsonObject: JsonObject): Response<User>
 
     @POST(Globals.PROFILE)
     suspend fun getProfile(): User
@@ -104,13 +106,12 @@ interface ApiService {
     suspend fun getSystemSettings(): ArrayList<SystemSettings>
 
     @POST(Globals.VALIDATE_SMS_VERIFICATION_CODE)
-    suspend fun validateVerificationCode(@Body jsonObject: JsonObject): User
+    suspend fun validateVerificationCode(@Body jsonObject: JsonObject): Response<User>
 
     @POST(Globals.VALIDATE_RESET_SMS_VERIFICATION_CODE)
-    suspend fun validateResetVerificationCode(@Body jsonObject: JsonObject): ValidateResetAccessData
+    suspend fun validateResetVerificationCode(@Body jsonObject: JsonObject):
+            Response<ValidateResetAccessData>
 
-    @POST(Globals.LOGOUT)
-    suspend fun logout(): Void
 
     @POST(Globals.GET_PRODUCT_LIST)
     suspend fun getProductList(@Body jsonObject: JsonObject): ProductListResult
@@ -160,5 +161,9 @@ interface ApiService {
 
     @POST(Globals.SUREPAY_CHARGING)
     suspend fun surePayCharging(@Body jsonObject: JsonObject): PaymentStatus
+
+
+    @POST(Globals.LOGOUT)
+    suspend fun logout(): Response<ErrorMessage>
 
 }

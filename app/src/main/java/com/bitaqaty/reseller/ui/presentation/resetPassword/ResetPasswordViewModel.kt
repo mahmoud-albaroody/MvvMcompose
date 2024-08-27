@@ -9,6 +9,7 @@ import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,13 +23,13 @@ import javax.inject.Inject
 class ResetPasswordViewModel @Inject constructor(private val repo: AuthenticationUseCase) :
     ViewModel() {
     private val _resetPassword =
-        MutableSharedFlow<ResetAccessData>()
-    val resetPassword: MutableSharedFlow<ResetAccessData>
+        MutableSharedFlow<Resource<ResetAccessData>>()
+    val resetPassword: MutableSharedFlow<Resource<ResetAccessData>>
         get() = _resetPassword
 
     private val _remainingTrials =
-        MutableSharedFlow<RemainingTrials>()
-    val remainingTrials: MutableSharedFlow<RemainingTrials>
+        MutableSharedFlow<Resource<RemainingTrials>>()
+    val remainingTrials: MutableSharedFlow<Resource<RemainingTrials>>
         get() = _remainingTrials
 
 

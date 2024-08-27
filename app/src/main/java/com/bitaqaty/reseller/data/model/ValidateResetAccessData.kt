@@ -1,7 +1,9 @@
 package com.bitaqaty.reseller.data.model
 
+import java.util.ArrayList
+
 data class ValidateResetAccessData(
-    var errors: ArrayList<ErrorMessage>? = ArrayList(),
     val authenticationType: String,
-    val validVerificationCode: Boolean
-)
+    val validVerificationCode: Boolean,
+    override var errors: ArrayList<ErrorMessage>?=null
+):StatusResponse

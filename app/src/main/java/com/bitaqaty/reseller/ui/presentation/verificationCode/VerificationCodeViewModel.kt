@@ -9,10 +9,12 @@ import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.RemainingTrials
 import com.bitaqaty.reseller.data.model.ResetAccessData
+import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.data.model.ValidateResetAccessData
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,17 +30,23 @@ class VerificationCodeViewModel @Inject constructor(private val repo: Authentica
     var timer: MutableLiveData<String> = MutableLiveData()
 
     private val _validateResetAccessData =
-        MutableSharedFlow<ValidateResetAccessData>()
-    val validateResetAccessData: MutableSharedFlow<ValidateResetAccessData>
+        MutableSharedFlow<Resource<ValidateResetAccessData>>()
+    val validateResetAccessData: MutableSharedFlow<Resource<ValidateResetAccessData>>
         get() = _validateResetAccessData
 
+
+    private val _validateCode =
+        MutableSharedFlow<Resource<User>>()
+    val validateCode: MutableSharedFlow<Resource<User>>
+        get() = _validateCode
+
     private val _remainingTrials =
-        MutableSharedFlow<RemainingTrials>()
-    val remainingTrials: MutableSharedFlow<RemainingTrials>
+        MutableSharedFlow<Resource<RemainingTrials>>()
+    val remainingTrials: MutableSharedFlow<Resource<RemainingTrials>>
         get() = _remainingTrials
     private val _resendResetAccess =
-        MutableSharedFlow<String>()
-    val resendResetAccess: MutableSharedFlow<String>
+        MutableSharedFlow<Resource<StatusResponse>>()
+    val resendResetAccess: MutableSharedFlow<Resource<StatusResponse>>
         get() = _resendResetAccess
 
     fun validateResetVerificationCode(token: String?, code: String?) {
@@ -48,11 +56,28 @@ class VerificationCodeViewModel @Inject constructor(private val repo: Authentica
         viewModelScope.launch {
             repo.validateResetVerificationCode(jsonObject)
                 .catch {
+
                 }.buffer().collect {
                     _validateResetAccessData.emit(it)
                 }
         }
     }
+
+    fun validateVerificationCode(token: String?, code: String?) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("loginProcessToken", token)
+        jsonObject.addProperty("smsVerificationCode", code)
+        viewModelScope.launch {
+            repo.validateVerificationCode(jsonObject)
+                .catch {
+
+                }.buffer().collect {
+                    _validateCode.emit(it)
+                }
+        }
+    }
+
+
 
     fun getRemainingTrials(resetPasswordToken: String) {
         val jsonObject = JsonObject()
@@ -72,9 +97,9 @@ class VerificationCodeViewModel @Inject constructor(private val repo: Authentica
         viewModelScope.launch {
             repo.resendResetAccessDataSms(jsonObject)
                 .catch {
-                    Log.e("dddd",it.toString())
-                    _resendResetAccess.emit("")
+
                 }.buffer().collect {
+                    _resendResetAccess.emit(it)
                 }
         }
     }

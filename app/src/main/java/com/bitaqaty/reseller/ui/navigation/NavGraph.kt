@@ -1,5 +1,7 @@
 package com.bitaqaty.reseller.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -21,12 +23,13 @@ import com.bitaqaty.reseller.ui.presentation.restorePassword.RestorePasswordScre
 import com.bitaqaty.reseller.ui.presentation.verificationCode.VerificationCodeScreen
 
 
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun Navigation(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    NavHost(navController, startDestination = Screen.MainScreen2.route, modifier) {
+    NavHost(navController, startDestination = Screen.LoginScreen.route, modifier) {
 
         composable(Screen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier = modifier)
@@ -83,7 +86,7 @@ fun Navigation(
 
 
         composable(Screen.MainScreen2.route) {
-            MainScreen2(modifier = modifier)
+            MainScreen2()
         }
 
     }

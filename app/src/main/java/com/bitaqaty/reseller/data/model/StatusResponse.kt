@@ -1,16 +1,11 @@
 package com.bitaqaty.reseller.data.model
 
-import com.google.gson.annotations.SerializedName
+import java.util.ArrayList
 
-open class StatusResponse(
-    @SerializedName("status")
-    val status: Int = 0,
-
-    @SerializedName("message")
-    val message: String? = null,
-
-    @SerializedName("errors")
-    var errors: ArrayList<ErrorMessage> = ArrayList(),
-)
+interface StatusResponse {
+    var errors: ArrayList<ErrorMessage>?
+        get() = null
+        set(value) = TODO()
+}
 
 

@@ -25,10 +25,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -39,39 +41,60 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
+import com.bitaqaty.reseller.ui.theme.Red
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.HandleError
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
 
 @Composable
 fun ResetPasswordScreen(navController: NavController, modifier: Modifier) {
     val resetPasswordViewModel: ResetPasswordViewModel = hiltViewModel()
+    val errors = remember { SnapshotStateList<ErrorMessage>() }
+    var showDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = true) {
         resetPasswordViewModel.viewModelScope.launch {
             resetPasswordViewModel.resetPassword.collect {
-                resetPasswordViewModel.getRemainingTrials(it.token)
-                val jsonObject = JsonObject()
-                jsonObject.addProperty("mobileNumber", it.mobileNumber)
-                jsonObject.addProperty("token", it.token)
-                navController.navigate(
-                    Screen.VerificationCodeScreen
-                        .route.plus(
-                            Screen.VerificationCodeScreen.objectName
-                                    + "$jsonObject"
+                it.data.let { resetAccessDate ->
+                    if (resetAccessDate?.errors?.isNotEmpty() == true) {
+                        errors.clear()
+                        errors.addAll(it.data?.errors!!)
+                        showDialog = true
+                    } else {
+                        resetAccessDate?.token?.let { it1 ->
+                            resetPasswordViewModel.getRemainingTrials(
+                                it1
+                            )
+                        }
+                        val jsonObject = JsonObject()
+                        jsonObject.addProperty("mobileNumber", resetAccessDate?.mobileNumber)
+                        jsonObject.addProperty("token", resetAccessDate?.token)
+                        navController.navigate(
+                            Screen.VerificationCodeScreen
+                                .route.plus(
+                                    Screen.VerificationCodeScreen.objectName
+                                            + "$jsonObject"
+                                )
                         )
-                )
+                    }
+                }
+
             }
         }
-//        resetPasswordViewModel.viewModelScope.launch {
-//            resetPasswordViewModel.remainingTrials.collect {
-//
-//            }
-//        }
+
+    }
+    errors.apply {
+        HandleError(this, showDialog, navController, context, onDismissClick = {
+            showDialog = false
+        })
     }
     ResetPassword(stringResource(id = R.string.to_reset_access_data)) {
         resetPasswordViewModel.resendResetAccess(it)
@@ -83,7 +106,7 @@ fun ResetPassword(
     text: String, text2: String? = null, onResetClick: (email: String) -> Unit
 ) {
     var email by rememberSaveable { mutableStateOf("") }
-    var isNotValid by remember { mutableStateOf(false) }
+    var isValid by remember { mutableStateOf(true) }
     val scrollState = rememberScrollState()
     var borderColor: Color = BebeBlue
     Column(
@@ -133,7 +156,7 @@ fun ResetPassword(
                     modifier = Modifier.padding(top = Dimens.DefaultMargin),
                     text = stringResource(id = R.string.reset_email),
                     style = TextStyle(
-                        fontSize = 12.sp, color = FontColor
+                        fontSize = Dimens.fontSize12, color = FontColor
                     ),
                 )
                 Card(
@@ -167,14 +190,26 @@ fun ResetPassword(
                         onValueChange = {
                             email = it
                             borderColor = BebeBlue
-                            isNotValid = it.isEmpty()
+                            isValid = it.isNotEmpty()
                         },
                         shape = RoundedCornerShape(8.dp),
                         singleLine = true,
-                        isError = isNotValid,
+                        isError = !isValid,
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     )
                 }
+                if (!isValid)
+                    Text(
+                        modifier = Modifier.padding(
+                            start = Dimens.padding16,
+                            end = Dimens.padding16,
+                            top = Dimens.padding8
+                        ),
+                        text = stringResource(id = R.string.invalid_username),
+                        style = TextStyle(
+                            fontSize = Dimens.fontSize12, color = Red
+                        ),
+                    )
             }
         }
 
@@ -185,14 +220,10 @@ fun ResetPassword(
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(BebeBlue),
             onClick = {
-                if (email.isNotEmpty() && !isNotValid) {
+                if (email.isNotEmpty() && isValid) {
                     onResetClick(email)
                 } else {
-                    if (email.isEmpty()) {
-                        isNotValid = true
-                    }
-
-
+                    isValid = false
                 }
             }) {
             Text(

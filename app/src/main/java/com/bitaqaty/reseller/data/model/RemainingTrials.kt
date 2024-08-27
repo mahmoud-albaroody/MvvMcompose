@@ -1,7 +1,9 @@
 package com.bitaqaty.reseller.data.model
 
+import java.util.ArrayList
+
 data class RemainingTrials(
-    var errors: ArrayList<ErrorMessage> = ArrayList(),
+
     private var allowedSmsTrials: Int? = null,
     private var remainingInvalidSmsTrials: Int? = null,
     private var waitingSecondsToResendSms: Int? = null,
@@ -15,8 +17,9 @@ data class RemainingTrials(
     private var forgetPasswordResendSmsTrials: Int? = null,
     private var remainingForgetPasswordSmsResendTrials: Int? = null,
     private var remainingResendResetAccessDataSMSTrails: Int? = null,
-    private var remainingInvalidResetAccessDataSMSTrails: Int? = null
-) {
+    private var remainingInvalidResetAccessDataSMSTrails: Int? = null,
+    override var errors: ArrayList<ErrorMessage>?=null
+):StatusResponse {
     fun getAllowedSmsTrials(): Int {
         return allowedSmsTrials ?: 0
     }

@@ -200,6 +200,7 @@ class ReportPrintComponent constructor(
             productNameTitle.setTextColor(
                 Color.BLACK
             )
+            productNAmeText.textSize = 11f
             productNAmeText.setTextColor(Color.BLACK)
             productLayout.addView(productNameTitle)
             productLayout.addView(productNAmeText)
@@ -292,10 +293,10 @@ class ReportPrintComponent constructor(
                 recommendedPriceTitle.typeface = Typeface.DEFAULT_BOLD
                 recommendedPriceText.typeface = Typeface.DEFAULT_BOLD
                 recommendedPriceTitle.setTextColor(
-                  Color.BLACK
+                    Color.BLACK
                 )
                 recommendedPriceText.setTextColor(
-                  Color.BLACK
+                    Color.BLACK
                 )
                 recommendedPriceLayout.addView(recommendedPriceTitle)
                 recommendedPriceLayout.addView(recommendedPriceText)
@@ -319,7 +320,7 @@ class ReportPrintComponent constructor(
                 totalProfitTitle.typeface = Typeface.DEFAULT_BOLD
                 totalProfitText.typeface = Typeface.DEFAULT_BOLD
                 totalProfitTitle.setTextColor(
-                  Color.BLACK
+                    Color.BLACK
                 )
                 totalProfitText.setTextColor(
                     Color.BLACK
@@ -425,7 +426,7 @@ class ReportPrintComponent constructor(
 
 
     private fun setupResellerInformation(user: User) {
-        binding?.let {comBinding->
+        binding?.let { comBinding ->
             user.reseller?.let { userInfo ->
                 if (user.accountType == Globals.Role.SubAccount.value) {
                     comBinding.txtResellerName.text =

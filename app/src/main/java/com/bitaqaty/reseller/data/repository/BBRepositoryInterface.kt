@@ -5,6 +5,7 @@ import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.DataResult
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
@@ -22,6 +23,7 @@ import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
 import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementResponse
+import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.TransactionLogResult
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
@@ -43,32 +45,32 @@ interface BBRepositoryInterface {
     suspend fun signIn(jsonObject: JsonObject): Resource<DataResult>
     suspend fun loginChangePassword(jsonObject: JsonObject): Resource<DataResult>
     suspend fun resetChangePassword(jsonObject: JsonObject): Flow<DataResult>
-    suspend fun verifyForgetPassword(jsonObject: JsonObject): Flow<DataResult>
+    suspend fun verifyForgetPassword(jsonObject: JsonObject): Resource<DataResult>
 
     suspend fun forgetPasswordSend(jsonObject: JsonObject): Flow<ForgetPasswordSend>
 
     suspend fun changePassword(jsonObject: JsonObject): Flow<DataResult>
     suspend fun getRemainingTrials(jsonObject: JsonObject): Flow<RemainingTrials>
-    suspend fun getVerificationRemainingTrials(jsonObject: JsonObject): Flow<RemainingTrials>
+    suspend fun getVerificationRemainingTrials(jsonObject: JsonObject): Resource<RemainingTrials>
 
-    suspend fun resendResetAccessDataSms(jsonObject: JsonObject): Flow<Void>
+    suspend fun resendResetAccessDataSms(jsonObject: JsonObject): Resource<StatusResponse>
 
-    suspend fun authenticatedLogin(jsonObject: JsonObject): Flow<User>
+    suspend fun authenticatedLogin(jsonObject: JsonObject): Resource<User>
 
     suspend fun getProfile(): Flow<User>
 
-    suspend fun validateVerificationCode(jsonObject: JsonObject): Flow<User>
+    suspend fun validateVerificationCode(jsonObject: JsonObject): Resource<User>
 
-    suspend fun validateResetVerificationCode(jsonObject: JsonObject): Flow<ValidateResetAccessData>
+    suspend fun validateResetVerificationCode(jsonObject: JsonObject): Resource<ValidateResetAccessData>
 
-    suspend fun resetAccessData(jsonObject: JsonObject): Flow<ResetAccessData>
+    suspend fun resetAccessData(jsonObject: JsonObject): Resource<ResetAccessData>
     suspend fun forgetPassword(jsonObject: JsonObject): Flow<ForgetPassword>
 
     suspend fun getProductList(jsonObject: JsonObject): Flow<ProductListResult>
 
 
     suspend fun systemSettings(): Flow<ArrayList<SystemSettings>>
-    suspend fun logout(): Flow<Void>
+    suspend fun logout(): Resource<ErrorMessage>
 
     suspend fun generateHomeSalesReport(reportRequestBody: ReportRequestBody): Flow<ReportLog>
 

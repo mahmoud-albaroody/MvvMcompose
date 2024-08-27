@@ -71,7 +71,8 @@ fun MoreScreen(navController: NavController, modifier: Modifier) {
 
         moreViewModel.viewModelScope.launch {
             moreViewModel.getLogout.collect {
-                navController.navigate(Screen.LoginScreen.route)
+                Utils.deleteUserData()
+                navController.navigate(Screen.MainScreen.route)
             }
         }
     }

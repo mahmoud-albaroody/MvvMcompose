@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="@dimen/_9ssp"
         android:textColor="#000000" />
 
     <View
@@ -101,7 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="@dimen/_9ssp"/>
 
 
 
@@ -192,13 +194,13 @@
 
         <TextView
             android:id="@+id/productSecret"
-            android:fontFamily="@font/cairo_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:autoSizeMaxTextSize="30sp"
             android:autoSizeMinTextSize="8sp"
             android:autoSizeTextType="uniform"
+            android:fontFamily="@font/cairo_bold"
             android:gravity="center"
             android:maxWidth="384px"
             android:maxLines="1"
@@ -206,7 +208,8 @@
             android:textColor="#000"
             app:autoSizeMaxTextSize="30sp"
             app:autoSizeMinTextSize="8sp"
-            app:autoSizeTextType="uniform" />
+            app:autoSizeTextType="uniform"
+            />
     </RelativeLayout>
 
 
@@ -283,7 +286,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="@dimen/_9ssp"/>
 
         <TextView
             android:fontFamily="@font/cairo_bold"
@@ -318,7 +322,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="@dimen/_9ssp"/>
 
         <TextView
             android:fontFamily="@font/cairo_bold"
@@ -478,6 +483,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="@dimen/_9ssp"
         android:textColor="#000000" />
 
     <View
@@ -508,6 +514,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="@dimen/_8ssp"
                 android:text="@string/receipt_sku_en"
                 android:textColor="#000000" />
 
@@ -518,6 +525,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="@dimen/_8ssp"
                 android:text="@string/receipt_sku"
                 android:textColor="#000000" />
 
@@ -573,7 +581,8 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="@dimen/_9ssp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -588,6 +597,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="2dp"
+            android:textSize="@dimen/_8ssp"
             android:textColor="#000000" />
 
         <TextView

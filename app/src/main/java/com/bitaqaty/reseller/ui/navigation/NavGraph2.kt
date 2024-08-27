@@ -19,6 +19,7 @@ import com.bitaqaty.reseller.ui.presentation.chargeBalanceScreen.ChargeBalanceSc
 import com.bitaqaty.reseller.ui.presentation.components.SearchScreen
 import com.bitaqaty.reseller.ui.presentation.favoriteScreen.FavoraiteScreen
 import com.bitaqaty.reseller.ui.presentation.home.HomeScreen
+import com.bitaqaty.reseller.ui.presentation.login.LoginScreen
 import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
@@ -116,7 +117,9 @@ fun Navigation2(
         composable(Screen.BankTransferListScreen.route) {
             BankTransferListScreen(navController = navController, modifier = modifier)
         }
-
+        composable(Screen.LoginScreen.route) {
+            LoginScreen(navController = navController, modifier = modifier)
+        }
         composable(Screen.Transactions.route) {
             var obj: JSONObject? = null
             it.savedStateHandle.get<String>("filterObject")?.let {

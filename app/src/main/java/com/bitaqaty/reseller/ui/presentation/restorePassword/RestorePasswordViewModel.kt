@@ -10,6 +10,7 @@ import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,8 +29,8 @@ class RestorePasswordViewModel @Inject constructor(private val repo: Authenticat
         get() = _resetPassword
 
     private val _remainingTrials =
-        MutableSharedFlow<RemainingTrials>()
-    val remainingTrials: MutableSharedFlow<RemainingTrials>
+        MutableSharedFlow<Resource<RemainingTrials>>()
+    val remainingTrials: MutableSharedFlow<Resource<RemainingTrials>>
         get() = _remainingTrials
 
     fun forgetPasswordSend(email: String?, typeOfMethod: String?) {

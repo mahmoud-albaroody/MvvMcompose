@@ -81,6 +81,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.ValidatePassword
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePassHint
 import com.bitaqaty.reseller.ui.presentation.changePassword.ChangePassword
@@ -94,6 +95,7 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.Transparent
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
+import com.bitaqaty.reseller.utilities.HandleError
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.Utils.localized
@@ -126,6 +128,8 @@ fun CodeForgetPasswordScreen(
     var token by remember { mutableStateOf("") }
     val validatePass = remember { mutableStateListOf<ValidatePassword>() }
     val isValidate by remember { mutableStateOf(false) }
+    val errors = remember { SnapshotStateList<ErrorMessage>() }
+    var showDialog by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = null) {
 
         codeForgetPasswordViewModel.forgetPasswordSend(username, verificationType)
@@ -171,57 +175,75 @@ fun CodeForgetPasswordScreen(
         }
         codeForgetPasswordViewModel.viewModelScope.launch {
             codeForgetPasswordViewModel.verifyForgetPassword.collect {
-                Log.e("ddd", "kkk")
+
             }
         }
         codeForgetPasswordViewModel.viewModelScope.launch {
-            codeForgetPasswordViewModel.remainingTrials.collect { remainingTrials ->
-                if (remainingTrials.getResendSmsTrials() >= remainingTrials.getRemainingResendSmsTrial() && remainingTrials.getRemainingResendSmsTrial() != 0) {
-                    val trialNo =
-                        remainingTrials.getResendSmsTrials() - remainingTrials.getRemainingResendSmsTrial()
-                    remainingTrialsNo = "$trialNo / ${remainingTrials.getResendSmsTrials()} ${
-                        context.getString(
-                            R.string.verification_trial
-                        )
-                    }".localized()
-                    var timeOut = remainingTrials.getWaitingSecondsToResendSms().toFloat()
-                    timeOutTxt = " ${timeOut.fmt()} "
-                    speed = 1 / remainingTrials.getWaitingSecondsToResendSms().toFloat()
-                    showTimer = true
-                    CoroutineScope(Dispatchers.IO).launch {
-                        delay(2000)
-                        while (timeOut > 0) {
-                            timeOut -= 1f
-                            delay(1000)
-                            timeOutTxt = " ${timeOut.fmt()} "
-                            if (timeOut <= 0) {
-                                showTimer = false
+            codeForgetPasswordViewModel.remainingTrials.collect {
+                remaining ->
+                remaining.data.let {remainingTris ->
+                    remainingTris?.let {
+                        if(it.errors?.isNotEmpty() == true){
+                            errors.clear()
+                            it.errors?.let { it1 -> errors.addAll(it1) }
+                            showDialog = true
+                        }else{
+                            if (it.getResendSmsTrials() >= it.getRemainingResendSmsTrial()
+                                && it.getRemainingResendSmsTrial() != 0) {
+                                val trialNo =
+                                    it.getResendSmsTrials() - it.getRemainingResendSmsTrial()
+                                remainingTrialsNo = "$trialNo / ${it.getResendSmsTrials()} ${
+                                    context.getString(
+                                        R.string.verification_trial
+                                    )
+                                }".localized()
+                                var timeOut = it.getWaitingSecondsToResendSms().toFloat()
+                                timeOutTxt = " ${timeOut.fmt()} "
+                                speed = 1 / it.getWaitingSecondsToResendSms().toFloat()
+                                showTimer = true
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    delay(2000)
+                                    while (timeOut > 0) {
+                                        timeOut -= 1f
+                                        delay(1000)
+                                        timeOutTxt = " ${timeOut.fmt()} "
+                                        if (timeOut <= 0) {
+                                            showTimer = false
+                                        }
+                                    }
+                                }
+                                if (it.getResendSmsTrials() == it.getRemainingResendSmsTrial()) {
+                                    showTimer = false
+                                }
+                            }
+                            else {
+                                updateWaitTime(
+                                    context, it.getWaitTime(),
+                                    verificationCodeViewModel
+                                )
+                                verificationCodeViewModel.timer.value?.let {
+                                    if (it == "-1") {
+                                        showTimer = false
+                                    } else {
+                                        timeOutTxt = it
+                                    }
+                                }
+
                             }
                         }
                     }
-                    if (remainingTrials.getResendSmsTrials() == remainingTrials.getRemainingResendSmsTrial()) {
-                        showTimer = false
-                    }
-                } else {
-                    updateWaitTime(
-                        context, remainingTrials.getWaitTime(),
-                        verificationCodeViewModel
-                    )
-                    verificationCodeViewModel.timer.value?.let {
-                        if (it == "-1") {
-                            showTimer = false
-                        } else {
-                            timeOutTxt = it
-                        }
-                    }
-
                 }
+
             }
         }
 
     }
 
-
+    errors.apply {
+        HandleError(this, showDialog, navController, context, onDismissClick = {
+            showDialog = false
+        })
+    }
     Column(
         Modifier
             .fillMaxSize()

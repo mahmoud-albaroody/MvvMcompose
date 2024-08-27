@@ -8,4 +8,5 @@ data class TransactionLogResult(
     var totalRetailPrice: Double = 0.0,
     var totalProfit: Double = 0.0,
     var totalCostPrice: Double = 0.0,
-) : StatusResponse(), Serializable
+    override var errors: ArrayList<ErrorMessage>?=null,
+) : StatusResponse

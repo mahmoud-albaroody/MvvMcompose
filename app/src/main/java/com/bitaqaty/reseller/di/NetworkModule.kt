@@ -4,6 +4,7 @@ import android.content.Context
 import com.bitaqaty.reseller.MainApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
+import com.bitaqaty.reseller.data.model.CurrentUser
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.Utils.isCashInApp
 import com.bitaqaty.reseller.utilities.Utils.isMadaApp
@@ -102,6 +103,7 @@ object NetworkModule {
             } else if (isCashInApp()) {
                 deviceType = "CACHIN"
             }
+
             val requestBuilder = it.request().newBuilder()
                 //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
                 .header("Content-Type", "application/json; charset=utf-8")
@@ -111,10 +113,17 @@ object NetworkModule {
                 .header("whitelabel-code", "BITAQATY_BUSINESS")
                 .header("OS", "ANDROID")
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
-                .header(
-                    "Authorization",
-                    "Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlenphdHN1YiIsImlzcyI6IkJpdGFxYXR5IEJ1c2luZXNzIiwiZXhwIjoxNzUzNTY2MDIyLCJpYXQiOjE3MjIwMzAwMjIsImp0aSI6ImRkNWVmOWQ2LTRkZTMtNGZlNC05YTUxLTRiNjcyZTY5YTQyNiJ9.iF-1BQnUxfp5Q83S9XCbgbtQQZKuOXdoi5ePa4zyqk4mppJoMnuCdf7PyUpXWiHmNHdHV9zfTHbvOzQ_jDFjdFrRsuXGD9PtifkF7Uqp0CeQJYzsiVg_7ABb_DdALQUUDIp7qp4D4-PrXJtXpLedV7-mqQnQRcCqtnWIdwya89f6rVvzhX1aE-QBDxG27PdQgBnBdlexts7Oz2yjI7twz88Tdxwes_Eb116s409Wwj7W7GBAnjYGtP4E6ioXc3f3XZXNAS7iB0djnYjr6w1E_GXSlHFb8D3MHn3uLgUqlf9pxD2pXeSFN-8hfsce4Q2tnDwEu6qF2cb_rz6CNUnXrQ"
+
+            CurrentUser.getInstance()?.token?.let {
+                var token = "$it"
+                if (!it.startsWith("Bearer")) {
+                    token = "Bearer $it"
+                }
+                requestBuilder.header(
+                    "Authorization", token
                 )
+            }
+
 //                .header("partner-device", "CACHIN")
             it.proceed(requestBuilder.build())
         }

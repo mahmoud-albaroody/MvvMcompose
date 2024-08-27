@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitaqaty.reseller.BuildConfig
+import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.User
 import com.bitaqaty.reseller.domain.AuthenticationUseCase
+import com.bitaqaty.reseller.utilities.Errors
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.isMobily
 import com.bitaqaty.reseller.utilities.network.Resource
@@ -31,8 +33,8 @@ class LoginScreenViewModel @Inject constructor(private val repo: AuthenticationU
         get() = _signInState
 
     private val _authenticatedLoginState =
-        MutableSharedFlow<User>()
-    val authenticatedLoginState: MutableSharedFlow<User>
+        MutableSharedFlow<Resource<User>>()
+    val authenticatedLoginState: MutableSharedFlow<Resource<User>>
         get() = _authenticatedLoginState
 
     fun signIn(
