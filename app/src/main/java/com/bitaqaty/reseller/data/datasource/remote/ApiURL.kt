@@ -169,4 +169,9 @@ object ApiURL {
     const val PURCHASE_ORDER = "shopping-cart/purchase-order"
     const val EXPIRED_PRODUCT = "shopping-cart/get-expired-products"
 
+    //favorite
+    const val ADD_FAVORITE = "favorite-products/add-favorite-product"
+    const val DELETE_FAVORITE = "favorite-products/delete-favorite-product"
+    const val FAVORITE_PRODUCTS = "favorite-products/list-favorite-products "
+
 }

@@ -54,6 +54,10 @@ class ProductDetailsViewModel @Inject constructor(
         _counter.intValue++
     }
 
+    fun resetCounter(){
+        _counter.intValue = 1
+    }
+
     fun toggleOpacity(alpha: Float){
         _alpha.floatValue = alpha
     }

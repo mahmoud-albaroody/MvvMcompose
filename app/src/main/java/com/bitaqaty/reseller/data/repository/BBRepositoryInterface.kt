@@ -25,6 +25,7 @@ import com.bitaqaty.reseller.data.model.SettlementResponse
 import com.bitaqaty.reseller.data.model.StatusResponse
 import com.bitaqaty.reseller.data.model.SystemSettings
 import com.bitaqaty.reseller.data.model.ChildMerchantRequest
+import com.bitaqaty.reseller.data.model.FavoriteRequest
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PersonalBankData
 import com.bitaqaty.reseller.data.model.ProductListRequest
@@ -113,5 +114,8 @@ interface BBRepositoryInterface {
     suspend fun validateSurePayCharging(jsonObject: JsonObject): Flow<ValidationSurpayChargeResult>
 
     suspend fun surePayCharging(jsonObject: JsonObject): Flow<PaymentStatus>
+    suspend fun addFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
+    suspend fun deleteFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
+    suspend fun getFavoriteProducts(): Flow<DataState<ArrayList<Product>>>
 
 }

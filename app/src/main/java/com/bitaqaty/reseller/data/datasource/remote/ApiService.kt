@@ -6,6 +6,7 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ErrorMessage
+import com.bitaqaty.reseller.data.model.FavoriteRequest
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
@@ -187,4 +188,12 @@ interface ApiService {
     @POST(ApiURL.LOGOUT)
     suspend fun logout(): Response<ErrorMessage>
 
+    @POST(ApiURL.ADD_FAVORITE)
+    suspend fun addFavoriteProduct(@Body favoriteProduct: FavoriteRequest)
+
+    @POST(ApiURL.DELETE_FAVORITE)
+    suspend fun deleteFavoriteProduct(@Body favoriteProduct: FavoriteRequest)
+
+    @POST(ApiURL.FAVORITE_PRODUCTS)
+    suspend fun getFavoriteProducts(): ArrayList<Product>//ProductListResult
 }
