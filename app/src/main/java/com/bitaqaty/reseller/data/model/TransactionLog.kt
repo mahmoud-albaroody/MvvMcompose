@@ -1,17 +1,17 @@
 package com.bitaqaty.reseller.data.model
 
 
-import android.view.View
+import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import java.io.Serializable
 
 data class TransactionLog(
-    val id: Int? = 0,
-    val date: String? = null,
-    val productNameEn: String? = null,
-    val productNameAr: String? = null,
+    var id: Int? = 0,
+    var date: String? = null,
+    var productNameEn: String? = null,
+    var productNameAr: String? = null,
     val productSerial: String = "",
     val productSecret: String = "",
     val productPassword: String? = null,
@@ -29,28 +29,28 @@ data class TransactionLog(
     val productDetailsEn: String? = null,
     val channelCode: String? = null,
     val total: Double = 0.0,
-    val vatAmount: Double = 0.0,
-    val price: Double = 0.0,
+    var vatAmount: Double = 0.0,
+    var price: Double = 0.0,
     val balanceAfter: Double? = null,
-    val recommendedRetailPrice: Double? = null,
+    var recommendedRetailPrice: Double? = null,
     val vatOnRecommendedPrice: Double? = null,
     val totalVat: Double? = null,
-    val recommendedRetailPriceAfterVAT: Double? = null,
+    var recommendedRetailPriceAfterVAT: Double? = null,
     val expectedProfit: String? = null,
     val channelId: Int = 0,
     var printCounter: String? = null,
     val showPin: Boolean = false,
-    val transactionID: String? = null,
+     val transactionID: String? = null,
     val cancelled: Boolean = false,
     val printed: Boolean = false,
     val productType: String? = null,
     val barcode: String? = null,
-    val showBarCode: Boolean? = false,
+    var showBarCode: Boolean? = false,
     val receiptPrintDetailsEn: String? = null,
     val receiptPrintDetailsAr: String? = null,
     val enableReceiptDetails: Boolean? = false,
     val isItunesMerchant: Boolean? = false,
-    val transactionRefNumber: String? = null,
+    private val transactionRefNumber: String? = null,
     val subTransactionId: String? = null,
     val subTransactionDate: String? = null,
     val subTransactionRefNumber: String? = null,
@@ -67,12 +67,15 @@ data class TransactionLog(
     val paymentMethodAr: String? = null,
     val itemExpirationDate: String? = null,
     val merchantId: String? = null,
-    val merchantLogoPath: String? = null,
-    val showSkuBarcode: Boolean? = false,
-    val skuBarcode: String? = null,
-    val vatCode: String? = null,
-    val vatPercentage: String? = null,
-    var visible: Boolean
+    var merchantLogoPath: String? = null,
+    var showSkuBarcode: Boolean? = false,
+    var skuBarcode: String? = null,
+    var vatCode: String? = null,
+    var vatPercentage: String? = null,
+    var visible: Boolean,
+    var isServiceCredential: Boolean,
+    private val transRefNumber: String? = null
+
 ) : Serializable {
     fun getMerchant(): String {
         return merchantId ?: ""
@@ -90,15 +93,19 @@ data class TransactionLog(
         }
     }
 
-    fun getProductSeriall(): String {
-        return productSerial ?: ""
+    fun getUserSecretTitle(): String? {
+        return if (lang == "en") {
+            productSecretTitleEn
+        } else {
+            productSecretTitleAr
+        }
     }
 
     fun getProductSecrett(): String {
         if (productSecret.isNullOrBlank()) {
             return productPassword ?: ""
         }
-        return productSecret ?: productPassword ?: ""
+        return productSecret ?: ""
     }
 
     fun getCheckingRecommendedRetailPrice(): String {
@@ -284,6 +291,10 @@ data class TransactionLog(
         } else {
             receiptPrintDetailsAr ?: receiptPrintDetailsEn ?: ""
         }
+    }
+
+    fun getTransactionRefNumber(): String {
+        return transRefNumber ?: transactionRefNumber ?: ""
     }
 
     fun getDetailsEn(): String {

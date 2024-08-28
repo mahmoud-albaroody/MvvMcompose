@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.bitaqaty.reseller.BuildConfig
+import com.bitaqaty.reseller.MainApplication
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.localStorage.ProductModel
 import com.bitaqaty.reseller.data.model.AccountsCountries
@@ -48,6 +50,8 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Globals.SETTINGS
+import com.bitaqaty.reseller.utilities.ShowConfirmDialog
+import com.bitaqaty.reseller.utilities.ShowErrorDialog
 import com.bitaqaty.reseller.utilities.SunmiPrintHelper
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
@@ -57,7 +61,7 @@ import com.bitaqaty.reseller.utilities.Utils.isNearPayApp
 import com.bitaqaty.reseller.utilities.Utils.isPartnerApp
 import com.bitaqaty.reseller.utilities.addProductToBag
 import com.bitaqaty.reseller.utilities.deleteCartDB
-import com.bitaqaty.reseller.utilities.initCashIn
+import com.bitaqaty.reseller.utilities.initNearPay
 import com.bitaqaty.reseller.utilities.madaConnectionResult
 import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.utilities.printTransaction
@@ -614,7 +618,7 @@ private fun makeRecharge(
                 )
             } else if (isCashInApp() || isNearPayApp()) {
                 if (amount.substringAfter(".").length == 2) {
-                    purchaseWithCashIn(context.initCashIn(),
+                    purchaseWithCashIn(context.initNearPay(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
                         paymentRefNumber,
                         context,
@@ -625,7 +629,7 @@ private fun makeRecharge(
                             transactionListener(it)
                         })
                 } else {
-                    purchaseWithCashIn(context.initCashIn(),
+                    purchaseWithCashIn(context.initNearPay(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
                         paymentRefNumber,
                         context,
@@ -642,4 +646,131 @@ private fun makeRecharge(
     }
 }
 
-
+//@Composable
+//fun CompleteRecharge(context: Context) {
+//    MainApplication.getCallBackInstance {
+//        it.let {
+//            if (it != null) {
+//                if (versionCode > BuildConfig.VERSION_CODE && (isPartnerApp())
+//                    && isUpdateMandatory
+//                ) {
+//                    ShowConfirmDialog(
+//                        context,
+//                        R.string.there_is_new_version_of_Bitaqaty,
+//                        R.string.update,
+//                        Globals.IconType.None,
+//                        onConfirm = {
+//                            val intent =
+//                                context.packageManager?.getLaunchIntentForPackage(
+//                                    "com.surepay.surestore"
+//                                )
+//                            context.startActivity(intent)
+//                        })
+//                } else if (versionCode > BuildConfig.VERSION_CODE && (isPartnerApp()) && !isUpdateMandatory) {
+//                    ShowConfirmDialog(
+//                        context,
+//                        R.string.there_is_new_version_of_Bitaqaty,
+//                        R.string.update,
+//                        Globals.IconType.None,
+//                        onConfirm = {
+//                            val intent =
+//                                context.packageManager?.getLaunchIntentForPackage(
+//                                    "com.surepay.surestore"
+//                                )
+//                            context.startActivity(intent)
+//
+//                        },
+//                        onCancel = {
+//                            Utils.loadHome(context)
+//                        }
+//                    )
+//                } else {
+//                    if (paymentRefNumber == it.madaResponseModel?.clientRef &&
+//                        paymentRefNumber.isNotEmpty()
+//                    ) {
+//                        val jsonObject = JsonObject()
+//                        jsonObject.addProperty("amount", it.madaResponseModel?.aMOUNT)
+//                        jsonObject.addProperty("resellerId", Utils.getUserData()?.reseller?.id)
+//                        jsonObject.addProperty("deviceId", Globals.DEV_ID)
+//                        when (it.madaResponseModel?.tX_RSLT) {
+//                            "0" -> {
+//                                jsonObject.addProperty("requestStatus", "APPROVED")
+//                            }
+//
+//                            "1" -> {
+//                                jsonObject.addProperty("requestStatus", "DECLINED" + "مرفوض")
+//                            }
+//
+//                            "2" -> {
+//                                jsonObject.addProperty(
+//                                    "requestStatus",
+//                                    "TRANSACTION_VOID" + "مرفوض"
+//                                )
+//                            }
+//
+//                            "3" -> {
+//                                jsonObject.addProperty(
+//                                    "requestStatus",
+//                                    "CANCELLED" + "تم ااﻹلغاء"
+//                                )
+//                            }
+//                        }
+//                        jsonObject.addProperty(
+//                            "paymentRefNumber",
+//                            it.madaResponseModel?.clientRef
+//                        )
+//                        jsonObject.addProperty("responseBody", it.result)
+//                        jsonObject.addProperty("signature", it.signature)
+//                        jsonObject.addProperty("rrn", it.madaResponseModel?.rRN)
+//                        jsonObject.addProperty(
+//                            "usedCard",
+//                            it.madaResponseModel?.sCHEME_N_E
+//                        )
+//                        jsonObject.addProperty(
+//                            "cardNumber",
+//                            it.madaResponseModel?.pAN
+//                        )
+//                        jsonObject.addProperty(
+//                            "cardHolderName",
+//                            it.madaResponseModel?.cRD_HLDR_N
+//                        )
+//                        jsonObject.addProperty(
+//                            "authenticationCode",
+//                            it.madaResponseModel?.aUTH
+//                        )
+//                        var simCardType: String? = ""
+//                        if (Utils.isMobily()) {
+//                            simCardType = "Mobily"
+//                        }
+//                        val json1 = JsonObject()
+//                        if (isMadaApp()) {
+//                            json1.addProperty("madaVersion", Utils.getMadaVersion())
+//                            json1.addProperty(
+//                                "bitaqatyBusinessVersion",
+//                                BuildConfig.VERSION_CODE
+//                            )
+//                            json1.addProperty("simCardType", simCardType)
+//                        }
+//                        jsonObject.add("posMachineDetails", json1)
+//                        viewModel?.surePayCharging(jsonObject)
+//                        paymentRefNumber = ""
+//                    } else {
+//                        deleteCartDB(compositeDisposable) {
+//                            ShowErrorDialog(
+//                                context,
+//                                R.string.unsuccessful_recharge
+//                            )
+//                        }
+//                    }
+//                }
+//            } else {
+//                deleteCartDB(compositeDisposable) {
+//                    ShowErrorDialog(
+//                        context,
+//                        R.string.unsuccessful_recharge, onDismiss = {}
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}

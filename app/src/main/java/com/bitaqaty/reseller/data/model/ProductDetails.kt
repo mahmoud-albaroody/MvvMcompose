@@ -1,14 +1,13 @@
-package com.bitaqaty.reseller.data.models
+package com.bitaqaty.reseller.data.model
 
-import com.bitaqaty.reseller.data.model.ErrorMessage
-import com.bitaqaty.reseller.data.model.Product
+
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.Utils
 import java.io.Serializable
 
 class ProductDetails(err: ErrorMessage) : Serializable {
     var errors: ArrayList<ErrorMessage>? = ArrayList()
-    var products: ArrayList<Product>? = null
+    var products: ArrayList<TransactionLog>? = null
     var vatAmount: Double = 0.0
     var totalVatAmount: String? = null
     var oneItemPriceBeforeVat: Double = 0.0

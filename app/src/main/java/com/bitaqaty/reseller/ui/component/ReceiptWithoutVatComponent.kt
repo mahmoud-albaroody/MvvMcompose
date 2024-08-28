@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.ui.component
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -20,7 +19,7 @@ import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.data.model.UserInfo
-import com.bitaqaty.reseller.data.models.ProductDetails
+import com.bitaqaty.reseller.data.model.ProductDetails
 import com.bitaqaty.reseller.databinding.ComponentReceipt1Binding
 import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.utilities.DateUtils
@@ -37,7 +36,7 @@ import java.net.URL
 import java.util.*
 
 
-class ReceiptComponent1(
+class ReceiptWithoutVatComponent(
     private val ctx: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -52,65 +51,65 @@ class ReceiptComponent1(
 
     }
 
-    fun setData(
-        product: Product,
-        productDetails: ProductDetails,
-        index: Int,
-        secondCopy: Boolean = false
-    ) {
-        binding?.let { comBinding ->
-            if (product.getMerchant().isNotEmpty()) {
-                loadMerchantImage(product.getMerchantLogo(), product.getMerchant())
-            }
-            val counter = "${if (secondCopy) 2 else 1}"
-            comBinding.printCounter2.text = counter
-            comBinding.printCounter.text = counter
-            /*txtPurchaseDate.gravity = if (lang == "en") Gravity.LEFT or Gravity.CENTER_VERTICAL else Gravity.RIGHT or Gravity.CENTER_VERTICAL*/
-
-            comBinding.productName.text = productDetails.getProductName()
-
-            comBinding.purchaseDate.text = DateUtils.getTransLogDateOnly(
-                (productDetails.purchaseDateTime ?: productDetails.purchaseDate).replace(", ", " ")
-            )
-            comBinding.purchaseTime.text = DateUtils.getTransLogTime(
-                (productDetails.purchaseDateTime ?: productDetails.purchaseDate).replace(", ", " ")
-            )
-
-            if (Utils.isPartnerApp()) {
-
-                comBinding.line9.isVisible = true
-            }
-
-            setupSkuBarCode(productDetails.skuBarcode, productDetails.showSKUBarcode)
-            productDetails.products?.let {
-                setupProductCredentials(it[index], product)
-                setupReceiptDetails(it[index])
-                Utils.getUserData()?.let { user ->
-                    user.reseller?.let { userInfo ->
-
-                        setupBarCode(
-                            it[index].productSecret ?: it[index].productPassword
-                            ?: it[index].barcode,
-                            it[index].showBarCode,
-                            userInfo
-                        )
-
-                        if (userInfo.printResellerInfo == true) {
-                            comBinding.layoutShop.visibility = VISIBLE
-                            comBinding.resellerCommercialName.text = userInfo.parentResellerFullName
-                            comBinding.line.visibility = VISIBLE
-                        } else {
-                            comBinding.layoutShop.visibility = GONE
-                            comBinding.resellerCommercialName.visibility = GONE
-                            comBinding.line.visibility = GONE
-                        }
-                    }
-                }
-            }
-            /*txtPrintDate.gravity = if (lang == "en") Gravity.LEFT or Gravity.CENTER_VERTICAL else Gravity.RIGHT or Gravity.CENTER_VERTICAL*/
-            comBinding.txtPrintDate.text = DateUtils.getCurrentDate()
-        }
-    }
+//    fun setData(
+//        product: Product,
+//        productDetails: ProductDetails,
+//        index: Int,
+//        secondCopy: Boolean = false
+//    ) {
+//        binding?.let { comBinding ->
+//            if (product.getMerchant().isNotEmpty()) {
+//                loadMerchantImage(product.getMerchantLogo(), product.getMerchant())
+//            }
+//            val counter = "${if (secondCopy) 2 else 1}"
+//            comBinding.printCounter2.text = counter
+//            comBinding.printCounter.text = counter
+//            /*txtPurchaseDate.gravity = if (lang == "en") Gravity.LEFT or Gravity.CENTER_VERTICAL else Gravity.RIGHT or Gravity.CENTER_VERTICAL*/
+//
+//            comBinding.productName.text = productDetails.getProductName()
+//
+//            comBinding.purchaseDate.text = DateUtils.getTransLogDateOnly(
+//                (productDetails.purchaseDateTime ?: productDetails.purchaseDate).replace(", ", " ")
+//            )
+//            comBinding.purchaseTime.text = DateUtils.getTransLogTime(
+//                (productDetails.purchaseDateTime ?: productDetails.purchaseDate).replace(", ", " ")
+//            )
+//
+//            if (Utils.isPartnerApp()) {
+//
+//                comBinding.line9.isVisible = true
+//            }
+//
+//            setupSkuBarCode(productDetails.skuBarcode, productDetails.showSKUBarcode)
+//            productDetails.products?.let {
+//                setupProductCredentials(it[index], product)
+//                setupReceiptDetails(it[index])
+//                Utils.getUserData()?.let { user ->
+//                    user.reseller?.let { userInfo ->
+//
+//                        setupBarCode(
+//                            it[index].productSecret ?: it[index].productPassword
+//                            ?: it[index].barcode,
+//                            it[index].showBarCode,
+//                            userInfo
+//                        )
+//
+//                        if (userInfo.printResellerInfo == true) {
+//                            comBinding.layoutShop.visibility = VISIBLE
+//                            comBinding.resellerCommercialName.text = userInfo.parentResellerFullName
+//                            comBinding.line.visibility = VISIBLE
+//                        } else {
+//                            comBinding.layoutShop.visibility = GONE
+//                            comBinding.resellerCommercialName.visibility = GONE
+//                            comBinding.line.visibility = GONE
+//                        }
+//                    }
+//                }
+//            }
+//            /*txtPrintDate.gravity = if (lang == "en") Gravity.LEFT or Gravity.CENTER_VERTICAL else Gravity.RIGHT or Gravity.CENTER_VERTICAL*/
+//            comBinding.txtPrintDate.text = DateUtils.getCurrentDate()
+//        }
+//    }
 
     fun setTransLogReceipt(transLog: TransactionLog) {
         binding?.let { comBinding ->
@@ -126,16 +125,14 @@ class ReceiptComponent1(
 
             comBinding.printCounter2.text = counter.toString()
             comBinding.printCounter.text = counter.toString()
-            comBinding.purchaseDate.text = DateUtils.getTransLogDateOnly(transLog.date ?: "")
-            comBinding.purchaseTime.text = DateUtils.getTransLogTime(transLog.date ?: "")
+            comBinding.purchaseDate.text = DateUtils.getTransLogDateOnly(transLog.getCheckingDate() ?: "")
+            comBinding.purchaseTime.text = DateUtils.getTransLogTime(transLog.getCheckingDate() ?: "")
             /*txtProductName.text = transLog.getProductName()*/
             setupCredentialsFromTransactionLog(transLog)
             setupReceiptDetailsFromTransactionLog(transLog)
 
             if (Utils.isPartnerApp()) {
                 comBinding.line9.isVisible = true
-
-
             }
 
             Utils.getUserData()?.let { user ->
@@ -174,10 +171,8 @@ class ReceiptComponent1(
         }
     }
 
-    private fun setupProductCredentials(data: Product, product: Product) {
+    private fun setupProductCredentials(data: TransactionLog, product: Product) {
         binding?.let { comBinding ->
-
-
             if (!data.itemExpirationDate.isNullOrEmpty()) {
                 comBinding.layoutExpiryDate.visibility = VISIBLE
                 comBinding.itemExpirationDate.visibility = VISIBLE
@@ -212,13 +207,13 @@ class ReceiptComponent1(
                     ?: "").uppercase(Locale.getDefault())
                 comBinding.productSecret.visibility = GONE
             } else if (product.productType ==
-                Globals.ProductType.Credential.value && !data.productUsername.isNullOrEmpty()
+                Globals.ProductType.Credential.value && !data.productUserName.isNullOrEmpty()
             ) {
                 comBinding.layoutUserName.visibility = VISIBLE
                 comBinding.productUsername.visibility = VISIBLE
-                comBinding.usernameTitleAr.text = data.productUsernameTitleAr
-                comBinding.usernameTitleEn.text = data.productUsernameTitleEn
-                comBinding.productUsername.text = data.productUsername
+                comBinding.usernameTitleAr.text = data.productUserNameTitleAr
+                comBinding.usernameTitleEn.text = data.productUserNameTitleEn
+                comBinding.productUsername.text = data.productUserName
                 comBinding.productSecret.text = data.productPassword ?: data.productSecret ?: ""
             } else {
                 comBinding.productSecret.text = data.productSecret ?: data.productPassword ?: ""
@@ -226,9 +221,9 @@ class ReceiptComponent1(
 
             if (data.isServiceCredential) {
                 comBinding.productSerialTxt.text = data.productSerial
-                comBinding.usernameTitleAr.text = data.productUsernameTitleAr
-                comBinding.usernameTitleEn.text = data.productUsernameTitleEn
-                comBinding.productUsername.text = data.productUsername ?: data.transRefNumber ?: ""
+                comBinding.usernameTitleAr.text = data.productUserNameTitleAr
+                comBinding.usernameTitleEn.text = data.productUserNameTitleEn
+                comBinding.productUsername.text = data.productUserName ?: data.getTransactionRefNumber() ?: ""
                 comBinding.layoutUserName.visibility = VISIBLE
                 comBinding.productUsername.visibility = VISIBLE
                 // layoutPasswordBox.visibility = VISIBLE
@@ -244,7 +239,7 @@ class ReceiptComponent1(
             comBinding.serialTitleAr.text = transLog.productSerialTitleAr
             /*val serialTitle = "${transLog.getProductSerialTitle()}:"*/
             /*txtSerialNoTitle.text = serialTitle*/
-            comBinding.productSerialTxt.text = transLog.getProductSeriall()
+            comBinding.productSerialTxt.text = transLog.productSerial
             val secretTitle = "${transLog.getProductSecretTitle()}:"
             comBinding.txtSecretTitle.text = transLog.productSerialTitleAr
             comBinding.txtSecretTitleEn.text = transLog.productSerialTitleEn
@@ -322,7 +317,7 @@ class ReceiptComponent1(
         }
     }
 
-    private fun setupReceiptDetails(data: Product) {
+    private fun setupReceiptDetails(data: TransactionLog) {
         binding?.let { comBinding ->
             data.enableReceiptDetails?.let { enabled ->
                 if (enabled && data.receiptPrintDetailsEn?.isNotEmpty() == true) {

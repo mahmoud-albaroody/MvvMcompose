@@ -1,6 +1,5 @@
 package com.bitaqaty.reseller.data.model
 
-import com.bitaqaty.reseller.data.models.ProductDetails
 import com.bitaqaty.reseller.utilities.Utils
 import com.google.gson.annotations.SerializedName
 

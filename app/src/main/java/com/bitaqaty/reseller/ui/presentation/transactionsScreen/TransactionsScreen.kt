@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.transactionsScreen
 
 
+import CTOS.CtPrint
 import android.content.Context
 import android.util.Log
 import android.view.View
@@ -21,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,7 +57,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.data.model.TransactionRequestBody
-import com.bitaqaty.reseller.ui.component.ReceiptComponent1
+import com.bitaqaty.reseller.ui.component.ReceiptVatComponent
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Dimens
@@ -67,7 +67,11 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.Utils.isMadaApp
 import com.bitaqaty.reseller.utilities.Utils.view2Bitmap
+import com.bitaqaty.reseller.utilities.doPrinting
+import com.bitaqaty.reseller.utilities.initNearPay
+import com.bitaqaty.reseller.utilities.printReceipt
 import com.bitaqaty.reseller.utilities.printTransaction
 import io.nearpay.sdk.NearPay
 import io.nearpay.sdk.utils.enums.AuthenticationData
@@ -214,7 +218,7 @@ fun Transactions(
         items(transactionLogList) {
             TransactionsItem(it)
         }
-        if (totalElementsCount>transactionLogList.size)
+        if (totalElementsCount > transactionLogList.size)
             item {
                 if (transactionLogList.isNotEmpty()) {
                     onClick()
@@ -236,7 +240,7 @@ fun Transactions(
 fun TransactionsItem(transactionLog: TransactionLog) {
     var viewDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    var arrow =  if (transactionLog.visible) {
+    var arrow = if (transactionLog.visible) {
         R.drawable.ic_drop_down_arrow
     } else {
         R.drawable.ic_forward_arrow
@@ -294,64 +298,119 @@ fun TransactionsItem(transactionLog: TransactionLog) {
                         fontSize = 16.sp
                     ),
                 )
-                transactionLog.date?.let {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = Dimens.halfDefaultMargin),
-                        text = it,
-                        style = TextStyle(
-                            color = Black,
-                            fontSize = 12.sp
-                        ),
-                    )
-                }
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimens.halfDefaultMargin),
+                    text = transactionLog.getCheckingDate(),
+                    style = TextStyle(
+                        color = Black,
+                        fontSize = 12.sp
+                    ),
+                )
+                Column {
                     Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
+                        Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_support_tiket),
-                            contentDescription = ""
-                        )
-                        Text(
-                            modifier = Modifier
+                        Row(
+                            Modifier
                                 .fillMaxWidth()
-                                .padding(start = Dimens.padding4),
-                            text = stringResource(R.string.support_ticket),
-                            style = TextStyle(color = BebeBlue, fontSize = 11.sp),
-                        )
+                                .weight(1f),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_support_tiket),
+                                contentDescription = ""
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = Dimens.padding4),
+                                text = stringResource(R.string.support_ticket),
+                                style = TextStyle(color = BebeBlue, fontSize = 11.sp),
+                            )
+                        }
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.padding8)
+                                .weight(1f)
+                                .clickable {
+                                    printReceipt(transactionLog, context, true)
+                                    //   printTransactionById(transactionLog, context.initNearPay(), context)
+                                },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                modifier = Modifier,
+                                painter = painterResource(R.drawable.ic_print),
+                                contentDescription = ""
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = Dimens.padding4),
+                                text = stringResource(R.string.print_vat),
+                                style = TextStyle(color = BebeBlue, fontSize = 11.sp),
+                            )
+                        }
                     }
+
                     Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .clickable {
-                                printReceipt(transactionLog, context)
-                                //  printNearReceipt(transactionLog, context.initCashIn(), context)
-                            },
+                        Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            modifier = Modifier,
-                            painter = painterResource(R.drawable.ic_print),
-                            contentDescription = ""
-                        )
-                        Text(
-                            modifier = Modifier
+                        Row(
+                            Modifier
                                 .fillMaxWidth()
-                                .padding(start = Dimens.padding4),
-                            text = stringResource(R.string.print_again),
-                            style = TextStyle(color = BebeBlue, fontSize = 11.sp),
-                        )
+                                .weight(1f),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_support_tiket),
+                                contentDescription = ""
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = Dimens.padding4),
+                                text = stringResource(R.string.support_ticket),
+                                style = TextStyle(color = BebeBlue, fontSize = 11.sp),
+                            )
+                        }
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .clickable {
+                                    printReceipt(transactionLog, context, isPrintVat = true)
+
+//                                    printTransactionById(
+//                                        transactionLog,
+//                                        context.initNearPay(),
+//                                        context
+//                                    )
+                                },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                modifier = Modifier,
+                                painter = painterResource(R.drawable.ic_print),
+                                contentDescription = ""
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = Dimens.padding4),
+                                text = stringResource(R.string.print_again),
+                                style = TextStyle(color = BebeBlue, fontSize = 11.sp),
+                            )
+                        }
                     }
+
                 }
+
             }
 
             Image(
@@ -524,10 +583,11 @@ fun Filter(onFilterClick: () -> Unit) {
     }
 }
 
-fun printNearReceipt(transactionLog: TransactionLog, nearPay: NearPay, context: Context) {
+fun printTransactionById(transactionLog: TransactionLog, nearPay: NearPay, context: Context) {
 
 
     transactionLog.transactionUUID?.let {
+        Log.e("dddd", "sadsadsa")
         nearPay.getTransactionByUuid(it, false, 0L, object :
             GetTransactionListener {
             override fun onSuccess(transactionData: TransactionData) {
@@ -569,19 +629,4 @@ fun printNearReceipt(transactionLog: TransactionLog, nearPay: NearPay, context: 
 }
 
 
-fun printReceipt(transactionLog: TransactionLog, context: Context) {
-    val view: FrameLayout = ReceiptComponent1(context)
-    view.layoutParams = ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
-    )
-    (view as ReceiptComponent1).setTransLogReceipt(transactionLog)
-    view.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
-    CoroutineScope(Dispatchers.IO).launch {
-        view2Bitmap(view)?.let { it1 ->
-            printTransaction(
-                it1
-            )
-        }
-    }
-}
+

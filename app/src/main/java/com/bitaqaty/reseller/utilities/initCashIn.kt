@@ -10,7 +10,7 @@ import io.nearpay.sdk.utils.enums.NetworkConfiguration
 import io.nearpay.sdk.utils.enums.UIPosition
 import java.util.*
 
- fun Context.initCashIn(): NearPay {
+ fun Context.initNearPay(): NearPay {
      if(BuildConfig.APPLICATION_ID ==  "com.bitaqaty.resellerStaging") {
          return NearPay.Builder()
              .context(this)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +32,7 @@ import com.bitaqaty.reseller.ui.navigation.currentRoute
 import com.bitaqaty.reseller.ui.navigation.navigationTitle
 import com.bitaqaty.reseller.ui.presentation.appbar.AppBarWithArrow
 import com.bitaqaty.reseller.ui.theme.BitaqatyTheme
+import com.bitaqaty.reseller.utilities.Globals.DEV_ID
 import com.bitaqaty.reseller.utilities.Globals.lang
 import com.bitaqaty.reseller.utilities.LocaleHelper
 import com.bitaqaty.reseller.utilities.Utils.loadLocale
@@ -52,6 +54,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().apply {
             setKeepOnScreenCondition { mainActivityViewModel.isLoading.value }
         }
+        DEV_ID = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         setContent {
             BitaqatyTheme {
 

@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="384px"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+
+
+    <LinearLayout
+        android:id="@+id/taxable_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/taxableInvoiceAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/taxable_invoice_priceAR"
+            android:textColor="#000000"
+            android:textSize="@dimen/_10ssp" />
+        <TextView
+            android:id="@+id/taxableInvoiceEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:text="@string/taxable_invoice_priceEN"
+            android:textColor="#000000"
+            android:textSize="@dimen/_10ssp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_trx_id_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_trx_id"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/transNumberTxt"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_device_id_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_device_id"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/deviceNumber"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_reseller_id_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+        <TextView
+            android:id="@+id/baanNumber"
+            android:fontFamily="@font/cairo_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_reseller_id"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+
+
+    <View
+        android:id="@+id/line9"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="4dp"
+        android:background="#000"
+        android:visibility="visible" />
+
+
+
+    <LinearLayout
+        android:id="@+id/recommended"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/recommendedEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recommended_retail_priceEN"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/recommendedAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recommended_retail_priceAR"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/recommendedTxt"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/vat_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/vatEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/VAT_Amount_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/vatAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/VAT_Amount_ar"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/vatTxt"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutRecommendedRetailPriceAfterVAT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutRecommendedRetailPriceAfterVATEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recommended_retail_price_after_vat_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutRecommendedRetailPriceAfterVATAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recommended_retail_price_after_vat_ar"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/layoutRecommendedRetailPriceAfterVATTxt"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutCodeVAT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutCodeVATEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/vat_code_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutCodeAr"
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/vat_code_ar"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/layoutCodeVATTxt"
+        android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+
+    <View
+        android:id="@+id/line10"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="4dp"
+        android:background="#000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutSG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutSGEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VAT Standard Goods"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutSGAr"
+            style="@style/bold_small_font"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="ضريبة على كامل القيمة"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutSMEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="VAT Standard Margin"
+            android:textAlignment="viewStart"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutSMAr"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="ضريبة على القيمة الأعلى من القيمة الإسمية"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutOS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutOSEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="“OS” Out Of Scope"
+            android:textAlignment="viewStart"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutOSAr"
+            style="@style/bold_small_font"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="“OS” غير خاضع للضريبة"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutXO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layoutXOEn"
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="“XO” Export"
+            android:textAlignment="viewStart"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:id="@+id/layoutXOAr"
+            style="@style/bold_small_font"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="“XO”تصدير"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line11"
+        android:layout_width="match_parent"
+        android:layout_height=".75dp"
+        android:layout_marginTop="4dp"
+        android:background="#000"
+        android:visibility="gone" />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bold_small_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_print_date_en"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+
+
+        <TextView
+            android:fontFamily="@font/cairo_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receipt_print_date"
+            android:textColor="#000000"
+            android:textSize="@dimen/_8ssp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtPrintDate"
+       android:fontFamily="@font/cairo_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+
+    <TextView
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/receipt_print_warning"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+    <TextView
+        style="@style/bold_small_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/receipt_print_warning_en"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+
+    <TextView
+        android:id="@+id/code_number"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="VAT ID الرقم الضريبيى 300477102900003"
+        android:textColor="#000000"
+        android:textSize="@dimen/_8ssp"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/company_title"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Powered By: Bitaqaty Business"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+    <TextView
+        android:id="@+id/url"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="www.BitaqatyBusiness.com"
+        android:textColor="#000000"
+        android:textSize="@dimen/_7ssp" />
+
+
+    <TextView
+        android:id="@+id/whatsapp"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="WhatsApp: 0597206666"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/hotLine"
+        android:fontFamily="@font/cairo_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Hotline: 920033472"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:lineSpacingExtra="2sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="4dp"
+        android:layerType="software"
+        android:src="@drawable/drawable_dash" />
+
+</LinearLayout>

@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,7 @@ import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.utilities.printReceipt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,6 +69,7 @@ fun ProductDetailsBottomSheet(
     onDismiss: () -> Unit
 ) {
     val purchaseState by viewModel.purchaseState
+    val context = LocalContext.current
 
     if (isBottomSheetVisible) {
         ModalBottomSheet(
@@ -83,7 +86,7 @@ fun ProductDetailsBottomSheet(
             var isBalancePayClicked by remember { mutableStateOf(false) }
             var isConfirmBalancePayClicked by remember { mutableStateOf(false) }
 
-            LaunchedEffect(key1 = isExpanded){
+            LaunchedEffect(key1 = isExpanded) {
                 viewModel.toggleOpacity(1f)
             }
 
@@ -96,11 +99,11 @@ fun ProductDetailsBottomSheet(
             ) {
                 Icon(
                     modifier = Modifier
-                        .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+                        .background(
+                            color = Color.White, shape = RoundedCornerShape(10.dp)
+                        )
                         .border(
-                            width = 2.dp,
-                            color = Color.LightGray,
-                            shape = RoundedCornerShape(10.dp)
+                            width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)
                         )
                         .padding(10.dp)
                         .noRippleClickable { onDismiss() },
@@ -117,9 +120,8 @@ fun ProductDetailsBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .zIndex(0f),
-                contentAlignment = Alignment.Center
-            ){
+                    .zIndex(0f), contentAlignment = Alignment.Center
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -139,37 +141,48 @@ fun ProductDetailsBottomSheet(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                         ) {
                             item {
-                                if(true){
-                                    val totalPrice = (product?.getPriceDouble()?.times(qty.value))?.fmt()
-                                    ProductDetail(label = stringResource(id = R.string.total_cost_price), value = totalPrice ?: "")
-
-                                    val vatValue = (product?.getVatDouble()?.times(qty.value))?.fmt()
+                                if (true) {
+                                    val totalPrice =
+                                        (product?.getPriceDouble()?.times(qty.value))?.fmt()
                                     ProductDetail(
-                                        label = stringResource(id = R.string.vat_amount_per).replace("Amount (%)", "${product?.vatPercentage ?: ""}%"),
-                                        value = vatValue ?: ""
+                                        label = stringResource(id = R.string.total_cost_price),
+                                        value = totalPrice ?: ""
                                     )
 
-                                    val totalCostAfterVat = (product?.getPriceAfterVatDouble(qty.value))?.fmt()
+                                    val vatValue =
+                                        (product?.getVatDouble()?.times(qty.value))?.fmt()
+                                    ProductDetail(
+                                        label = stringResource(id = R.string.vat_amount_per).replace(
+                                            "Amount (%)", "${product?.vatPercentage ?: ""}%"
+                                        ), value = vatValue ?: ""
+                                    )
+
+                                    val totalCostAfterVat =
+                                        (product?.getPriceAfterVatDouble(qty.value))?.fmt()
                                     ProductDetail(
                                         label = stringResource(id = R.string.total_cost_after_vat),
                                         value = totalCostAfterVat ?: ""
                                     )
                                 }
 
-                                if(true){
-                                    val recommendedRetailPrice = (product?.getRecommendedRetailPriceDouble())?.fmt()
+                                if (true) {
+                                    val recommendedRetailPrice =
+                                        (product?.getRecommendedRetailPriceDouble())?.fmt()
                                     ProductDetail(
                                         label = stringResource(id = R.string.recommended_retail_price),
                                         value = recommendedRetailPrice ?: ""
                                     )
 
-                                    val totalRecommendedRetailPrice = (product?.getRecommendedRetailPriceDouble()?.times(qty.value))?.fmt()
+                                    val totalRecommendedRetailPrice =
+                                        (product?.getRecommendedRetailPriceDouble()
+                                            ?.times(qty.value))?.fmt()
                                     ProductDetail(
                                         label = stringResource(id = R.string.total_recommended_retail_price),
                                         value = totalRecommendedRetailPrice ?: ""
                                     )
 
-                                    val totalRecommendedRetailPriceAfterVat = (product?.getRecommendedRetailPriceAfterVatDouble(qty.value))?.fmt()
+                                    val totalRecommendedRetailPriceAfterVat =
+                                        (product?.getRecommendedRetailPriceAfterVatDouble(qty.value))?.fmt()
                                     ProductDetail(
                                         label = stringResource(id = R.string.total_recommended_retail_price_after_vat),
                                         value = totalRecommendedRetailPriceAfterVat ?: ""
@@ -198,15 +211,13 @@ fun ProductDetailsBottomSheet(
                     Counter(viewModel)
                     Spacer(modifier = Modifier.width(32.dp))
 
-                    val totalAmount = if(showCost){
+                    val totalAmount = if (showCost) {
                         (product?.getPriceAfterVatDouble(qty.value))?.fmt() ?: ""
-                    }else{
+                    } else {
                         (product?.getSubResellerPrice())?.fmt() ?: ""
                     }
-                    ProductInfo(
-                        totalAmount = totalAmount,
-                        onClickInfo = { isExpanded = !isExpanded }
-                    )
+                    ProductInfo(totalAmount = totalAmount,
+                        onClickInfo = { isExpanded = !isExpanded })
                 }
                 Divider(
                     modifier = Modifier
@@ -219,26 +230,90 @@ fun ProductDetailsBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(IntrinsicSize.Min),
-                        //.padding(bottom = 12.dp),
+                    //.padding(bottom = 12.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    if(!isBalancePayClicked){
-                        BalancePayButton {isBalancePayClicked = true}
+                    if (!isBalancePayClicked) {
+                        BalancePayButton { isBalancePayClicked = true }
                         Spacer(modifier = Modifier.width(2.dp))
                         MadaPayButton(viewModel) {}
-                    }else if(isBalancePayClicked && !isConfirmBalancePayClicked){
-                        ConfirmBalancePayButton(viewModel){
+                    } else if (isBalancePayClicked && !isConfirmBalancePayClicked) {
+                        ConfirmBalancePayButton(viewModel) {
                             viewModel.purchaseOrder(product = product!!)
                             isConfirmBalancePayClicked = true
                         }
                         MadaPayButton(viewModel) {}
-                    }else{
-                        when(purchaseState){
+                    } else {
+                        when (purchaseState) {
                             is DataState.Loading -> Loading(color = Color.Blue)
                             is DataState.Error -> {}
                             is DataState.Success -> {
-                                PrintVatButton {}
-                                DoneButton {onDismiss()}
+
+                                val transactionLogList =
+                                    (purchaseState as DataState.Success).data.purchaseProductDetails
+                                PrintVatButton {
+                                    transactionLogList?.forEach { purchaseDetailsState ->
+                                        purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
+                                            x.productNameEn =
+                                                purchaseDetailsState.purchaseProductResponseDTO.productNameEn
+                                            x.productNameAr =
+                                                purchaseDetailsState.purchaseProductResponseDTO.productNameAr
+                                            x.vatAmount =
+                                                purchaseDetailsState.purchaseProductResponseDTO.vatAmount
+                                            x.price =
+                                                purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
+                                            x.date =
+                                                purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
+                                            x.vatPercentage =
+                                                purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
+                                            x.id =
+                                                purchaseDetailsState.purchaseProductResponseDTO.productId
+                                            x.merchantLogoPath =
+                                                purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
+                                            x.skuBarcode =
+                                                purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
+                                            x.showSkuBarcode =
+                                                purchaseDetailsState.purchaseProductResponseDTO.showSKUBarcode
+                                            x.vatCode =
+                                                purchaseDetailsState.purchaseProductResponseDTO.vatCode
+                                            x.recommendedRetailPriceAfterVAT = purchaseDetailsState.recommendedRetailPriceAfterVat?.toDouble()
+                                            x.recommendedRetailPrice = purchaseDetailsState.recommendedRetailPrice.toDouble()
+
+                                            printReceipt(x, context, isPrintVat = true)
+                                        }
+
+                                    }
+                                }
+                                DoneButton { onDismiss() }
+                                transactionLogList?.forEach { purchaseDetailsState ->
+                                    purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
+                                        x.productNameEn =
+                                            purchaseDetailsState.purchaseProductResponseDTO.productNameEn
+                                        x.productNameAr =
+                                            purchaseDetailsState.purchaseProductResponseDTO.productNameAr
+                                        x.vatAmount =
+                                            purchaseDetailsState.purchaseProductResponseDTO.vatAmount
+                                        x.price =
+                                            purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
+                                        x.date =
+                                            purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
+                                        x.vatPercentage =
+                                            purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
+                                        x.id =
+                                            purchaseDetailsState.purchaseProductResponseDTO.productId
+                                        x.merchantLogoPath =
+                                            purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
+                                        x.skuBarcode =
+                                            purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
+                                        x.showSkuBarcode =
+                                            purchaseDetailsState.purchaseProductResponseDTO.showSKUBarcode
+                                        x.vatCode =
+                                            purchaseDetailsState.purchaseProductResponseDTO.vatCode
+                                        printReceipt(x, context, isPrintVat = false)
+                                    }
+
+                                }
+
                             }
                         }
                     }
@@ -250,15 +325,11 @@ fun ProductDetailsBottomSheet(
 
 @Composable
 fun ProductDetail(
-    label: String,
-    value: String
-){
+    label: String, value: String
+) {
     Row {
         Text(
-            text = label,
-            fontFamily = arial,
-            fontSize = 12.sp,
-            color = Color(0xFF8D8D8D)
+            text = label, fontFamily = arial, fontSize = 12.sp, color = Color(0xFF8D8D8D)
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(

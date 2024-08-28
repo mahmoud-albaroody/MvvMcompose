@@ -5,7 +5,9 @@ import com.bitaqaty.reseller.MainApplication
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
 import com.bitaqaty.reseller.data.datasource.remote.ApiURL
 import com.bitaqaty.reseller.data.model.CurrentUser
+import com.bitaqaty.reseller.utilities.Globals.DEV_ID
 import com.bitaqaty.reseller.utilities.Globals.lang
+import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.isCashInApp
 import com.bitaqaty.reseller.utilities.Utils.isMadaApp
 import dagger.Module
@@ -97,19 +99,13 @@ object NetworkModule {
     fun provideHeaderInterceptor(): Interceptor {
 
         return Interceptor {
-            var deviceType = ""
-            if (isMadaApp()) {
-                deviceType = "SUREPAY"
-            } else if (isCashInApp()) {
-                deviceType = "CACHIN"
-            }
 
             val requestBuilder = it.request().newBuilder()
                 //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
                 .header("Content-Type", "application/json; charset=utf-8")
                 .header("Content-Type", "application/json")
                 .header("locale", lang)
-                .header("device-id", "94d2eb615c7a291a")
+                .header("device-id", DEV_ID)
                 .header("whitelabel-code", "BITAQATY_BUSINESS")
                 .header("OS", "ANDROID")
                 .header("Application-name", "BITAQATY_BUSINESS_MOBILE")
@@ -124,7 +120,11 @@ object NetworkModule {
                 )
             }
 
-//                .header("partner-device", "CACHIN")
+            if (isMadaApp()) {
+                requestBuilder.addHeader("partner-device", "SUREPAY")
+            } else if (isCashInApp()) {
+                requestBuilder.addHeader("partner-device", "CACHIN")
+            }
             it.proceed(requestBuilder.build())
         }
     }

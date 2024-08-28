@@ -6,6 +6,7 @@ import androidx.multidex.MultiDexApplication
 import com.bitaqaty.reseller.data.localStorage.BagDatabase
 import com.bitaqaty.reseller.data.localStorage.getDatabase
 import com.bitaqaty.reseller.data.model.MadaResponse
+import com.bitaqaty.reseller.ui.interfaces.SureCallback
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.MySharedPreferences
 import com.bitaqaty.reseller.utilities.SunmiPrintHelper
@@ -44,6 +45,10 @@ class MainApplication : MultiDexApplication() {
         fun networkCallBackInstance(callback:() -> Unit) {
             networkCallBack = callback
         }
+        var sureCallback: SureCallback?=null
+        fun getCallBackInstance(callback: SureCallback) {
+            sureCallback = callback
+        }
 
         fun getChatWindowConfiguration(
             email: String,
@@ -80,6 +85,8 @@ class MainApplication : MultiDexApplication() {
             .build()
 //
         FraudForceManager.initialize(configuration, applicationContext)
+
+
 
         // Enable verbose OneSignal logging to debug issues if needed.
 //        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);

@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.salesReport
 
+import CTOS.CtPrint
 import android.content.Context
 import android.util.Log
 import android.view.View
@@ -76,6 +77,7 @@ import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.ui.theme.clickedMerchant
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.doPrinting
 import com.bitaqaty.reseller.utilities.printTransaction
 import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
@@ -629,7 +631,13 @@ fun printSalesReport(
     view.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
     view.setDailyReportData(body, request)
     CoroutineScope(Dispatchers.IO).launch {
-        Utils.view2Bitmap(view)?.let { printTransaction(it) }
+            Utils.view2Bitmap(view)?.let { it1 ->
+                if (Utils.isMadaApp()) {
+                    doPrinting(view, CtPrint())
+                } else {
+                    printTransaction(it1)
+                }
+            }
     }
 
 
