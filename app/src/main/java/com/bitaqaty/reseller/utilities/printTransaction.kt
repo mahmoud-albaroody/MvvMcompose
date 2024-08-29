@@ -32,7 +32,7 @@ fun printReceipt(transactionLog: TransactionLog, context: Context, isPrintVat: B
     val view: FrameLayout = if (isPrintVat) {
         ReceiptVatComponent(context)
     } else {
-        ReceiptComponent(context)
+        ReceiptWithoutVatComponent(context)
     }
     view.layoutParams = ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -41,7 +41,7 @@ fun printReceipt(transactionLog: TransactionLog, context: Context, isPrintVat: B
     if (isPrintVat) {
         (view as ReceiptVatComponent).setTransLogReceipt(transactionLog)
     } else {
-        (view as ReceiptComponent).setTransLogReceipt(transactionLog)
+        (view as ReceiptWithoutVatComponent).setTransLogReceipt(transactionLog)
     }
     view.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
     CoroutineScope(Dispatchers.IO).launch {
