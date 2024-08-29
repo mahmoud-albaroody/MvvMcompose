@@ -74,11 +74,11 @@ fun Favoraite(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
         confirmValueChange = { it != SheetValue.Hidden })
 
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         favoriteViewModel.getFavoriteProducts()
     }
 
-    when(favoriteListState){
+    when (favoriteListState) {
         is DataState.Loading -> Loading()
         is DataState.Error -> {}
         is DataState.Success -> {
@@ -94,7 +94,7 @@ fun Favoraite(
                     ProductItem(
                         product = product,
                         isSelected = product == selectedProduct && isBottomSheetVisible
-                    ){
+                    ) {
                         selectedProduct = product
                         scope.launch {
                             isBottomSheetVisible = true
@@ -114,50 +114,10 @@ fun Favoraite(
             )
         }
     }
-//    LazyVerticalGrid(columns = GridCells.Fixed(3),
-//        Modifier
-//            .background(Color.White)
-//            .fillMaxSize(),
-//        content = {
-//            items(10) {
-//                FavoraiteItem(onItemClick = {
-//                    onItemClick.invoke()
-//                })
-//            }
-//        })
+
 }
 
 
-@Composable
-fun FavoraiteItem(onItemClick: () -> Unit) {
-    Card(modifier = Modifier
-        .clickable {
-            onItemClick.invoke()
-        }
-        .padding(
-            horizontal = Dimens.halfDefaultMargin,
-            vertical = Dimens.halfDefaultMargin
-        ),
-        shape = RoundedCornerShape(Dimens.DefaultMargin10),
-        border = BorderStroke(Dimens.DefaultMargin0, BebeBlue),
-        colors = CardDefaults.cardColors(containerColor = DefaultBackgroundColor)) {
-        Column(
-            Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_add_fav),
-                colorFilter = ColorFilter.tint(LightGrey400),
-                contentDescription = null,
-                modifier = Modifier.padding(
-
-                    vertical = Dimens.padding45
-                )
-
-            )
-        }
-    }
-}
 
 
 
