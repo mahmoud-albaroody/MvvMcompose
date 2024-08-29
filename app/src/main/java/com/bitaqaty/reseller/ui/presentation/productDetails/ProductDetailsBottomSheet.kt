@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.productDetails
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.BalancePayButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ConfirmBalancePayButton
@@ -56,13 +59,17 @@ import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.common.Loading
+import com.bitaqaty.reseller.utilities.extention.toJson
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.printReceipt
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsBottomSheet(
     viewModel: ProductDetailsViewModel = hiltViewModel(),
+    navController: NavController,
     product: Product? = null,
     isBottomSheetVisible: Boolean,
     sheetState: SheetState,
@@ -254,6 +261,7 @@ fun ProductDetailsBottomSheet(
 
                                 val transactionLogList =
                                     (purchaseState as DataState.Success).data.purchaseProductDetails
+                                val commission = (purchaseState as DataState.Success).data.resellerCommission
                                 PrintVatButton {
                                     transactionLogList?.forEach { purchaseDetailsState ->
                                         purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
@@ -313,8 +321,12 @@ fun ProductDetailsBottomSheet(
                                         x.vatCode =
                                             purchaseDetailsState.purchaseProductResponseDTO.vatCode
                                         printReceipt(x, context, isPrintVat = false)
-                                    }
 
+                                        val jsonObject = JsonObject()
+                                        jsonObject.addProperty("commission", commission)
+
+                                        navController.navigate("successfulPurchaseScreen/${Uri.encode(jsonObject.toString())}")
+                                    }
                                 }
 
                             }

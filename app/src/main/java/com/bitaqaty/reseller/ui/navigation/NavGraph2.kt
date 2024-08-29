@@ -1,12 +1,10 @@
 package com.bitaqaty.reseller.ui.navigation
 
-import android.util.Log
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideOutHorizontally
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,8 +12,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.bitaqaty.reseller.data.model.TransactionLog
 import com.bitaqaty.reseller.ui.presentation.accountManager.AccountManagerScreen
-import androidx.navigation.navArgument
 import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
@@ -33,6 +31,7 @@ import com.bitaqaty.reseller.ui.presentation.moreScreen.MoreScreen
 import com.bitaqaty.reseller.ui.presentation.notificationDetails.NotificationDetailsScreen
 import com.bitaqaty.reseller.ui.presentation.notifications.NotificationScreen
 import com.bitaqaty.reseller.ui.presentation.privacyScreen.PrivacyScreen
+import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
 import com.bitaqaty.reseller.ui.presentation.productsDiscountsList.ProductsDiscountsScreen
 import com.bitaqaty.reseller.ui.presentation.profileScreen.MyProfileScreen
 import com.bitaqaty.reseller.ui.presentation.recharge.RechargeScreen
@@ -47,6 +46,8 @@ import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.termsAndConditions.TermsAndConditionsScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
+import com.bitaqaty.reseller.utilities.extention.fromJson
+import com.google.gson.Gson
 import org.json.JSONObject
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -75,7 +76,7 @@ fun Navigation2(
             HomeScreen(navController = navController, mainViewModel = mainViewModel)
         }
         composable(Screen.Search.route) {
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
 
         composable(
@@ -202,8 +203,18 @@ fun Navigation2(
             )
             it.savedStateHandle.remove<String>("filterObject")
         }
-        composable(Screen.SuccessfulPurchaseScreen.route) {
-            SuccessfulPurchaseScreen(navController = navController, modifier = modifier)
+
+        composable(
+            Screen.SuccessfulPurchaseScreen.route,
+            arguments = listOf(
+                navArgument("productDetails"){ type = NavType.StringType },
+            )
+        ) {
+            SuccessfulPurchaseScreen(
+                navController = navController,
+                modifier = modifier,
+                navBackStack = it
+            )
         }
 
         composable(Screen.ChangePasswordScreen.route) {

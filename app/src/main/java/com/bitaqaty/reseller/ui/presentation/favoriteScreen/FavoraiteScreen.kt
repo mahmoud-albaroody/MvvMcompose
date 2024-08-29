@@ -54,6 +54,7 @@ fun FavoraiteScreen(navController: NavController, modifier: Modifier) {
     val favoriteViewModel: FavoraiteViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
     Favoraite(
+        navController = navController,
         favoriteViewModel = favoriteViewModel,
 //        onItemClick = {
 //            navController.navigate(Screen.SelectMainCategoryScreen.route)
@@ -64,6 +65,7 @@ fun FavoraiteScreen(navController: NavController, modifier: Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Favoraite(
+    navController: NavController,
     favoriteViewModel: FavoraiteViewModel,
     //onItemClick: () -> Unit
 ) {
@@ -104,6 +106,7 @@ fun Favoraite(
                 }
             }
             ProductDetailsBottomSheet(
+                navController = navController,
                 product = selectedProduct,
                 isBottomSheetVisible = isBottomSheetVisible,
                 sheetState = sheetState,

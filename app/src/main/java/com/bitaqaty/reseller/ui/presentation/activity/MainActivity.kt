@@ -204,7 +204,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     currentRoute(navController) == Screen.SuccessfulPurchaseScreen.route -> {
-                        appTitle = "Transactions"
+                        appTitle = "Successful Purchase"
                         haveBack = false
                         haveTopBar = true
                         haveSubTitle = false

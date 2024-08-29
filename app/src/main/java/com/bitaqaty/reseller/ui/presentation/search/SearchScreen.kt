@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
@@ -49,6 +50,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
+    navController: NavController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val categoryState by viewModel.categoryState
@@ -196,6 +198,7 @@ fun SearchScreen(
             }
         }
         ProductDetailsBottomSheet(
+            navController = navController,
             product = selectedProduct,
             isBottomSheetVisible = isBottomSheetVisible,
             sheetState = sheetState,
@@ -206,10 +209,10 @@ fun SearchScreen(
         )
     }
 }
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun SearchScreenPreview() {
-    BitaqatyTheme {
-        SearchScreen()
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun SearchScreenPreview() {
+//    BitaqatyTheme {
+//        SearchScreen()
+//    }
+//}

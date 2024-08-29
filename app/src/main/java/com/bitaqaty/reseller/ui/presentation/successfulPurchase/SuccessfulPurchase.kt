@@ -1,8 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.successfulPurchase
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
@@ -37,17 +37,39 @@ import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.LiteBlue
+import com.bitaqaty.reseller.utilities.Utils
+import org.json.JSONObject
 
 @Composable
-fun SuccessfulPurchaseScreen(navController: NavController, modifier: Modifier) {
+fun SuccessfulPurchaseScreen(
+    modifier: Modifier,
+    navController: NavController,
+    navBackStack: NavBackStackEntry,
+) {
     val successfulPurchaseViewModel: SuccessfulPurchaseViewModel = hiltViewModel()
     LaunchedEffect(key1 = true) {}
-    ProductDetails()
+    ProductDetails(
+        navBackStack = navBackStack,
+        navController = navController
+    )
 }
 
-@Preview
+//@Preview
 @Composable
-fun ProductDetails() {
+fun ProductDetails(
+    navBackStack: NavBackStackEntry,
+    navController: NavController
+) {
+    val jsonString = navBackStack.arguments?.getString("productDetails") ?: ""
+    val decodedJsonString = Uri.decode(jsonString)
+    val jsonObject = JSONObject(decodedJsonString)
+
+    var commission = ""
+
+    jsonObject.let {
+        commission = it.getString("commission")
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -63,13 +85,15 @@ fun ProductDetails() {
             shape = RoundedCornerShape(Dimens.DefaultMargin10),
             colors = CardDefaults.cardColors(containerColor = LiteBlue)
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = Dimens.DefaultMargin),
-                textAlign = TextAlign.Center,
-                text = "Your Commission is 0.40 SAR", color = BebeBlue
-            )
+            if(Utils.isPartnerApp()){
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimens.DefaultMargin),
+                    textAlign = TextAlign.Center,
+                    text = commission, color = BebeBlue
+                )
+            }
         }
         Row(
             verticalAlignment = Alignment.CenterVertically
