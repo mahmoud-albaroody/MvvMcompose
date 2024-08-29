@@ -30,9 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +53,7 @@ fun ConfirmBalancePayButton(
 ){
     var offsetX by remember { mutableFloatStateOf(0f) }
     val maxOffsetX = 180f
+    val layoutDirection = LocalLayoutDirection.current
 
     Button(
         modifier = Modifier
@@ -69,7 +72,10 @@ fun ConfirmBalancePayButton(
                     }
                 ) { change, dragAmount ->
                     change.consume()
-                    offsetX = (offsetX + dragAmount.x).coerceIn(0f, maxOffsetX)
+                    offsetX = when (layoutDirection) {
+                        LayoutDirection.Ltr -> (offsetX + dragAmount.x).coerceIn(0f, maxOffsetX)
+                        LayoutDirection.Rtl -> (offsetX - dragAmount.x).coerceIn(0f, maxOffsetX)
+                    }
                     if(offsetX == maxOffsetX) viewModel.toggleOpacity(0f)
                     if(offsetX < maxOffsetX) viewModel.toggleOpacity(0.5f)
                 }

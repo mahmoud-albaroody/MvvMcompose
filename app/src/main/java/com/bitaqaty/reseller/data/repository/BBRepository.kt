@@ -1,18 +1,14 @@
 package com.bitaqaty.reseller.data.repository
 
-import android.provider.SyncStateContract
 import android.util.Log
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.bitaqaty.reseller.data.datasource.remote.ApiService
-import com.bitaqaty.reseller.data.datasource.remote.paging.TransactionPagingDataSource
 import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.ChildMerchantRequest
 import com.bitaqaty.reseller.data.model.DataResult
 import com.bitaqaty.reseller.data.model.ErrorMessage
+import com.bitaqaty.reseller.data.model.FavoriteRequest
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
 import com.bitaqaty.reseller.data.model.LogUserName
@@ -50,10 +46,8 @@ import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.utilities.network.DataState
 import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 
 import javax.inject.Inject
@@ -490,5 +484,36 @@ class BBRepository @Inject constructor(
             }
         }
 
+    override suspend fun addFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val result = apiService.addFavoriteProduct(favoriteProduct)
+                emit(DataState.Success(result))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
 
+    override suspend fun deleteFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val result = apiService.deleteFavoriteProduct(favoriteProduct)
+                emit(DataState.Success(result))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+
+    override suspend fun getFavoriteProducts(): Flow<DataState<ArrayList<Product>>> =
+        flow {
+            emit(DataState.Loading)
+            try {
+                val result = apiService.getFavoriteProducts()
+                emit(DataState.Success(result))
+            }catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
 }

@@ -106,7 +106,10 @@ fun ProductDetailsBottomSheet(
                             width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)
                         )
                         .padding(10.dp)
-                        .noRippleClickable { onDismiss() },
+                        .noRippleClickable {
+                            onDismiss()
+                            viewModel.resetCounter()
+                        },
                     imageVector = Icons.Filled.Close,
                     contentDescription = "Close Icon",
                     tint = Color(0xFF1C274C)
