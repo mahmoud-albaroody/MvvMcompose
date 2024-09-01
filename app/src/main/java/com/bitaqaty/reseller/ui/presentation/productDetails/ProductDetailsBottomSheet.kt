@@ -1,5 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.productDetails
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +31,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +48,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.bitaqaty.reseller.MainApplication
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.BalancePayButton
 import com.bitaqaty.reseller.ui.presentation.productDetails.components.ConfirmBalancePayButton
@@ -55,22 +64,36 @@ import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.PurchaseResponseProductDetails
+import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.common.Loading
-import com.bitaqaty.reseller.utilities.network.DataState
+import com.bitaqaty.reseller.ui.presentation.recharge.initMada
+import com.bitaqaty.reseller.ui.presentation.recharge.rechargeWithCashIn
+import com.bitaqaty.reseller.utilities.Utils.isMadaApp
+import com.bitaqaty.reseller.utilities.Utils.isNearPayApp
+import com.bitaqaty.reseller.utilities.initNearPay
+import com.bitaqaty.reseller.utilities.madaConnectionResult
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.bitaqaty.reseller.utilities.printReceipt
+import com.bitaqaty.reseller.utilities.printTransaction
+import io.nearpay.sdk.utils.enums.TransactionData
+import io.nearpay.sdk.utils.toImage
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsBottomSheet(
+    navController: NavController,
     viewModel: ProductDetailsViewModel = hiltViewModel(),
     product: Product? = null,
     isBottomSheetVisible: Boolean,
     sheetState: SheetState,
     onDismiss: () -> Unit
 ) {
-    val purchaseState by viewModel.purchaseState
     val context = LocalContext.current
-
+    var paymentRefNumber by remember { mutableStateOf("") }
+    var transaction: TransactionData? = null
+    initMada(product, viewModel, paymentRefNumber)
     if (isBottomSheetVisible) {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
@@ -82,12 +105,93 @@ fun ProductDetailsBottomSheet(
             scrimColor = Color.Black.copy(alpha = .5f),
         ) {
             var isExpanded by remember { mutableStateOf(false) }
-
             var isBalancePayClicked by remember { mutableStateOf(false) }
             var isConfirmBalancePayClicked by remember { mutableStateOf(false) }
-
+            val transactionLogList =
+                remember { mutableStateListOf(PurchaseResponseProductDetails()) }
+            var isLoading by remember { mutableStateOf(false) }
+            var totalRecommendedRetailPriceAfterVat by remember { mutableDoubleStateOf(0.0) }
             LaunchedEffect(key1 = isExpanded) {
                 viewModel.toggleOpacity(1f)
+                viewModel.viewModelScope.launch {
+                    viewModel.initPurchase.collect {
+                        when (it) {
+                            is Resource.Loading -> {
+
+                            }
+
+                            is Resource.Success -> {
+                                isLoading = false
+                                paymentRefNumber = it.data?.paymentRefNumber.toString()
+                                purchaseWithPartner(totalRecommendedRetailPriceAfterVat,
+                                    context,
+                                    paymentRefNumber,
+                                    transactionData = { transactionData ->
+                                        transaction = transactionData
+                                    }, onCallRecharge = {
+                                        product?.let {
+                                            viewModel.completePurchase(
+                                                arrayListOf(product),
+                                                paymentRefNumber,
+                                                requestStatue = transaction?.receipts?.get(0)?.status_message?.english?.toUpperCase(),
+                                                cashInTransaction = transaction?.receipts?.get(0),
+                                                isCart = false,
+                                                isBalance = false
+                                            )
+                                        }
+                                    })
+                            }
+
+                            is Resource.DataError -> {
+
+                            }
+                        }
+                    }
+                }
+                viewModel.viewModelScope.launch {
+                    viewModel.completePurchaseCart.collect { result ->
+                        when (result) {
+                            is Resource.Loading -> {
+                                isLoading = true
+                            }
+
+                            is Resource.Success -> {
+                                isLoading = false
+                                onDismiss()
+                                navController.navigate(Screen.SuccessfulPurchaseScreen.route)
+
+                                transactionLogList.clear()
+                                if (isNearPayApp() && !isBalancePayClicked) {
+                                    transaction?.let {
+                                        transaction?.receipts?.get(0)?.toImage(
+                                            context, 380, 12
+                                        ) { imageBitmap ->
+                                            imageBitmap?.let { it1 -> printTransaction(it1) }
+                                            result.data?.purchaseProductDetails?.let { it1 ->
+                                                transactionLogList.addAll(it1)
+                                                setDataProduct(
+                                                    transactionLogList, context, false
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (isMadaApp()) {
+                                    result.data?.purchaseProductDetails?.let { it1 ->
+                                        transactionLogList.addAll(it1)
+                                        setDataProduct(
+                                            transactionLogList, context, false
+                                        )
+                                    }
+                                }
+                            }
+
+                            is Resource.DataError -> {
+
+                            }
+                        }
+                    }
+                }
             }
 
             Box(
@@ -119,6 +223,7 @@ fun ProductDetailsBottomSheet(
             val showCost = Utils.showCost()
             val showRecommendedCost = Utils.showRecommended()
             val qty = viewModel.counter
+            product?.quantity = viewModel.counter.value
 
             Box(
                 modifier = Modifier
@@ -131,6 +236,8 @@ fun ProductDetailsBottomSheet(
                         .background(Color.White),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    totalRecommendedRetailPriceAfterVat =
+                        (product?.getRecommendedRetailPriceAfterVatDouble(qty.value) ?: 0.0)
                     if (isExpanded) {
                         Text(
                             modifier = Modifier.padding(top = 24.dp),
@@ -184,11 +291,10 @@ fun ProductDetailsBottomSheet(
                                         value = totalRecommendedRetailPrice ?: ""
                                     )
 
-                                    val totalRecommendedRetailPriceAfterVat =
-                                        (product?.getRecommendedRetailPriceAfterVatDouble(qty.value))?.fmt()
+
                                     ProductDetail(
                                         label = stringResource(id = R.string.total_recommended_retail_price_after_vat),
-                                        value = totalRecommendedRetailPriceAfterVat ?: ""
+                                        value = totalRecommendedRetailPriceAfterVat.fmt() ?: ""
                                     )
                                 }
                             }
@@ -219,7 +325,8 @@ fun ProductDetailsBottomSheet(
                     } else {
                         (product?.getSubResellerPrice())?.fmt() ?: ""
                     }
-                    ProductInfo(totalAmount = totalAmount,
+                    ProductInfo(
+                        totalAmount = totalAmount,
                         onClickInfo = { isExpanded = !isExpanded })
                 }
                 Divider(
@@ -239,85 +346,38 @@ fun ProductDetailsBottomSheet(
                     if (!isBalancePayClicked) {
                         BalancePayButton { isBalancePayClicked = true }
                         Spacer(modifier = Modifier.width(2.dp))
-                        MadaPayButton(viewModel) {}
+                        MadaPayButton(viewModel) {
+                            product?.let {
+                                viewModel.initPurchase(
+                                    arrayListOf(it), totalRecommendedRetailPriceAfterVat.toString()
+                                )
+                            }
+                        }
                     } else if (isBalancePayClicked && !isConfirmBalancePayClicked) {
                         ConfirmBalancePayButton(viewModel) {
-                            viewModel.purchaseOrder(product = product!!)
+                            product?.let {
+                                viewModel.completePurchase(
+                                    arrayListOf(it), isCart = false, isBalance = true
+                                )
+                            }
                             isConfirmBalancePayClicked = true
                         }
-                        MadaPayButton(viewModel) {}
-                    } else {
-                        when (purchaseState) {
-                            is DataState.Loading -> Loading(color = Color.Blue)
-                            is DataState.Error -> {}
-                            is DataState.Success -> {
-
-                                val transactionLogList =
-                                    (purchaseState as DataState.Success).data.purchaseProductDetails
-                                PrintVatButton {
-                                    transactionLogList?.forEach { purchaseDetailsState ->
-                                        purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
-                                            x.productNameEn =
-                                                purchaseDetailsState.purchaseProductResponseDTO.productNameEn
-                                            x.productNameAr =
-                                                purchaseDetailsState.purchaseProductResponseDTO.productNameAr
-                                            x.vatAmount =
-                                                purchaseDetailsState.purchaseProductResponseDTO.vatAmount
-                                            x.price =
-                                                purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
-                                            x.date =
-                                                purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
-                                            x.vatPercentage =
-                                                purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
-                                            x.id =
-                                                purchaseDetailsState.purchaseProductResponseDTO.productId
-                                            x.merchantLogoPath =
-                                                purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
-                                            x.skuBarcode =
-                                                purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
-                                            x.showSkuBarcode =
-                                                purchaseDetailsState.purchaseProductResponseDTO.showSKUBarcode
-                                            x.vatCode =
-                                                purchaseDetailsState.purchaseProductResponseDTO.vatCode
-                                            x.recommendedRetailPriceAfterVAT = purchaseDetailsState.recommendedRetailPriceAfterVat?.toDouble()
-                                            x.recommendedRetailPrice = purchaseDetailsState.recommendedRetailPrice.toDouble()
-
-                                            printReceipt(x, context, isPrintVat = true)
-                                        }
-
-                                    }
-                                }
-                                DoneButton { onDismiss() }
-                                transactionLogList?.forEach { purchaseDetailsState ->
-                                    purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
-                                        x.productNameEn =
-                                            purchaseDetailsState.purchaseProductResponseDTO.productNameEn
-                                        x.productNameAr =
-                                            purchaseDetailsState.purchaseProductResponseDTO.productNameAr
-                                        x.vatAmount =
-                                            purchaseDetailsState.purchaseProductResponseDTO.vatAmount
-                                        x.price =
-                                            purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
-                                        x.date =
-                                            purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
-                                        x.vatPercentage =
-                                            purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
-                                        x.id =
-                                            purchaseDetailsState.purchaseProductResponseDTO.productId
-                                        x.merchantLogoPath =
-                                            purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
-                                        x.skuBarcode =
-                                            purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
-                                        x.showSkuBarcode =
-                                            purchaseDetailsState.purchaseProductResponseDTO.showSKUBarcode
-                                        x.vatCode =
-                                            purchaseDetailsState.purchaseProductResponseDTO.vatCode
-                                        printReceipt(x, context, isPrintVat = false)
-                                    }
-
-                                }
-
+                        MadaPayButton(viewModel) {
+                            product?.let {
+                                viewModel.initPurchase(
+                                    arrayListOf(it), totalRecommendedRetailPriceAfterVat.toString()
+                                )
                             }
+                        }
+                    } else {
+                        if (isLoading) {
+                            Loading(color = Color.Blue)
+                        } else {
+                            PrintVatButton {
+                                setDataProduct(transactionLogList, context, true)
+                            }
+                            DoneButton { onDismiss() }
+
                         }
                     }
                 }
@@ -325,6 +385,7 @@ fun ProductDetailsBottomSheet(
         }
     }
 }
+
 
 @Composable
 fun ProductDetail(
@@ -353,6 +414,91 @@ fun ProductDetail(
     }
     Spacer(modifier = Modifier.height(6.dp))
 }
+
+private fun setDataProduct(
+    transactionLogList: SnapshotStateList<PurchaseResponseProductDetails>,
+    context: Context,
+    isPrintVat: Boolean
+) {
+    transactionLogList.forEach { purchaseDetailsState ->
+        purchaseDetailsState.purchaseProductResponseDTO?.products?.forEach { product ->
+            product.productNameEn = purchaseDetailsState.purchaseProductResponseDTO.productNameEn
+            product.productNameAr = purchaseDetailsState.purchaseProductResponseDTO.productNameAr
+            product.vatAmount = purchaseDetailsState.purchaseProductResponseDTO.vatAmount
+            product.price = purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
+            product.date = purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
+            product.vatPercentage = purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
+            product.id = purchaseDetailsState.purchaseProductResponseDTO.productId
+            product.merchantLogoPath = purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
+            product.skuBarcode = purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
+            product.showSkuBarcode = purchaseDetailsState.purchaseProductResponseDTO.showSKUBarcode
+            product.vatCode = purchaseDetailsState.purchaseProductResponseDTO.vatCode
+            printReceipt(product, context, isPrintVat = isPrintVat)
+        }
+    }
+}
+
+
+private fun initMada(
+    product: Product?, viewModel: ProductDetailsViewModel, paymentRefNumber: String
+) {
+    MainApplication.getCallBackInstance {
+        it?.let { madaResponse ->
+            product?.let {
+                viewModel.completePurchase(
+                    arrayListOf(product),
+                    paymentRefNumber,
+                    madaResponse,
+                    isCart = false,
+                    isBalance = false
+                )
+            }
+        }
+    }
+}
+
+
+private fun purchaseWithPartner(
+    rec: Double?, context: Context,
+    paymentRefNumber: String, transactionData: (TransactionData) -> Unit, onCallRecharge: () -> Unit
+) {
+    if (isMadaApp()) {
+        if (rec.toString().substringAfter(".").length == 2) {
+            context.madaConnectionResult(
+                totalAmount = (rec!! * 10).fmt(), refName = paymentRefNumber
+            )
+        } else {
+            context.madaConnectionResult(
+                totalAmount = (rec!! * 100).fmt(), refName = paymentRefNumber
+            )
+        }
+    } else if (isNearPayApp()) {
+        if (rec.toString().substringAfter(".").length == 2) {
+            rechargeWithCashIn(context.initNearPay(),
+                (((rec!!.toInt() * 100).fmt()).toDouble()).toLong(),
+                paymentRefNumber,
+                context,
+                onCallRecharge = {
+                    onCallRecharge()
+                },
+                transactionData = {
+                    transactionData(it)
+                })
+        } else {
+            rechargeWithCashIn(context.initNearPay(),
+                (((rec!!.toInt() * 100).fmt()).toDouble()).toLong(),
+                paymentRefNumber,
+                context,
+                onCallRecharge = {
+                    onCallRecharge()
+                },
+                transactionData = {
+                    transactionData(it)
+                })
+        }
+    }
+}
+
 
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable

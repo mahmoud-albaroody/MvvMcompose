@@ -9,6 +9,7 @@ import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.FavoriteRequest
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
+import com.bitaqaty.reseller.data.model.InitPurchaseResponse
 import com.bitaqaty.reseller.data.model.LogUserName
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PaymentStatus
@@ -57,6 +58,14 @@ interface ApiService {
     suspend fun getChildMerchants(@Body childMerchantRequest: ChildMerchantRequest): TopChildMerchant
     @POST(ApiURL.GET_MERCHANTS)
     suspend fun getMerchants(@Path("category_id") categoryId: Int): ArrayList<Merchant>
+
+    @POST(ApiURL.InitPurchaseCart)
+    suspend fun initPurchase(@Body jsonObject: JsonObject): Response<InitPurchaseResponse>
+
+    @POST(ApiURL.CompletePurchaseCart)
+    suspend fun completePurchaseCart(@Body jsonObject: JsonObject): Response<PurchaseResponse>
+
+
     @POST(ApiURL.GET_PRODUCT_LIST)
     suspend fun getProductList(@Body productsInfo: ProductListRequest): ProductListResponse
     @POST(ApiURL.CATEGORY_EDIT)
@@ -73,7 +82,7 @@ interface ApiService {
     @POST(ApiURL.PROFILE)
     suspend fun getProfile(): User
     @POST(ApiURL.PURCHASE_ORDER)
-    suspend fun purchaseOrder(@Body products: PurchaseRequest): PurchaseResponse
+    suspend fun purchaseOrder(@Body jsonObject: JsonObject):  Response<PurchaseResponse>
     @POST(ApiURL.GET_TRANSACTIONS_LIST)
     suspend fun getTransactionLogList(@Body transactionRequestBody: TransactionRequestBody):
             Response<TransactionLogResult>
@@ -181,8 +190,11 @@ interface ApiService {
     @POST(ApiURL.VALIDATE_SUREPAY_CHARGING)
     suspend fun validateSurePayCharging(@Body jsonObject: JsonObject): ValidationSurpayChargeResult
 
+
+
+
     @POST(ApiURL.SUREPAY_CHARGING)
-    suspend fun surePayCharging(@Body jsonObject: JsonObject): PaymentStatus
+    suspend fun surePayCharging(@Body jsonObject: JsonObject): Response<PaymentStatus>
 
 
     @POST(ApiURL.LOGOUT)

@@ -11,6 +11,7 @@ import com.bitaqaty.reseller.data.model.ErrorMessage
 import com.bitaqaty.reseller.data.model.FavoriteRequest
 import com.bitaqaty.reseller.data.model.ForgetPassword
 import com.bitaqaty.reseller.data.model.ForgetPasswordSend
+import com.bitaqaty.reseller.data.model.InitPurchaseResponse
 import com.bitaqaty.reseller.data.model.LogUserName
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.PaymentStatus
@@ -86,6 +87,34 @@ class BBRepository @Inject constructor(
         }
     }
 
+    override suspend fun initPurchaseRequest(jsonObject: JsonObject): Resource<InitPurchaseResponse> {
+        val response = apiService.initPurchase(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
+
+    override suspend fun completePurchaseCart(jsonObject: JsonObject): Resource<PurchaseResponse> {
+        val response = apiService.completePurchaseCart(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
+
+    override suspend fun purchaseOrder(jsonObject: JsonObject): Resource<PurchaseResponse> {
+        val response = apiService.purchaseOrder(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
+        }
+    }
+
+
     override suspend fun authenticatedLogin(jsonObject: JsonObject): Resource<User> {
         val response = apiService.authenticatedLogin(jsonObject)
         return if (response.isSuccessful) {
@@ -144,7 +173,7 @@ class BBRepository @Inject constructor(
             try {
                 val merchants = apiService.getMerchants(categoryId)
                 emit(DataState.Success(merchants))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -209,11 +238,14 @@ class BBRepository @Inject constructor(
             emit(senderAccountByCounter)
         }
 
-    override suspend fun surePayCharging(jsonObject: JsonObject): Flow<PaymentStatus> =
-        flow {
-            val senderAccountByCounter = apiService.surePayCharging(jsonObject)
-            emit(senderAccountByCounter)
+    override suspend fun surePayCharging(jsonObject: JsonObject): Resource<PaymentStatus> {
+        val response = apiService.surePayCharging(jsonObject)
+        return if (response.isSuccessful) {
+            Resource.Success(response.body()!!, response.errorBody())
+        } else {
+            Resource.DataError(null, response.code(), response.errorBody())
         }
+    }
 
 
     override suspend fun forgetPassword(jsonObject: JsonObject):
@@ -301,9 +333,6 @@ class BBRepository @Inject constructor(
     }
 
 
-
-
-
     override suspend fun validateVerificationCode(jsonObject: JsonObject): Resource<User> {
         val response = apiService.validateVerificationCode(jsonObject)
         return if (response.isSuccessful) {
@@ -377,7 +406,7 @@ class BBRepository @Inject constructor(
             try {
                 val topMerchants = apiService.getTopMerchants()
                 emit(DataState.Success(topMerchants))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -388,7 +417,7 @@ class BBRepository @Inject constructor(
             try {
                 val childMerchants = apiService.getChildMerchants(childMerchantRequest)
                 emit(DataState.Success(childMerchants))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -399,7 +428,7 @@ class BBRepository @Inject constructor(
             try {
                 val merchants = apiService.getMerchants(categoryId)
                 emit(DataState.Success(merchants))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -410,7 +439,7 @@ class BBRepository @Inject constructor(
             try {
                 val products = apiService.getProductList(productsInfo)
                 emit(DataState.Success(products))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -424,7 +453,7 @@ class BBRepository @Inject constructor(
             try {
                 val editResult = apiService.editCategory(currentCategoryId, newCategoryId)
                 emit(DataState.Success(editResult))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -435,7 +464,7 @@ class BBRepository @Inject constructor(
             try {
                 val systemSettings = apiService.getSystemSetting()
                 emit(DataState.Success(systemSettings))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -446,7 +475,7 @@ class BBRepository @Inject constructor(
             try {
                 val bankData = apiService.getSettlementRequestData()
                 emit(DataState.Success(bankData))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -457,7 +486,7 @@ class BBRepository @Inject constructor(
             try {
                 val settlementRequestResult = apiService.createSettlementRequest(settlementRequest)
                 emit(DataState.Success(settlementRequestResult))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -468,21 +497,11 @@ class BBRepository @Inject constructor(
             try {
                 val profile = apiService.getProfile()
                 emit(DataState.Success(profile))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
 
-    override suspend fun purchaseOrder(products: PurchaseRequest): Flow<DataState<PurchaseResponse>> =
-        flow {
-            emit(DataState.Loading)
-            try {
-                val purchaseResponse = apiService.purchaseOrder(products)
-                emit(DataState.Success(purchaseResponse))
-            }catch (e: Exception){
-                emit(DataState.Error(e))
-            }
-        }
 
     override suspend fun addFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>> =
         flow {
@@ -490,7 +509,7 @@ class BBRepository @Inject constructor(
             try {
                 val result = apiService.addFavoriteProduct(favoriteProduct)
                 emit(DataState.Success(result))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -501,7 +520,7 @@ class BBRepository @Inject constructor(
             try {
                 val result = apiService.deleteFavoriteProduct(favoriteProduct)
                 emit(DataState.Success(result))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
@@ -512,7 +531,7 @@ class BBRepository @Inject constructor(
             try {
                 val result = apiService.getFavoriteProducts()
                 emit(DataState.Success(result))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }

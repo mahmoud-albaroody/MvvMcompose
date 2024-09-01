@@ -14,10 +14,10 @@ data class PurchaseResponse(
 )
 
 data class PurchaseResponseProductDetails(
-    val purchaseProductResponseDTO: ProductDetails,
-    val productType: String,
-    val recommendedRetailPrice: String,
-    val recommendedRetailPriceAfterVat: String?
+    val purchaseProductResponseDTO: ProductDetails?=null,
+    val productType: String?=null,
+    val recommendedRetailPrice: String?=null,
+    val recommendedRetailPriceAfterVat: String?=null
 )
 
 data class InvalidItem(

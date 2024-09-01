@@ -75,7 +75,7 @@ fun Navigation2(
             HomeScreen(navController = navController, mainViewModel = mainViewModel)
         }
         composable(Screen.Search.route) {
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
 
         composable(
@@ -92,14 +92,14 @@ fun Navigation2(
                     animationSpec = tween(700)
                 )
             },
-            arguments = listOf(navArgument("categoryId"){
+            arguments = listOf(navArgument("categoryId") {
                 type = NavType.StringType
                 nullable = true
                 defaultValue = null
             })
         ) { backStackEntry ->
             var categoryId = backStackEntry.arguments?.getString("categoryId")
-            if(mainViewModel.showBottomNav.value){
+            if (mainViewModel.showBottomNav.value) {
                 categoryId = null
             }
             StoreScreen(
@@ -113,8 +113,8 @@ fun Navigation2(
         composable(
             Screen.CategoryDetails.route,
             arguments = listOf(
-                navArgument("categoryId"){ type = NavType.StringType },
-                navArgument("categoryName"){ type = NavType.StringType }
+                navArgument("categoryId") { type = NavType.StringType },
+                navArgument("categoryName") { type = NavType.StringType }
             )
         ) { backStackEntry ->
             val categoryId = backStackEntry.arguments?.getString("categoryId")

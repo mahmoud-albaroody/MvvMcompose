@@ -102,6 +102,7 @@ fun CategoryDetailsScreen(
             }
         }
         ProductDetailsBottomSheet(
+            navController = navController,
             product = selectedProduct,
             isBottomSheetVisible = isBottomSheetVisible,
             sheetState = sheetState,

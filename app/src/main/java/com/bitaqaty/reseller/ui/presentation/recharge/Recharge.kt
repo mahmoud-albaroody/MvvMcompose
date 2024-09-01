@@ -50,9 +50,6 @@ import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.White
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Globals.SETTINGS
-import com.bitaqaty.reseller.utilities.ShowConfirmDialog
-import com.bitaqaty.reseller.utilities.ShowErrorDialog
-import com.bitaqaty.reseller.utilities.SunmiPrintHelper
 import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.Utils.isCashInApp
@@ -85,6 +82,7 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
     var amount by remember { mutableStateOf("100") }
     var transaction: Bitmap? = null
     val compositeDisposable = CompositeDisposable()
+    initMada(rechargeViewModel)
     LaunchedEffect(key1 = true) {
         rechargeViewModel.viewModelScope.launch {
             rechargeViewModel.validatePartnerCharging.collect {
@@ -95,8 +93,13 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
                     onCallRecharge = { jsonRechargeObject ->
                         rechargeViewModel.rechargePartner(jsonRechargeObject)
                     },
-                    transactionListener = { transactionBitmap ->
-                        transaction = transactionBitmap
+                    transactionData = { transactionData ->
+                        transactionData.receipts?.get(0)?.toImage(
+                            context, 380, 12
+                        ) { imageBitmap ->
+                            transaction = imageBitmap
+                        }
+
                     })
             }
         }
@@ -112,11 +115,11 @@ fun RechargeScreen(navController: NavController, modifier: Modifier) {
     }
     Recharge(onRechargeClick = {
         rechargeViewModel.validatePartnerCharging("MADA_AHLI", amount.toDouble())
-    }, amount = {
-        amount = it
-    }, onTermsCondition = {
-        navController.navigate(Screen.TermsAndConditionsScreen.route)
-    })
+    },
+        amount = { amount = it },
+        onTermsCondition = {
+            navController.navigate(Screen.TermsAndConditionsScreen.route)
+        })
 }
 
 
@@ -324,15 +327,15 @@ fun RechargeAmount(countries: AccountsCountries? = null, onCounterSelectedClick:
     }
 }
 
-private fun purchaseWithCashIn(
+
+fun rechargeWithCashIn(
     nearpay: NearPay,
     amount: Long,
     paymentRefNumber: String,
     context: Context,
     onCallRecharge: (JsonObject) -> Unit,
-    transactionListener: (transaction: Bitmap) -> Unit
+    transactionData: (transactionData: TransactionData) -> Unit
 ) {
-    val amount: Long = amount // [Required] ammount you want to set .
     val enableReceiptUi = true// [optional] true will enable the ui and false will disable
     val enableReversal = true // it will allow you to enable or disable the reverse button
     val finishTimeOut: Long = 0 // Add the number of seconds
@@ -348,10 +351,10 @@ private fun purchaseWithCashIn(
         enableUiDismiss,
         object : PurchaseListener {
             override fun onPurchaseApproved(transactionData: TransactionData) {
+                transactionData(transactionData)
                 transactionData.receipts?.get(0)?.toImage(
                     context, 380, 12
                 ) {
-                    it?.let { it1 -> transactionListener(it1) }
 //                    if (versionCode > BuildConfig.VERSION_CODE && (isMadaApp()) && isUpdateMandatory) {
 //                        Utils.showConfirmDialog(
 //                            activity,
@@ -595,13 +598,14 @@ private fun purchaseWithCashIn(
         })
 }
 
+
 private fun makeRecharge(
     it: ValidationSurpayChargeResult,
     compositeDisposable: CompositeDisposable,
     amount: String,
     context: Context,
     onCallRecharge: (JsonObject) -> Unit,
-    transactionListener: (transaction: Bitmap) -> Unit
+    transactionData: (transactionData: TransactionData) -> Unit
 ) {
     var paymentRefNumber = ""
     if (it.chargeValid) {
@@ -618,26 +622,26 @@ private fun makeRecharge(
                 )
             } else if (isCashInApp() || isNearPayApp()) {
                 if (amount.substringAfter(".").length == 2) {
-                    purchaseWithCashIn(context.initNearPay(),
+                    rechargeWithCashIn(context.initNearPay(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
                         paymentRefNumber,
                         context,
                         onCallRecharge = {
                             onCallRecharge(it)
                         },
-                        transactionListener = {
-                            transactionListener(it)
+                        transactionData = {
+                            transactionData(it)
                         })
                 } else {
-                    purchaseWithCashIn(context.initNearPay(),
+                    rechargeWithCashIn(context.initNearPay(),
                         (((amount.toInt() * 100).fmt()).toDouble()).toLong(),
                         paymentRefNumber,
                         context,
                         onCallRecharge = {
                             onCallRecharge(it)
                         },
-                        transactionListener = {
-                            transactionListener(it)
+                        transactionData = {
+                            transactionData(it)
                         })
                 }
             }
@@ -646,131 +650,75 @@ private fun makeRecharge(
     }
 }
 
-//@Composable
-//fun CompleteRecharge(context: Context) {
-//    MainApplication.getCallBackInstance {
-//        it.let {
-//            if (it != null) {
-//                if (versionCode > BuildConfig.VERSION_CODE && (isPartnerApp())
-//                    && isUpdateMandatory
-//                ) {
-//                    ShowConfirmDialog(
-//                        context,
-//                        R.string.there_is_new_version_of_Bitaqaty,
-//                        R.string.update,
-//                        Globals.IconType.None,
-//                        onConfirm = {
-//                            val intent =
-//                                context.packageManager?.getLaunchIntentForPackage(
-//                                    "com.surepay.surestore"
-//                                )
-//                            context.startActivity(intent)
-//                        })
-//                } else if (versionCode > BuildConfig.VERSION_CODE && (isPartnerApp()) && !isUpdateMandatory) {
-//                    ShowConfirmDialog(
-//                        context,
-//                        R.string.there_is_new_version_of_Bitaqaty,
-//                        R.string.update,
-//                        Globals.IconType.None,
-//                        onConfirm = {
-//                            val intent =
-//                                context.packageManager?.getLaunchIntentForPackage(
-//                                    "com.surepay.surestore"
-//                                )
-//                            context.startActivity(intent)
-//
-//                        },
-//                        onCancel = {
-//                            Utils.loadHome(context)
-//                        }
-//                    )
-//                } else {
-//                    if (paymentRefNumber == it.madaResponseModel?.clientRef &&
-//                        paymentRefNumber.isNotEmpty()
-//                    ) {
-//                        val jsonObject = JsonObject()
-//                        jsonObject.addProperty("amount", it.madaResponseModel?.aMOUNT)
-//                        jsonObject.addProperty("resellerId", Utils.getUserData()?.reseller?.id)
-//                        jsonObject.addProperty("deviceId", Globals.DEV_ID)
-//                        when (it.madaResponseModel?.tX_RSLT) {
-//                            "0" -> {
-//                                jsonObject.addProperty("requestStatus", "APPROVED")
-//                            }
-//
-//                            "1" -> {
-//                                jsonObject.addProperty("requestStatus", "DECLINED" + "مرفوض")
-//                            }
-//
-//                            "2" -> {
-//                                jsonObject.addProperty(
-//                                    "requestStatus",
-//                                    "TRANSACTION_VOID" + "مرفوض"
-//                                )
-//                            }
-//
-//                            "3" -> {
-//                                jsonObject.addProperty(
-//                                    "requestStatus",
-//                                    "CANCELLED" + "تم ااﻹلغاء"
-//                                )
-//                            }
-//                        }
-//                        jsonObject.addProperty(
-//                            "paymentRefNumber",
-//                            it.madaResponseModel?.clientRef
-//                        )
-//                        jsonObject.addProperty("responseBody", it.result)
-//                        jsonObject.addProperty("signature", it.signature)
-//                        jsonObject.addProperty("rrn", it.madaResponseModel?.rRN)
-//                        jsonObject.addProperty(
-//                            "usedCard",
-//                            it.madaResponseModel?.sCHEME_N_E
-//                        )
-//                        jsonObject.addProperty(
-//                            "cardNumber",
-//                            it.madaResponseModel?.pAN
-//                        )
-//                        jsonObject.addProperty(
-//                            "cardHolderName",
-//                            it.madaResponseModel?.cRD_HLDR_N
-//                        )
-//                        jsonObject.addProperty(
-//                            "authenticationCode",
-//                            it.madaResponseModel?.aUTH
-//                        )
-//                        var simCardType: String? = ""
-//                        if (Utils.isMobily()) {
-//                            simCardType = "Mobily"
-//                        }
-//                        val json1 = JsonObject()
-//                        if (isMadaApp()) {
-//                            json1.addProperty("madaVersion", Utils.getMadaVersion())
-//                            json1.addProperty(
-//                                "bitaqatyBusinessVersion",
-//                                BuildConfig.VERSION_CODE
-//                            )
-//                            json1.addProperty("simCardType", simCardType)
-//                        }
-//                        jsonObject.add("posMachineDetails", json1)
-//                        viewModel?.surePayCharging(jsonObject)
-//                        paymentRefNumber = ""
-//                    } else {
-//                        deleteCartDB(compositeDisposable) {
-//                            ShowErrorDialog(
-//                                context,
-//                                R.string.unsuccessful_recharge
-//                            )
-//                        }
-//                    }
-//                }
-//            } else {
-//                deleteCartDB(compositeDisposable) {
-//                    ShowErrorDialog(
-//                        context,
-//                        R.string.unsuccessful_recharge, onDismiss = {}
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
+
+fun initMada(rechargeViewModel: RechargeViewModel) {
+    MainApplication.getCallBackInstance {
+        it?.let {
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("amount", it.madaResponseModel?.aMOUNT)
+            jsonObject.addProperty("resellerId", Utils.getUserData()?.reseller?.id)
+            jsonObject.addProperty("deviceId", Globals.DEV_ID)
+            when (it.madaResponseModel?.tX_RSLT) {
+                "0" -> {
+                    jsonObject.addProperty("requestStatus", "APPROVED")
+                }
+
+                "1" -> {
+                    jsonObject.addProperty("requestStatus", "DECLINED" + "مرفوض")
+                }
+
+                "2" -> {
+                    jsonObject.addProperty(
+                        "requestStatus",
+                        "TRANSACTION_VOID" + "مرفوض"
+                    )
+                }
+
+                "3" -> {
+                    jsonObject.addProperty(
+                        "requestStatus",
+                        "CANCELLED" + "تم ااﻹلغاء"
+                    )
+                }
+            }
+            jsonObject.addProperty(
+                "paymentRefNumber",
+                it.madaResponseModel?.clientRef
+            )
+            jsonObject.addProperty("responseBody", it.result)
+            jsonObject.addProperty("signature", it.signature)
+            jsonObject.addProperty("rrn", it.madaResponseModel?.rRN)
+            jsonObject.addProperty(
+                "usedCard",
+                it.madaResponseModel?.sCHEME_N_E
+            )
+            jsonObject.addProperty(
+                "cardNumber",
+                it.madaResponseModel?.pAN
+            )
+            jsonObject.addProperty(
+                "cardHolderName",
+                it.madaResponseModel?.cRD_HLDR_N
+            )
+            jsonObject.addProperty(
+                "authenticationCode",
+                it.madaResponseModel?.aUTH
+            )
+            var simCardType: String? = ""
+            if (Utils.isMobily()) {
+                simCardType = "Mobily"
+            }
+            val json1 = JsonObject()
+            if (isMadaApp()) {
+                json1.addProperty("madaVersion", Utils.getMadaVersion())
+                json1.addProperty(
+                    "bitaqatyBusinessVersion",
+                    BuildConfig.VERSION_CODE
+                )
+                json1.addProperty("simCardType", simCardType)
+            }
+            jsonObject.add("posMachineDetails", json1)
+            rechargeViewModel.rechargePartner(jsonObject)
+        }
+    }
+}

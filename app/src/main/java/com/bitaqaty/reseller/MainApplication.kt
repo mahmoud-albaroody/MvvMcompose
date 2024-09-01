@@ -6,6 +6,7 @@ import androidx.multidex.MultiDexApplication
 import com.bitaqaty.reseller.data.localStorage.BagDatabase
 import com.bitaqaty.reseller.data.localStorage.getDatabase
 import com.bitaqaty.reseller.data.model.MadaResponse
+import com.bitaqaty.reseller.ui.delegate.GetLastStatusCallback
 import com.bitaqaty.reseller.ui.interfaces.SureCallback
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.MySharedPreferences
@@ -18,7 +19,7 @@ import com.livechatinc.inappchat.ChatWindowConfiguration
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApplication : MultiDexApplication() {
+class MainApplication : MultiDexApplication(), GetLastStatusCallback {
 
     lateinit var database: BagDatabase
 
@@ -69,15 +70,15 @@ class MainApplication : MultiDexApplication() {
      //   PicassoUtils.initPicasso(this)
         database = getDatabase(this)
         SunmiPrintHelper.getInstance().initSunmiPrinterService(this)
-//        if (myReceiver == null) {
-//            myReceiver = SurePayReceiver(callback = this)
-//            val filter = IntentFilter()
-//            filter.addAction("surepay.mada.RESULT")
-//            registerReceiver(
-//                myReceiver,
-//                filter
-//            )
-//        }
+        if (myReceiver == null) {
+            myReceiver = SurePayReceiver(callback = this@MainApplication)
+            val filter = IntentFilter()
+            filter.addAction("surepay.mada.RESULT")
+            registerReceiver(
+                myReceiver,
+                filter
+            )
+        }
 
         val configuration = FraudForceConfiguration.Builder()
             .subscriberKey("M1WrRSwcjUBQmHamij3DxQJWr00YzfRhXaMkI+zhhiY=")
@@ -101,10 +102,12 @@ class MainApplication : MultiDexApplication() {
         super.onCreate()
     }
 
+    override fun onLastStatusReceived(madaResponse: MadaResponse?) {
+        sureCallback?.sureCallback(madaResponse)
+    }
 
-//    override fun onLastStatusReceived(madaResponse: MadaResponse?) {
-//        sureCallback?.sureCallback(madaResponse)
-//    }
+
+
 
 
 }

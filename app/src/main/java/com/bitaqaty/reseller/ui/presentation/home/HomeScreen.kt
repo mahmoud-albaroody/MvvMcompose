@@ -272,6 +272,7 @@ fun HomeScreen(
 
                 Box(modifier = Modifier.align(Alignment.BottomCenter)) {
                     ProductDetailsBottomSheet(
+                        navController=navController,
                         product = selectedProduct,
                         isBottomSheetVisible = isBottomSheetVisible,
                         sheetState = sheetState,

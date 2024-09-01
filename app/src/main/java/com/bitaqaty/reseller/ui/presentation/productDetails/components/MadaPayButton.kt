@@ -35,7 +35,9 @@ fun MadaPayButton(
     onClick: () -> Unit
 ){
     Button(
-        onClick = onClick,
+        onClick = {
+                  onClick()
+        },
         interactionSource = NoRippleInteractionSource(),
         shape = RoundedCornerShape(Dimens.cornerRadius15),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5F5F5)),

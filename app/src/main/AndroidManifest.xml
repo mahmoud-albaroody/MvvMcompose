@@ -47,6 +47,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".utilities.SurePayReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+
     </application>
     <queries>
         <!-- Explicit apps you know in advance about: -->

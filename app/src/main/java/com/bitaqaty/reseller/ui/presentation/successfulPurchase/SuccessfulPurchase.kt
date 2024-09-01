@@ -138,8 +138,11 @@ fun ProductDetails() {
                     .weight(1f)
             ) {
                 FilterButton(
-                    backgroundTex = Blue100, text = "Print Product",
-                    iconVisibility = false, textColor = Color.White,horizontalPadding =  Dimens.DefaultMargin,
+                    backgroundTex = Blue100,
+                    text = "Print Product",
+                    iconVisibility = false,
+                    textColor = Color.White,
+                    horizontalPadding = Dimens.DefaultMargin,
                     onApplyFilterClick = {
 
                     }
@@ -155,7 +158,7 @@ fun ProductDetails() {
                     text = "Print VAT",
                     iconVisibility = false,
                     textColor = Blue100,
-                    haveBorder = true,horizontalPadding =  Dimens.DefaultMargin,
+                    haveBorder = true, horizontalPadding = Dimens.DefaultMargin,
                     onApplyFilterClick = {
 
                     }

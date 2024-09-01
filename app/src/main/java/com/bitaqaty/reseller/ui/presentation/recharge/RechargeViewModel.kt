@@ -10,6 +10,7 @@ import com.bitaqaty.reseller.data.model.ValidationSurpayChargeResult
 import com.bitaqaty.reseller.domain.RechargeUseCase
 import com.bitaqaty.reseller.utilities.Globals
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.network.Resource
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,8 +30,8 @@ class RechargeViewModel @Inject constructor(private val rechargeUseCase: Recharg
         get() = _validatePartnerCharging
 
     private val _rechargePartner =
-        MutableSharedFlow<PaymentStatus>()
-    val rechargePartner: MutableSharedFlow<PaymentStatus>
+        MutableSharedFlow<Resource<PaymentStatus>>()
+    val rechargePartner: MutableSharedFlow<Resource<PaymentStatus>>
         get() = _rechargePartner
 
     fun validatePartnerCharging(
