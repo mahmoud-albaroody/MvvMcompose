@@ -6,30 +6,45 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
+import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
+import com.bitaqaty.reseller.ui.presentation.common.ProductLogo
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
@@ -38,6 +53,7 @@ import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.LiteBlue
 import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.noRippleClickable
 import org.json.JSONObject
 
 @Composable
@@ -65,9 +81,29 @@ fun ProductDetails(
     val jsonObject = JSONObject(decodedJsonString)
 
     var commission = ""
+    var logoUrl = ""
+    var productName = ""
+    var date = ""
+    var quantity = ""
+    var recommendedPrice = ""
+    var totalRecommendedPrice = ""
+    var totalRecommendedPriceAfterVat = ""
+    var productSerial = ""
+    var productPassword = ""
+    var skuBarcode = ""
 
     jsonObject.let {
         commission = it.getString("commission")
+        logoUrl = it.getString("logo")
+        productName = it.getString("name")
+        date = it.getString("date")
+        quantity = it.getString("quantity")
+        recommendedPrice = it.getString("recommendedPrice")
+        totalRecommendedPrice = it.getString("totalRecommendedPrice")
+        totalRecommendedPriceAfterVat = it.getString("totalRecommendedPriceAfterVat")
+        productSerial = it.getString("productSerial")
+        productPassword = it.getString("productPassword")
+        skuBarcode = it.getString("skuBarcode")
     }
 
     Column(
@@ -91,54 +127,71 @@ fun ProductDetails(
                         .fillMaxWidth()
                         .padding(vertical = Dimens.DefaultMargin),
                     textAlign = TextAlign.Center,
-                    text = commission, color = BebeBlue
+                    text = stringResource(id = R.string.your_commission) + commission,
+                    color = BebeBlue
                 )
             }
         }
         Row(
+            modifier = Modifier.padding(start = 8.dp),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
+            Card(
                 modifier = Modifier
-                    .size(Dimens.bitaqatyLogo)
-                    .background(Color.White),
-                painter = painterResource(id = R.drawable.bitaqaty_logo),
-                contentDescription = "Logo",
-            )
+                    .size(Dimens.bitaqatyLogo),
+                shape = RoundedCornerShape(
+                    topEndPercent = 20,
+                    bottomStartPercent = 20,
+                    bottomEndPercent = 20
+                ),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    ImageLoader(
+                        modifier = Modifier
+                            .size(Dimens.bitaqatyLogo),
+                        imgUrl = logoUrl,
+                        errorImg = R.drawable.no_image,
+                        isCircle = false
+                    )
+                }
+            }
             Column(
                 Modifier
                     .padding(horizontal = Dimens.halfDefaultMargin)
                     .padding(top = Dimens.halfDefaultMargin)
             ) {
-                Text(text = "Apple & iTunes Giftcard \$10 (US Store)")
+                Text(text = productName)
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "12/12/2024",
+                        text = "$date ",
                         style = TextStyle(fontSize = 12.sp, color = LightGrey400)
                     )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = Dimens.DefaultMargin),
-                        text = "3:41 PM",
-                        style = TextStyle(fontSize = 12.sp, color = LightGrey400)
-                    )
+//                    Text(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(start = Dimens.DefaultMargin),
+//                        text = "",//"3:41 PM",
+//                        style = TextStyle(fontSize = 12.sp, color = LightGrey400)
+//                    )
                 }
                 Row(
                     Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Quantity",
+                        text = stringResource(R.string.item_quantity),
                         style = TextStyle(fontSize = 10.sp, color = LightGrey400)
                     )
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = Dimens.halfDefaultMargin),
-                        text = "1",
+                        text = quantity,
                         style = TextStyle(fontSize = 10.sp, color = FontColor)
                     )
                 }
@@ -149,9 +202,9 @@ fun ProductDetails(
                         bottom = Dimens.halfDefaultMargin
                     )
                 ) {
-                    Recommended("Recommended Retail Price", "72.08 SAR")
-                    Recommended("Recommended Retail Price", "72.08 SAR")
-                    Recommended("Recommended Retail Price", "72.08 SAR")
+                    Recommended(stringResource(id = R.string.recommended_retail_price), recommendedPrice)
+                    Recommended(stringResource(id = R.string.total_recommended_retail_price), totalRecommendedPrice)
+                    Recommended(stringResource(id = R.string.total_recommended_retail_price_after_vat), totalRecommendedPriceAfterVat)
                 }
             }
         }
@@ -186,7 +239,11 @@ fun ProductDetails(
                 )
             }
         }
-        Report()
+        Report(
+            serialNum = productSerial,
+            password = productPassword,
+            skuBarcode = skuBarcode
+        )
     }
 
 }
@@ -215,9 +272,13 @@ fun Recommended(text: String, text2: String) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun Report() {
+fun Report(
+    serialNum: String,
+    password: String,
+    skuBarcode: String
+) {
     Card(
         Modifier
             .fillMaxWidth()
@@ -237,10 +298,45 @@ fun Report() {
                 )
                 .padding(start = Dimens.DefaultMargin)
         ) {
-            Recommended("Serial Number", "Bravooo12355")
-            Recommended("Password", "Bravooo12355")
-            Recommended("SKU Barcode", "Bravooo12355")
-            Recommended("SKU Barcode", "Bravooo12355")
+            Recommended(stringResource(id = R.string.TLogSerialNo), serialNum)
+            Recommended(stringResource(id = R.string.password), password)
+            Barcode(skuBarcode = skuBarcode)
         }
+    }
+}
+
+@Composable
+fun Barcode(
+    skuBarcode: String,
+    modifier: Modifier = Modifier
+) {
+    val widthPixels = 380
+    val heightPixels = 60
+
+    val barcodeBitmap = remember(skuBarcode, widthPixels, heightPixels) {
+        Utils.createBarcodeBitmap(
+            barcodeValue = skuBarcode,
+            widthPixels = widthPixels,
+            heightPixels = heightPixels
+        )
+    }
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(top = Dimens.halfDefaultMargin)
+            .padding(end = Dimens.DefaultMargin),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(id = R.string.sku_code),
+            style = TextStyle(fontSize = 10.sp, color = LightGrey400)
+        )
+        Image(
+            bitmap = barcodeBitmap.asImageBitmap(),
+            contentDescription = "SKU Barcode",
+            modifier = modifier
+        )
     }
 }

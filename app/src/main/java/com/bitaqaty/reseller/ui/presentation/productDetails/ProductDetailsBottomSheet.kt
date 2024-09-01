@@ -262,6 +262,10 @@ fun ProductDetailsBottomSheet(
                                 val transactionLogList =
                                     (purchaseState as DataState.Success).data.purchaseProductDetails
                                 val commission = (purchaseState as DataState.Success).data.resellerCommission
+                                val quantity = (purchaseState as DataState.Success).data.purchaseProductDetails?.first()?.purchaseProductResponseDTO?.itemsCount
+                                val recommendedPrice = (purchaseState as DataState.Success).data.purchaseProductDetails?.first()?.getRecommendedRetailPriceWithCurrency()
+                                val totalRecommendedPrice = (purchaseState as DataState.Success).data.getTotalRecommendedRetailPriceWithCurrency()
+                                val totalRecommendedPriceAfterVat = (purchaseState as DataState.Success).data.getTotalRecommendedRetailAfterVatWithCurrency()
                                 PrintVatButton {
                                     transactionLogList?.forEach { purchaseDetailsState ->
                                         purchaseDetailsState.purchaseProductResponseDTO.products?.forEach { x ->
@@ -324,6 +328,16 @@ fun ProductDetailsBottomSheet(
 
                                         val jsonObject = JsonObject()
                                         jsonObject.addProperty("commission", commission)
+                                        jsonObject.addProperty("logo", x.getMerchantLogo())
+                                        jsonObject.addProperty("name", x.getProductName())
+                                        jsonObject.addProperty("date", x.getCheckingDate())
+                                        jsonObject.addProperty("quantity", quantity)
+                                        jsonObject.addProperty("recommendedPrice", recommendedPrice)
+                                        jsonObject.addProperty("totalRecommendedPrice", totalRecommendedPrice)
+                                        jsonObject.addProperty("totalRecommendedPriceAfterVat", totalRecommendedPriceAfterVat)
+                                        jsonObject.addProperty("productSerial", x.productSerial)
+                                        jsonObject.addProperty("productPassword", x.getProductSecrett())
+                                        jsonObject.addProperty("skuBarcode", x.skuBarcode)
 
                                         navController.navigate("successfulPurchaseScreen/${Uri.encode(jsonObject.toString())}")
                                     }
