@@ -506,7 +506,7 @@ class BBRepository @Inject constructor(
             }
         }
 
-    override suspend fun getFavoriteProducts(): Flow<DataState<ArrayList<Product>>> =
+    override suspend fun getFavoriteProducts(): Flow<DataState<ProductListResult>> =
         flow {
             emit(DataState.Loading)
             try {

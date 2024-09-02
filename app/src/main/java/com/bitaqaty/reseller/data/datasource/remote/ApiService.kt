@@ -195,5 +195,5 @@ interface ApiService {
     suspend fun deleteFavoriteProduct(@Body favoriteProduct: FavoriteRequest)
 
     @POST(ApiURL.FAVORITE_PRODUCTS)
-    suspend fun getFavoriteProducts(): ArrayList<Product>//ProductListResult
+    suspend fun getFavoriteProducts(): ProductListResult
 }

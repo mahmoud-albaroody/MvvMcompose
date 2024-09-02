@@ -1,6 +1,7 @@
 package com.bitaqaty.reseller.ui.presentation.favoriteScreen
 
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +40,7 @@ import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.ui.navigation.Screen
+import com.bitaqaty.reseller.ui.presentation.common.Empty
 import com.bitaqaty.reseller.ui.presentation.common.Loading
 import com.bitaqaty.reseller.ui.presentation.common.ProductItem
 import com.bitaqaty.reseller.ui.presentation.productDetails.ProductDetailsBottomSheet
@@ -70,13 +72,15 @@ fun Favoraite(
     //onItemClick: () -> Unit
 ) {
     val favoriteListState by favoriteViewModel.favoriteListState
+    val editState by favoriteViewModel.editFavoriteState
+
     var selectedProduct by remember { mutableStateOf<Product?>(null) }
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
         confirmValueChange = { it != SheetValue.Hidden })
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = editState) {
         favoriteViewModel.getFavoriteProducts()
     }
 
@@ -84,26 +88,30 @@ fun Favoraite(
         is DataState.Loading -> Loading()
         is DataState.Error -> {}
         is DataState.Success -> {
-            val favoriteProducts = (favoriteListState as DataState.Success).data
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = Dimens.halfDefaultMargin),
-                columns = GridCells.Fixed(3),
-                contentPadding = PaddingValues(Dimens.fourDefaultMargin),
-            ) {
-                items(favoriteProducts) { product ->
-                    ProductItem(
-                        product = product,
-                        isSelected = product == selectedProduct && isBottomSheetVisible
-                    ) {
-                        selectedProduct = product
-                        scope.launch {
-                            isBottomSheetVisible = true
-                            sheetState.expand()
+            val favoriteProducts = (favoriteListState as DataState.Success).data.products
+            if(favoriteProducts.isNotEmpty()){
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Dimens.halfDefaultMargin),
+                    columns = GridCells.Fixed(3),
+                    contentPadding = PaddingValues(Dimens.fourDefaultMargin),
+                ) {
+                    items(favoriteProducts) { product ->
+                        ProductItem(
+                            product = product,
+                            isSelected = product == selectedProduct && isBottomSheetVisible
+                        ) {
+                            selectedProduct = product
+                            scope.launch {
+                                isBottomSheetVisible = true
+                                sheetState.expand()
+                            }
                         }
                     }
                 }
+            }else{
+                Empty()
             }
             ProductDetailsBottomSheet(
                 navController = navController,
