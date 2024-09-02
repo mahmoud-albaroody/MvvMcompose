@@ -55,7 +55,7 @@ fun SuccessfulPurchaseScreen(
     transaction: PurchaseResponse
 ) {
     val successfulPurchaseViewModel: SuccessfulPurchaseViewModel = hiltViewModel()
-
+    Log.e("dddds",transaction.toString())
     ProductDetails(
         transaction = transaction,
         navController = navController

@@ -123,6 +123,6 @@ interface BBRepositoryInterface {
     suspend fun surePayCharging(jsonObject: JsonObject): Resource<PaymentStatus>
     suspend fun addFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
     suspend fun deleteFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
-    suspend fun getFavoriteProducts(): Flow<DataState<ArrayList<Product>>>
+    suspend fun getFavoriteProducts(): Flow<DataState<ProductListResult>>
 
 }

@@ -212,6 +212,7 @@ fun Navigation2(
             )
         ) {
            it.arguments?.getString("transactionLog")?.let {
+               Log.e("ddddds",it.toString())
                 val purchase = Gson().fromJson(it, PurchaseResponse::class.java)
                SuccessfulPurchaseScreen(
                    navController = navController,

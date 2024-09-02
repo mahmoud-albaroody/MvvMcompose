@@ -23,15 +23,17 @@ class FavoraiteViewModel @Inject constructor(
     val editFavoriteState: State<DataState<Unit>> = _editFavoriteState
 
     private val _favoriteListState =
-        mutableStateOf<DataState<ArrayList<Product>>>(DataState.Loading)
-    val favoriteListState: State<DataState<ArrayList<Product>>> = _favoriteListState
+        mutableStateOf<DataState<ProductListResult>>(DataState.Loading)
+    val favoriteListState: State<DataState<ProductListResult>> = _favoriteListState
     fun addFavoriteProduct(product: Product){
         val request = FavoriteRequest(productId = product.getProductsId())
         viewModelScope.launch {
-            repo.addFavoriteProduct(request).collect{ state ->
-                _editFavoriteState.value = state
-                if(state is DataState.Success){
-                    product.isFavorite = true
+            if(product.isInStock()){
+                repo.addFavoriteProduct(request).collect{ state ->
+                    _editFavoriteState.value = state
+                    if(state is DataState.Success){
+                        product.isFavorite = true
+                    }
                 }
             }
         }

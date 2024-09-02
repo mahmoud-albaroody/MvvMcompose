@@ -158,6 +158,7 @@ fun ProductDetailsBottomSheet(
                             is Resource.Success -> {
                                 isLoading = false
                                 onDismiss()
+                                Log.e("sssss","sadsadsad")
                                 result.data?.let {
                                     transactionLog = it
                                 }
@@ -185,9 +186,12 @@ fun ProductDetailsBottomSheet(
                                             )
                                         }
                                     }
-                                } else if (isMadaApp()) {
+                                }
+                                else if (isMadaApp()&& !isBalancePayClicked) {
+
                                     setDataProduct(
                                         transactionLog, context, false, onComplete = {
+                                            Log.e("sssss","sadasdasd")
                                             transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
                                                 it.purchaseProductResponseDTO?.vatPercentage =
                                                     it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
@@ -195,13 +199,15 @@ fun ProductDetailsBottomSheet(
                                                     ).toString()
                                             }
                                             val transactionJson = Gson().toJson(transactionLog)
+                                            Log.e("sssss",transactionLog.toString())
                                             navController.navigate(
                                                 Screen.SuccessfulPurchaseScreen.route +
                                                         "?transactionLog=${transactionJson}"
                                             )
                                         }
                                     )
-                                } else {
+                                }
+                                else {
                                     setDataProduct(
                                         transactionLog, context, false, onComplete = {
                                             transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
@@ -409,7 +415,7 @@ fun ProductDetailsBottomSheet(
                         } else {
                             PrintVatButton {
                                 setDataProduct(transactionLog, context, true, onComplete = {
-                                    Log.e("sdsdsdsds", product.toString())
+
                                     transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
                                         it.purchaseProductResponseDTO?.vatPercentage =
                                             it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
@@ -491,6 +497,7 @@ fun setDataProduct(
             printReceipt(product, context, isPrintVat = isPrintVat)
         }
     }
+    Log.e("sssss","sadasdasdشسيشسيشس")
     onComplete()
 }
 
