@@ -42,7 +42,16 @@ sealed class Screen(
     object BankTransferListScreen : Screen("bankTransferListScreen", 0, "bankTransferListScreen")
 
 
-    object SuccessfulPurchaseScreen : Screen("transactionsScreen", 0, "transactionsScreen")
+
+
+
+    object SuccessfulPurchaseScreen : Screen(
+        "successfulPurchaseScreen",
+        0,
+        "successfulPurchaseScreen", objectName = "successfulPurchaseScreen/",
+        objectPath = "{productDetails}"
+    )
+
     object LoginScreen : Screen("loginScreen", 0, "loginScreen")
 
     object ResetPasswordScreen : Screen("resetPasswordScreen", 0, "resetPasswordScreen")

@@ -1143,5 +1143,6 @@ Inactive accounts will be handled in accordance with Bitaqaty Business policy in
     <string name="confirm_change_category">Are you sure you want to change &quot;%1$s&quot; category?</string>
     <string name="select_card">Select Card</string>
     <string name="your_new_balance">Your New Balance</string>
+    <string name="item_quantity">Quantity</string>
 
 </resources>

@@ -74,11 +74,11 @@ class ReceiptVatComponent(
                 component.layoutSGEn.text =
                     "“SG”" + productDetails.vatPercentage + "VAT Standard Goods"
                 component.layoutSGAr.text =
-                    productDetails.vatPercentage + "ضريبة على كامل القيمة"
+                    productDetails.vatPercentage.toString() + "ضريبة على كامل القيمة"
                 component.layoutSMEn.text =
                     "“SM“" + productDetails.vatPercentage + "VAT Standard Margin"
                 component.layoutSMAr.text =
-                    productDetails.vatPercentage + "ضريبة على القيمة الأعلى من القيمة الإسمية"
+                    productDetails.vatPercentage.toString() + "ضريبة على القيمة الأعلى من القيمة الإسمية"
             }
 
 
@@ -143,11 +143,11 @@ class ReceiptVatComponent(
                 component.layoutSGEn.text =
                     "“SG”" + transLog.vatPercentage + "VAT Standard Goods"
                 component.layoutSGAr.text =
-                    transLog.vatPercentage + "ضريبة على كامل القيمة"
+                    transLog.vatPercentage.toString() + "ضريبة على كامل القيمة"
                 component.layoutSMEn.text =
                     "“SM“" + transLog.vatPercentage + "VAT Standard Margin"
                 component.layoutSMAr.text =
-                    transLog.vatPercentage + "ضريبة على القيمة الأعلى من القيمة الإسمية"
+                    transLog.vatPercentage.toString() + "ضريبة على القيمة الأعلى من القيمة الإسمية"
             }
 
             Utils.getUserData()?.let { user ->

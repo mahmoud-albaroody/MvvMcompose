@@ -1145,5 +1145,6 @@
     <string name="confirm_change_category">هل أنت متأكد أنك تريد تغيير التصنيف &quot;%1$s&quot;؟</string>
     <string name="select_card">اختر بطاقة</string>
     <string name="your_new_balance">Your New Balance</string>
+    <string name="item_quantity">الكمية</string>
 
 </resources>

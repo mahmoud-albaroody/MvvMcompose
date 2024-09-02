@@ -1,12 +1,10 @@
 package com.bitaqaty.reseller.ui.navigation
 
-import android.util.Log
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideOutHorizontally
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,8 +12,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.ui.presentation.accountManager.AccountManagerScreen
-import androidx.navigation.navArgument
 import com.bitaqaty.reseller.ui.presentation.activity.MainActivityViewModel
 
 import com.bitaqaty.reseller.ui.presentation.activity.MainScreen
@@ -47,6 +45,9 @@ import com.bitaqaty.reseller.ui.presentation.store.StoreScreen
 import com.bitaqaty.reseller.ui.presentation.successfulPurchase.SuccessfulPurchaseScreen
 import com.bitaqaty.reseller.ui.presentation.termsAndConditions.TermsAndConditionsScreen
 import com.bitaqaty.reseller.ui.presentation.transactionsScreen.TransactionsScreen
+import com.google.gson.Gson
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.json.JSONObject
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -202,8 +203,22 @@ fun Navigation2(
             )
             it.savedStateHandle.remove<String>("filterObject")
         }
-        composable(Screen.SuccessfulPurchaseScreen.route) {
-            SuccessfulPurchaseScreen(navController = navController, modifier = modifier)
+
+        composable(
+            Screen.SuccessfulPurchaseScreen.route+"?transactionLog={transactionLog}",
+            arguments = listOf(
+                navArgument("transactionLog") { type = NavType.StringType
+                    defaultValue = ""},
+            )
+        ) {
+           it.arguments?.getString("transactionLog")?.let {
+                val purchase = Gson().fromJson(it, PurchaseResponse::class.java)
+               SuccessfulPurchaseScreen(
+                   navController = navController,
+                   modifier = modifier,
+                   transaction = purchase
+               )
+            }
         }
 
         composable(Screen.ChangePasswordScreen.route) {

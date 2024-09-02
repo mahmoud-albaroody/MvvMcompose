@@ -43,7 +43,8 @@ fun Navigation(
         composable(Screen.ForgetPasswordScreen.route) {
             ForgetPasswordScreen(navController = navController, modifier = modifier)
         }
-        composable(Screen.VerificationCodeScreen.route.plus(Screen.VerificationCodeScreen.objectName
+        composable(Screen.VerificationCodeScreen.route
+            .plus(Screen.VerificationCodeScreen.objectName
                 + "{object}"),
             arguments = listOf(navArgument("object") {
                 type = NavType.StringType

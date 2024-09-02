@@ -1,8 +1,8 @@
 package com.bitaqaty.reseller.ui.presentation.successfulPurchase
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,19 +17,24 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.ui.presentation.applyFilter.FilterButton
+import com.bitaqaty.reseller.ui.presentation.common.ImageLoader
+import com.bitaqaty.reseller.ui.presentation.productDetails.setDataProduct
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
 import com.bitaqaty.reseller.ui.theme.DefaultBackgroundColor
@@ -37,21 +42,41 @@ import com.bitaqaty.reseller.ui.theme.Dimens
 import com.bitaqaty.reseller.ui.theme.FontColor
 import com.bitaqaty.reseller.ui.theme.LightGrey400
 import com.bitaqaty.reseller.ui.theme.LiteBlue
+import com.bitaqaty.reseller.ui.theme.White
+import com.bitaqaty.reseller.utilities.Utils
+import com.bitaqaty.reseller.utilities.printReceipt
+import com.google.gson.Gson
+import org.json.JSONObject
 
 @Composable
-fun SuccessfulPurchaseScreen(navController: NavController, modifier: Modifier) {
+fun SuccessfulPurchaseScreen(
+    modifier: Modifier,
+    navController: NavController,
+    transaction: PurchaseResponse
+) {
     val successfulPurchaseViewModel: SuccessfulPurchaseViewModel = hiltViewModel()
-    LaunchedEffect(key1 = true) {}
-    ProductDetails()
+
+    ProductDetails(
+        transaction = transaction,
+        navController = navController
+    )
 }
 
-@Preview
+//@Preview
 @Composable
-fun ProductDetails() {
+fun ProductDetails(
+    transaction: PurchaseResponse,
+    navController: NavController
+) {
+
+    val context = LocalContext.current
+    val product =
+        transaction.purchaseResponseAndRecommendedPriceList?.get(0)
+
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(White)
     ) {
         Card(
             Modifier
@@ -63,58 +88,80 @@ fun ProductDetails() {
             shape = RoundedCornerShape(Dimens.DefaultMargin10),
             colors = CardDefaults.cardColors(containerColor = LiteBlue)
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = Dimens.DefaultMargin),
-                textAlign = TextAlign.Center,
-                text = "Your Commission is 0.40 SAR", color = BebeBlue
-            )
+            if (transaction.resellerCommission != null) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimens.DefaultMargin),
+                    textAlign = TextAlign.Center,
+                    text = (stringResource(id = R.string.your_commission)+" "+ transaction.resellerCommission)
+                        ?: "",
+                    color = BebeBlue
+                )
+            }
         }
         Row(
+            modifier = Modifier.padding(start = 8.dp),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
+            Card(
                 modifier = Modifier
-                    .size(Dimens.bitaqatyLogo)
-                    .background(Color.White),
-                painter = painterResource(id = R.drawable.bitaqaty_logo),
-                contentDescription = "Logo",
-            )
+                    .size(Dimens.bitaqatyLogo),
+                shape = RoundedCornerShape(
+                    topEndPercent = 20,
+                    bottomStartPercent = 20,
+                    bottomEndPercent = 20
+                ),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    ImageLoader(
+                        modifier = Modifier
+                            .size(Dimens.bitaqatyLogo),
+                        imgUrl = product?.purchaseProductResponseDTO?.merchantLogo,
+                        errorImg = R.drawable.no_image,
+                        isCircle = false
+                    )
+                }
+            }
             Column(
                 Modifier
                     .padding(horizontal = Dimens.halfDefaultMargin)
                     .padding(top = Dimens.halfDefaultMargin)
             ) {
-                Text(text = "Apple & iTunes Giftcard \$10 (US Store)")
+                Text(
+                    text = product?.purchaseProductResponseDTO?.getProductName() ?: ""
+                )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "12/12/2024",
+                        text = product?.purchaseProductResponseDTO?.purchaseDate ?: "",
                         style = TextStyle(fontSize = 12.sp, color = LightGrey400)
                     )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = Dimens.DefaultMargin),
-                        text = "3:41 PM",
-                        style = TextStyle(fontSize = 12.sp, color = LightGrey400)
-                    )
+//                    Text(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(start = Dimens.DefaultMargin),
+//                        text = "",//"3:41 PM",
+//                        style = TextStyle(fontSize = 12.sp, color = LightGrey400)
+//                    )
                 }
                 Row(
                     Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Quantity",
+                        text = stringResource(R.string.item_quantity),
                         style = TextStyle(fontSize = 10.sp, color = LightGrey400)
                     )
                     Text(
+                        text = product?.purchaseProductResponseDTO?.itemsCount.toString(),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = Dimens.halfDefaultMargin),
-                        text = "1",
                         style = TextStyle(fontSize = 10.sp, color = FontColor)
                     )
                 }
@@ -125,13 +172,22 @@ fun ProductDetails() {
                         bottom = Dimens.halfDefaultMargin
                     )
                 ) {
-                    Recommended("Recommended Retail Price", "72.08 SAR")
-                    Recommended("Recommended Retail Price", "72.08 SAR")
-                    Recommended("Recommended Retail Price", "72.08 SAR")
+                    Recommended(
+                        stringResource(id = R.string.recommended_retail_price),
+                        product?.getRecommendedRetailPriceWithCurrency() ?: ""
+                    )
+                    Recommended(
+                        stringResource(id = R.string.total_recommended_retail_price),
+                        transaction.getTotalRecommendedRetailPriceWithCurrency()
+                    )
+                    Recommended(
+                        stringResource(id = R.string.total_recommended_retail_price_after_vat),
+                        transaction.getTotalRecommendedRetailAfterVatWithCurrency()
+                    )
                 }
             }
         }
-        Row {
+        Row(Modifier.padding(horizontal = Dimens.padding16)) {
             Box(
                 Modifier
                     .padding(top = Dimens.DefaultMargin20)
@@ -139,12 +195,14 @@ fun ProductDetails() {
             ) {
                 FilterButton(
                     backgroundTex = Blue100,
-                    text = "Print Product",
+                    text = stringResource(id = R.string.print),
                     iconVisibility = false,
-                    textColor = Color.White,
+                    textColor = White,
                     horizontalPadding = Dimens.DefaultMargin,
                     onApplyFilterClick = {
+                        setDataProduct(transaction, context, isPrintVat = false,onComplete = {
 
+                        })
                     }
                 )
             }
@@ -154,20 +212,29 @@ fun ProductDetails() {
                     .weight(1f)
             ) {
                 FilterButton(
-                    backgroundTex = Color.White,
-                    text = "Print VAT",
+                    backgroundTex = White,
+                    text = stringResource(id = R.string.print_vat),
                     iconVisibility = false,
                     textColor = Blue100,
                     haveBorder = true, horizontalPadding = Dimens.DefaultMargin,
                     onApplyFilterClick = {
+                        setDataProduct(transaction, context, isPrintVat = true,onComplete = {
 
+                        })
                     }
                 )
             }
         }
-        Report()
-    }
+        product?.purchaseProductResponseDTO?.products?.get(0)?.let {
+            Report(
+                serialNum = it.productSerial,
+                password = it.productPassword ?: "",
+                skuBarcode = product.purchaseProductResponseDTO.skuBarcode ?: ""
+            )
+        }
 
+
+    }
 }
 
 
@@ -194,9 +261,14 @@ fun Recommended(text: String, text2: String) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun Report() {
+fun Report(
+    serialNum: String,
+    password: String,
+    skuBarcode: String
+) {
+    Log.e("ssssss",skuBarcode)
     Card(
         Modifier
             .fillMaxWidth()
@@ -216,10 +288,44 @@ fun Report() {
                 )
                 .padding(start = Dimens.DefaultMargin)
         ) {
-            Recommended("Serial Number", "Bravooo12355")
-            Recommended("Password", "Bravooo12355")
-            Recommended("SKU Barcode", "Bravooo12355")
-            Recommended("SKU Barcode", "Bravooo12355")
+            Recommended(stringResource(id = R.string.TLogSerialNo), serialNum)
+            Recommended(stringResource(id = R.string.password), password)
+            Barcode(skuBarcode = skuBarcode)
         }
+    }
+}
+
+@Composable
+fun Barcode(
+    skuBarcode: String,
+    modifier: Modifier = Modifier
+) {
+    val widthPixels = 380
+    val heightPixels = 60
+
+    val barcodeBitmap = remember(skuBarcode, widthPixels, heightPixels) {
+        Utils.createBarcodeBitmap(
+            barcodeValue = skuBarcode,
+            widthPixels = widthPixels,
+            heightPixels = heightPixels
+        )
+    }
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(top = Dimens.halfDefaultMargin),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(id = R.string.sku_code),
+            style = TextStyle(fontSize = 10.sp, color = LightGrey400)
+        )
+        Image(
+            bitmap = barcodeBitmap.asImageBitmap(),
+            contentDescription = stringResource(id = R.string.sku_code),
+            modifier = modifier
+        )
     }
 }

@@ -220,11 +220,11 @@ class ReceiptComponent(
                 component.layoutSGEn.text =
                     "“SG”" + transLog.vatPercentage + "VAT Standard Goods"
                 component.layoutSGAr.text =
-                    transLog.vatPercentage + "ضريبة على كامل القيمة"
+                    transLog.vatPercentage.toString() + "ضريبة على كامل القيمة"
                 component.layoutSMEn.text =
                     "“SM“" + transLog.vatPercentage + "VAT Standard Margin"
                 component.layoutSMAr.text =
-                    transLog.vatPercentage + "ضريبة على القيمة الأعلى من القيمة الإسمية"
+                    transLog.vatPercentage.toString() + "ضريبة على القيمة الأعلى من القيمة الإسمية"
             }
             component.companyTitle.text = "شركة الخليج للتوزيع المباشر. ص.ب 7753, الرياض 12234"
             Utils.getUserData()?.let { user ->

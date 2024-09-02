@@ -1,7 +1,6 @@
 package com.bitaqaty.reseller.ui.presentation.productDetails
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,11 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,10 +61,10 @@ import com.bitaqaty.reseller.utilities.Utils
 import com.bitaqaty.reseller.utilities.Utils.fmt
 import com.bitaqaty.reseller.utilities.noRippleClickable
 import com.bitaqaty.reseller.R
+import com.bitaqaty.reseller.data.model.PurchaseResponse
 import com.bitaqaty.reseller.data.model.PurchaseResponseProductDetails
 import com.bitaqaty.reseller.ui.navigation.Screen
 import com.bitaqaty.reseller.ui.presentation.common.Loading
-import com.bitaqaty.reseller.ui.presentation.recharge.initMada
 import com.bitaqaty.reseller.ui.presentation.recharge.rechargeWithCashIn
 import com.bitaqaty.reseller.utilities.Utils.isMadaApp
 import com.bitaqaty.reseller.utilities.Utils.isNearPayApp
@@ -76,6 +73,8 @@ import com.bitaqaty.reseller.utilities.madaConnectionResult
 import com.bitaqaty.reseller.utilities.network.Resource
 import com.bitaqaty.reseller.utilities.printReceipt
 import com.bitaqaty.reseller.utilities.printTransaction
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.nearpay.sdk.utils.enums.TransactionData
 import io.nearpay.sdk.utils.toImage
 import kotlinx.coroutines.launch
@@ -107,8 +106,8 @@ fun ProductDetailsBottomSheet(
             var isExpanded by remember { mutableStateOf(false) }
             var isBalancePayClicked by remember { mutableStateOf(false) }
             var isConfirmBalancePayClicked by remember { mutableStateOf(false) }
-            val transactionLogList =
-                remember { mutableStateListOf(PurchaseResponseProductDetails()) }
+
+            var transactionLog by remember { mutableStateOf(PurchaseResponse()) }
             var isLoading by remember { mutableStateOf(false) }
             var totalRecommendedRetailPriceAfterVat by remember { mutableDoubleStateOf(0.0) }
             LaunchedEffect(key1 = isExpanded) {
@@ -128,7 +127,8 @@ fun ProductDetailsBottomSheet(
                                     paymentRefNumber,
                                     transactionData = { transactionData ->
                                         transaction = transactionData
-                                    }, onCallRecharge = {
+                                    },
+                                    onCallRecharge = {
                                         product?.let {
                                             viewModel.completePurchase(
                                                 arrayListOf(product),
@@ -158,32 +158,67 @@ fun ProductDetailsBottomSheet(
                             is Resource.Success -> {
                                 isLoading = false
                                 onDismiss()
-                                navController.navigate(Screen.SuccessfulPurchaseScreen.route)
-
-                                transactionLogList.clear()
+                                result.data?.let {
+                                    transactionLog = it
+                                }
                                 if (isNearPayApp() && !isBalancePayClicked) {
                                     transaction?.let {
                                         transaction?.receipts?.get(0)?.toImage(
                                             context, 380, 12
                                         ) { imageBitmap ->
                                             imageBitmap?.let { it1 -> printTransaction(it1) }
-                                            result.data?.purchaseProductDetails?.let { it1 ->
-                                                transactionLogList.addAll(it1)
-                                                setDataProduct(
-                                                    transactionLogList, context, false
-                                                )
-                                            }
+                                            setDataProduct(
+                                                transactionLog, context, false, onComplete = {
+                                                    transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
+                                                        it.purchaseProductResponseDTO?.vatPercentage =
+                                                            it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
+                                                                "%"
+                                                            ).toString()
+                                                    }
+                                                    val transactionJson =
+                                                        Gson().toJson(transactionLog)
+                                                    navController.navigate(
+                                                        Screen.SuccessfulPurchaseScreen.route +
+                                                                "?transactionLog=${transactionJson}"
+                                                    )
+                                                }
+                                            )
                                         }
                                     }
+                                } else if (isMadaApp()) {
+                                    setDataProduct(
+                                        transactionLog, context, false, onComplete = {
+                                            transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
+                                                it.purchaseProductResponseDTO?.vatPercentage =
+                                                    it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
+                                                        "%"
+                                                    ).toString()
+                                            }
+                                            val transactionJson = Gson().toJson(transactionLog)
+                                            navController.navigate(
+                                                Screen.SuccessfulPurchaseScreen.route +
+                                                        "?transactionLog=${transactionJson}"
+                                            )
+                                        }
+                                    )
+                                } else {
+                                    setDataProduct(
+                                        transactionLog, context, false, onComplete = {
+                                            transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
+                                                it.purchaseProductResponseDTO?.vatPercentage =
+                                                    it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
+                                                        "%"
+                                                    ).toString()
+                                            }
+                                            val transactionJson = Gson().toJson(transactionLog)
+                                            navController.navigate(
+                                                Screen.SuccessfulPurchaseScreen.route +
+                                                        "?transactionLog=${transactionJson}"
+                                            )
+                                        }
+                                    )
                                 }
-                                else if (isMadaApp()) {
-                                    result.data?.purchaseProductDetails?.let { it1 ->
-                                        transactionLogList.addAll(it1)
-                                        setDataProduct(
-                                            transactionLogList, context, false
-                                        )
-                                    }
-                                }
+
                             }
 
                             is Resource.DataError -> {
@@ -325,8 +360,7 @@ fun ProductDetailsBottomSheet(
                     } else {
                         (product?.getSubResellerPrice())?.fmt() ?: ""
                     }
-                    ProductInfo(
-                        totalAmount = totalAmount,
+                    ProductInfo(totalAmount = totalAmount,
                         onClickInfo = { isExpanded = !isExpanded })
                 }
                 Divider(
@@ -374,7 +408,20 @@ fun ProductDetailsBottomSheet(
                             Loading(color = Color.Blue)
                         } else {
                             PrintVatButton {
-                                setDataProduct(transactionLogList, context, true)
+                                setDataProduct(transactionLog, context, true, onComplete = {
+                                    Log.e("sdsdsdsds", product.toString())
+                                    transactionLog.purchaseResponseAndRecommendedPriceList?.forEach {
+                                        it.purchaseProductResponseDTO?.vatPercentage =
+                                            it.purchaseProductResponseDTO?.vatPercentage?.substringBefore(
+                                                "%"
+                                            ).toString()
+                                    }
+                                    val transactionJson = Gson().toJson(transactionLog)
+                                    navController.navigate(
+                                        Screen.SuccessfulPurchaseScreen.route +
+                                                "?transactionLog=${transactionJson}"
+                                    )
+                                })
                             }
                             DoneButton { onDismiss() }
 
@@ -415,11 +462,18 @@ fun ProductDetail(
     Spacer(modifier = Modifier.height(6.dp))
 }
 
-private fun setDataProduct(
-    transactionLogList: SnapshotStateList<PurchaseResponseProductDetails>,
+fun setDataProduct(
+    transactionLog: PurchaseResponse,
     context: Context,
-    isPrintVat: Boolean
+    isPrintVat: Boolean, onComplete: () -> Unit
 ) {
+    val transactionLogList:
+            ArrayList<PurchaseResponseProductDetails> = arrayListOf()
+    transactionLog.purchaseResponseAndRecommendedPriceList?.let { it1 ->
+        transactionLogList.addAll(it1)
+    }
+
+
     transactionLogList.forEach { purchaseDetailsState ->
         purchaseDetailsState.purchaseProductResponseDTO?.products?.forEach { product ->
             product.productNameEn = purchaseDetailsState.purchaseProductResponseDTO.productNameEn
@@ -427,7 +481,8 @@ private fun setDataProduct(
             product.vatAmount = purchaseDetailsState.purchaseProductResponseDTO.vatAmount
             product.price = purchaseDetailsState.purchaseProductResponseDTO.oneItemPriceBeforeVat
             product.date = purchaseDetailsState.purchaseProductResponseDTO.purchaseDateTime
-            product.vatPercentage = purchaseDetailsState.purchaseProductResponseDTO.vatPercentage
+            product.vatPercentage =
+                purchaseDetailsState.purchaseProductResponseDTO.vatPercentage?.substringBefore("%")
             product.id = purchaseDetailsState.purchaseProductResponseDTO.productId
             product.merchantLogoPath = purchaseDetailsState.purchaseProductResponseDTO.merchantLogo
             product.skuBarcode = purchaseDetailsState.purchaseProductResponseDTO.skuBarcode
@@ -436,6 +491,7 @@ private fun setDataProduct(
             printReceipt(product, context, isPrintVat = isPrintVat)
         }
     }
+    onComplete()
 }
 
 
@@ -459,8 +515,11 @@ private fun initMada(
 
 
 private fun purchaseWithPartner(
-    rec: Double?, context: Context,
-    paymentRefNumber: String, transactionData: (TransactionData) -> Unit, onCallRecharge: () -> Unit
+    rec: Double?,
+    context: Context,
+    paymentRefNumber: String,
+    transactionData: (TransactionData) -> Unit,
+    onCallRecharge: () -> Unit
 ) {
     if (isMadaApp()) {
         if (rec.toString().substringAfter(".").length == 2) {

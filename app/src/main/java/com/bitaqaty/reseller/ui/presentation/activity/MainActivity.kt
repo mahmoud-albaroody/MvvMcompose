@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
         DEV_ID = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         setContent {
             BitaqatyTheme {
-
                 Log.e("token", CurrentUser.getInstance()?.token.toString())
                 if (CurrentUser.getInstance()?.token == null) {
                     MainScreen(mainActivityViewModel)
@@ -198,14 +197,14 @@ class MainActivity : ComponentActivity() {
 
                     currentRoute(navController) == Screen.Transactions.route -> {
                         appTitle = stringResource(id = R.string.tranaction_log)
-                        haveBack = false
+                        haveBack = true
                         haveTopBar = true
                         haveSubTitle = false
                     }
 
                     currentRoute(navController) == Screen.SuccessfulPurchaseScreen.route -> {
-                        appTitle = "Transactions"
-                        haveBack = false
+                        appTitle = stringResource(id = R.string.purchase_success)
+                        haveBack = true
                         haveTopBar = true
                         haveSubTitle = false
                     }
