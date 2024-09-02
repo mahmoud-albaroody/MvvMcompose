@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -44,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -186,20 +188,23 @@ fun screen(
     onFilterClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    Box(
+
+    Column(
         Modifier
             .fillMaxSize()
-            .background(White)
-    ) {
-        Transactions(transactionLogList, totalElementsCount) {
-            onClick()
-        }
+            .background(White),
 
-        Box(Modifier.align(Alignment.BottomEnd)) {
+        ) {
+
+        Box(Modifier.weight(1f)) {
+            Transactions(transactionLogList, totalElementsCount) {
+                onClick()
+            }
+        }
             Filter(onFilterClick = {
                 onFilterClick.invoke()
             })
-        }
+
 
     }
 }

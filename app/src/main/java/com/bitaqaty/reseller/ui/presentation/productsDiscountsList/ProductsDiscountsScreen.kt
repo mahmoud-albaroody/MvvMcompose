@@ -110,7 +110,7 @@ fun ProductsDiscounts(products: SnapshotStateList<Product>, onFilterClick: () ->
         PrintExportButton() {
 
         }
-        Box(Modifier.height(screenHeight * 0.58f)) {
+        Box(Modifier.weight(1f)) {
             LazyColumn(
                 Modifier
                     .fillMaxSize()
@@ -122,12 +122,12 @@ fun ProductsDiscounts(products: SnapshotStateList<Product>, onFilterClick: () ->
                 })
         }
 
-        Box(Modifier.height(screenHeight * 0.15f)) {
-            Filter(
-                onFilterClick = {
-                    onFilterClick.invoke()
-                })
-        }
+
+        Filter(
+            onFilterClick = {
+                onFilterClick.invoke()
+            })
+
     }
 }
 

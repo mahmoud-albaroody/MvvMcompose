@@ -3,6 +3,7 @@ package com.bitaqaty.reseller.ui.presentation.rechargingLogScreen
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,12 +107,12 @@ fun RechargeLogScreen(navController: NavController, modifier: Modifier, obj: JSO
         rechargeLogViewModel.viewModelScope.launch {
             rechargeLogViewModel.rechargeLogs.collect {
                 it.data?.resultList?.let { it1 -> rechargingLogsList.addAll(it1) }
-                totalElementsCount = it.data?.totalElementsCount?:0
+                totalElementsCount = it.data?.totalElementsCount ?: 0
             }
         }
     }
 
-    RechargeLog(rechargingLogsList, totalElementsCount =  totalElementsCount,onClick = {
+    RechargeLog(rechargingLogsList, totalElementsCount = totalElementsCount, onClick = {
         rechargeLogViewModel.getRechargingList(
             ++pageIndex,
             discrmenationVal,
@@ -146,7 +147,7 @@ fun RechargeLog(
             .background(White),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(Modifier.height(screenHeight * 0.70f)) {
+        Box(Modifier.weight(1f)) {
             Column {
                 RechargeLogHeader(
                     LightGrey300,
@@ -163,12 +164,11 @@ fun RechargeLog(
                 }, rechargingLogs = rechargingLogs)
             }
         }
-        Column(Modifier.height(screenHeight * 0.15f)) {
-            Filter(
-                onFilterClick = {
-                    onFilterClick.invoke()
-                })
-        }
+        Filter(
+            onFilterClick = {
+                onFilterClick.invoke()
+            })
+
 
     }
 
@@ -180,9 +180,9 @@ fun RechargeLog(
 fun RechargeLogItems(
     isViewMothed: Boolean,
     onClick: () -> Unit,
-    totalElementsCount:Int,
-    settlementLog: SnapshotStateList<SettlementLog> ?= null,
-    rechargingLogs: SnapshotStateList<RechargingLog> ?= null
+    totalElementsCount: Int,
+    settlementLog: SnapshotStateList<SettlementLog>? = null,
+    rechargingLogs: SnapshotStateList<RechargingLog>? = null
 ) {
     LazyColumn(
         Modifier
@@ -229,22 +229,22 @@ fun RechargeLogItems(
                 }
             }
 
-            if(settlementLog==null){
-             if (totalElementsCount> rechargingLogs?.size!!)
-            item {
-                if (rechargingLogs.isNotEmpty())
-                    onClick()
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.width(14.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                    )
-                }
-            }
-            }else{
+            if (settlementLog == null) {
+                if (totalElementsCount > rechargingLogs?.size!!)
+                    item {
+                        if (rechargingLogs.isNotEmpty())
+                            onClick()
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.width(14.dp),
+                                color = MaterialTheme.colorScheme.secondary,
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                            )
+                        }
+                    }
+            } else {
 
-                if (totalElementsCount> settlementLog.size)
+                if (totalElementsCount > settlementLog.size)
                     item {
                         if (settlementLog.isNotEmpty())
                             onClick()

@@ -76,22 +76,28 @@ fun BankTransferListScreen(navController: NavController, modifier: Modifier) {
         }
 
     }
-    BankTransfer(bankRequestsLog,totalElementsCount, onFilterClick = { selectedStatus, selectedDateTo, selectedDateFrom ->
-        bankTransferLogBody.requestStatus = selectedStatus
-        bankTransferLogBody.dateTo = selectedDateTo
-        bankTransferLogBody.dateFrom = selectedDateFrom
-        bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
-    }, onClick = {
-        bankTransferLogBody.pageNumber++
-        bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
-    })
+    BankTransfer(
+        bankRequestsLog,
+        totalElementsCount,
+        onFilterClick = { selectedStatus, selectedDateTo, selectedDateFrom ->
+            bankTransferLogBody.requestStatus = selectedStatus
+            bankTransferLogBody.dateTo = selectedDateTo
+            bankTransferLogBody.dateFrom = selectedDateFrom
+            bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
+        },
+        onClick = {
+            bankTransferLogBody.pageNumber++
+            bankTransferViewModel.searchBankTransfer(bankTransferLogBody)
+        })
 
 }
 
 
 @Composable
-fun BankTransfer(bankRequestsLog: SnapshotStateList<RequestsLog>,totalElementsCount:Int,
-                 onFilterClick: (String, String, String) -> Unit,onClick:()->Unit) {
+fun BankTransfer(
+    bankRequestsLog: SnapshotStateList<RequestsLog>, totalElementsCount: Int,
+    onFilterClick: (String, String, String) -> Unit, onClick: () -> Unit
+) {
     var selectedDateTo by remember {
         mutableStateOf("")
     }
@@ -144,18 +150,18 @@ fun BankTransfer(bankRequestsLog: SnapshotStateList<RequestsLog>,totalElementsCo
             items(bankRequestsLog) {
                 BankTransferItem(it)
             }
-            if (totalElementsCount>bankRequestsLog.size)
-            item {
-                if (bankRequestsLog.isNotEmpty())
-                    onClick()
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.width(14.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                    )
+            if (totalElementsCount > bankRequestsLog.size)
+                item {
+                    if (bankRequestsLog.isNotEmpty())
+                        onClick()
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(14.dp),
+                            color = MaterialTheme.colorScheme.secondary,
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                    }
                 }
-            }
         })
 
     }

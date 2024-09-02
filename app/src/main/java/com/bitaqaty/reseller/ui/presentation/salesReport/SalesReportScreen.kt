@@ -205,7 +205,7 @@ fun SalesReport(
             .fillMaxSize()
             .background(White)
     ) {
-        Box(Modifier.height(screenHeight * 0.67f)) {
+        Box(Modifier.weight(1f)) {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 PrintExportButton() {
                     onPrintClick(report)
@@ -237,12 +237,11 @@ fun SalesReport(
                     })
             }
         }
-        Box(Modifier.height(screenHeight * 0.13f)) {
             Filter(
                 onFilterClick = {
                     onFilterClick.invoke()
                 })
-        }
+
 
     }
 }
