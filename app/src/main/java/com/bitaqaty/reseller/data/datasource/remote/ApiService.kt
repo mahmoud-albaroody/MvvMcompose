@@ -29,6 +29,7 @@ import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
 import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
 import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
+import com.bitaqaty.reseller.data.model.SavedAccounts
 import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
@@ -178,14 +179,14 @@ interface ApiService {
     suspend fun onecardAccount(@Body requestOneCardAccountsBody: RequestOneCardAccountsBody): AccountsByCountry
 
     @POST(ApiURL.SENDER_COUNTRIES)
-    suspend fun senderCounters(): ArrayList<AccountsCountries>
+    suspend fun senderCounters(): AccountsCountries
 
     @POST(ApiURL.SAVED_ACCOUNTS)
     suspend fun saveAccount(): ArrayList<SavedAccount>
 
 
     @POST(ApiURL.SENDER_ACCOUNTS_BY_COUNTRY)
-    suspend fun senderAccountByCounter(@Path("id") id: String): ArrayList<AccountsCountries>
+    suspend fun senderAccountByCounter(@Path("id") id: String): AccountsCountries
 
     @POST(ApiURL.VALIDATE_SUREPAY_CHARGING)
     suspend fun validateSurePayCharging(@Body jsonObject: JsonObject): ValidationSurpayChargeResult
@@ -208,4 +209,7 @@ interface ApiService {
 
     @POST(ApiURL.FAVORITE_PRODUCTS)
     suspend fun getFavoriteProducts(): ProductListResult
+
+    @POST(ApiURL.SAVED_ACCOUNTS)
+    suspend fun gatSavedAccounts(@Body requestOneCardAccountsBody: RequestOneCardAccountsBody): SavedAccounts
 }

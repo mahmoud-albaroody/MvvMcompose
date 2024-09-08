@@ -31,6 +31,7 @@ import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
 import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
 import com.bitaqaty.reseller.data.model.ResetAccessData
 import com.bitaqaty.reseller.data.model.SavedAccount
+import com.bitaqaty.reseller.data.model.SavedAccounts
 import com.bitaqaty.reseller.data.model.SearchBank
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
@@ -216,7 +217,7 @@ class BBRepository @Inject constructor(
             emit(onecardAccount)
         }
 
-    override suspend fun senderCounters(): Flow<ArrayList<AccountsCountries>> = flow {
+    override suspend fun senderCounters(): Flow<AccountsCountries> = flow {
         val senderCounters = apiService.senderCounters()
         emit(senderCounters)
     }
@@ -226,7 +227,7 @@ class BBRepository @Inject constructor(
         emit(saveAccount)
     }
 
-    override suspend fun senderAccountByCounter(id: String): Flow<ArrayList<AccountsCountries>> =
+    override suspend fun senderAccountByCounter(id: String): Flow<AccountsCountries> =
         flow {
             val senderAccountByCounter = apiService.senderAccountByCounter(id)
             emit(senderAccountByCounter)
@@ -534,5 +535,11 @@ class BBRepository @Inject constructor(
             } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
+        }
+
+    override suspend fun gatSavedAccounts(userInfo: RequestOneCardAccountsBody): Flow<SavedAccounts> =
+        flow {
+            val savedAccounts = apiService.gatSavedAccounts(userInfo)
+            emit(savedAccounts)
         }
 }

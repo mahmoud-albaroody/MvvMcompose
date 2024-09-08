@@ -1,5 +1,6 @@
 package com.bitaqaty.reseller.data.model
 
 data class SavedAccounts(
-    val savedAccounts: List<SavedAccount>
+    var errors: ArrayList<ErrorMessage>? = ArrayList(),
+    var savedAccounts: ArrayList<SavedAccount>? = null
 )

@@ -33,6 +33,7 @@ import com.bitaqaty.reseller.data.model.ProductListRequest
 import com.bitaqaty.reseller.data.model.ProductListResponse
 import com.bitaqaty.reseller.data.model.PurchaseRequest
 import com.bitaqaty.reseller.data.model.PurchaseResponse
+import com.bitaqaty.reseller.data.model.SavedAccounts
 import com.bitaqaty.reseller.data.model.SettlementRequestDataRequest
 import com.bitaqaty.reseller.data.model.SettlementRequestResult
 import com.bitaqaty.reseller.data.model.TopChildMerchant
@@ -113,10 +114,10 @@ interface BBRepositoryInterface {
     suspend fun searchBankTransfer(bankTransferLogBody: RequestBankTransferLogBody): Flow<SearchBank>
     suspend fun onecardCountries(): Flow<AccountsCountries>
     suspend fun onecardAccount(requestOneCardAccountsBody: RequestOneCardAccountsBody): Flow<AccountsByCountry>
-    suspend fun senderCounters(): Flow<ArrayList<AccountsCountries>>
+    suspend fun senderCounters(): Flow<AccountsCountries>
 
     suspend fun saveAccount(): Flow<ArrayList<SavedAccount>>
-    suspend fun senderAccountByCounter(id: String): Flow<ArrayList<AccountsCountries>>
+    suspend fun senderAccountByCounter(id: String): Flow<AccountsCountries>
 
     suspend fun validateSurePayCharging(jsonObject: JsonObject): Flow<ValidationSurpayChargeResult>
 
@@ -124,5 +125,5 @@ interface BBRepositoryInterface {
     suspend fun addFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
     suspend fun deleteFavoriteProduct(favoriteProduct: FavoriteRequest): Flow<DataState<Unit>>
     suspend fun getFavoriteProducts(): Flow<DataState<ProductListResult>>
-
+    suspend fun gatSavedAccounts(userInfo: RequestOneCardAccountsBody): Flow<SavedAccounts>
 }

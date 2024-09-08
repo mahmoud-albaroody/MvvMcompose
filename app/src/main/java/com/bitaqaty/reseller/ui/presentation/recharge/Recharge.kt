@@ -221,7 +221,7 @@ fun Recharge(
             DynamicSelectTextField(
                 TextAlign.Start,
                 stringArrayResource(R.array.credit_mada_instruction_arr).toList(),
-                false
+                clickable = false
             ) {
 
             }
@@ -319,7 +319,7 @@ fun RechargeAmount(countries: AccountsCountries? = null, onCounterSelectedClick:
             )
         ) {
             if (countriesList.isNotEmpty()) DynamicSelectTextField(
-                TextAlign.Center, countriesList, true
+                TextAlign.Center, countriesList, clickable = true
             ) {
                 onCounterSelectedClick(it)
             }

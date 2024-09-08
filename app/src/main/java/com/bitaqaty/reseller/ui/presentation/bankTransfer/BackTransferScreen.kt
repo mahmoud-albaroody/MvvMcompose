@@ -2,6 +2,7 @@ package com.bitaqaty.reseller.ui.presentation.bankTransfer
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material3.Card
@@ -25,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +47,7 @@ import com.bitaqaty.reseller.data.model.AccountsByCountry
 import com.bitaqaty.reseller.data.model.AccountsCountries
 import com.bitaqaty.reseller.data.model.RequestBankTransferLogBody
 import com.bitaqaty.reseller.data.model.RequestOneCardAccountsBody
+import com.bitaqaty.reseller.data.model.SavedAccounts
 import com.bitaqaty.reseller.ui.presentation.applyFilter.DynamicSelectTextField
 import com.bitaqaty.reseller.ui.presentation.recharge.RechargeAmount
 import com.bitaqaty.reseller.ui.theme.BanKTransferBackgroundColor
@@ -58,6 +62,10 @@ fun BankTransferScreen(navController: NavController, modifier: Modifier) {
     val bankTransferViewModel: BankTransferViewModel = hiltViewModel()
     var accounts by remember { mutableStateOf(AccountsByCountry()) }
     var countries by remember { mutableStateOf(AccountsCountries()) }
+
+    var savedAccounts by remember { mutableStateOf(SavedAccounts()) }
+    var senderCountries by remember { mutableStateOf(AccountsCountries()) }
+    var senderAccounts by remember { mutableStateOf(AccountsCountries()) }
 
     val requestOneCardAccountsBody = RequestOneCardAccountsBody()
     LaunchedEffect(key1 = true) {
@@ -76,9 +84,33 @@ fun BankTransferScreen(navController: NavController, modifier: Modifier) {
                 bankTransferViewModel.onecardAccount(requestOneCardAccountsBody)
             }
         }
+        bankTransferViewModel.getSavedAccounts()
+        bankTransferViewModel.viewModelScope.launch {
+            bankTransferViewModel.savedAccounts.collect{
+                savedAccounts = it
+            }
+        }
+        bankTransferViewModel.getSenderCountries()
+        bankTransferViewModel.viewModelScope.launch{
+            bankTransferViewModel.senderCountries.collect{
+                senderCountries = it
+            }
+        }
+        bankTransferViewModel.viewModelScope.launch{
+            bankTransferViewModel.senderAccountsByCountry.collect{
+                senderAccounts = it
+            }
+        }
     }
 
-    BankTransfer(accounts, countries) { selectedContry ->
+    BankTransfer(
+        bankTransferViewModel,
+        accounts,
+        countries,
+        savedAccounts,
+        senderCountries,
+        senderAccounts
+    ) { selectedContry ->
         requestOneCardAccountsBody.countryId =
             countries.lookupList?.find { it.getName() == selectedContry }?.id
         requestOneCardAccountsBody.resellerUsername =
@@ -90,10 +122,15 @@ fun BankTransferScreen(navController: NavController, modifier: Modifier) {
 
 @Composable
 fun BankTransfer(
+    viewModel: BankTransferViewModel,
     accounts: AccountsByCountry,
     countries: AccountsCountries,
+    savedAccounts: SavedAccounts,
+    senderCountries: AccountsCountries,
+    senderAccounts: AccountsCountries,
     onCountrySelect: (String) -> Unit
 ) {
+    val isSelected by viewModel.isSelected
 
     Column(
         Modifier
@@ -102,35 +139,56 @@ fun BankTransfer(
     ) {
         DynamicSelectTextField(
             TextAlign.Start,
-            stringArrayResource(R.array.credit_mada_instruction_arr).toList(), true
+            stringArrayResource(R.array.credit_mada_instruction_arr).toList(), clickable = true
         ) {
 
         }
-        StepsIcons()
+        StepsIcons(
+            isStep2Selected = isSelected
+        )
 
-        RechargeAmount(countries) {
-            onCountrySelect(it)
+        if(!isSelected){
+            RechargeAmount(countries) {
+                onCountrySelect(it)
+            }
+
+            if (!accounts.accounts.isNullOrEmpty())
+                LazyColumn(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Dimens.halfDefaultMargin), content = {
+                        items(accounts.accounts) {
+                            BankTransferItem(it){
+                                viewModel.isSelected(true)
+                                viewModel.onChangeAccountNum(viewModel.selectedAccount.value?.bankAccountNumber ?: "")
+                            }
+                        }
+                    })
+        }else{
+            BankTransferStep2(
+                viewModel = viewModel,
+                savedAccounts = savedAccounts,
+                senderCountries = senderCountries,
+                senderAccounts = senderAccounts,
+                onClickBack = {
+                    viewModel.isSelected(false)
+                }
+            )
         }
-
-        if (!accounts.accounts.isNullOrEmpty())
-            LazyColumn(
-                Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = Dimens.halfDefaultMargin), content = {
-                    items(accounts.accounts) {
-                        BankTransferItem(it)
-                    }
-                })
     }
 }
 
 
 @Composable
-fun BankTransferItem(account: Account) {
+fun BankTransferItem(
+    account: Account,
+    onClick: () -> Unit
+) {
     Card(
         Modifier
             .fillMaxWidth()
-            .padding(Dimens.halfDefaultMargin),
+            .padding(Dimens.halfDefaultMargin)
+            .clickable { onClick() },
         shape = RoundedCornerShape(Dimens.DefaultMargin10),
         colors = CardDefaults.cardColors(containerColor = BanKTransferBackgroundColor)
 
@@ -218,9 +276,11 @@ fun BankTransferTextItem(text: String, text1: String) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun StepsIcons() {
+fun StepsIcons(
+    isStep2Selected: Boolean
+) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -231,8 +291,11 @@ fun StepsIcons() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            modifier = Modifier.padding(Dimens.halfDefaultMargin),
-            painter = painterResource(R.drawable.ic_manager_icon),
+            modifier = Modifier
+                .padding(Dimens.halfDefaultMargin)
+                .background(color = Color.Blue, shape = CircleShape)
+                .padding(8.dp),
+            painter = painterResource(R.drawable.ic_is_select_bank),
             contentDescription = ""
         )
         Divider(
@@ -241,11 +304,14 @@ fun StepsIcons() {
                 .fillMaxWidth()
                 .padding(horizontal = Dimens.DefaultMargin)
                 .weight(1f)
-                .background(BebeBlue)
+                .background(if(isStep2Selected) Color.Blue else Color.LightGray)
         )
         Image(
-            modifier = Modifier.padding(Dimens.halfDefaultMargin),
-            painter = painterResource(R.drawable.ic_manager_icon),
+            modifier = Modifier
+                .padding(Dimens.halfDefaultMargin)
+                .background(color = if(isStep2Selected) Color.Blue else Color.Transparent, shape = CircleShape)
+                .padding(8.dp),
+            painter = painterResource(R.drawable.ic_sender_details),
             contentDescription = ""
         )
         Divider(
@@ -258,7 +324,7 @@ fun StepsIcons() {
         )
         Image(
             modifier = Modifier.padding(Dimens.halfDefaultMargin),
-            painter = painterResource(R.drawable.ic_manager_icon),
+            painter = painterResource(R.drawable.ic_transfer_details),
             contentDescription = ""
         )
     }

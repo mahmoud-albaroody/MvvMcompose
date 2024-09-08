@@ -11,7 +11,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -39,6 +42,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
@@ -56,6 +60,7 @@ import com.bitaqaty.reseller.data.model.Category
 import com.bitaqaty.reseller.data.model.Merchant
 import com.bitaqaty.reseller.data.model.Product
 import com.bitaqaty.reseller.data.model.RechargeMethod
+import com.bitaqaty.reseller.data.model.SavedAccount
 import com.bitaqaty.reseller.ui.theme.BanKTransferBackgroundColor
 import com.bitaqaty.reseller.ui.theme.BebeBlue
 import com.bitaqaty.reseller.ui.theme.Blue100
@@ -245,7 +250,7 @@ fun ApplyFilter(
             if (comeFrom == "SalesReport" || comeFrom == "TransactionLog")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    accountName, true
+                    accountName, clickable = true
                 ) {
                     if (it == Utils.getUserData()?.reseller?.username.toString()) {
                         subAccountId = Utils.getUserData()?.reseller?.id!!
@@ -262,7 +267,7 @@ fun ApplyFilter(
             if (comeFrom == "SalesReport" || comeFrom == "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    categoryList, true
+                    categoryList, clickable = true
                 ) { selectedName ->
                     categoryId = simpleCategoryList.find { it.getName() == selectedName }?.id!!
                     viewModel.getSimpleMerchantList(categoryId)
@@ -271,7 +276,7 @@ fun ApplyFilter(
             if (comeFrom == "SalesReport" || comeFrom == "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    serviceList, true
+                    serviceList, clickable = true
                 ) { selectedName ->
                     merchantId = simpleMerchantList.find { it.getName() == selectedName }?.id!!
                     viewModel.getProductLookList(
@@ -283,7 +288,7 @@ fun ApplyFilter(
             if (comeFrom == "SalesReport")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    productList, true
+                    productList, clickable = true
                 ) { selectedProduct ->
                     productId = simpleProductList.find { it.getName() == selectedProduct }?.id!!
                 }
@@ -291,21 +296,21 @@ fun ApplyFilter(
             if (comeFrom == "SalesReport" || comeFrom == "TransactionLog")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    channelList, true
+                    channelList, clickable = true
                 ) {
                     channel = it
                 }
             if (comeFrom == "TransactionLog")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    printedList, true
+                    printedList, clickable = true
                 ) {
                     isPrinted = it
                 }
             if (comeFrom != "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    methodList, true
+                    methodList, clickable = true
                 ) { payment ->
                     paymentMethod = payment
                     discrmenationVal =
@@ -315,7 +320,7 @@ fun ApplyFilter(
             if (comeFrom != "productDiscount")
                 DynamicSelectTextField(
                     TextAlign.Center,
-                    dateList, true
+                    dateList, clickable = true
                 ) {
                     if (it == context.getString(R.string.report_custom_date)) {
                         viewCustomDate = true
@@ -426,12 +431,38 @@ fun TextFiledd(title: String, onEnterString: (String) -> Unit) {
 fun DynamicSelectTextField(
     textAlign: TextAlign,
     options: List<String>,
+    isBankCountry: Boolean? = null,
+    isBankName: Boolean? = null,
+    selectedAccount: SavedAccount? = null,
     clickable: Boolean,
-    onSelectItem: (String) -> Unit
+    onSelectItem: (String) -> Unit,
 ) {
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var selectedOptionText by remember {
+        if(isBankCountry == true){
+            mutableStateOf(selectedAccount?.getCountryName() ?: "")
+        }else if(isBankName == true){
+            mutableStateOf(selectedAccount?.getBankName() ?: "")
+        }else{
+            mutableStateOf(options[0])
+        }
+    }
+
+    LaunchedEffect(key1 = selectedAccount){
+        if(isBankCountry == true){
+            selectedOptionText = selectedAccount?.getCountryName() ?: options.first()
+        }
+        if(isBankName == true){
+            selectedOptionText = selectedAccount?.getBankName() ?: options.first()
+        }
+    }
+
+    LaunchedEffect(key1 = options){
+        if(isBankName == true){
+            selectedOptionText = if(options.any { it == selectedAccount?.getBankName() }) selectedAccount?.getBankName().toString() else options.first()
+        }
+    }
 
     Card(
         Modifier

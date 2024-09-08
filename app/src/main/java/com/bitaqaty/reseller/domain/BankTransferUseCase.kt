@@ -24,4 +24,7 @@ class BankTransferUseCase @Inject constructor(private val repo: BBRepository) {
 
     suspend fun senderAccountByCounter(id: String) =
         repo.senderAccountByCounter(id)
+
+    suspend fun getSavedAccounts(userInfo: RequestOneCardAccountsBody) =
+        repo.gatSavedAccounts(userInfo)
 }

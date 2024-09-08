@@ -121,7 +121,7 @@ fun BankTransfer(
                 stringResource(R.string.btrr_status_accepted),
                 stringResource(R.string.btrr_status_rejected)
             ).toList(),
-            true
+            clickable = true
         ) {
             selectedStatus = it
         }
